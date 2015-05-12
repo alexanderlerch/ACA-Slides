@@ -1,0 +1,111 @@
+\documentclass[hyperref={pdfpagelabels=false}]{beamer}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% packages
+\usepackage{pict2e}
+\usepackage{epic}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{units}
+\usepackage{fancybox}
+\usepackage[absolute,overlay]{textpos} 
+\usepackage{media9} % avi2flv: "C:\Program Files\ffmpeg\bin\ffmpeg.exe" -i TuneFreqFilterbank.avi -b 600k -s 441x324 -r 15 -acodec copy TuneFreqFilterbank.flv
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% relative paths
+\graphicspath{{graph/}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colors
+\definecolor{gtgold}{HTML}{E0AA0F} %{rgb}{0.88,0.66,1,0.06} [234, 170, 0]/256
+
+%---------------------------------------------------------------------------------
+% math
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\atan}{atan}
+\DeclareMathOperator*{\arcsinh}{arcsinh}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\tcdf}{tcdf}
+\DeclareMathOperator*{\si}{sinc}
+\DeclareMathOperator*{\princarg}{princarg}
+\DeclareMathOperator*{\arccosh}{arccosh}
+\DeclareMathOperator*{\hwr}{HWR}
+\DeclareMathOperator*{\flip}{flip}
+\DeclareMathOperator*{\sinc}{sinc}
+\newcommand{\e}{{e}}
+\newcommand{\jom}{\mathrm{j}\omega}
+\newcommand{\jOm}{\mathrm{j}\Omega}
+\newcommand   {\mat}[1]    		{\boldsymbol{\uppercase{#1}}}		%bold
+\renewcommand {\vec}[1]    		{\boldsymbol{\lowercase{#1}}}		%bold
+
+%---------------------------------------------------------------------------------
+% media9
+\newcommand{\includeaudio}[1]{\includemedia[
+                        addresource=#1,
+                        width=5mm,
+                        height=5mm,
+                        activate=onclick,
+                        flashvars={
+                            source=#1  
+                            &autoPlay=true
+                        }]
+                        {\includegraphics[width=5mm, height=5mm]{graph/SpeakerIcon}}
+                        {APlayer.swf}}
+
+\newcommand{\includevideo}[1]{\includemedia[
+                        addresource=#1,
+                        width=0.8\linewidth,
+                        height=0.6\linewidth,
+                        activate=onclick,
+                        flashvars={
+                            source=#1  
+                            &autoPlay=true
+                        }]
+                        {}
+                        {VPlayer.swf}}
+
+%---------------------------------------------------------------------------------
+% units
+\setlength{\unitlength}{1mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% theme & layout
+\usetheme{Frankfurt}
+\useoutertheme{smoothbars}
+\beamertemplatenavigationsymbolsempty
+
+% set this to ensure bulletpoints without subsections
+\usepackage{remreset}
+\makeatletter
+\@removefromreset{subsection}{section}
+\makeatother
+\setcounter{subsection}{1}
+
+%---------------------------------------------------------------------------------
+% appearance
+\setbeamercolor{structure}{fg=gtgold}
+\setbeamercovered{transparent} %invisible
+
+%---------------------------------------------------------------------------------
+% fontsize
+\let\Tiny=\tiny
+
+%---------------------------------------------------------------------------------
+% logo
+\addtobeamertemplate{frametitle}{}{%
+\begin{textblock*}{100mm}(8.3cm,.65cm)
+\includegraphics[height=.8cm,keepaspectratio]{CenterMusicTechnology-solid-2lines-white-CoAtag}
+\end{textblock*}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% title information
+\title[]{MUSI-6201~---~Computational Music Analysis}   
+\author[alexander lerch]{alexander lerch} 
+%\institute{~}
+%\date[Alexander Lerch]{}
+\titlegraphic{\vspace{-16mm}\includegraphics[scale=.25]{title}}
