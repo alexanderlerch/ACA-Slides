@@ -1,4 +1,4 @@
-\documentclass[hyperref={pdfpagelabels=false}]{beamer}
+\documentclass[hyperref={pdfpagelabels=false,colorlinks=true,linkcolor=white,urlcolor=blue}]{beamer}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -68,8 +68,32 @@
                         {VPlayer.swf}}
 
 %---------------------------------------------------------------------------------
+% other commands
+\newcommand{\question}[1]{\vspace{-4mm}
+                          \begin{columns}
+                            \column{.7\textwidth}
+                                \textbf{#1}\\
+                            \column{.3\textwidth}
+                                \begin{flushright}
+                                     \includegraphics[scale=.5]{Graph/question_mark}
+                                \end{flushright}
+                                \vspace{6mm}
+                          \end{columns}\pause\vspace{-6mm}}
+   %{{\begin{flushright}\includegraphics[scale=1]{question_mark}\end{flushright} \textbf{#1}\\\vspace{5mm}\pause}
+
+%---------------------------------------------------------------------------------
 % units
 \setlength{\unitlength}{1mm}
+
+%---------------------------------------------------------------------------------
+% counters
+\newcounter{iXOffset}
+\newcounter{iYOffset}
+\newcounter{iXBlockSize}
+\newcounter{iYBlockSize}
+\newcounter{iYBlockSizeDiv2}
+\newcounter{iDistance}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
