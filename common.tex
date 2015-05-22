@@ -99,8 +99,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % theme & layout
 \usetheme{Frankfurt}
-\useoutertheme{smoothbars}
 \beamertemplatenavigationsymbolsempty
+%\setbeamertemplate{frametitle}[smoothbars theme]
+\setbeamertemplate{frametitle}
+{
+    \begin{beamercolorbox}[ht=1.8em,wd=\paperwidth]{frametitle}
+        \vspace{-.1em}%
+        \hspace{.2em}{\strut\insertframetitle\strut}
+        
+        \hspace{.2em}\small\strut\insertframesubtitle\strut
+        %\hfill
+        %\includegraphics[height=.8cm,keepaspectratio]{CenterMusicTechnology-solid-2lines-white-CoAtag}
+        
+    \end{beamercolorbox}
+    \begin{textblock*}{100mm}(8.3cm,.65cm)
+        \includegraphics[height=.8cm,keepaspectratio]{CenterMusicTechnology-solid-2lines-white-CoAtag}
+    \end{textblock*}
+}
 
 % set this to ensure bulletpoints without subsections
 \usepackage{remreset}
@@ -117,13 +132,6 @@
 %---------------------------------------------------------------------------------
 % fontsize
 \let\Tiny=\tiny
-
-%---------------------------------------------------------------------------------
-% logo
-\addtobeamertemplate{frametitle}{}{%
-\begin{textblock*}{100mm}(8.3cm,.65cm)
-\includegraphics[height=.8cm,keepaspectratio]{CenterMusicTechnology-solid-2lines-white-CoAtag}
-\end{textblock*}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

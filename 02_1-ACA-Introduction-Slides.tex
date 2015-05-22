@@ -158,7 +158,7 @@
         \end{frame}
 
     \section[content]{audio content}
-        \begin{frame}{audio content}{origins}
+        \begin{frame}{audio content}{sources}
             \setbeamercovered{invisible}
             \question{what are the sources of (musical) audio content?}
 
@@ -217,19 +217,24 @@
                 \centering
                 \input{pict/introduction_ACASystem}
             \end{figure}
-            \pause
-            \begin{itemize}
-                \item	\textbf{feature extraction}
-                        \begin{itemize}
-                            \item 	dimensionality reduction
-                            \item	meaningful representation
-                        \end{itemize}
-
-                \item<2->	\textbf{classification}
-                        \begin{itemize}
-                            \item	map or convert feature to comprehensible domain
-                        \end{itemize}
-            \end{itemize}
+            
+            \begin{columns}
+                \column{.5\textwidth}
+                    \begin{itemize}
+                        \item<2->[]	\textbf{feature extraction}
+                                \begin{itemize}
+                                    \item 	dimensionality reduction
+                                    \item	meaningful representation
+                                \end{itemize}
+                    \end{itemize}
+                \column{.5\textwidth}
+                    \begin{itemize}
+                        \item<3->[]	\textbf{classification}
+                                \begin{itemize}
+                                    \item	map or convert feature to comprehensible domain
+                                \end{itemize}
+                    \end{itemize}
+            \end{columns}
         \end{frame}
 
     \section{summary}
