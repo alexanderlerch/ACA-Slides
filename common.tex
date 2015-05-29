@@ -67,6 +67,18 @@
                         {}
                         {VPlayer.swf}}
 
+\newcommand{\audioautoplay}[1]{\includemedia[
+                            addresource=#1,
+                            width=.1\linewidth,
+                            height=.01\linewidth,
+                            activate=pageopen,
+                            flashvars={
+                                source=#1  
+                                &autoPlay=true
+                            }]
+                            {}
+                            {APlayer.swf}}
+
 %---------------------------------------------------------------------------------
 % other commands
 \newcommand{\question}[1]{\vspace{-4mm}
@@ -79,7 +91,17 @@
                                 \end{flushright}
                                 \vspace{6mm}
                           \end{columns}\pause\vspace{-6mm}}
-   %{{\begin{flushright}\includegraphics[scale=1]{question_mark}\end{flushright} \textbf{#1}\\\vspace{5mm}\pause}
+
+\newcommand{\toremember}[1]{\vspace{-4mm}
+                          \begin{columns}
+                            \column{.7\textwidth}
+                                \textbf{#1}\\
+                            \column{.3\textwidth}
+                                \begin{flushright}
+                                     \includegraphics[scale=.5]{Graph/exclamation_mark}
+                                \end{flushright}
+                                \vspace{6mm}
+                          \end{columns}\vspace{-6mm}}
 
 %---------------------------------------------------------------------------------
 % units
@@ -87,6 +109,7 @@
 
 %---------------------------------------------------------------------------------
 % counters
+\newcounter{i}
 \newcounter{iXOffset}
 \newcounter{iYOffset}
 \newcounter{iXBlockSize}
