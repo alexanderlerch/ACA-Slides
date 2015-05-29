@@ -9,3 +9,9 @@
 /*.synctex
 /*.toc
 /01_1-ACA-Organizational-Slides.pdf
+/graph/*.eps
+/audio/*.pk
+/matlab/*.asv
+/texniccenter/*.tps
+/02_1-ACA-Introduction-Slides.pdf
+/03_1-ACA-Fundamentals-Slides.pdf

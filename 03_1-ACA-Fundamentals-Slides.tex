@@ -60,12 +60,17 @@
                 f_0 	&=& \frac{1}{T_0} =  \frac{\omega_0}{2\pi}
             \end{eqnarray*}
             \vspace{-9mm}
-            \pause
-            
-            \begin{figure}
-                \centering
-                \includegraphics{PeriodicRandom}
-            \end{figure}
+
+            \visible<2>{
+                \begin{figure}
+                    \centering
+                    \includegraphics{PeriodicRandom}
+                \end{figure}
+                \only<2>{
+                \begin{textblock*}{\baselineskip }(1.1\textwidth,.5\textheight)
+                    \rotatebox{90}{\tiny matlab source: matlab/displayPeriodicRandom.m}
+                \end{textblock*}}
+            }
         \end{frame}
 
         \begin{frame}{audio signals}{periodic signals 2/4}
@@ -105,10 +110,13 @@
             \end {equation*}
             %\vspace{-5mm}
             \only<1>{
-            \begin{figure}
-                \centering
+                \begin{figure}
+                    \centering
                     \includegraphics{graph/AdditiveSynthesisSaw-1}
-            \end{figure}
+                \end{figure}
+                \begin{textblock*}{\baselineskip }(1.1\textwidth,.5\textheight)
+                    \rotatebox{90}{\tiny matlab source: matlab/displayAdditiveSynthesis.m}
+                \end{textblock*}
             }
             
             \setcounter{i}{1}
@@ -122,6 +130,10 @@
                         \includegraphics{graph/AdditiveSynthesisSaw-\arabic{i}}
                     \end{figure}
                     \audioautoplay{audio/additivesynthesis_saw_\arabic{i}.mp3}
+                    
+                    \begin{textblock*}{\baselineskip }(1.1\textwidth,.5\textheight)
+                        \rotatebox{90}{\tiny matlab source: matlab/displayAdditiveSynthesis.m}
+                    \end{textblock*}
                 }
                 \stepcounter{i} 
             }	
@@ -137,6 +149,10 @@
                         \includegraphics{graph/AdditiveSynthesisRect-\arabic{i}.pdf}
                     \end{figure}
                     \audioautoplay{audio/additivesynthesis_rect_\arabic{i}.mp3}
+                    
+                    \begin{textblock*}{\baselineskip }(1.1\textwidth,.5\textheight)
+                        \rotatebox{90}{\tiny matlab source: matlab/displayAdditiveSynthesis.m}
+                    \end{textblock*}
                 }
                 \stepcounter{i} 
             }	
