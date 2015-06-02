@@ -50,8 +50,8 @@
             \end{itemize}
         \end{frame}
 
-    \section[periodic]{periodic signals}
-        \begin{frame}{audio signals}{periodic signals 1/4}
+    \section[signals]{signals}
+        \begin{frame}{audio signals}{periodic signals 1/5}
             \setbeamercovered{invisible}
 
             periodic signals: most prominent examples of deterministic signals
@@ -59,22 +59,15 @@
                 x(t) 	&=& x(t+T_0)\\
                 f_0 	&=& \frac{1}{T_0} =  \frac{\omega_0}{2\pi}
             \end{eqnarray*}
-            \vspace{-9mm}
 
-            \visible<2>{
-                \begin{figure}
-                    \centering
-                    \includegraphics{PeriodicRandom}
-                \end{figure}
-                \only<2>{
-                \begin{textblock*}{\baselineskip }(1.1\textwidth,.5\textheight)
-                    \rotatebox{90}{\tiny matlab source: matlab/displayPeriodicRandom.m}
-                \end{textblock*}}
-            }
+            \only<2>{
+                \figwithmatlab{PeriodicRandom}
+             }
+            \vphantom{\includegraphics{PeriodicRandom}}
         \end{frame}
 
-        \begin{frame}{audio signals}{periodic signals 2/4}
-            periodic signal $\Rightarrow$ representation in \textbf{Fourier series}
+        \begin{frame}{audio signals}{periodic signals 2/5}
+            periodic signal $\Rightarrow$ representation in \textbf{Fourier series}\footnote{\tiny Jean-Baptiste Joseph Fourier, 1768--1830}
             \begin {equation}
                 x(t) = \sum\limits_{k=-\infty}^{\infty} {\color<5>{gtgold}{a_k}} {\color<4>{gtgold}{\e^{\mathrm{j}{\color<2-3>{gtgold}{\omega_0}} {\color<3>{gtgold}{k}} t}}} \nonumber
             \end {equation}
@@ -89,10 +82,10 @@
             \end{itemize}
         \end{frame}
 
-        \begin{frame}{audio signals}{periodic signals 2/4}
+        \begin{frame}{audio signals}{periodic signals 3/5}
             \toremember{}
             
-            \begin{block}{Fourier Series}
+            \begin{block}{Fourier series}
                 \begin{itemize}
                     \item   \textbf{every} periodic signal can be represented in a Fourier series
                     \item   a periodic signal \textbf{contains only} frequencies at integer multiples of the fundamental frequency $f_0$
@@ -103,20 +96,14 @@
             \end{block}
         \end{frame}
 
-        \begin{frame}{audio signals}{periodic signals 3/4}
+        \begin{frame}{audio signals}{periodic signals 4/5}
             reconstruction of periodic signals with limited number of sinusoidals:
             \begin {equation*}
                 \hat{x}(t) = \sum\limits_{k=-\mathcal{K}}^{\mathcal{K}} a_k e^{\jom_0kt}
             \end {equation*}
             %\vspace{-5mm}
             \only<1>{
-                \begin{figure}
-                    \centering
-                    \includegraphics{graph/AdditiveSynthesisSaw-1}
-                \end{figure}
-                \begin{textblock*}{\baselineskip }(1.1\textwidth,.5\textheight)
-                    \rotatebox{90}{\tiny matlab source: matlab/displayAdditiveSynthesis.m}
-                \end{textblock*}
+                \figwithref{AdditiveSynthesisSaw-1}%{matlab/displayAdditiveSynthesis.m}
             }
             
             \setcounter{i}{1}
@@ -129,11 +116,9 @@
                         \centering
                         \includegraphics{graph/AdditiveSynthesisSaw-\arabic{i}}
                     \end{figure}
-                    \audioautoplay{audio/additivesynthesis_saw_\arabic{i}.mp3}
+                    \audioautoplay{additivesynthesis_saw_\arabic{i}}
                     
-                    \begin{textblock*}{\baselineskip }(1.1\textwidth,.5\textheight)
-                        \rotatebox{90}{\tiny matlab source: matlab/displayAdditiveSynthesis.m}
-                    \end{textblock*}
+                    \addreference{matlab source: matlab/displayAdditiveSynthesis.m}
                 }
                 \stepcounter{i} 
             }	
@@ -148,122 +133,141 @@
                         \centering
                         \includegraphics{graph/AdditiveSynthesisRect-\arabic{i}.pdf}
                     \end{figure}
-                    \audioautoplay{audio/additivesynthesis_rect_\arabic{i}.mp3}
+                    \audioautoplay{additivesynthesis_rect_\arabic{i}}
                     
-                    \begin{textblock*}{\baselineskip }(1.1\textwidth,.5\textheight)
-                        \rotatebox{90}{\tiny matlab source: matlab/displayAdditiveSynthesis.m}
-                    \end{textblock*}
+                    \addreference{matlab source: matlab/displayAdditiveSynthesis.m}
                 }
                 \stepcounter{i} 
             }	
         \end{frame}
+        \begin{frame}{audio signals}{periodic signals 5/5}
+            youtube example --- mechanical additive synthesis:
+            
+            \url{http://youtu.be/8KmVDxkia_w}
+        \end{frame}
 
-    \section[random]{random signals}
-%\begin{frame}{audio signals}{random process}
-	%\textbf{random process}: ensemble of random series
-	%\begin{figure}
-		%\centering
-			%\includegraphics[scale=.25]{graph/randomprocess}
-	%\end{figure}
-	%\pause
-	%special cases:
-	%\begin{itemize}
-		%\item	\textbf{stationarity}: all parameters (such as the mean) are time invariant
-		%\item	\textbf{ergodicity}: process with equal time and ensemble mean (implies stationarity)
-	%\end{itemize}
-%\end{frame}
-	%
-%\subsection{sampling \& quantization}
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{introduction}
-		%digital signals can only be represented with a limited number of values
-		%\pause
-		%
-		%$\Rightarrow$
-		%\begin{itemize}
-			%\item	time discretization: \textbf{sampling}
-			%\item	amplitude discretization: \textbf{quantization}
-		%\end{itemize}
-	%\end{frame}
-	%
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{sampling}
-		%\begin{equation}
-			%T_{\mathrm{S}} = \frac{1}{f_{\mathrm{S}}} 
-		%\end{equation}
-		%\begin{figure}
-			%\centering
-				%\includegraphics[scale=.6]{\AcaGraph/sampling}
-			%\label{fig:sampling}
-		%\end{figure}
-		%\pause
-		%typical sample rates
-		%\begin{itemize}
-			%\item	\unit[8--16]{kHz}: speech (phone)
-			%\item	\unit[44.1--48]{kHz}: (consumer) audio/music
-			%\item	higher: production audio
-		%\end{itemize}
-	%\end{frame}	
-	%
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{sampling ambiguity 1/2}
-		%\begin{eqnarray}
-			%f_0 &=& \unit[1, 5, 7]{kHz}\\
-			%f_{\mathrm{S}} &=& \unit[6]{kHz}
-		%\end{eqnarray}
-		%\begin{figure}
-			%\centering
-				%\includegraphics[scale=.7]{\AcaGraph/samplingambig}
-				%\label{fig:samplingambig}
-		%\end{figure}
-	%\end{frame}	
-	%
-	%\begin{frame}\frametitle{sampling and quantization}\framesubtitle{sampling ambiguity 2/2}
-		%\textbf{wagon wheel effect}
-		%\invisible<2->{
-		%\begin{figure}
-			%\begin{center}
-				%\includegraphics[scale=.4]{graph/Stagecoach-Western}
-			%\end{center}
-		%\end{figure}
-		%}
-		%\visible<2->{
-			%\vspace{-60mm}
-			%\begin{figure}
-				%\begin{center}
-					%\includegraphics[scale=.2]{graph/Stagecoach-Western}
-				%\end{center}
-			%\end{figure}
-			%\begin{enumerate}
-				%\item	$f_{wheel} < \frac{f_S}{2}$: speeding up
-				%\pause
-				%\item	$\frac{f_S}{2} < f_{wheel} < f_S$: slowing down
-				%\pause
-				%\item	$f_{wheel} = f_S$: standing still
-				%\pause
-				%\item	$\ldots$
-			%\end{enumerate}
-		%}
-	%\end{frame}
-	%
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{sampling theorem 1/2}
-		%\vspace{-10mm}
-		%\begin{flushright}
-			 %\includegraphics[scale=.25]{Graph/exclamation-mark}
-		%\end{flushright}
-		%\begin{block}{sampling theorem}
-			%\centering
-			%A sampled signal can  be reconstructed without loss of information if the sample rate $f_{\mathrm{S}}$ is higher than twice the bandwidth $f_{\mathrm{max}}$  in the sampled audio signal.
-			%\begin{equation}\label{eq:sample_theorem}	
-				%f_{\mathrm{S}} > 2\cdot f_{\mathrm{max}}
-			%\end{equation}
-		%\end{block}
-	%\end{frame}	
-	%
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{sampling theorem: aliasing 2/2}
-		%\begin{figure}
-			%\centering
-				%\includegraphics[scale=.7]{\AcaGraph/spectral_overlap}
-		%\end{figure}
-	%\end{frame}	
-	%
+        \begin{frame}{audio signals}{random process 1/2}
+            \textbf{random process}: ensemble of random series
+            \figwithmatlab{RandomProcess}%{matlab/displayRandomProcess.m}
+        \end{frame}
+
+        \begin{frame}{audio signals}{random process 2/2}
+            \toremember{}
+            
+            \begin{block}{random process}
+                \begin{itemize}
+                    \item   ensemble of random series
+                    \item   each series represents a \textit{sample} or the process
+                    \item   the value of the next sample is indetermined, regardless of any amount of knowledge
+                \end{itemize}
+            \end{block}
+            \begin{itemize}
+                \item   special case: \textbf{stationarity}\\ all properties (such as the mean) are time invariant
+                \item   example: white noise
+            \end{itemize}
+        \end{frame}
+            
+    \section[digital]{digital signals}
+        \begin{frame}{digital signals}{introduction}
+            \textit{digital} signals are represented with a limited number of values
+            \pause
+            
+            \bigskip
+            $\Rightarrow$
+            \begin{enumerate}
+                \item	\textbf{sampling}: time discretization
+                
+                a continuous (analogue) signal is sampled at equidistant points in time
+                
+                \smallskip
+                \item	\textbf{quantization}: amplitude discretization
+                
+                a continuous (analogue) signal is mapped to specific amplitude values
+            \end{enumerate}
+        \end{frame}
+            
+        \begin{frame}{digital signals}{sampling}
+            \figwithref{Sampling01}
+                
+            \begin{itemize}
+                \item   $f_\mathrm{S}\;[\unit{Hz}]$: number of samples per second
+                \item   $T_\mathrm{S} = \nicefrac{1}{f_\mathrm{S}}\;[\unit{s}]$: distance between two neighboring samples
+            \end{itemize}
+        \end{frame}
+            
+        \begin{frame}{digital signals}{sampling frequencies}
+            \question{What are typical sample rates}
+            
+            
+            \begin{itemize}
+                \item	\unit[8--16]{kHz}: speech (phone)
+                \item	\unit[44.1--48]{kHz}: (consumer) audio/music
+                \item	\unit[$>$48]{kHz}: production audio
+            \end{itemize}
+            \pause
+            
+            \bigskip
+            \begin{table}
+                \centering
+                    \begin{tabular}{l|cccccc}
+                        $f_\mathrm{S}$ & \unit[44.1]{kHz} & \unit[32]{kHz} & \unit[22.05]{kHz} & \unit[16]{kHz} & \unit[8]{kHz} & \unit[6]{kHz}\\
+                        & \includeaudio{sampling_44}& \includeaudio{sampling_32}& \includeaudio{sampling_22}& \includeaudio{sampling_16}& \includeaudio{sampling_08}& \includeaudio{sampling_06} \\
+                    \end{tabular}
+            \end{table}
+        \end{frame}	
+            
+        \begin{frame}{digital signals}{sampling ambiguity}
+            \figwithmatlab{Sampling02}
+        \end{frame}	
+        
+        \begin{frame}{digital signals}{sampling ambiguity --- wagon-wheel effect}
+            \only<1>{\figwithref{StageCoach}{\url{flickr.com/photos/fotoguy49057/12209056184}}}
+            \visible<2->{
+                compare speed of wheel (spokes) $f_\mathrm{wheel}$ between real world and video recording for an accelerating stage coach
+                \begin{columns}
+                    \column{0.5\textwidth}
+                        
+                        \begin{enumerate}
+                            \item<2->	$f_\mathrm{wheel} < \frac{f_\mathrm{S}}{2}$\\
+                                speeding up
+                            \item<3->	$\frac{f_\mathrm{S}}{2} < f_\mathrm{wheel} < f_\mathrm{S}$\\
+                                slowing down
+                            \item<4->	$f_\mathrm{wheel} = f_\mathrm{S}$:\\
+                            standing still
+                            \item<4->	$\ldots$
+                        \end{enumerate}
+                                    
+                    \column{0.5\textwidth}
+                        \includegraphics[scale=0.5]{StageCoach}
+                \end{columns}
+            }
+            
+            \only<5->{
+            \vspace{5mm}
+            video example: \url{https://youtu.be/QYYK4tlCMlY}
+            }
+        \end{frame}	
+        
+        \begin{frame}{digital signals}{sampling ambiguity --- spectral domain}
+            \includevideo{video/animateSampling.mp4}
+            \question{What are the x-axis labels for the spectrum shown above?}
+        \end{frame}	
+        \begin{frame}{digital signals}{sampling theorem}
+            \toremember{}
+            
+            \begin{block}{sampling theorem}
+                A sampled signal can be reconstructed without loss of information if the sample rate $f_\mathrm{S}$ is higher than twice the bandwidth $f_\mathrm{max}$ of the original audio signal.
+                
+                \begin{equation*}
+                    f_\mathrm{S} > 2\cdot f_\mathrm{max}
+                \end{equation*}
+            \end{block}
+            
+            \pause
+            \bigskip
+            $\nicefrac{f_\mathrm{S}}{2}$ is sometimes referred to as the \textit{Nyquist}\footnote{\tiny Harry Nyquist, 1889--1976}-rate
+        \end{frame}	
+
 	%\begin{frame}\frametitle{digital signals}\framesubtitle{quantization}
 		%continuous amplitude values are rounded to pre-defined set of allowed amplitude values
 		%\begin{figure}

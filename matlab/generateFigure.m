@@ -25,6 +25,7 @@ function hFigureHandle = generateFigure(fWidthInCm, fHeightInCm)
     
     myColorMap  = [
                              0                         0                         0
+                             234/256                    170/256                 0
                              0                         0                         1
                              1                         0                         0
                              0                       0.5                         0
@@ -34,6 +35,7 @@ function hFigureHandle = generateFigure(fWidthInCm, fHeightInCm)
                           0.25                      0.25                      0.25];
     
     set(hFigureHandle,'PaperUnits', 'centimeters', 'PaperPosition', [fPaperPos fWidthInCm fHeightInCm]);    
+    set(hFigureHandle,'Units', 'centimeters', 'Position', [[5 5] fWidthInCm fHeightInCm]);    
     
     % change default appearance
     set(hFigureHandle,'defaultAxesColorOrder',myColorMap); 
