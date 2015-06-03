@@ -1,0 +1,72 @@
+\begin{footnotesize}
+				\begin{picture}(90,15)
+					\setcounter{iXOffset}{0}
+					\setcounter{iYOffset}{0}
+					\setcounter{iXBlockSize}{10}
+					\setcounter{iYBlockSize}{10}
+					\setcounter{iYBlockSizeDiv2}{5}
+					\setcounter{iDistance}{5}
+	
+					\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+	
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\text{$x(i)$}}
+					\addtocounter{iXOffset}{1}
+	
+					\addtocounter{iXOffset}{\value{iDistance}}
+	
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(1,0){\value{iDistance}}}
+	
+					\addtocounter{iXOffset}{\value{iDistance}}
+					\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+					
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {Q}}
+	
+					\addtocounter{iXOffset}{\value{iXBlockSize}}
+					\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+	
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(1,0){\value{iDistance}}}
+	
+					\addtocounter{iXOffset}{\value{iDistance}}
+					\addtocounter{iXOffset}{1}
+
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\text{$x_\mathrm{Q}(i)$}}
+
+
+					\setcounter{iYOffset}{0}
+					\addtocounter{iXOffset}{20}
+					\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+	
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\text{$x(i)$}}
+					\addtocounter{iXOffset}{1}
+	
+					\addtocounter{iXOffset}{\value{iDistance}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(1,0){\value{iDistance}}}
+
+                    \put(57.3, 4.2)
+                        {$\oplus$}
+
+					\put(58.5, 10.6)
+						{\vector(0,-1){\value{iDistance}}}
+
+					\put(59, 11)
+						{\text{$q(i)$}}
+					
+                    \addtocounter{iXOffset}{\value{iDistance}}
+                    \addtocounter{iXOffset}{1}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(1,0){\value{iDistance}}}
+
+					\addtocounter{iXOffset}{\value{iDistance}}
+					\addtocounter{iXOffset}{1}
+
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\text{$x_\mathrm{Q}(i) = x(i) + q(i)$}}
+				\end{picture}
+\end{footnotesize}

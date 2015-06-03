@@ -17,7 +17,7 @@
                     \end{itemize}
                 \item   \textbf{additional reading}  
                     \begin{itemize}
-                        \item   Richard G.~Lyons, \textit{Understanding Digial Signal Processing}, 3rd, Prentice Hall/Pearson, 2011
+                        \item   Richard G.~Lyons, \textit{Understanding Digital Signal Processing}, 3rd, Prentice Hall/Pearson, 2011
                     \end{itemize}
                 \bigskip
                 \item<2->   \textbf{lecture content}
@@ -25,8 +25,8 @@
                         \item<2->   periodic and random signals
                         \item<3->   sampling and quantization
                         \item<4->   statistical signal description
-                        \item<5->   convolution
-                        \item<6->   block-based processing
+                        %\item<5->   convolution
+                        %\item<6->   block-based processing
                     \end{itemize}
             \end{itemize}
         \end{frame}
@@ -166,8 +166,28 @@
                 \item   example: white noise
             \end{itemize}
         \end{frame}
+
+        \begin{frame}{audio signals}{matlab exercise}
+            \matlabexercise{signal generation and plotting}
             
-    \section[digital]{digital signals}
+            \begin{enumerate}
+                \item   generate a sinusoidal
+                    \begin{itemize}
+                        \item   4 periods
+                        \item   max amplitude $0.707$
+                    \end{itemize}
+                \item   plot the sinusoidal
+                \item   generate white noise 
+                    \begin{itemize}
+                        \item   uniform distribution
+                        \item   approx. zero mean
+                        \item   max amplitude $0.707$
+                    \end{itemize}
+                \item   plot the noise
+            \end{enumerate}
+        \end{frame}
+            
+    \section[digital signals]{digital signals}
         \begin{frame}{digital signals}{introduction}
             \textit{digital} signals are represented with a limited number of values
             \pause
@@ -177,15 +197,17 @@
             \begin{enumerate}
                 \item	\textbf{sampling}: time discretization
                 
-                a continuous (analogue) signal is sampled at equidistant points in time
+                continuous time $\mapsto$ discrete equidistant points in time 
+                
                 
                 \smallskip
                 \item	\textbf{quantization}: amplitude discretization
                 
-                a continuous (analogue) signal is mapped to specific amplitude values
+                continuous amplitude $\mapsto$ discrete, pre-defined, set of values
             \end{enumerate}
         \end{frame}
-            
+        
+        \subsection{sampling}
         \begin{frame}{digital signals}{sampling}
             \figwithref{Sampling01}
                 
@@ -252,6 +274,7 @@
             \includevideo{video/animateSampling.mp4}
             \question{What are the x-axis labels for the spectrum shown above?}
         \end{frame}	
+        
         \begin{frame}{digital signals}{sampling theorem}
             \toremember{}
             
@@ -268,158 +291,197 @@
             $\nicefrac{f_\mathrm{S}}{2}$ is sometimes referred to as the \textit{Nyquist}\footnote{\tiny Harry Nyquist, 1889--1976}-rate
         \end{frame}	
 
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{quantization}
-		%continuous amplitude values are rounded to pre-defined set of allowed amplitude values
-		%\begin{figure}
-			%\centering
-				%\includegraphics[scale=.7]{\AcaGraph/quant}
-		%\end{figure}
-        %\vspace{-3mm}
-		%\pause
-		%\begin{itemize}
-			%\item	\textbf{number of quantization steps}: $\mathcal{M} = 16$
-			%\item	\textbf{word length}: $w = \log_2(\mathcal{M}) = \unit[4]{bit}$
-		%\end{itemize}
-	%\end{frame}	
-%
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{quantization: number of quantization steps}
-		%\begin{table}
-			%\centering
-			%\begin{tabular}{lcr}
-			%\hline
-				%$w$ & $\mathcal{M} = 2^w$ \\
-			%\hline
-				%1	&	2\\
-				%2	&	4\\
-				%4	&	16\\
-				%8	&	256\\
-				%12	&	4096\\
-				%16	&	65536\\
-				%20	&	1048576\\
-				%24	&	16777216\\
-			%\end{tabular}  
-		%\end{table}
-	%\end{frame}	
-%
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{quantization: process}
-		%\begin{figure}
-			%\centering
-			 %\includegraphics[scale=0.13]{Graph/Flowchart_Quantization}
-		%\end{figure}
-		%\begin{equation}
-			%e_{\mathrm{Q}}(i) = x(i) - x_{\mathrm{Q}}(i)
-		%\end{equation}
-	%\end{frame}	
-	%
-	%%\begin{frame}\frametitle{digital signals}\framesubtitle{quantization: SNR 1/2}
-		%%\vspace{-5mm}
-		%%\begin{columns}[lr]
-			%%\column{6cm}
-			%%What is the SNR of a quantized sinusoidal?
-			%%\begin{equation}\label{eq:snr}
-				%%SNR = 10\cdot\log_{10}\left(\frac{W_{\mathrm{S}}}{W_{\mathrm{Q}}}\right)\; [dB] 
-			%%\end{equation}
-			%%
-			%%\hspace{3mm}use: $sin^2(t) = \frac{1-cos(2t)}{2}$
-			%%
-			%%\column{4cm}
-			%%%\hspace{5mm}
-			%%\begin{flushright}
-				 %%\includegraphics[scale=.08]{Graph/question-mark}
-			%%\end{flushright}
-		%%\end{columns}
-		%%
-		%%\pause
-		%%\begin{eqnarray}
-			%%W_S &=& \frac{A^2}{2} = \frac{(\Delta\cdot 2^{w-1})^2}{2}\\
-			%%W_Q &=& \frac{\Delta^2}{12}\\
-			%%\pause
-			%%\frac{W_S}{W_Q} &=& \frac{3}{2}\cdot 2^{2w}
-		%%\end{eqnarray}
-	%%\end{frame}		
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{quantization: SNR}
-		%\begin{block}{Signal-to-Noise Ratio}
-			%\centering
-			%\begin{equation}
-				%SNR = 6.02\cdot w + c_{\mathrm{S}}\quad [dB]
-			%\end{equation}
-			%\begin{itemize}
-				%\item	every additional bit adds app.\ \unit[6]{dB} SNR
-				%\item	constant $c_{\mathrm{S}}$ depends on signal (scaling and PDF)
-			%\end{itemize}
-		%\end{block}
-		%\pause
-		%\begin{itemize}
-			%\item	square wave (full scale): $c_{\mathrm{S}} =  \unit[10.80]{dB}$
-			%\item	sinusoidal wave (full scale): $c_{\mathrm{S}} =  \unit[1.76]{dB}$
-			%\item	rectangular {PDF} (full scale): $c_{\mathrm{S}} =  \unit[0]{dB}$
-			%\item	Gaussian {PDF} (full scale = $4\sigma_{g}$): $c_{\mathrm{S}} =  \unit[-7.27]{dB}$
-		%\end{itemize}
-	%\end{frame}		
-	%
-	%\begin{frame}\frametitle{digital signals}\framesubtitle{amplitude in DSP}
-		%floating point: $x_{\mathrm{Q}} = M_{\mathrm{G}}\cdot 2^{E_{\mathrm{G}}}$
-		%\begin{figure}
-			%\centering
-			 %\includegraphics[scale=.3]{Graph/floatingpoint}
-		%\end{figure}
-		%\begin{itemize}
-			%\item	signal amplitude: $-1 \leq x_{\mathrm{Q}} < 1$\\
-			%\item	level: max.\ amplitude $\mapsto \unit{0}{dBFS}$
-		%\end{itemize}
-	%\end{frame}
-	%
-	%\begin{frame}\frametitle{statistical signal description}\framesubtitle{probability density function}
-		%PDF $p_x(x)$
-		%\begin{itemize}
-			%\item	abscissa: possible (amplitude) values
-			%\item	ordinate: probability
-		%\end{itemize}
-		%\pause
-		%\begin{eqnarray}
-			%p_x(x)&\geq& 0 , and\\	
-			%\int\limits_{-\infty}^{\infty}{p_x(x)\, dx} &=& 1	
-		%\end{eqnarray}
-		%\pause
-		%RFD (Approximation)
-		%\begin{itemize}
-			%\item[] histogram of (amplitude) values
-		%\end{itemize}
-	%\end{frame}	
-		%
-	%\begin{frame}\frametitle{statistical signal description}\framesubtitle{PDF: examples 1/2}
-		%\only<1>
-		%{
-			%\begin{flushright}
-				 %\includegraphics[scale=.08]{Graph/question-mark}
-			%\end{flushright}
-			%\vspace{-3mm}
-			%PDF shape for:
-			%\begin{itemize}
-				%\item	square wave
-				%\item	sawtooth wave
-				%\item	sine wave
-				%\item	white noise (uniform, gaussian)
-				%\item	DC
-			%\end{itemize}
-		%}
-		%\uncover<2->
-		%{
-			%\begin{figure}
-				%\centering
-				 %\includegraphics[scale=.7]{\AcaGraph/pdfs}
-			%\end{figure}
-		%}
-	%\end{frame}	
-		%
-	%\begin{frame}\frametitle{statistical signal description}\framesubtitle{PDF: real world signals 2/2}
-		%\begin{figure}
-			%\centering
-			 %\includegraphics[scale=.7]{\AcaGraph/realpdf}
-		%\end{figure}
-	%\end{frame}	
+        \begin{frame}{digital signals}{matlab exercise}
+            \matlabexercise{sampling}
+            
+            \begin{enumerate}
+                \item   generate a sinesweep
+                    \begin{itemize}
+                        \item   length: \unit[5]{s}
+                        \item   1000--20000\unit{Hz}
+                        \item   sample rate: \unit[48000]{Hz}
+                        \item   max amplitude: $0.5$
+                    \end{itemize}
+                \item   generate a new signal by taking only every 4th sample
+                \item   listen to and compare both signals
+            \end{enumerate}
+        \end{frame}
+            
+
+        \subsection{quantization}
+        \begin{frame}{digital signals}{quantization}
+        
+            \begin{itemize}
+                \item   map continuous amplitude values to pre-defined set of values
+                \item<2->   quantization steps are most frequently \textbf{equidistant}
+                \item<2->   signal stored in binary $\Rightarrow$ \# quantization steps \textbf{power of 2}
+                \item<3->   \textbf{example: 4-bit quantization}
+                    \begin{itemize}
+                        \item	\textit{number of quantization steps}: $\mathcal{M} = 16$
+                        \item	\textit{word length}: $w = \log_2(\mathcal{M}) = \unit[4]{bit}$
+                    \end{itemize}
+            \end{itemize}
+            
+            \vspace{-3mm}
+            \visible<3->{
+            \figwithmatlab{Quantization}}
+        \end{frame}	
+
+        \begin{frame}{digital signals}{quantization wordlength}
+            \question{What are typical wordlengths?}
+            
+            \begin{itemize}
+                \item	\unit[8]{bit}: speech
+                \item	\unit[12--14]{bit}: low quality audio
+                \item	\unit[16]{bit}: (consumer) audio/music
+                \item	\unit[$>$16]{bit}: production audio
+            \end{itemize}
+            \pause
+            
+            \bigskip
+            \begin{table}
+                \centering
+                    \begin{tabular}{l|ccccc}
+                        $w$ & \unit[16]{bit} & \unit[12]{bit} & \unit[8]{bit} & \unit[4]{bit} &\unit[2]{bit}\\
+                        & \includeaudio{quantized_16}& \includeaudio{quantized_12}& \includeaudio{quantized_8}& \includeaudio{quantized_4}& \includeaudio{quantized_2} \\
+                    \end{tabular}
+            \end{table}
+        \end{frame}	
+
+        \begin{frame}{digital signals}{quantization error}
+            \begin{figure}
+                \input{pict/fundamentals_Quantization}
+            \end{figure}
+            \bigskip
+            \pause
+            
+            model for quantization: quantization noise $q$ is added to input signal $x$
+            \begin{equation*}
+                q(i) = x(i) - x_{\mathrm{Q}}(i)
+            \end{equation*}
+        \end{frame}		
+        \begin{frame}{digital signals}{quantization error size}
+            \question{What is the maximum amplitude of the quantization error?}
+
+            \figwithmatlab{QuantizationError}
+        \end{frame}	
+
+        \begin{frame}{digital signals}{quantization error properties}
+            Under the assumption that the signal has a variance much higher than the quantization step size, we find that the quantization error
+            \begin{itemize}
+                \item   is white noise and uncorrelated to signal,
+                \item   is uniformly distributed, and
+                \item   its power $W_\mathrm{Q}$ is directly related to the wordlength.
+            \end{itemize}
+            
+            \pause
+            \bigskip
+            The quantizer quality is usually given by its \textit{Signal-to-Noise Ratio (SNR)}
+			\begin{equation*}\label{eq:snr}
+				SNR = 10\cdot\log_{10}\left(\frac{W_{\mathrm{S}}}{W_{\mathrm{Q}}}\right)\; [dB] 
+			\end{equation*}
+            
+            \end{frame}	
+            
+            \begin{frame}{digital signals}{quantization: SNR}
+                \toremember{}
+                \begin{block}{signal-to-noise ratio (quantizer)}
+                    \centering
+                    \begin{equation*}
+                        SNR = 6.02\cdot w + c_{\mathrm{S}}\quad [dB]
+                    \end{equation*}
+                    \vspace{-3mm}
+                    \begin{itemize}
+                        \item	every additional bit adds app.\ \unit[6]{dB} SNR
+                        \item	constant $c_{\mathrm{S}}$ depends on \textit{signal} (scaling and PDF)
+                    \end{itemize}
+                \end{block}
+                \pause
+                \begin{itemize}
+                    \item	square wave (full scale): $c_{\mathrm{S}} =  \unit[10.80]{dB}$
+                    \item	sinusoidal wave (full scale): $c_{\mathrm{S}} =  \unit[1.76]{dB}$
+                    \item	rectangular {PDF} (full scale): $c_{\mathrm{S}} =  \unit[0]{dB}$
+                    \item	Gaussian {PDF} (full scale = $4\sigma_{g}$): $c_{\mathrm{S}} =  \unit[-7.27]{dB}$
+                \end{itemize}
+            \end{frame}		
+               
+            \begin{frame}{digital signals}{amplitude in DSP}
+                In many DSP scenarios we can pretend the signal to be \textit{not quantized}, as we use a high resolution floating point representation: 
+                \begin{equation*}
+                    x_{\mathrm{Q}} = M_{\mathrm{G}}\cdot 2^{E_{\mathrm{G}}}
+                \end{equation*}
+                \begin{itemize}
+                    \item<2->	signal amplitude:
+                        \begin{equation*}
+                            -1 \leq x_{\mathrm{Q}} < 1
+                        \end{equation*}
+                    \item<3->	level: max.\ amplitude $\mapsto \unit{0}{dBFS}$
+                \end{itemize}
+            \end{frame}
+            
+            \begin{frame}{digital signals}{matlab exercise}
+                \matlabexercise{quantization}
+                
+                \begin{enumerate}
+                    \item   load the audio file \textsl{sax\_example.wav}
+                    \item   normalize it to a maximum magnitude of $1$
+                    \item   quantize it to a wordlength of \unit[8]{bit} and \unit[4]{bit}, respectively
+                    \item   listen to and compare all signals
+                \end{enumerate}
+            \end{frame}
+
+        \section{statistical description}
+            \begin{frame}{statistical signal description}{probability density function}
+                PDF $p_x(x)$
+                \begin{itemize}
+                    \item	abscissa: possible (amplitude) values
+                    \item	ordinate: probability
+                \end{itemize}
+                \pause
+                \begin{eqnarray*}
+                    p_x(x)&\geq& 0 , and\\	
+                    \int\limits_{-\infty}^{\infty}{p_x(x)\, dx} &=& 1	
+                \end{eqnarray*}
+                \pause
+                RFD---Relative Frequency Distribution (sample of PDF)
+                \begin{itemize}
+                    \item[] histogram of (amplitude) values
+                \end{itemize}
+            \end{frame}	
+            
+            \begin{frame}{statistical signal description}{PDF examples}
+                \question{Draw the PDF of the following prototype signals:}
+                \only<2>{
+                \begin{itemize}
+                    \item	square wave
+                    \item	sawtooth wave
+                    \item	sine wave
+                    \item	white noise (uniform, gaussian)
+                    \item	DC
+                \end{itemize}}
+                \pause
+                \figwithmatlab{PdfExamples}
+            \end{frame}
+                
+            \begin{frame}{statistical signal description}{RFD: real world signals}
+                \figwithmatlab{Rfd}
+            \end{frame}	
     
     \section[summary]{lecture summary}
-
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item       what signals can be represented with the Fourier series?
+                \bigskip
+                \item<2->   why is the Fourier series helpful in describing signals?
+                \bigskip
+                \item<3->   what does the sampling theorem say?
+                \bigskip
+                \item<4->   can I perfectly reconstruct a quantized signal?
+                \bigskip
+                \item<5->   how does the quality of the quantization process depend on the wordlength?
+                \bigskip
+                \item<6->   why is the PDF a useful description for random signals?
+            \end{itemize}
+        \end{frame}
 \end{document}
 
