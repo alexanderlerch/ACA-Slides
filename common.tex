@@ -57,17 +57,17 @@
                         {\includegraphics[width=5mm, height=5mm]{SpeakerIcon}}
                         {APlayer.swf}}}
 
-\newcommand{\includevideo}[1]{{\includemedia[
-                        addresource=#1,
+\newcommand{\includevideo}[1]{{\begin{center}\includemedia[
+                        addresource=video/#1.mp4,
                         width=0.8\linewidth,
                         height=0.4\linewidth,
                         activate=onclick,
                         flashvars={
-                            source=#1  
+                            source=video/#1.mp4  
                             &autoPlay=true
                         }]
                         {}
-                        {VPlayer.swf}}}
+                        {VPlayer.swf}\end{center}}}
 
 \newcommand{\audioautoplay}[1]{{\begin{center}\includemedia[
                             addresource=audio/#1.mp3,

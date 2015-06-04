@@ -68,17 +68,17 @@
 
         \begin{frame}{audio signals}{periodic signals 2/5}
             periodic signal $\Rightarrow$ representation in \textbf{Fourier series}\footnote{\tiny Jean-Baptiste Joseph Fourier, 1768--1830}
-            \begin {equation}
+            \begin {equation*}
                 x(t) = \sum\limits_{k=-\infty}^{\infty} {\color<5>{gtgold}{a_k}} {\color<4>{gtgold}{\e^{\mathrm{j}{\color<2-3>{gtgold}{\omega_0}} {\color<3>{gtgold}{k}} t}}} \nonumber
-            \end {equation}
+            \end {equation*}
             \begin{itemize}
                 \item<2-> $\omega_0 = 2\pi\cdot f_0$
                 \item<3-> $k\omega_0$: integer multiples of the lowest frequency
                 \item<4-> $\e^{\jom_0kt} = \cos(\omega_0kt) + \mathrm{j} \sin(\omega_0kt)$
                 \item<5-> $a_k$: Fourier coefficients --- amplitude of each component
-                    \begin {equation}\label{eq:fourier_coeff}
+                    \begin {equation*}\label{eq:fourier_coeff}
                         a_k = \frac{1}{T_0}\int\limits_{-\nicefrac{T_0}{2}}^{\nicefrac{T_0}{2}} x(t) \e^{-\jom_0kt}\, dt \nonumber
-                    \end {equation}
+                    \end {equation*}
             \end{itemize}
         \end{frame}
 
@@ -271,7 +271,7 @@
         \end{frame}	
         
         \begin{frame}{digital signals}{sampling ambiguity --- spectral domain}
-            \includevideo{video/animateSampling.mp4}
+            \includevideo{animateSampling}
             \question{What are the x-axis labels for the spectrum shown above?}
         \end{frame}	
         
@@ -466,10 +466,69 @@
             \begin{frame}{statistical signal description}{RFD: real world signals}
                 \figwithmatlab{Rfd}
             \end{frame}	
-    
+ 
+    \section{convolution}
+	\begin{frame}\frametitle{convolution}\framesubtitle{introduction}
+        convolution operation describes the \textbf{output of an LTI system}:
+        \pause
+        \begin{itemize}
+            \item   \textbf{linearity}: 
+                \begin{itemize}
+                    \item if input $x_n(t)$ produces output $y_n(t)$
+                    \item[$\rightarrow$] input $\sum a_n x_n(t)$ produces output $\sum a_n y_n(t)$
+                \end{itemize}
+            \item   \textbf{time invariance}:
+                \begin{itemize}
+                    \item   if input $x(t)$ produces output $y(t)$
+                    \item[$\rightarrow$] $x(t-T)$ produces $y(t-T)$
+                \end{itemize}
+        \end{itemize}
+        \pause
+        \begin{eqnarray*}
+            y(t) = (x \ast h)(t) &:=& \int\limits_{-\infty}^{\infty}x(\tau)h(t-\tau)d\tau\\
+            y(i) = (x \ast h)(i) &:=& \sum\limits_{j=-\infty}^{\infty}x(j)h(i-j)
+        \end{eqnarray*}
+	\end{frame}
+        
+    \begin{frame}{convolution}{animation}
+        \vspace{-5mm}
+        \begin{footnotesize}
+            \begin{eqnarray*}
+                y(t) = (x \ast h)(t) &:=& \int\limits_{-\infty}^{\infty}x(\tau)h(t-\tau)d\tau\\
+                y(i) = (x \ast h)(i) &:=& \sum\limits_{j=-\infty}^{\infty}x(j)h(i-j)
+            \end{eqnarray*}
+        \end{footnotesize}
+        \includevideo{animateConvolution}
+    \end{frame}
+
+        \begin{frame}\frametitle{convolution}\framesubtitle{properties}
+            \begin{itemize}
+                \item<1->	\textbf{identity}:
+                        \begin{footnotesize}\begin{equation*}
+                            x(i) = \delta(i)\ast x(i)
+                        \end{equation*}\end{footnotesize}
+                \item<2->	\textbf{commutativity}: 
+                        \begin{footnotesize}\begin{equation*}
+                            h(i) \ast x(i)	= x(i) \ast h(i) 
+                        \end{equation*}\end{footnotesize}
+                \item<3->	\textbf{associativity}:
+                        \begin{footnotesize}\begin{equation*}
+                            \big(g(i) \ast h(i)\big) \ast x(i) = g(i) \ast \big(h(i) \ast x(i)\big)
+                        \end{equation*}\end{footnotesize}
+                \item<4->	\textbf{distributivity}:
+                            \begin{footnotesize}\begin{equation*}
+                                g(i) \ast \big(h(i) + x(i)\big) = \big(g(i) \ast h(i)\big) + \big(g(i) \ast x(i)\big)
+                            \end{equation*}\end{footnotesize}
+                \item<5->	\textbf{circularity}:\\
+                        \begin{footnotesize}
+                        $h(i)$ periodic $\Rightarrow y(i) = h(i) \ast x(i)$ periodic
+                        \end{footnotesize}
+            \end{itemize}
+        \end{frame}	
+        
     \section[summary]{lecture summary}
         \begin{frame}{summary}{lecture content}
-            \begin{itemize}
+            \begin{enumerate}
                 \item       what signals can be represented with the Fourier series?
                 \bigskip
                 \item<2->   why is the Fourier series helpful in describing signals?
@@ -481,7 +540,7 @@
                 \item<5->   how does the quality of the quantization process depend on the wordlength?
                 \bigskip
                 \item<6->   why is the PDF a useful description for random signals?
-            \end{itemize}
+            \end{enumerate}
         \end{frame}
 \end{document}
 

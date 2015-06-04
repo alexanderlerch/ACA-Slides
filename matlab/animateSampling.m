@@ -1,12 +1,13 @@
 function animateSampling()
 
-    hFigureHandle = generateFigure(10.8,5.4);
+    hFigureHandle = generateFigure(10.7,5.42);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
  
     writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
     writerObj.FrameRate = 10;
+    writerObj.Quality   = 100;
     open(writerObj);
 
     fs  = 300;
