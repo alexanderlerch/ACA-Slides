@@ -21,3 +21,10 @@
 /audio/quantized_2.wav
 /audio/quantized_4.wav
 /audio/quantized_8.wav
+/03_2-ACA-Fundamentals-Slides.pdf
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc

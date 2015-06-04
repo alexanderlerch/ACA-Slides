@@ -164,6 +164,7 @@
                 \end{itemize}	
             \end{block}
         \end{frame}	
+        
         \begin{frame}{autocorrelation function}{matlab exercise}
             \matlabexercise{correlation}
             
@@ -175,7 +176,301 @@
                 \item   plot that lag of the detected maxima over blocks and discuss the results
             \end{enumerate}
         \end{frame}
+ 
+    \section{Fourier transform}
+        \begin{frame}{fourier transform}{introduction}
+            \figwithmatlab{FourierTransform}
+            Fourier transform (overview):
             
+            continuous (definition \& properties) $\bullet$ sampled $\bullet$ STFT $\bullet$ DFT
+            \vspace{30mm}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{definition (continuous)}
+            \begin {equation*}\label{eq:fourier_transformation}
+                X(\jom) = \mathfrak{F}[x(t)] = \int\limits_{-\infty}^{\infty} {x(t) \e^{-\jom t}\, dt}
+            \end {equation*}
+
+            \pause
+            remember: Fourier series coefficients 
+            \begin {equation*}\label{eq:fourier_coeff}
+                a_k = \frac{1}{T_0}\int\limits_{-\nicefrac{T_0}{2}}^{\nicefrac{T_0}{2}} x(t) \e^{-\jom_0kt}\, dt \nonumber
+            \end {equation*}
+            
+            \begin{itemize}
+                \item	$T_0\rightarrow \infty$ to allow the analysis of aperiodic functions
+                \item[$\Rightarrow$] $k\omega_0 \rightarrow \omega$
+            \end{itemize}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{property 1: invertibility}
+            \begin{eqnarray*}\label{eq:ift}
+                x(t) &=& \mathfrak{F}^{-1}[X(\jom)]\nonumber\\
+                 &=& \frac{1}{2\pi}\int\limits_{-\infty}^{\infty} X(\jom) \e^{\jom t}\, d\omega 
+            \end{eqnarray*}
+
+            \begin{itemize}
+                \item<2->   compare with Fourier series equation
+                    \begin {equation*}
+                        x(t) = \sum\limits_{k=-\infty}^{\infty} a_k \e^{\jom_0 k t} \nonumber
+                    \end {equation*}
+                \item<3->   time domain signal can be \textbf{perfectly reconstructed}~---~no information loss
+                \item<3->   FT and IFT are very similar, largely equivalent
+            \end{itemize}
+        \end{frame}	
+
+        %\begin{frame}{fourier transform}{property 2: superposition}
+            %\begin{eqnarray}
+                %y(t) &=& c_1\cdot x_1(t) + c_2\cdot x_2(t)\nonumber\\
+                %\mapsto&&\nonumber\\
+                %Y(\jom) &=& c_1\cdot X_1(\jom) + c_2\cdot X_2(\jom)\nonumber
+            %\end{eqnarray}
+            %\pause
+            %\begin{itemize}
+                %\item[]	Derivation
+                        %\begin{footnotesize}
+                            %\begin{eqnarray}
+                                %Y(\jom) &=& \int\limits_{-\infty}^{\infty} {\big(c_1\cdot x_1(t) + c_2\cdot x_2(t)\big)\cdot \e^{-\jom t}\, dt}\nonumber\\
+                                %\pause
+                                %&=& c_1\cdot \int\limits_{-\infty}^{\infty} {x_1(t)  \e^{-\jom t}\, dt} + c_2\cdot \int\limits_{-\infty}^{\infty} {x_2(t) \e^{-\jom t}\, dt}\nonumber\\
+                                %\pause
+                                %&=& c_1\cdot X_1(\jom) + c_2\cdot X_2(\jom) 
+                            %\end{eqnarray}
+                        %\end{footnotesize}
+            %\end{itemize}
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{property 3: convolution and multiplication}
+            %\begin{eqnarray}
+                %y(t) &= \int_{-\infty}^{\infty} {h(\tau) \cdot x(t-\tau)\, d\tau}\pause\mapsto 
+                %Y(\jom) &= H(\jom)\cdot X(\jom) \nonumber
+            %\end{eqnarray}
+            %\pause
+            %\begin{itemize}
+                %\item[]	Derivation
+                        %\begin{footnotesize}
+                    %\begin{eqnarray}
+                        %Y(\jom)	&=& \int_{-\infty}^{\infty} {y(t) \e^{-\jom t}\, dt}\nonumber\\
+                                %\pause
+                                    %&=& \int_{-\infty}^{\infty} {\left(\int_{-\infty}^{\infty} {h(\tau) \cdot x(t-\tau)\, d\tau}\right) \e^{-\jom t}\, dt}\nonumber\\
+                                %\pause
+                                    %&=& \int_{-\infty}^{\infty} {h(\tau) \int_{-\infty}^{\infty} {x(t-\tau)} \e^{-\jom t}\, dt\, d\tau}\nonumber\\
+                                %\pause
+                                    %&=& \int_{-\infty}^{\infty} {h(\tau)  \e^{-\jom \tau} \underbrace{\int_{-\infty}^{\infty} {x(t-\tau)} \e^{-\jom (t-\tau)}\, d(t-\tau)}_{X(\jom)}\, d\tau}\nonumber\\
+                                %\pause
+                                    %&=& \int_{-\infty}^{\infty} {h(\tau) \e^{-\jom \tau}\, d\tau} \cdot X(\jom)\nonumber\\
+                                %\pause
+                                    %&=& H(\jom) \cdot X(\jom)\label{eq:mult_conv} 
+                    %\end{eqnarray}
+                        %\end{footnotesize}
+            %\end{itemize}
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{property 4: Parseval's theorem}
+            %\begin{equation}
+                %\int_{-\infty}^{\infty}{x^2(t)\, dt} = \frac{1}{2\pi}\int_{-\infty}^{\infty} {\left|X(\jom)\right|^2\, d\omega} 
+            %\end{equation}
+            %\pause
+            %\begin{itemize}
+                %\item[]	Derivation
+                %\begin{footnotesize}
+                    %\begin{equation}
+                        %\int_{-\infty}^{\infty}{h(\tau)\cdot x(t-\tau)\, d\tau} = \frac{1}{2\pi}\int_{-\infty}^{\infty} {H(\jom)\cdot X(\jom) \e^{\jom t} d\omega}\nonumber
+                    %\end{equation}
+                     %\centering $H(\jom) \longrightarrow X^\ast (\jom)$/$h(\tau)\longrightarrow x(-\tau)$, $t = 0$
+                                %\pause
+                    %\begin{eqnarray}
+                        %\int_{-\infty}^{\infty}{x(-\tau)\cdot x(-\tau)\, d\tau} &=& \frac{1}{2\pi}\int_{-\infty}^{\infty} {X^\ast (\jom)\cdot X(\jom) \, d\omega}\nonumber\\
+                        %\pause
+                        %\int_{-\infty}^{\infty}{x^2(t)\, dt} &=& \frac{1}{2\pi}\int_{-\infty}^{\infty} {\left|X(\jom)\right|^2\, d\omega} \nonumber
+                    %\end{eqnarray}
+                %\end{footnotesize}
+            %\end{itemize}
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{property 5: time \& frequency shift}
+            %\begin{equation}\label{eq:fft_timeshift}
+                %Y(\jom) = X(\jom)\e^{-\jom t_0} 
+            %\end{equation} 
+            %\pause
+            %\begin{itemize}
+                %\item[]	Derivation
+                %\begin{footnotesize}
+                    %\begin{eqnarray}
+                        %\int\limits_{-\infty}^{\infty} {x(t-t_0) \e^{-\jom t}\, dt} &=& \int\limits_{-\infty}^{\infty} {x(\tau) \e^{-\jom (\tau + t_0)}\, d\tau}\nonumber\\
+                        %\pause
+                        %&=& \e^{-\jom t_0}\int\limits_{-\infty}^{\infty} {x(\tau) \e^{-\jom \tau}\, d\tau}\nonumber\\
+                        %\pause
+                        %&=& \e^{-\jom t_0} \cdot X(\jom) \nonumber
+                    %\end{eqnarray}
+                %\end{footnotesize}
+            %\end{itemize}
+            %\pause
+            %Frequency Shift:
+            %\begin{equation}
+                        %\frac{1}{2\pi}\int\limits_{-\infty}^{\infty} X(\jom-\omega_0) \e^{\jom t}\, d\omega = \e^{\jom_0 t}\cdot x(t) 		
+            %\end{equation} 
+%
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{property 6: symmetry}
+            %\begin{eqnarray}
+                %|X(\jom)| &=& |X(-\jom)|\\
+                %\Phi_\mathrm{X}(\omega) &=& -\Phi_\mathrm{X}(-\omega) 
+            %\end{eqnarray}
+            %\pause
+            %\vspace{-5mm}
+            %\begin{itemize}
+                %\item[]	Derivation
+                %
+                %\begin{footnotesize}
+                    %time signal sum of even and odd component $x_e(t), x_o(t)$:
+                    %\begin{equation}
+                        %x(t) = \underbrace{\frac{1}{2}(x(t) + x(-t))}_{x_e(t)} + \underbrace{\frac{1}{2}(x(t) - x(-t))}_{x_o(t)} 
+                    %\end{equation}
+                    %\only<3-4>{
+                    %\begin{equation}
+                        %X_e(\jom) = \int\limits_{-\infty}^{\infty}{x_e(t)\cos(\omega t)\,dt} - \mathrm{j} \underbrace{\int\limits_{-\infty}^{\infty}{x_e(t)\sin(\omega t)\,dt}}_{= 0}\nonumber
+                    %\end{equation}
+                    %\pause
+                    %\vspace{-5mm}
+                    %\begin{itemize}
+                        %\item[$\Rightarrow$]	$X_e(\jom)$ is real
+                        %\item[$\Rightarrow$]	$X_e(\jom) = X_e(-\jom)$ (substitute $x(t)$ with $x(-t)$)
+                    %\end{itemize}
+                    %}
+                    %\only<5-6>{
+                    %\begin{equation}
+                        %X_o(\jom) = \underbrace{\int\limits_{-\infty}^{\infty}{x_o(t)\cos(\omega t)\,dt}}_{=0} - \mathrm{j} \int\limits_{-\infty}^{\infty}{x_o(t)\sin(\omega t)\,dt} \nonumber
+                    %\end{equation}
+                    %\pause
+                    %\vspace{-5mm}
+                    %\begin{itemize}
+                        %\item[$\Rightarrow$]	$X_o(\jom)$ is imaginary
+                        %\item[$\Rightarrow$]	$X_o(\jom) = -X_o(-\jom)$ (substitute $x(t)$ with $-x(-t)$)
+                    %\end{itemize}
+                    %}
+                %\end{footnotesize}
+                %\vspace{500mm}
+            %\end{itemize}
+        %\end{frame}	
+%
+%
+        %\begin{frame}{fourier transform}{property 7: time \& frequency scaling}
+                    %\begin{equation}
+                        %y(t) = x(c\cdot t) \mapsto Y(\jom) = \frac{1}{|c|}X\left(j\frac{\omega}{c}\right) 
+                    %\end{equation}
+            %\pause
+            %\begin{itemize}
+                %\item[]	Derivation
+                %\begin{footnotesize}
+                    %\begin{eqnarray}
+                        %Y(\jom) &=& \int\limits_{-\infty}^{\infty} {x(c\cdot t) \e^{-\jom t}\, dt}\nonumber\\
+                        %\pause
+                        %&=& \int\limits_{-\infty}^{\infty} {x(\tau) \e^{-\jom \frac{\tau}{c}}\, d\frac{\tau}{c}}\nonumber\\
+                        %\pause
+                        %&=& \frac{1}{c}\int\limits_{-\infty}^{\infty} {x(\tau) \e^{-\mathrm{j} \frac{\omega}{c} \tau}\, d\tau}\nonumber\\
+                        %\pause
+                        %&=& \frac{1}{c} X\left(\mathrm{j}\frac{\omega}{c}\right) \nonumber
+                    %\end{eqnarray}
+                %\end{footnotesize}
+            %\end{itemize}
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{examples}
+                %\begin{flushright}
+                     %\includegraphics[scale=.08]{Graph/question-mark}
+                %\end{flushright}
+                %\vspace{-3mm}
+                %FT of:
+                %\begin{itemize}
+                    %\item	delta function
+                    %\item	constant
+                    %\item	cosine
+                    %\item	rectangular window
+                    %\item	delta pulse
+                %\end{itemize}
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{sampled time signals}
+            %\begin{eqnarray}\label{eq:ft_sampled}
+                %\mathfrak{F}[x(i)] 	&=& \mathfrak{F}[x(t)\cdot \delta_\mathrm{T}(t)]\nonumber\\
+                %\pause
+                                    %&=& \mathfrak{F}[x(t)]\ast \mathfrak{F}[\delta_\mathrm{T}(t)]\nonumber\\
+                                    %&=& X(\jom)\ast \Delta_\mathrm{T}(\jom) 
+            %\end{eqnarray}
+            %\pause
+            %Fourier transform is \textbf{still continuous}
+            %\begin{figure}
+                %\centering
+                    %\includegraphics[scale=.7]{\AcaGraph/spectral_overlap}
+            %\end{figure}
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{STFT}
+            %short time Fourier transform (STFT):\\ compute Fourier transform only over a segment
+%
+            %\vspace{3mm}		
+            %\pause
+            %reasons:
+            %\begin{itemize}
+                %\item	\textbf{perception}: ear analyzes short segments of signal
+                %\item	\textbf{signal properties}: choose quasi-periodic segment
+                %\item	\textbf{hardware}: Fourier transform is inefficient and memory consuming for very long input segments
+            %\end{itemize}
+            %\pause
+            %$\Rightarrow$ multiply a \textbf{window} with the signal
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{STFT: window functions}
+            %multiplication in time domain\\ $\Rightarrow$ convolution in frequency domain
+%
+            %\pause		
+            %\textbf{spectral leakage}
+            %\begin{itemize}
+                %\item	main lobe width
+                %\item	side lobe height
+                %\item	side lobe attenuation
+            %\end{itemize}
+            %\begin{figure}
+                %\centering
+                    %\includegraphics[scale=.7]{\AcaGraph/windows}
+                %\label{fig:windows}
+            %\end{figure}
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{DFT}
+            %digital domain: requires discrete frequency values:
+            %
+            %$\Rightarrow$ discrete Fourier transform
+            %\begin{equation}\label{eq:dft}
+                %X(\mathrm{j}\Delta\Omega) = \sum\limits_{i=0}^{\mathcal{K}-1}{x(i)\e^{-\mathrm{j}ki\frac{2\pi}{\mathcal{K}}}}
+            %\end{equation}
+            %with
+            %\begin{equation}
+                %\Delta\Omega = \frac{2\pi}{\mathcal{K}T_{\mathrm{S}}} = \frac{2\pi f_{\mathrm{S}}}{\mathcal{K}}
+            %\end{equation}
+            %
+            %\pause
+            %2 interpretations:
+            %\begin{itemize}
+                %\item	sampled continuous Fourier transform
+                %\item	continuous Fourier transform of periodically extended time domain segment
+            %\end{itemize}
+        %\end{frame}	
+%
+        %\begin{frame}{fourier transform}{spectrogram}
+            %\begin{figure}
+                %\centering
+                    %\includegraphics[scale=.85]{\AcaGraph/specgram}
+            %\end{figure}
+        %\end{frame}	
+        
+        \begin{frame}{fourier transform}{matlab exercise}
+            \matlabexercise{spectrogram/STFT}
+            
+        \end{frame}
+        
     \section[summary]{lecture summary}
         \begin{frame}{summary}{lecture content}
             %\begin{enumerate}
