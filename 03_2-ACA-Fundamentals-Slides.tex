@@ -164,11 +164,12 @@
                 \end{itemize}	
             \end{block}
         \end{frame}	
-        \begin{frame}{convolution}{matlab exercise}
+        \begin{frame}{autocorrelation function}{matlab exercise}
             \matlabexercise{correlation}
             
             \begin{enumerate}
                 \item   implement a Matlab function that computes the ACF for an arbitrary block length
+                \item   compare results with matlab's \textsl{xcorr} function
                 \item   consider only one half of the ACF and detect that highest local max that is not the absolute max
                 \item   compute this ACF with overlapping blocks for the audio file \textsl{sax\_example.wav} 
                 \item   plot that lag of the detected maxima over blocks and discuss the results
