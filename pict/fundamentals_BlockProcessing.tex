@@ -1,0 +1,87 @@
+\begin{footnotesize}
+				\begin{picture}(60,40)
+					\setcounter{iXOffset}{0}
+					\setcounter{iYOffset}{24}
+					\setcounter{iXBlockSize}{16}
+					\setcounter{iYBlockSize}{4}
+					\setcounter{iYBlockSizeDiv2}{2}
+					\setcounter{iDistance}{8}
+
+					% block indices
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\text{{\shortstack[c]{$n$}}}}
+					\addtocounter{iYOffset}{-\value{iYBlockSize}}
+					\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\text{{\shortstack[c]{$n+1$}}}}
+					\addtocounter{iYOffset}{-\value{iYBlockSize}}
+					\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\text{{\shortstack[c]{$n+2$}}}}
+					\addtocounter{iYOffset}{-\value{iYBlockSize}}
+					\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\text{{\shortstack[c]{$n+3$}}}}
+
+					% audio time line
+					\setcounter{iYOffset}{30}
+					\setcounter{iXOffset}{5}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(1,0){50}}
+	
+					% blocks
+					\addtocounter{iXOffset}{5}
+					\addtocounter{iYOffset}{-\value{iYBlockSize}}
+					\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\framebox(\value{iXBlockSize}, \value{iYBlockSize})}
+					\addtocounter{iXOffset}{5}
+					\addtocounter{iYOffset}{-\value{iYBlockSize}}
+					\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\framebox(\value{iXBlockSize}, \value{iYBlockSize})}
+					\addtocounter{iXOffset}{5}
+					\addtocounter{iYOffset}{-\value{iYBlockSize}}
+					\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\framebox(\value{iXBlockSize}, \value{iYBlockSize})}
+					\addtocounter{iXOffset}{5}
+					\addtocounter{iYOffset}{-\value{iYBlockSize}}
+					\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\framebox(\value{iXBlockSize}, \value{iYBlockSize})}
+
+	
+					% lengths
+					\linethickness{.03mm}
+					\setcounter{iYOffset}{34}
+					\setcounter{iXOffset}{10}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\line(0,-1){12}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(1,0){1}}
+					\addtocounter{iXOffset}{5}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\line(0,-1){18}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(-1,0){1}}
+					\addtocounter{iXOffset}{5}
+					\addtocounter{iXOffset}{5}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\line(0,-1){30}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(1,0){1}}
+					\addtocounter{iXOffset}{\value{iXBlockSize}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\line(0,-1){30}}
+					\put(\value{iXOffset}, \value{iYOffset})
+						{\vector(-1,0){1}}
+
+					\put(11, 34)
+						{\text{$\mathcal{H}$}}
+					\put(32, 34)
+						{\text{$\mathcal{K}$}}
+					\put(56, 28)
+						{\text{$i$}}
+				\end{picture}
+\end{footnotesize}

@@ -56,6 +56,17 @@
                         }]
                         {\includegraphics[width=5mm, height=5mm]{SpeakerIcon}}
                         {APlayer.swf}}}
+\newcommand{\audioautoplay}[1]{{\begin{center}\includemedia[
+                            addresource=audio/#1.mp3,
+                            width=.1\linewidth,
+                            height=.01\linewidth,
+                            activate=pageopen,
+                            flashvars={
+                                source=audio/#1.mp3  
+                                &autoPlay=true
+                            }]
+                            {}
+                            {APlayer.swf}\end{center}}}
 
 \newcommand{\includevideo}[1]{{\begin{center}\includemedia[
                         addresource=video/#1.mp4,
@@ -68,18 +79,18 @@
                         }]
                         {}
                         {VPlayer.swf}\end{center}}}
-
-\newcommand{\audioautoplay}[1]{{\begin{center}\includemedia[
-                            addresource=audio/#1.mp3,
-                            width=.1\linewidth,
-                            height=.01\linewidth,
-                            activate=pageopen,
-                            flashvars={
-                                source=audio/#1.mp3  
-                                &autoPlay=true
-                            }]
-                            {}
-                            {APlayer.swf}\end{center}}}
+\newcommand{\videowithmatlab}[1]{{\begin{center}\includemedia[
+                        addresource=video/animate#1.mp4,
+                        width=0.8\linewidth,
+                        height=0.4\linewidth,
+                        activate=onclick,
+                        flashvars={
+                            source=video/animate#1.mp4  
+                            &autoPlay=true
+                        }]
+                        {}
+                        {VPlayer.swf}\end{center}\addreference{matlab source: matlab/animate#1.m}}}
+                        
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

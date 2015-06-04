@@ -1,4 +1,4 @@
-function animateSampling()
+function animateConvolution()
 
     hFigureHandle = generateFigure(10.8,6.45);
     

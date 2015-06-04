@@ -13,7 +13,7 @@
             \begin{itemize}
                 \item   \textbf{text book}  
                     \begin{itemize}
-                        \item   \href{http://ieeexplore.ieee.org/xpl/ebooks/bookPdfWithBanner.jsp?fileName=6331119.pdf&bkn=6266785&pdfType=chapter}{\underline{\textit{Chapter 2: Fundamentals} (pp.~7--20)}}
+                        \item   \href{http://ieeexplore.ieee.org/xpl/ebooks/bookPdfWithBanner.jsp?fileName=6331119.pdf&bkn=6266785&pdfType=chapter}{\underline{\textit{Chapter 2: Fundamentals} (pp.~7--17)}}
                     \end{itemize}
                 \item   \textbf{additional reading}  
                     \begin{itemize}
@@ -25,14 +25,13 @@
                         \item<2->   periodic and random signals
                         \item<3->   sampling and quantization
                         \item<4->   statistical signal description
-                        %\item<5->   convolution
-                        %\item<6->   block-based processing
+                        \item<5->   convolution
                     \end{itemize}
             \end{itemize}
         \end{frame}
         
     \section[intro]{introduction}
-        \begin{frame}\frametitle{audio signals}\framesubtitle{signal categories}
+        \begin{frame}{audio signals}{signal categories}
             \begin{itemize}
                 \item	\textbf{deterministic signals}:\\
                         \textit{predictable}: future shape of the signal can be known (example: sinusoidal)
@@ -271,7 +270,7 @@
         \end{frame}	
         
         \begin{frame}{digital signals}{sampling ambiguity --- spectral domain}
-            \includevideo{animateSampling}
+            \videowithmatlab{animateSampling}
             \question{What are the x-axis labels for the spectrum shown above?}
         \end{frame}	
         
@@ -498,7 +497,7 @@
                 y(i) = (x \ast h)(i) &:=& \sum\limits_{j=-\infty}^{\infty}x(j)h(i-j)
             \end{eqnarray*}
         \end{footnotesize}
-        \includevideo{animateConvolution}
+        \videowithmatlab{animateConvolution}
     \end{frame}
 
         \begin{frame}\frametitle{convolution}\framesubtitle{properties}
@@ -525,6 +524,24 @@
                         \end{footnotesize}
             \end{itemize}
         \end{frame}	
+
+        \begin{frame}{convolution}{matlab exercise}
+            \matlabexercise{convolution}
+            
+            \begin{enumerate}
+                \item   implement a moving average filter of length $\mathcal{J}$
+                		\begin{equation*}
+                            y(i) = \sum\limits_{j=0}^{\mathcal{J}-1}{b(j)\cdot x(i-j)}
+                        \end{equation*} 
+
+                \item   implement a single-pole filter with coefficient $\alpha$
+                        \begin{equation*}
+                            y(n) = (1-\alpha)\cdot x(n) + \alpha\cdot y(n-1)
+                        \end{equation*}
+                \item   plot the impulse responses and magnitude transfer functions of both filters
+                \item   compare the output with matlab's \textsl{filter} function
+            \end{enumerate}
+        \end{frame}
         
     \section[summary]{lecture summary}
         \begin{frame}{summary}{lecture content}

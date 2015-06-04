@@ -1,0 +1,195 @@
+% move all configuration stuff into one file so we can focus on the content
+\input{common}
+
+\subtitle{Part 3.2: Fundamentals II}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{itemize}
+                \item   \textbf{text book}  
+                    \begin{itemize}
+                        \item   \href{http://ieeexplore.ieee.org/xpl/ebooks/bookPdfWithBanner.jsp?fileName=6331119.pdf&bkn=6266785&pdfType=chapter}{\underline{\textit{Chapter 2: Fundamentals} (pp.~18--28)}}
+                    \end{itemize}
+                \item   \textbf{additional reading}  
+                    \begin{itemize}
+                        \item   Richard G.~Lyons, \textit{Understanding Digital Signal Processing}, 3rd, Prentice Hall/Pearson, 2011
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{lecture content}
+                    \begin{itemize}
+                        \item<2->   block-based processing
+                        \item<3->   correlation
+                        \item<4->   Fourier Transform
+                        \item<5->   other time-frequency transforms
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{audio signals}{signal categories}
+        \end{frame}
+
+    \section[processing blocks]{block-based processing}
+        \begin{frame}{block based processing}{system implementation}
+            typical audio applications process chunks of audio data:
+            \vspace{-4mm}
+            \begin{columns}
+                \column{.6\textwidth}
+                    \begin{figure}
+                        \centering
+                        \input{pict/fundamentals_BlockProcessing}	
+                    \end{figure}
+                \column{.4\textwidth}
+                    \begin{itemize}
+                        \item   $\mathcal{K}$: block length
+                        \item   $\mathcal{H}$: hop length
+                        \item   $n$: block index
+                        \item   $i$: sample index
+                    \end{itemize}
+            \end{columns}
+            \vspace{-2mm}
+            \only<2>{
+            \begin{itemize}
+                \item   \textbf{reasons}:			
+                    \begin{itemize}
+                        \item	quasi-stationary signal properties
+                        \item	internal block-based processing
+                        \item	audio hardware characteristics (real-time systems)
+                        \item	efficiency (memory allocation, SIMD)
+                    \end{itemize}
+            \end{itemize}}
+            \only<3>{
+            \begin{itemize}
+                \item   \textbf{block boundaries}:
+                    \begin{eqnarray*}
+                        i_{\mathrm{s}}(n)	&=& i_{\mathrm{s}}(n-1) + \mathcal{H}\\
+                        i_{\mathrm{e}}(n)		&=& i_{\mathrm{s}}(n) + \mathcal{K} - 1
+                    \end{eqnarray*}
+                \item   \textbf{overlap ratio}:
+                    \begin{equation*}
+                        o_{\mathrm{r}}	= \frac {\mathcal{K}-\mathcal{H}}{\mathcal{K}}
+                    \end{equation*}
+            \end{itemize}}
+            \vspace{50mm}
+        \end{frame}	
+
+    \section[correlation]{correlation}
+        \begin{frame}{correlation function}{introduction}
+            \textbf{correlation function}: compute similarity between two \textit{stationary} signals $x$,$y$
+            \begin{equation}
+                r_\mathrm{xy}(\tau)=\mathcal{E}\lbrace x(t)y(t+\tau)\rbrace  
+            \end{equation}  
+            
+            \begin{itemize}
+                \item<2->	\textbf{continuous}:
+                    \begin{equation*}
+                        r_\mathrm{xy}(\tau) = \int\limits_{-\infty}^{\infty}{x(t)\cdot y(t+\tau)dt}
+                    \end{equation*}
+                \item<2->	\textbf{discrete}:
+                    \begin{equation*}
+                        r_\mathrm{xy}(\eta) = \sum\limits_{i=-\infty}^{\infty}{x(i)\cdot y(i+\eta)}
+                    \end{equation*}
+            \end{itemize}
+        \end{frame}	
+
+        \begin{frame}{correlation function}{animation}
+            \vspace{-5mm}
+            \begin{footnotesize}
+                    \begin{eqnarray*}
+                        r_\mathrm{xy}(\tau) &=& \int\limits_{-\infty}^{\infty}{x(t)\cdot y(t+\tau)dt}\\
+                        r_\mathrm{xy}(\eta) &=& \sum\limits_{i=-\infty}^{\infty}{x(i)\cdot y(i+\eta)}
+                    \end{eqnarray*}
+            \end{footnotesize}
+            \videowithmatlab{Correlation}
+        \end{frame}
+
+        \begin{frame}{correlation function}{examples}
+            \question{draw the correlation function for}
+            
+            \only<2>
+            {
+			\begin{itemize}
+				\item	rectangular window vs.
+				\item	sine vs.
+				\item	noise
+			\end{itemize}
+            }
+            \pause
+            \vspace{-7mm}
+            \figwithmatlab{Correlation}
+        \end{frame}	
+
+        \begin{frame}{correlation function}{blocked correlation: animation}
+            \videowithmatlab{BlockedCorrelation}
+        \end{frame}	 
+
+        \begin{frame}{correlation function}{normalization}
+            \begin{equation*}\label{eq:corrnorm}
+                \lambda_c = \frac{1}{\sqrt{\left(\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{x^2(i)}\right)\cdot \left(\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{y^2(i)}\right)}} 
+            \end{equation*}
+            
+            \pause
+            avoiding the triangular shape for blocked correlation:
+            \pause
+            \begin{enumerate}
+                \item	modified normalization
+                    \begin{equation*}
+                        \lambda_c(\eta) = \frac{\mathcal{K}}{(\mathcal{K}-|\eta|)\cdot\sqrt{\left(\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{x^2(i)}\right)\cdot \left(\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{y^2(i)}\right)}} .
+                    \end{equation*}
+                \pause
+                \item	different block lengths ($\mathcal{K},3\mathcal{K})$
+                \pause
+                \item	circular application
+            \end{enumerate}
+        \end{frame}	
+
+        \begin{frame}{autocorrelation function}{definition \& properties}
+            \toremember{correlation function with the signal itself}
+            \begin{block}{autocorrelation function properties}
+                \begin{itemize}
+                    \item	{ACF} at lag $0$:\\
+                    $r_{xx}(0,n) = 1$ if normalized, RMS otherwise
+                
+                    \item	maximum:\\
+                    $|r_{xx}(\eta,n)| \leq r_{xx}(0,n)$ 
+                    \item	symmetry:\\
+                    $r_{xx}(\eta,n) = r_{xx}(-\eta,n)$
+                    \item	periodicity:\\
+                    The {ACF} of a periodic signal is periodic (period length of input signal)
+                \end{itemize}	
+            \end{block}
+        \end{frame}	
+        \begin{frame}{convolution}{matlab exercise}
+            \matlabexercise{correlation}
+            
+            \begin{enumerate}
+                \item   implement a Matlab function that computes the ACF for an arbitrary block length
+                \item   consider only one half of the ACF and detect that highest local max that is not the absolute max
+                \item   compute this ACF with overlapping blocks for the audio file \textsl{sax\_example.wav} 
+                \item   plot that lag of the detected maxima over blocks and discuss the results
+            \end{enumerate}
+        \end{frame}
+            
+    \section[summary]{lecture summary}
+        \begin{frame}{summary}{lecture content}
+            %\begin{enumerate}
+                %\item       what signals can be represented with the Fourier series?
+                %\bigskip
+                %\item<2->   why is the Fourier series helpful in describing signals?
+                %\bigskip
+                %\item<3->   what does the sampling theorem say?
+                %\bigskip
+                %\item<4->   can I perfectly reconstruct a quantized signal?
+                %\bigskip
+                %\item<5->   how does the quality of the quantization process depend on the wordlength?
+                %\bigskip
+                %\item<6->   why is the PDF a useful description for random signals?
+            %\end{enumerate}
+        \end{frame}
+\end{document}
+
