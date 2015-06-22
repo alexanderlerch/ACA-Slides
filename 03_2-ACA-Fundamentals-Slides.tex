@@ -511,20 +511,121 @@
             \end{itemize}
         \end{frame}
         
+    \section[time-freq]{other time-frequency transforms}
+        \begin{frame}{constant Q transform}{introduction}
+            \begin{itemize}
+                \item<1-> DFT has a \textit{linear} frequency axis:
+                    \begin{itemize}
+                        \item	not perceptually meaningful: \textit{logarithmic} is better match
+                        \item	comparably low frequency resolution at low frequencies
+                    \end{itemize}
+                \bigskip
+                \item<2->[$\Rightarrow$] compute DFT-like transform {\color{gtgold}{at specific frequencies}}
+                    \begin{itemize}
+                        \item   long window for low frequencies (high freq res, low time res)
+                        \item   short window for high frequencies (low freq res, high time res)
+                        \item   space frequencies logarithmically (constant $\mathcal{Q}$)
+                    \end{itemize}
+            \end{itemize}
+            \pause
+            \begin{equation*}
+                X_\mathrm{CQ}(k,n) = \frac{1}{\mathcal{K}(k)}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{w_k(i-i_{\mathrm{s}})\cdot x(i) \e^{\mathrm{j}2\pi \frac{\mathcal{Q}\cdot(i-i_{\mathrm{s}})}{\mathcal{K}(k)}}}
+            \end{equation*}
+            \begin{eqnarray*}
+                \mathcal{Q} &=& \frac{f}{\Delta f} = \frac{1}{2^{\nicefrac{1}{c}}-1}\\
+                \mathcal{K}(k) &=& \frac{f_{\mathrm{S}}}{f(k)} \mathcal{Q}
+            \end{eqnarray*} 
+            
+        \end{frame}	
+
+        \begin{frame}{constant Q transform}{implementation}
+            \begin{columns}
+                \column{.4\linewidth}
+                    \vspace{-5mm}
+                    \begin{center}\textbf{non-overlapping}\end{center}
+                    \vspace{-8mm}
+                    \begin{figure}
+                        \input{pict/fundamentals_CQT}
+                    \end{figure}
+                \column{.6\linewidth}
+                    \vspace{-5mm}
+                    \begin{center}\textbf{overlapping}\end{center}
+                    \vspace{20mm}
+                    \begin{itemize}
+                        \item   define tranformation matrix with maximum window length
+                        \item   zeropad higher frequencies (left \& right)
+                        \item[$\Rightarrow$] independent definition of block and hop length
+                    \end{itemize}
+                    \vspace{15mm}
+                \end{columns}
+        \end{frame}	
+
+        \begin{frame}{constant Q transform}{CQT vs.\ DFT}
+            \textbf{CQT}:
+            \bigskip
+            \begin{itemize}
+                \item<1->[+]	perceptually/musically adapted frequency resolution
+                \smallskip
+                \item<2->[--]	time resolution depends on frequency
+                \smallskip
+                \item<3->[--]	not invertible
+                \smallskip
+                \item<4->[--]	no optimized implementation (compare FFT)
+            \end{itemize}
+        \end{frame}	
+
+        \begin{frame}{auditory filterbanks}{introduction}
+            FT and related transforms not good models of physiological properties of the human ear
+                \begin{itemize}
+                    \item   frequency resolution/critical bands
+                    \item   frequency scale
+                    \item   loudness \& masking
+                    \item   event perception \&  time integration
+                \end{itemize}
+            
+            $\Rightarrow$ \textbf{auditory filterbanks}
+            
+            \pause
+            \bigskip
+            not as widely used as one might think because
+            
+            \begin{enumerate}
+                \item<3->	computationally inefficient
+                \item<4->	analysis only: no invertibility (mostly)
+                \item<5->	not proven to be superior
+            \end{enumerate}
+        \end{frame}	
+
+        \begin{frame}{auditory filterbanks}{gammatone filterbank 1/2}
+            \vspace{-3mm}
+            \begin{equation*}
+                h(i) = \frac{ a \cdot\left(\nicefrac{i}{f_{\mathrm{S}}}\right)^{\mathcal{O}-1}\cdot \cos\left( 2\pi \cdot f_{\mathrm{c}} \frac{ i}{f_{\mathrm{S}}} \right) }{\e^{\nicefrac{2\pi i \Delta f}{f_{\mathrm{S}}}}}
+            \end{equation*}
+            \vspace{-3mm}
+            \begin{figure}
+                \includegraphics{Gammatone}
+                \label{fig:gammatone}
+            \end{figure}
+        \end{frame}	
+
     \section[summary]{lecture summary}
         \begin{frame}{summary}{lecture content}
             \begin{enumerate}
                 \item       how does the hop length relate to the overlap between blocks?
-                \bigskip
-                \item<2->   discussion the differences between convolution and correlation in both time and frequency domain
-                \bigskip
-                \item<3->   Name 2 pairs of signals: 
+                \smallskip
+                \item<2->   discuss the differences between convolution and correlation in both time and frequency domain
+                \smallskip
+                \item<3->   name 2 pairs of signals: 
                     \begin{itemize}
                         \item   the correlation function between the signals equals the output of their convolution
                         \item   the correlation function between the signals and the output of their convolution is different.
                     \end{itemize}
-                \bigskip
+                \smallskip
                 \item<4->   name 3 important properties of the Fourier transform
+                \smallskip
+                \item<5->   why are time-frequency transforms helpful tools for audio signal analysis
+                \smallskip
+                \item<6->   discuss advantages and disadvantages of different approaches for time-frequency transforms
             \end{enumerate}
         \end{frame}
 \end{document}

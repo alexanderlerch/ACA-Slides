@@ -1,0 +1,43 @@
+\newcommand{\plotrect}[1]{%
+\setcounter{iXOffset}{0}%
+\setcounter{i}{0}%
+\whiledo{\value{i} < #1}%
+{%
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+    \addtocounter{iXOffset}{\value{iXBlockSize}}%
+    \stepcounter{i}%
+}%                    
+\addtocounter{iYOffset}{\value{iYBlockSize}}%
+\addtocounter{iYBlockSize}{\value{iYBlockSize}}%
+}
+
+\begin{footnotesize}
+				\begin{picture}(32,75)
+					\setcounter{iYOffset}{5}
+					\setcounter{iXBlockSize}{16}
+					\setcounter{iYBlockSize}{2}
+	
+					% blocks
+                    \plotrect{\value{iYBlockSize}}
+
+					\setcounter{iXBlockSize}{8}
+                    \plotrect{\value{iYBlockSize}}
+
+					\setcounter{iXBlockSize}{4}
+                    \plotrect{\value{iYBlockSize}}
+
+					\setcounter{iXBlockSize}{2}
+                    \plotrect{\value{iYBlockSize}}
+
+					\setcounter{iXBlockSize}{1}
+                    \plotrect{\value{iYBlockSize}}
+
+					\put(9,69)
+						{\text{5-point CQT}}
+					\put(13,2)
+						{\text{time}}
+					\put(-5, 30)
+						{\rotatebox{90}{\text{frequency}}}
+				\end{picture}
+\end{footnotesize}
