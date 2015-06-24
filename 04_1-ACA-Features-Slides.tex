@@ -1,0 +1,158 @@
+% move all configuration stuff into one file so we can focus on the content
+\input{common}
+
+\subtitle{Part 4.1: Instantaneous Features}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{instantaneous features}{overview}
+            \begin{itemize}
+                \item   \textbf{text book}  
+                    \begin{itemize}
+                        \item   \href{http://ieeexplore.ieee.org/xpl/ebooks/bookPdfWithBanner.jsp?fileName=6331120.pdf&bkn=6266785&pdfType=chapter}{\underline{\textit{Chapter 3: Instantaneous Features} (pp.~31--63)}}
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{lecture content}
+                    \begin{itemize}
+                        \item<2->   feature extraction pre-processing
+                        \item<3->   statistical features
+                        \item<4->   spectral shape features
+                        \item<5->   other features
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{instantaneous features}{introduction}
+            remember the flow chart of a general ACA system:
+            \vspace{-2mm}
+            \begin{figure}
+                \input{pict/introduction_ACASystem_2}
+            \end{figure}
+            
+            \vspace{-2mm}
+            \pause
+            \textbf{feature}:
+            \begin{itemize}
+                \item<2->   \textit{terminology}: 
+                    \begin{itemize}
+                        \item   audio descriptor
+                        \item   instantaneous/short-term/\color<3->{gtgold}{low-level feature}
+                    \end{itemize}
+                \item<3->   \textit{characteristics}:
+                    \begin{itemize}
+                        \item	not necessarily musically, perceptually, or semantically meaningful
+                        \item	usually one feature per block of data
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{instantaneous features}{feature}
+            \toremember{a feature \ldots}
+            
+            
+            \begin{itemize}
+                \item   has to be task-specific,
+                \item<2->   is often chosen from a set of established features, but
+                \item<3->   can be invented/customized, and
+                \item<4->   can also be derived from other data (tags, etc.), or
+                \item<5->   from other features.
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{instantaneous features}{feature example}
+            waveform envelope of three different signals 
+            
+            \figwithmatlab{Waveforms}
+            
+            \vspace{-2mm}
+            \begin{columns}
+                \column{.16\textwidth}
+                \column{.25\textwidth}\centering
+                    \includeaudio{excerpt_pop}
+                \column{.25\textwidth}\centering
+                    \includeaudio{excerpt_stringquartet}
+                \column{.25\textwidth}\centering
+                    \includeaudio{excerpt_speech}
+                \column{.09\textwidth}
+            \end{columns}
+            
+            \bigskip
+            \begin{itemize}
+                \item<2->   envelopes of waveform seem to have distinct shape
+                \item<3->[$\Rightarrow$] a feature describing the envelope shape should help to distinguish these signal types
+            \end{itemize}
+        \end{frame}
+
+    \section[pre-proc]{audio pre-processing}
+        \begin{frame}{instantaneous features}{audio pre-processing}
+            \begin{itemize}
+                \item   \textbf{goals} (task dependent)
+                    \begin{itemize}
+                        \item   reduce amount of data (e.g., down-sampling)
+                        \item   remove irrelevant information (e.g., surround channels of multi-channel signal)
+                        \item   remove information that might impact analysis (e.g., DC offset)
+                        \item   increase robustness (e.g., normalization)
+                    \end{itemize}
+                 %\bigskip
+                %\item<2->   \textbf{examples}
+                    %\begin{itemize}
+                        %\item   downmix to mono
+                        %\item   sample rate reduction
+                        %\item   filtering (DC removal, HP, BP, ...)
+                    %\end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{instantaneous features}{audio pre-processing examples 1/2}
+            \begin{itemize}
+                \item   \textbf{down-mixing}
+                    \[
+                        x(i) = \frac{1}{\mathcal{C}}\sum\limits_{c=0}^{\mathcal{C}-1}{x_c(i)} 
+                    \]
+                    \begin{itemize}
+                        \item   \textit{variants}: different channel weights, $\nicefrac{\pi}{2}$ phase shift in one channel, \ldots
+                    \end{itemize}
+                    
+                \bigskip
+                \item<2->   \textbf{normalization}
+                    \[
+                        x(i) = \frac{x_s(i)}{\max\limits_{\forall i}\big(|x_s(i)|\big)} 
+                    \]
+                    \begin{itemize}
+                        \item   \textit{variants}: RMS, LUFS normalization
+                        \item<3>   real-time?
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{instantaneous features}{audio pre-processing examples 2/2}
+            \begin{itemize}
+                \item   \textbf{filtering}
+                    \begin{itemize}
+                        \item   \textit{DC removal}
+                            \[
+                                x(i) = x_{\mathrm{DC}}(i) - \frac{1}{\mathcal{I}}\sum\limits_{i=0}^{\mathcal{I}-1}{x_{\mathrm{DC}}(i)} 
+                            \]
+                            \begin{itemize}
+                                \item   real-time?
+                            \end{itemize}
+                        \item   other filters: high/band pass, smoothing, ...
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{sample rate reduction}
+                \bigskip
+                \item<3->   \textbf{quality enhancement} (denoising etc.)
+                \bigskip
+                \item<3->   \ldots
+            \end{itemize}
+        \end{frame}
+
+    \section[stats]{statistical features}
+        \begin{frame}{instantaneous features}{statistical features}
+        \end{frame}
+
+    \section[summary]{lecture summary}
+
+\end{document}
+

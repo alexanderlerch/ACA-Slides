@@ -17,10 +17,9 @@ function displayGammatone()
     
     subplot(212),
     plot(f,H),
-    axis([f(1) 16 -50 0])
+    axis([0.1 16 -60 1])
     xlabel('f [kHz]')
     ylabel('|H(f)| [dB]')
-
 
     printFigure(hFigureHandle, cOutputFilePath)
 end
@@ -42,7 +41,7 @@ function [t,h, f,H] = generateSampleData()
     
     for (i = 1:20)
        fc(i)    = 228.7*exp((2*i/9.26)-1);
-       b(i)     = fc(i)/4;
+       b(i)     = fc(i)/8;
        h2        = t2.^(O-1).*exp(-2*pi*b(i)*t2).* cos(2*pi*fc(i)*t2);
        H(i,:)   = abs(fft(h2));
        H(i,:)   = 20*log10(H(i,:)/max(H(i,:)));

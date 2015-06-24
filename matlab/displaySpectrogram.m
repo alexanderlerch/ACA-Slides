@@ -14,6 +14,7 @@ function displaySpectrogram()
 
     [X,f,t] = spectrogram(x, hann(2048,'periodic'),1024,2048,fs);
     
+    
     imagesc(t,f(1:floor(end/2))/1000,20*log10(abs(X(1:floor(end/2),:)))),colorbar
     c = colorbar;
     c.Label.String = '[dB]';
