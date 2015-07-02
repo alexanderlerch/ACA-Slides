@@ -41,9 +41,8 @@ function displayFeatures()
         
         subplot(211), 
         imagesc(tf,f(1:floor(end/2))/1000,20*log10(abs(X(1:floor(end/2),:))))
-%         colormap(flipud(gray))
-         axis xy;
-        ylabel([ 'f [kHz]'])
+        axis xy;
+        ylabel(['f [kHz]'])
         
         subplot(212)
         [AX,H2,H1] = plotyy(t,x, tv,v);
@@ -54,5 +53,5 @@ function displayFeatures()
         ylabel(AX(2),'v(n)')
 
         printFigure(hFigureHandle, cOutputFilePath)
-end
+    end
 end
