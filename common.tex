@@ -10,6 +10,11 @@
 \usepackage{fancybox}
 \usepackage[absolute,overlay]{textpos} 
 \usepackage{media9} % avi2flv: "C:\Program Files\ffmpeg\bin\ffmpeg.exe" -i TuneFreqFilterbank.avi -b 600k -s 441x324 -r 15 -acodec copy TuneFreqFilterbank.flv
+\usepackage{silence}
+\usepackage[backend=bibtex,style=ieee]{biblatex}
+\WarningFilter{biblatex}{Patching footnotes failed}
+\AtEveryCitekey{\iffootnote{\tiny}{}}
+\addbibresource{references}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -202,7 +207,9 @@
 % appearance
 \setbeamercolor{structure}{fg=gtgold}
 \setbeamercovered{transparent} %invisible
-
+\setbeamercolor{bibliography entry author}{fg=black}
+\setbeamercolor*{bibliography entry title}{fg=black}
+\setbeamercolor*{bibliography entry note}{fg=black}
 %---------------------------------------------------------------------------------
 % fontsize
 \let\Tiny=\tiny

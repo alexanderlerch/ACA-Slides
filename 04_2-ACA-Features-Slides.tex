@@ -1,6 +1,39 @@
 % move all configuration stuff into one file so we can focus on the content
 \input{common}
 
+\newcommand{\listspectralfeature}[1]{
+\vspace{-5mm}
+\begin{equation*}
+    \input{eq/Spectral#1}
+\end{equation*}
+\only<2>{
+    \question{discuss the feature}
+    \begin{itemize}
+        \item   how would you describe its 'meaning'
+        \item   value of this feature for the hypothetical prototype signals
+            \begin{itemize}
+                \item   silence
+                \item   single peak (@ $k_\mathrm{s}$)
+                \item   white noise (flat magnitude spectrum)
+            \end{itemize}
+    \end{itemize}
+}
+\only<3>{
+    \vspace{-3mm}
+    \figwithref{FeaturesSpectral#1}{matlab source: matlab/displayFeatures.m}
+}
+\only<4>{
+    \vspace{10mm}
+    \textbf{common variants}:
+    \begin{itemize}
+        \item	restricted frequency range
+        \item	power spectrum 
+    \end{itemize}
+    }
+\vspace{50mm}
+}                    
+
+
 \subtitle{Part 4.2: Instantaneous Features~---~Spectral Shape}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,7 +66,95 @@
                 \input{pict/introduction_ACASystem_2}
             \end{figure}
         \end{frame}
+        
+        \begin{frame}{instantaneous features}{introduction~---~timbre 1/2}
+            \begin{block}{\textbf{definition (American Standards Association)}}
+                ...that attribute of sensation in terms of which a listener can judge that two sounds having the same loudness and pitch are dissimilar
+            \end{block}
+            \pause
+            \question{What is the problem with this definition?}
+            \vspace{-5mm}
+            Bregman:\footfullcite{bregman_auditory_1994}
+                    \begin{enumerate}
+                        \item   implies that timbre \textit{only} exists for sound with pitch!
+                        \item   only says that timbre \textit{is not} loudness and pitch
+                    \end{enumerate}
+            \pause
+            
+            \begin{itemize}
+                \item[$\rightarrow$]   [timbre is] "\textit{...the psychoacoustician's multidimensional waste-basket category for everything that cannot be labeled pitch or loudness.}"\footfullcite{mcadams_hearing_1979}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{instantaneous features}{introduction~---~timbre 2/2}
+        
+            timbre is
+            \begin{itemize}
+                \item   a function of \textbf{temporal envelope}
+                    \begin{itemize}
+                        \item   attack time characteristics
+                        \item   amplitude modulations
+                        \item   \ldots
+                    \end{itemize}
+                \item<2->   a function of \color<3->{gtgold}{\textbf{spectral distribution}}
+                    \begin{itemize}
+                        \item   spectral envelope
+                        \item   number of partials
+                        \item   energy distribution of partials
+                        \item   \ldots
+                    \end{itemize}
+            \end{itemize}
 
+            \begin{itemize}
+                \item<3->[] when dealing with complex mixtures of sound, it is very difficult (maybe impossible?) to extract detailed temporal information for individual tones
+                \item<4->[$\Rightarrow$] features typically focus on the \textbf{spectral shape}
+            \end{itemize}
+        \end{frame}
+
+    \section[spectral shape]{spectral features}
+        \begin{frame}{instantaneous features}{spectral rolloff}
+            \listspectralfeature{Rolloff}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral flux}
+            \listspectralfeature{Flux}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral centroid}
+            \listspectralfeature{Centroid}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral spread}
+            \listspectralfeature{Spread}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral decrease}
+            \listspectralfeature{Decrease}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral slope}
+            \listspectralfeature{Slope}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral skewness}
+            \listspectralfeature{Skewness}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral kurtosis}
+            \listspectralfeature{Kurtosis}
+        \end{frame}
+
+        %MFCCs
+    \section[tonalness]{tonalness features}
+        \begin{frame}{instantaneous features}{spectral crest factor}
+            \listspectralfeature{CrestFactor}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral flatness}
+            \listspectralfeature{Flatness}
+        \end{frame}
+        \begin{frame}{instantaneous features}{spectral tonal power ratio}
+            \listspectralfeature{TonalPowerRatio}
+        \end{frame}
+        
+        %MaxACF
+        %Predictivity Ratio
+        %SpectralPredictivity
+        %ACFCoeffs
+        %ZCR
+        
     \section[summary]{lecture summary}
         \begin{frame}{summary}{lecture content}
             \begin{enumerate}
