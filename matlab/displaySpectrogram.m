@@ -2,9 +2,6 @@ function displaySpectrogram()
 
     hFigureHandle = generateFigure(10.8,6.4);
     
-    iStart  = 66000;
-    iLength = 2048;
-    
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
     
@@ -22,6 +19,6 @@ function displaySpectrogram()
     xlabel('t [s]')
     ylabel('f [kHz]')
 
-
+    print(hFigureHandle, '-dpng', '-r600', strcat(cOutputFilePath,'.png'));
     printFigure(hFigureHandle, cOutputFilePath)
 end

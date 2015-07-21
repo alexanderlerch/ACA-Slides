@@ -1,7 +1,7 @@
 % move all configuration stuff into one file so we can focus on the content
 \input{common}
 
-\newcommand{\listspectralfeature}[1]{
+\newcommand{\listspectralfeature}[2]{
 \vspace{-5mm}
 \begin{equation*}
     \input{eq/Spectral#1}
@@ -23,12 +23,11 @@
     \figwithref{FeaturesSpectral#1}{matlab source: matlab/displayFeatures.m}
 }
 \only<4>{
-    \vspace{10mm}
+    %\vspace{10mm}
+    
     \textbf{common variants}:
-    \begin{itemize}
-        \item	restricted frequency range
-        \item	power spectrum 
-    \end{itemize}
+    
+    #2
     }
 \vspace{50mm}
 }                    
@@ -112,61 +111,277 @@
         \end{frame}
 
     \section[spectral shape]{spectral features}
-        \begin{frame}{instantaneous features}{spectral rolloff}
-            \listspectralfeature{Rolloff}
+        \begin{frame}{instantaneous features}{timbre: spectral rolloff}
+            \listspectralfeature{Rolloff}{\begin{itemize}   \item restricted frequency range  \item power spectrum  \end{itemize}}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral flux}
-            \listspectralfeature{Flux}
+        \begin{frame}{instantaneous features}{timbre: spectral flux}
+            \listspectralfeature{Flux}{\begin{itemize} \item different distance measure
+						\begin{footnotesize}
+							\item[]
+							\begin{eqnarray*}
+								v_{\mathrm{SF}}(n, \beta) &=& \frac{\sqrt[\beta]{\sum\limits_{k = 0}^{\mathcal{K}/2-1}{\left(|X(k,n)|-|X(k,n-1)|\right)^\beta}}}{\nicefrac{\mathcal{K}}{2}}\\
+								v_{\mathrm{SF}, \sigma}(n) &=& \sqrt{{\frac{2}{\mathcal{K}}}\sum\limits_{k = 0}^{\mathcal{K}/2-1}{\left(\Delta X(k,n)-\mu_{\Delta X}\right)^2}}\\
+								v_\mathrm{SF, log}(n) &=& {{\frac{2}{\mathcal{K}}}\sum\limits_{k = 0}^{\mathcal{K}/2-1}{\log_2\left(\frac{|X(k,n)|}{|X(k,n-1)|}\right)}}
+							\end{eqnarray*}
+						\end{footnotesize}\end{itemize}}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral centroid}
-            \listspectralfeature{Centroid}
+        \begin{frame}{instantaneous features}{timbre: spectral centroid}
+            \listspectralfeature{Centroid}{\begin{itemize}  \item magnitude spectrum vs.\ power spectrum    \item logarithmic frequency scale
+						\[
+							v_\mathrm{SC,log}(n) = \frac{\sum\limits_{k = k(f_{\mathrm{min}})}^{\mathcal{K}/2-1}{\log_2\left(\frac{f(k)}{f_{\mathrm{ref}}}\right)\cdot |X(k,n)|^2}}{\sum\limits_{k = k(f_{\mathrm{min}})}^{N/2-1}{|X(k,n)|^2}} 
+						\]
+			\end{itemize}}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral spread}
-            \listspectralfeature{Spread}
+        \begin{frame}{instantaneous features}{timbre: spectral spread}
+            \listspectralfeature{Spread}{\begin{itemize}    \item same variants as with \textit{spectral Centroid}, e.g.\ logarithmic:
+				\begin{footnotesize}\[
+                        v_\mathrm{SS,log}(n) = \sqrt{\frac{\sum\limits_{k = k(f_{\mathrm{min}})}^{\nicefrac{\mathcal{K}}{2}-1}{\left(\log_2\left(\frac{f(k)}{\unit[1000]{Hz}}\right)-v_{\mathrm{SC}}(n)\right)^2\cdot |X(k,n)|^2}}{\sum\limits_{k = k(f_{\mathrm{min}})}^{\nicefrac{\mathcal{K}}{2}-1}{|X(k,n)|^2}}} 
+                    \]\end{footnotesize}
+			\end{itemize}}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral decrease}
-            \listspectralfeature{Decrease}
+        \begin{frame}{instantaneous features}{timbre: spectral decrease}
+            \listspectralfeature{Decrease}{\begin{itemize}  \item restricted frequency range:
+					\[
+						v_{\mathrm{SD}}(n) = \frac{\sum\limits_{k = k_{\mathrm{l}}}^{k_{\mathrm{u}}}\frac{1}{k}\cdot \big(|X(k,n)|-|X(k_{\mathrm{l}}-1,n)|\big)}{\sum\limits_{k = k_{\mathrm{l}}}^{k_{\mathrm{u}}}{|X(k,n)|}} 
+					\]  \end{itemize}}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral slope}
-            \listspectralfeature{Slope}
+        \begin{frame}{instantaneous features}{timbre: spectral slope}
+            \listspectralfeature{Slope}{}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral skewness}
-            \listspectralfeature{Skewness}
+        \begin{frame}{instantaneous features}{timbre: spectral skewness}
+            \listspectralfeature{Skewness}{}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral kurtosis}
-            \listspectralfeature{Kurtosis}
+        \begin{frame}{instantaneous features}{timbre: spectral kurtosis}
+            \listspectralfeature{Kurtosis}{}
         \end{frame}
 
-        %MFCCs
+		\begin{frame}{fundamentals}{cepstrum 1/3}
+			\textbf{signal model}: \\
+			convolution of \textit{excitation signal} and \textit{transfer function}
+			\begin{equation*}\label{eq:speech}
+				x(i) = e(i)\ast h(i)
+			\end{equation*}
+			\pause
+			\begin{equation*}
+				X(\jom) = E(\jom)\cdot H(\jom) 
+			\end{equation*}
+			\pause
+			\begin{eqnarray*}
+				\log\big(X(\jom)\big)	&=& \log\big(E(\jom)\cdot H(\jom)\big)\nonumber\\
+											&=& \log\big(E(\jom)\big) \mathbf{+} \log\big(H(\jom)\big) 
+			\end{eqnarray*}
+		\end{frame}
+
+		\begin{frame}{fundamentals}{cepstrum 2/3}
+			\vspace{-4mm}
+            \begin{eqnarray*}
+				c_x(i)	&=& \mathfrak{F}^{-1}\left\{\log\left(X(\jom)\right)\right\}\nonumber\\
+                        \pause
+						&=& \mathfrak{F}^{-1}\left\{\log\left(E(\jom)\right) + \log\left(H(\jom)\right)\right\}\nonumber\\
+						\pause
+                        &=& \mathfrak{F}^{-1}\left\{\log\left(E(\jom)\right)\right\} + \mathfrak{F}^{-1}\left\{\log\left(H(\jom)\right)\right\} \\
+                    \pause
+					\hat{c}_x(i_{\mathrm{s}}(n)\ldots i_{\mathrm{e}}(n)) &=& \sum\limits_{k=0}^{\nicefrac{\mathcal{K}}{2}-1}{\log\left(|X(k,n)|\right)\e^{\mathrm{j}ki\Delta\Omega}} 
+			\end{eqnarray*}
+				
+			\vspace{-4mm}
+            \figwithmatlab{Cepstrum}
+		\end{frame}
+        
+        \begin{frame}{fundamentals}{cepstrum 3/3}
+            \begin{itemize}
+                \item \textbf{summary}:
+                    \begin{itemize}
+                        \item   cepstrum replaces the convolution operation with addition
+                        \item   result is the \textit{unfiltered} excitation signal plus the filter IR (both logarithmic)
+                        \item   can be used for, e.g., \textit{spectral envelope extraction} or \textit{pitch detection}
+                        \item<2> the naming silliness knows no boundaries:\\
+                         cepstrum, quefrequency, liftering, \ldots
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+		\begin{frame}{instantaneous features}{timbre: mel frequency cepstral coefficients 1/4}
+            \begin{itemize}
+                \item   typical processing steps for the mel frequency cepstral coefficients (MFCCs):
+                    \begin{enumerate}
+                        \item   compute magnitude spectrum
+                        \item   convert linear frequency scale to logarithmic
+                        \item   group bins into bands
+                        \item   apply logarithm to all bands
+                        \item   compute (inverse) cosine transform (DCT)
+                    \end{enumerate}
+            \end{itemize}
+            
+            \bigskip
+			\begin{equation*}
+				v^j_{\mathrm{MFCC}}(n)	= \sum\limits_{k' = 1}^{\mathcal{K}'}{\log\big( |X'(k',n)|\big)\cdot \cos\left( j\cdot\left(k'-\frac{1}{2} \right)\frac{\pi}{\mathcal{K}'} \right)}			
+			\end{equation*}
+        \end{frame}
+
+		\begin{frame}{instantaneous features}{timbre: mel frequency cepstral coefficients 2/4}
+			\figwithmatlab{MfccFilterbank}
+            
+            \begin{itemize}
+                \item   constant Q filter spacing for higher frequencies (mel scale)
+                \item   FFT values are weighted and summed over bins for each band
+            \end{itemize}
+		\end{frame}
+		\begin{frame}{instantaneous features}{timbre: mel frequency cepstral coefficients 3/4}
+			\begin{columns}
+                \column{.75\textwidth}
+                    \includegraphics[scale=.4]{MfccMelDct}
+                \column{.25\textwidth}
+                    mel-warped cosine functions for DCT
+			\end{columns}
+		\end{frame}
+		\begin{frame}{instantaneous features}{timbre: mel frequency cepstral coefficients 4/4}
+			\vspace{-5mm}\begin{footnotesize}
+			\begin{table}
+				\centering
+				\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lccc}%{l|c|c|c} %{c|p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}}
+                    \\ \hline
+                    \bf{\emph{Property}}	 & \bf{\emph{DM}}	 & \bf{\emph{HTK}}	 & \bf{\emph{SAT}}\\ 
+                     \hline
+                    \bf{Num.\ filters}	 & 20	 & 24	 & 40\\
+                    \bf{Mel scale}	 & lin/log	 & log	 & lin/log\\
+                    \bf{Freq.\ range}	 & $[100; 4000]$	 & $[100; 4000]$	 & $[200; 6400]$\\
+                    \bf{Normalization}	 & Equal height	 & Equal height	 & Equal area\\
+				\end{tabular*}
+			\end{table}
+			\end{footnotesize}
+
+            \vspace{-5mm}
+            \figwithref{FeaturesSpectralMfccs}{matlab source: matlab/displayFeatures.m}
+		\end{frame}
+
     \section[tonalness]{tonalness features}
-        \begin{frame}{instantaneous features}{spectral crest factor}
-            \listspectralfeature{CrestFactor}
+        \begin{frame}{instantaneous features}{tonalness: spectral crest factor}
+            \listspectralfeature{CrestFactor}{\begin{itemize}   \item normalization \item power spectrum \item measure \textit{per band} instead of  whole spectrum \end{itemize}}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral flatness}
-            \listspectralfeature{Flatness}
+        \begin{frame}{instantaneous features}{tonalness: spectral flatness}
+            \listspectralfeature{Flatness}{\begin{itemize}   \item power vs.\ magnitude spectrum \item smoothed spectrum (avoid spurious 0-bins) \item measure \textit{per band} instead of  whole spectrum \end{itemize}}
         \end{frame}
-        \begin{frame}{instantaneous features}{spectral tonal power ratio}
-            \listspectralfeature{TonalPowerRatio}
+        \begin{frame}{instantaneous features}{tonalness: spectral tonal power ratio}
+            \listspectralfeature{TonalPowerRatio}{\begin{itemize}   \item definition of tonal/non-tonal components \end{itemize}}
         \end{frame}
         
-        %MaxACF
+		\begin{frame}{instantaneous features}{tonalness: maximum of ACF 1/2}
+			\begin{equation*}
+				\input{eq/TimeMaxAcf}
+			\end{equation*}
+            \only<2>{
+                \question{discuss the feature}
+                \begin{itemize}
+                    \item   how would you describe its 'meaning'
+                    \item   value of this feature for the hypothetical prototype signals
+                        \begin{itemize}
+                            \item   silence
+                            \item   periodic signal ($T_0 = k$)
+                            \item   white noise (flat magnitude spectrum)
+                        \end{itemize}
+                \end{itemize}
+            }
+            \only<3>{
+                \vspace{-3mm}
+                \figwithref{FeaturesTimeMaxAcf}{matlab source: matlab/displayFeatures.m}
+            }
+		\end{frame}
+		\begin{frame}{instantaneous features}{tonalness: maximum of ACF 2/2}
+            \question{maximumdetection: how to avoid main lobe maxima?}
+			
+			\begin{itemize}
+				\item	minimum lag
+				\item	magnitude threshold
+				\item	search only after first local minimum
+			\end{itemize}
+		\end{frame}
         %Predictivity Ratio
         %SpectralPredictivity
-        %ACFCoeffs
-        %ZCR
-        
+
+    \section[technical]{technical properties}
+		\begin{frame}\frametitle{signal properties}\framesubtitle{zero crossing rate}
+			\begin{equation*}\label{eq:zc}
+				\input{eq/TimeZeroCrossingRate} 
+			\end{equation*}
+            \only<2>{
+                \question{discuss the feature}
+                \begin{itemize}
+                    \item   how would you describe its 'meaning'
+                    \item   value of this feature for the hypothetical prototype signals
+                        \begin{itemize}
+                            \item   silence
+                            \item   periodic signal ($T_0 = k$)
+                            \item   white noise (flat magnitude spectrum)
+                        \end{itemize}
+                \end{itemize}
+            }
+            \only<3>{
+                \vspace{-3mm}
+                \figwithref{FeaturesTimeZeroCrossingRate}{matlab source: matlab/displayFeatures.m}
+            }
+		\end{frame}
+		\begin{frame}\frametitle{signal properties}\framesubtitle{ACF coefficients}
+			\begin{equation*}
+				\input{eq/TimeAcfCoeff} \quad \text{with}\enspace \eta = 1,2,3,\ldots
+			\end{equation*}
+            \only<2>{
+                \question{discuss the feature}
+                \begin{itemize}
+                    \item   how would you describe its 'meaning'
+                    \item   value of this feature for the hypothetical prototype signals
+                        \begin{itemize}
+                            \item   silence
+                            \item   periodic signal ($T_0 = k$)
+                            \item   white noise (flat magnitude spectrum)
+                        \end{itemize}
+                \end{itemize}
+            }
+            \only<3>{
+                \vspace{-3mm}
+                \figwithref{FeaturesTimeAcfCoeff}{matlab source: matlab/displayFeatures.m}
+            }
+		\end{frame}
+
+    \section[learned]{feature learning}
+        \begin{frame}{instantaneous features}{feature learning}
+            \textbf{TODO: SLIDES UNFINISHED}
+            \begin{itemize}
+                \item   low-level features are relatively simple to compute, and possibly have only limited meaningfulness
+                \item   alternative: try to learn features from the data (usually unsupervised)
+                \item   \textbf{principle}
+                    \begin{itemize}
+                        \item   put (a lot of) raw data at input, learn a way of reducing dimensionality
+                    \end{itemize}
+                \item   \textbf{advantages}
+                    \begin{itemize}
+                        \item   features might contain more useful information than provided by hand-crafted features
+                        \item   no expert knowledge needed
+                        \item   possibly easier generalization
+                    \end{itemize}
+                \item   \textbf{disadvantages}
+                    \begin{itemize}
+                        \item   usually time consuming
+                        \item   limited ways of controlling the type of information learned
+                    \end{itemize}
+            \end{itemize}
+            \bigskip
+            \begin{itemize}
+                \item   dictionary learning (sparse coding, nmf)
+                \item   neural networks and deep architectures (also semi-supervised and supervised)
+                \item   clustering (distance/similarity of point to cluster)
+                \item   PCA etc
+            \end{itemize}
+        \end{frame}
+
     \section[summary]{lecture summary}
         \begin{frame}{summary}{lecture content}
             \begin{enumerate}
-                \item       
+                \item   how do you describe and characterize timbre in music
                 \smallskip
-                \item<2->   
+                \item<2->   name 5 low level features
                 \smallskip
-                \item<3->   
-                \smallskip
-                \item<4->   
-                \smallskip
-                \item<5->   
+                \item<3->   what would be typical algorithm parameters to extract, e.g., the \textit{spectral centroid}
             \end{enumerate}
         \end{frame}
 \end{document}

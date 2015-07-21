@@ -50,8 +50,8 @@
             \end{itemize}
         \end{frame}
         \begin{frame}{instantaneous features}{feature}
+            \only<1-5>{
             \toremember{a feature \ldots}
-            
             
             \begin{itemize}
                 \item   has to be task-specific,
@@ -60,6 +60,22 @@
                 \item<4->   can also be derived from other data (tags, etc.), or
                 \item<5->   from other features.
             \end{itemize}
+            }
+            \only<6>{
+                \begin{columns}
+                \column{.7\linewidth}
+                \begin{figure}
+                    \includegraphics[scale=.08]{FeatureExtraction}
+                \end{figure}
+                \column{.3\linewidth}
+                    \begin{itemize}
+                        \item   repeat for every block
+                        \item   repeat for every feature
+                        \bigskip
+                        \item[$\Rightarrow$] feature matrix per audio input
+                    \end{itemize}
+                \end{columns}
+            }
         \end{frame}
         \begin{frame}{instantaneous features}{feature example}
             waveform envelope of three different signals 
