@@ -1,0 +1,301 @@
+% move all configuration stuff into one file so we can focus on the content
+\input{common}
+
+\subtitle{Part 4.3: Feature Post-Processing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{instantaneous features}{overview}
+            \begin{itemize}
+                \item   \textbf{text book}  
+                    \begin{itemize}
+                        \item   \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331121&}{\underline{\textit{Chapter 4: Intensity} (pp.~71--78)}}
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{lecture content}
+                    \begin{itemize}
+                        \item<2->   
+                        \item<3->   
+                        \item<4->   
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section[intro]{introduction}
+
+        \begin{frame}{intensity, magnitude \& loudness}{introduction}
+            \begin{itemize}
+                \item   intensity-related descriptors \textbf{commonly used}
+                    \begin{itemize}
+                        \item	waveform view
+                        
+                            \includegraphics[scale=.3]{waveforms}
+                        \item	level monitoring (PPM, VU,\ldots)
+                        
+                            \includegraphics[scale=.1]{ppmulator}
+                     \end{itemize}
+            \end{itemize}
+            
+            \vspace{-3mm}
+            \begin{itemize}
+                \item[]<2-> \question{terms and definitions}
+                \vspace{-3mm}
+                 \begin{itemize}
+                    \item	intensity
+                    \item	magnitude
+                    \item	peak
+                    \item	envelope
+                    \item	level
+                    \item	volume
+                    \item	loudness
+                 \end{itemize}
+            \end{itemize}
+            
+                \vspace{-3mm}
+        \end{frame}
+	
+	\begin{frame}{intensity, magnitude \& loudness}{human perception 1/2}
+		perception has non-linear relation to intensity:
+		\begin{itemize}
+			\item	model: logarithmic relation
+				\begin{equation}
+					v_\mathrm{dB}(n) = 20\cdot\log_{10}\left(\frac{v(n)}{v_0}\right)
+				\end{equation}
+	
+				\pause
+				\begin{itemize}
+					\item	$v_0$: reference constant (\unit[0]{dB} point)
+					
+							digital: $v_0 = 1$ $\Rightarrow \unit{dBFS}$
+					\pause
+					\item	scaling	factor: \unit[1]{dB} $\approx$ JNDL
+				\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	%\begin{frame}{intensity, magnitude \& loudness}{comment: level computation}
+		%$v(n) = 0$: computation of $\log_{10}(0)$
+		%
+		%workarounds:
+		%\begin{itemize}
+			%\item	add constant $\epsilon$
+				%\begin{equation}
+					%v_\mathrm{dB}(n) = 20\cdot\log_{10}(v(n) + \epsilon)
+				%\end{equation}
+				%\begin{figure}
+					%\centering
+						%\includegraphics[scale=.7]{\AcaGraph/logepsilon}
+					%\label{fig:logepsilon}
+				%\end{figure}
+				%
+			%\pause
+			%\item	add \textbf{if} statement	
+				%\begin{equation}
+					%v_\mathrm{trunc}(n)  =   \left\{ 
+								%\begin{array}{ll} 
+									%v(n), & \text{if } v(n) \geq \epsilon \\
+									%\epsilon, & \text{otherwise }
+			          			%\end{array} 
+			          			%\right. 
+				%\end{equation}
+		%\end{itemize}
+	%\end{frame}
+	%
+	%\begin{frame}{intensity, magnitude \& loudness}{human perception 2/2}
+		%decibel scale is \textit{not} loudness scale:
+		%\begin{itemize}
+			%\item	equal-sized steps on the decibel scale not perceived as equal-sized loudness steps
+		%\end{itemize}
+		%
+		%\pause
+		%\bigskip
+		%perceptual loudness depends on
+		%\begin{itemize}
+			%\item	frequency
+			%\item	cochlear resolution
+			%\item	masking effects
+		%\end{itemize}
+		%\vspace{-20mm}
+		%\begin{figure}
+			%\flushright
+				%\includegraphics[scale=.25]{graph/equalloudness}
+		%\end{figure}
+	%\end{frame}	
+	%
+	%\begin{frame}{intensity, magnitude \& loudness}{dynamics in music}
+		%\begin{itemize}
+			%\item	\textbf{score}:
+					%\begin{itemize}
+						%\item	only several rough dynamic steps,e.g., \emph{\textbf{pp}}, \emph{\textbf{p}}, \emph{\textbf{mf}}, \emph{\textbf{f}}, \emph{\textbf{ff}}
+						%\item	comparably vague instructions on volume modifications, e.g., \textsl{crescendo}, \textsl{decrescendo}, \emph{\textbf{sf}}
+						%\pause
+						%\item	dynamics influenced by
+								%\begin{itemize}
+									%\item	instrumentation
+									%\item	timbre
+									%\item	number of voices
+									%\item	context and musical tension
+								%\end{itemize}
+					%\end{itemize}
+			%\item	\textbf{MIDI}:
+					%\begin{itemize}
+						%\item	$128$ velocity steps
+						%\item	no standardized relation to magnitude, power, \ldots
+					%\end{itemize}
+		%\end{itemize}
+	%\end{frame}
+	%\begin{frame}{intensity, magnitude \& loudness}{features: root mean square 1/2}
+		%\begin{equation}\label{eq:rms}
+			%\input{\AcaEq/Llf_RMS}
+		%\end{equation}
+			%\begin{figure}
+				%\includegraphics[scale=.7]{\AcaGraph/rms}
+			%\end{figure}
+	%\end{frame}
+	%\begin{frame}{intensity, magnitude \& loudness}{features: root mean square 2/2}
+			%\begin{itemize}
+				%\item	measure of power
+			%\end{itemize}
+			%
+			%\pause
+			%\textbf{variants}  (sample processing only):
+			%\begin{itemize}
+				%\item	reduce computational complexity
+					%\begin{footnotesize}
+					%\begin{eqnarray}
+						%v^2_{\mathrm{RMS}}(n) &=& \frac{x(i_{\mathrm{e}}(n))^2 - x(i_{\mathrm{s}}(n-1))^2}{i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n) + 1} + v^2_{\mathrm{RMS}}(n-1) \\
+						%v_{\mathrm{RMS}}(n)	&=& \sqrt{v^2_{\mathrm{RMS}}(n)}
+					%\end{eqnarray}
+					%\end{footnotesize}
+				%\item	single pole approximation
+					%\begin{footnotesize}
+					%\begin{eqnarray}
+						%v_\mathrm{tmp}(i)	&=& \alpha\cdot v_\mathrm{tmp}(i-1) + (1-\alpha)\cdot x(i)^2\\
+						%v^*_{\mathrm{RMS}}(i)		&=& \sqrt{v_\mathrm{tmp}(i)}
+					%\end{eqnarray}
+					%\end{footnotesize}
+			%\end{itemize}
+	%\end{frame}
+	%\begin{frame}{intensity, magnitude \& loudness}{features: weighted root mean square}
+		%\vspace{-5mm}
+		%\begin{figure}
+			%\centering
+			%\input{\AcaPict/lowlevelfeatures_rmsblock}
+	    %\end{figure}
+	    %
+	    %\pause
+		%\vspace{-10mm}
+	    %$H(z)$:
+	    %\begin{itemize}
+	    	%\item	A, B, C weighting
+	    	%\item	RLB (BS.1770)
+	    	%\item	\ldots
+	    %\end{itemize}
+	    %
+		%\begin{figure}
+			%\centering
+			%\includegraphics[scale=.7]{\AcaGraph/loudnessweighting}
+			%\label{fig:loudnessweighting}
+		%\end{figure}
+	%\end{frame}
+	%\begin{frame}{intensity, magnitude \& loudness}{features: peak envelope (max)}
+		%\begin{equation}
+			%v_{\mathrm{Peak}}(n) = \max_{i_{\mathrm{s}}(n) \leq i \leq i_{\mathrm{e}}(n)}{|x(i)|} 
+		%\end{equation}
+		%\begin{figure}
+			%\centering
+				%\includegraphics[scale=.7]{\AcaGraph/ppm}
+		%\end{figure}
+	%\end{frame}
+	%\begin{frame}{intensity, magnitude \& loudness}{features: peak envelope (PPM) 1/2}
+		%\begin{figure}
+			%\centering
+			%\input{\AcaPict/lowlevelfeatures_ppm}
+		%\end{figure}	
+        %\only<1>{\vspace{30mm}}
+		%\only<2->{
+		%\begin{itemize}
+			%\only<2-3>{
+			%\item \textbf{release state} ($|x(i)| < v_{\mathrm{PPM}}(i-1)\Rightarrow\lambda = \alpha_\mathrm{RT}$)
+				%\invisible<2>{
+				%\begin{eqnarray}
+					%v_{\mathrm{PPM}}(i) &=& v_{\mathrm{PPM}}(i-1) - \alpha_\mathrm{RT}\cdot v_{\mathrm{PPM}}(i-1)\nonumber\\
+								%&=& (1-\alpha_\mathrm{RT})\cdot v_{\mathrm{PPM}}(i-1) 
+				%\end{eqnarray}
+				%}
+			%}
+			%\only<4-5>{
+			%\item \textbf{attack state} ($|x(i)| \geq v_{\mathrm{PPM}}(i-1)\Rightarrow\lambda = 0$)
+				%\invisible<4>{
+				%\begin{eqnarray}
+					%v_{\mathrm{PPM}}(i) &=& \alpha_\mathrm{AT}\cdot\big(|x(i)| - v_{\mathrm{PPM}}(i-1)\big) + v_{\mathrm{PPM}}(i-1)\nonumber\\
+								%&=& \alpha_\mathrm{AT}\cdot |x(i)| + (1-\alpha_\mathrm{AT})\cdot v_{\mathrm{PPM}}(i-1) 
+				%\end{eqnarray}
+				%}
+			%}
+		%\end{itemize}
+		%}
+	%\end{frame}
+	%\begin{frame}{intensity, magnitude \& loudness}{features: peak envelope (PPM) 2/2}
+		%\begin{figure}
+			%\centering
+				%\includegraphics[scale=.7]{\AcaGraph/ppm}
+			%\label{fig:ppm_level}
+		%\end{figure}
+	%\end{frame}
+	%\begin{frame}{intensity, magnitude \& loudness}{features: zwicker loudness}
+		%\scalebox{.8}
+		%{
+%%		\begin{figure}
+			%\centering
+			%\input{\AcaPict/lowlevelfeatures_zwicker}
+%%		\end{figure}
+		%}
+		%
+		%\uncover<2->{
+		%\begin{itemize}
+			%
+			%\item	
+			%\only<2>{ outer ear transfer function
+			%\begin{figure}
+				%\includegraphics[scale=.25]{graph/OETF}
+			%\end{figure}
+			%}
+			%
+			%\only<3>{	excitation patterns
+			%\begin{figure}
+				%\includegraphics[scale=.5]{graph/excitationpatterns}
+			%\end{figure}
+			%}
+			%\only<4>{	specific loudness
+			%\begin{figure}
+				%\includegraphics[scale=.4]{graph/specificloudness}
+			%\end{figure}
+			%}
+		%\end{itemize}
+        %\vspace{70mm}
+		%}
+	%\end{frame}
+	        
+
+
+    \section[summary]{lecture summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{enumerate}
+                \item   
+                \smallskip
+                \item<2->   
+                \smallskip
+                \item<3->   
+                \smallskip
+                \item<4->   
+                \smallskip
+                \item<5->   
+            \end{enumerate}
+        \end{frame}
+\end{document}
+
