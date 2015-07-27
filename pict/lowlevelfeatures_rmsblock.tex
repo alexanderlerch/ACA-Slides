@@ -1,0 +1,41 @@
+\begin{footnotesize}
+	\setcounter{iXOffset}{0}
+	\setcounter{iYOffset}{5}
+	\setcounter{iXBlockSize}{20}
+	\setcounter{iYBlockSize}{16}
+	\setcounter{iDistance}{5}
+	\setcounter{iYBlockSizeDiv2}{8}
+    \begin{picture}(57,26)
+
+
+		\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+		\addtocounter{iYOffset}{1}
+        \put(\value{iXOffset},\value{iYOffset}){\footnotesize{\shortstack[c]{$x(i)$}}}
+		\addtocounter{iYOffset}{-1}
+		\addtocounter{iXOffset}{2}
+
+        \put(\value{iXOffset},\value{iYOffset}){\vector(1,0){\value{iDistance}}}
+		\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+
+		\addtocounter{iXOffset}{\value{iDistance}}
+        \put(\value{iXOffset},\value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){\footnotesize{\shortstack[c]{$H(z)$}}}}
+
+		\addtocounter{iXOffset}{\value{iXBlockSize}}
+		\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+        \put(\value{iXOffset},\value{iYOffset}){\vector(1,0){\value{iDistance}}}
+		\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+
+		\addtocounter{iXOffset}{\value{iDistance}}
+        \put(\value{iXOffset},\value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){\footnotesize{\shortstack[c]{$\mathrm{RMS}$}}}}
+
+		\addtocounter{iXOffset}{\value{iXBlockSize}}
+		\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+        \put(\value{iXOffset},\value{iYOffset}){\vector(1,0){\value{iDistance}}}
+
+        %text
+		\addtocounter{iYOffset}{1}
+		\addtocounter{iXOffset}{3}
+        \put(\value{iXOffset},\value{iYOffset}){\footnotesize{\shortstack[c]{$v(n)$}}}
+
+    \end{picture}
+\end{footnotesize}
