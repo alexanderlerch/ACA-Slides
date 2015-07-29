@@ -101,22 +101,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % other commands
-\newcommand{\question}[1]{\vspace{-4mm}
+\newcommand{\question}[1]{%\vspace{-4mm}
                           \setbeamercovered{invisible}
-                          \begin{columns}
-                            \column{.7\textwidth}
-                                \textbf{#1}\\
-                            \column{.3\textwidth}
+                          \begin{columns}[T]
+                            \column{.8\textwidth}
+                                \textbf{#1}
+                            \column{.2\textwidth}
+                                \vspace{-4mm}
                                 \begin{flushright}
                                      \includegraphics[scale=.5]{question_mark}
                                 \end{flushright}
                                 \vspace{6mm}
-                          \end{columns}\pause\vspace{-6mm}}
+                          \end{columns}\pause\vspace{-10mm}}
 
-\newcommand{\toremember}[1]{\vspace{-4mm}
-                          \begin{columns}
+\newcommand{\toremember}[1]{%\vspace{-4mm}
+                          \begin{columns}[T]
                             \column{.7\textwidth}
-                                \textbf{#1}\\
+                                \textbf{#1}
                             \column{.3\textwidth}
                                 \begin{flushright}
                                      \includegraphics[scale=.5]{exclamation_mark}
@@ -124,9 +125,9 @@
                                 \vspace{6mm}
                           \end{columns}\vspace{-6mm}}
 
-\newcommand{\matlabexercise}[1]{\vspace{-4mm}
+\newcommand{\matlabexercise}[1]{%\vspace{-4mm}
                           \setbeamercovered{invisible}
-                          \begin{columns}
+                          \begin{columns}[T]
                             \column{.7\textwidth}
                                 \textbf{matlab exercise}: #1
                             \column{.3\textwidth}
