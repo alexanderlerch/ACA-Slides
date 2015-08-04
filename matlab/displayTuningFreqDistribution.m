@@ -1,6 +1,6 @@
 function displayTuningFreqDistribution()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(10.8,7);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
