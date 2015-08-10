@@ -85,9 +85,3 @@ function [t,x, f,X] = generateSampleData()
 %     t = t';
 %     f = f';
 end
-
-function [x,t] = generateSineWave(fFreq, fLengthInS, fSampleRateInHz)
-    t = linspace(0,fLengthInS-1/fSampleRateInHz,fSampleRateInHz*fLengthInS);
-    
-    x = sin(2*pi*fFreq*t);
-end

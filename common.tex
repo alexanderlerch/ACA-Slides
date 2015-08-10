@@ -14,6 +14,7 @@
 \usepackage[backend=bibtex,style=ieee]{biblatex}
 \WarningFilter{biblatex}{Patching footnotes failed}
 \WarningFilter{latexfont}{Font shape}
+\WarningFilter{latexfont}{Some font shapes}
 \AtEveryCitekey{\iffootnote{\tiny}{}}
 \addbibresource{references}
 
@@ -146,7 +147,7 @@
                     \begin{figure}
                         \centering
                         \includegraphics{#1}
-                        \label{fig:#1}
+                        %\label{fig:#1}
                     \end{figure}
                     
                     \addreference{matlab source: matlab/display#1.m}}                    
