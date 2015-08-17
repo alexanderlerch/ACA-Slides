@@ -156,7 +156,7 @@
             \begin{block}{random process}
                 \begin{itemize}
                     \item   ensemble of random series
-                    \item   each series represents a \textit{sample} or the process
+                    \item   each series represents a \textit{sample} of the process
                     \item   the value of the next sample is indetermined, regardless of any amount of knowledge
                 \end{itemize}
             \end{block}
@@ -208,7 +208,7 @@
         
         \subsection{sampling}
         \begin{frame}{digital signals}{sampling}
-            \figwithref{Sampling01}
+            \figwithmatlab{Sampling01}
                 
             \begin{itemize}
                 \item   $f_\mathrm{S}\;[\unit{Hz}]$: number of samples per second
@@ -245,7 +245,7 @@
             \only<1>{\figwithref{StageCoach}{\url{flickr.com/photos/fotoguy49057/12209056184}}}
             \visible<2->{
                 compare speed of wheel (spokes) $f_\mathrm{wheel}$ between real world and video recording for an accelerating stage coach
-                \begin{columns}
+                \begin{columns}[T]
                     \column{0.5\textwidth}
                         
                         \begin{enumerate}
@@ -270,8 +270,8 @@
         \end{frame}	
         
         \begin{frame}{digital signals}{sampling ambiguity --- spectral domain}
-            \videowithmatlab{animateSampling}
-            \question{What are the x-axis labels for the spectrum shown above?}
+            \videowithmatlab{Sampling}
+            \question{What are the x-axis (tick) labels for the spectrum shown above?}
         \end{frame}	
         
         \begin{frame}{digital signals}{sampling theorem}
@@ -285,9 +285,8 @@
                 \end{equation*}
             \end{block}
             
-            \pause
             \bigskip
-            $\nicefrac{f_\mathrm{S}}{2}$ is sometimes referred to as the \textit{Nyquist}\footnote{\tiny Harry Nyquist, 1889--1976}-rate
+            $\nicefrac{f_\mathrm{S}}{2}$ is also referred to as the \textit{Nyquist}\footnote{\tiny Harry Nyquist, 1889--1976}-rate
         \end{frame}	
 
         \begin{frame}{digital signals}{matlab exercise}
@@ -309,7 +308,7 @@
 
         \subsection{quantization}
         \begin{frame}{digital signals}{quantization}
-        
+            \vspace{-2mm}
             \begin{itemize}
                 \item   map continuous amplitude values to pre-defined set of values
                 \item<2->   quantization steps are most frequently \textbf{equidistant}
@@ -383,13 +382,14 @@
             \end{frame}	
             
             \begin{frame}{digital signals}{quantization: SNR}
+                \vspace{-10mm}
                 \toremember{}
                 \begin{block}{signal-to-noise ratio (quantizer)}
                     \centering
                     \begin{equation*}
                         SNR = 6.02\cdot w + c_{\mathrm{S}}\quad [dB]
                     \end{equation*}
-                    \vspace{-3mm}
+                    \vspace{-5mm}
                     \begin{itemize}
                         \item	every additional bit adds app.\ \unit[6]{dB} SNR
                         \item	constant $c_{\mathrm{S}}$ depends on \textit{signal} (scaling and PDF)
@@ -422,7 +422,7 @@
                 \matlabexercise{quantization}
                 
                 \begin{enumerate}
-                    \item   load the audio file \textsl{sax\_example.wav}
+                    \item   load the audio file \textsl{sax\_example.wav}\footnote{repository: git@github.com:alexanderlerch/ACA-Slides.git}
                     \item   normalize it to a maximum magnitude of $1$
                     \item   quantize it to a wordlength of \unit[8]{bit} and \unit[4]{bit}, respectively
                     \item   listen to and compare all signals
@@ -497,7 +497,7 @@
                 y(i) = (x \ast h)(i) &:=& \sum\limits_{j=-\infty}^{\infty}x(j)h(i-j)
             \end{eqnarray*}
         \end{footnotesize}
-        \videowithmatlab{animateConvolution}
+        \videowithmatlab{Convolution}
     \end{frame}
 
         \begin{frame}\frametitle{convolution}\framesubtitle{properties}
