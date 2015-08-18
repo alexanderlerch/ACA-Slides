@@ -1,6 +1,7 @@
 function animateCorrelation()
 
-    hFigureHandle = generateFigure(10.8,6.45);
+    %hFigureHandle = generateFigure(10.8,6.45);
+    hFigureHandle = generateFigure(3*10.8,3*6.45);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
@@ -29,8 +30,8 @@ function animateCorrelation()
         r(-k+1) = rect*[tri(-k+1:end),zeros(1,-k)]';
         plot(-250:0,fliplr(r))
         axis([-250 0 0 40])
-        ylabel('r_{xy}')
-        xlabel('\eta')
+        ylabel('$r_{xy}$')
+        xlabel('$\eta$')
 
         frame = getframe(hFigureHandle);
         writeVideo(writerObj,frame);
