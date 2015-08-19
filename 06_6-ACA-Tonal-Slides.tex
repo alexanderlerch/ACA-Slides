@@ -147,44 +147,43 @@
                 \item	tonal and harmonic relations define importance and occurrence of individual pitch classes
             \end{itemize}
             }
-            \begin{enumerate}
-                \item<2->	define reference distribution for specific keys
-                \item<3->	extract average pitch chroma
-            \end{enumerate}
-            \only<2>{\vspace{-7mm}   \figwithmatlab{KeyProfiles}}
         \end{frame}
-        
         \begin{frame}{key detection}{introduction 2/2}
-            \begin{figure}
-                \begin{center}
-                \begin{picture}(60,25)
-        
-                    %boxes
-                    \put(0,10){\ovalbox{\footnotesize{\parbox{20mm}{\centering{extracted\\ pitch chroma}}}}}
-                    \put(0,20){\ovalbox{\footnotesize{\parbox{20mm}{\centering{template\\ pitch chroma}}}}}
-                    \put(27,15){\ovalbox{\footnotesize{\parbox{20mm}{\centering{distance measure}}}}}
-        
-                
-                    %diagonal
-                    \put(22.5,11){\vector(1,1){4.5}}
-                    \put(22.5,21){\vector(1,-1){4.5}}
-                    
-                    % horizontal
-                    \put(49,15.5){\vector(1,0){10}}
-        
-                    %text
-                    \put(54,16){\footnotesize{\shortstack[c]{key}}}
-        
-                \end{picture}
-                \end{center}
-            \end{figure}
-            \vspace{-10mm}
             \begin{enumerate}
-                \setcounter{enumi}{2}
-                \item	compute distance between template and extracted chroma
-                \videowithmatlab{KeyDetection}
+                \item<1->	define reference distribution for specific keys
+                    \only<1>{\figwithmatlab{KrumhanslKeyProfile}}
+                \item<2->	extract average pitch chroma
+                \item<3->	compute distance between template and extracted chroma
+                    \only<3>{            
+                    \begin{figure}
+                        \begin{center}
+                        \begin{picture}(60,25)
+                
+                            %boxes
+                            \put(0,10){\ovalbox{\footnotesize{\parbox{20mm}{\centering{extracted\\ pitch chroma}}}}}
+                            \put(0,20){\ovalbox{\footnotesize{\parbox{20mm}{\centering{template\\ pitch chroma}}}}}
+                            \put(27,15){\ovalbox{\footnotesize{\parbox{20mm}{\centering{distance measure}}}}}
+                
+                        
+                            %diagonal
+                            \put(22.5,11){\vector(1,1){4.5}}
+                            \put(22.5,21){\vector(1,-1){4.5}}
+                            
+                            % horizontal
+                            \put(49,15.5){\vector(1,0){10}}
+                
+                            %text
+                            \put(54,16){\footnotesize{\shortstack[c]{key}}}
+                
+                        \end{picture}
+                        \end{center}
+                    \end{figure}
+                    }
+                    \only<4>{\videowithmatlab{KeyDetection}}
+
             \end{enumerate}
         \end{frame}
+        
         \begin{frame}{key detection}{key templates 1/2}
                     \begin{itemize}
                         \item	\emph{Orthogonal} $\vec{\nu}_\mathrm{o}$: root note is most salient component, other components negligible
