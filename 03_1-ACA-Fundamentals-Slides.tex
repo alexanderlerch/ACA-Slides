@@ -157,11 +157,11 @@
                 \begin{itemize}
                     \item   ensemble of random series
                     \item   each series represents a \textit{sample} of the process
-                    \item   the value of the next sample is indetermined, regardless of any amount of knowledge
+                    \item   the following value is \textit{indetermined}, regardless of any amount of knowledge
                 \end{itemize}
             \end{block}
             \begin{itemize}
-                \item   special case: \textbf{stationarity}\\ all properties (such as the mean) are time invariant
+                \item   special case: \textbf{stationarity}\\ statistical properties such as the mean are time invariant
                 \item   example: white noise
             \end{itemize}
         \end{frame}
@@ -183,6 +183,7 @@
                         \item   max amplitude $0.707$
                     \end{itemize}
                 \item   plot the noise
+                \item   add the signals, plot them, and play them back
             \end{enumerate}
         \end{frame}
             
@@ -405,7 +406,7 @@
             \end{frame}		
                
             \begin{frame}{digital signals}{amplitude in DSP}
-                In many DSP scenarios we can pretend the signal to be \textit{not quantized}, as we use a high resolution floating point representation: 
+                In many DSP scenarios we can pretend the signal to be \textbf{not quantized}, as we use a high resolution floating point representation: 
                 \begin{equation*}
                     x_{\mathrm{Q}} = M_{\mathrm{G}}\cdot 2^{E_{\mathrm{G}}}
                 \end{equation*}
