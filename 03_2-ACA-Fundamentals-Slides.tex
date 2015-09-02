@@ -145,11 +145,13 @@
         \end{frame}	
 
         \begin{frame}{autocorrelation function}{definition \& properties}
-            \toremember{correlation function with the signal itself}
+            \vspace{-12mm}
+            \toremember{}
             \begin{block}{autocorrelation function properties}
                 \begin{itemize}
+                    \item   ACF is correlation function with the signal itself
                     \item	{ACF} at lag $0$:\\
-                    $r_{xx}(0,n) = 1$ if normalized, RMS otherwise
+                    $r_{xx}(0,n) = 1$ if normalized, energy otherwise
                 
                     \item	maximum:\\
                     $|r_{xx}(\eta,n)| \leq r_{xx}(0,n)$ 
@@ -167,7 +169,7 @@
             \begin{enumerate}
                 \item   implement a Matlab function that computes the ACF for an arbitrary block length
                 \item   compare results with matlab's \textsl{xcorr} function
-                \item   consider only one half of the ACF and detect that highest local max that is not the absolute max
+                \item   consider only one half of the ACF and detect the highest local max that is not the absolute max
                 \item   compute this ACF with overlapping blocks for the audio file \textsl{sax\_example.wav} 
                 \item   plot that lag of the detected maxima over blocks and discuss the results
             \end{enumerate}
@@ -203,7 +205,12 @@
             \begin{eqnarray*}
                 X(\jom) &=& \Re[X(\jom)] + \Im[X(\jom)]\\
                 &=& \underbrace{|X(\jom)|}_{\text{magnitude spectrum}} \cdot \underbrace{\Phi_\mathrm{X}(\omega)}_{\text{phase spectrum}}\\
+            %\end{eqnarray*}
+                %\pause
+            %\begin{eqnarray*}
                 \pause
+                &&\\
+                &&\\
                 \bigskip
                 |X(\jom)|  &=& \sqrt{\Re[X(\jom)]^2 + \Im[X(\jom)]^2}\\
                 \Phi_\mathrm{X}(\omega)  &=& \atan2\left(\frac{\Im[X(\jom)]}{\Re[X(\jom)]}\right)
@@ -367,13 +374,13 @@
 
 
         \begin{frame}{fourier transform}{property 7: time \& frequency scaling}
-            \vspace{-3mm}
+            \vspace{-5mm}
             \begin{eqnarray*}
                 y(t) &=& x(c\cdot t)\\ \mapsto&&\\ Y(\jom) &=& \frac{1}{|c|}X\left(j\frac{\omega}{c}\right) 
             \end{eqnarray*}
             \pause
             \begin{itemize}
-                \item[]	\textbf{derivation}
+                \item[]	\textbf{derivation} (positive $c$)
                 \begin{footnotesize}
                     \begin{eqnarray*}
                         Y(\jom) &=& \int\limits_{-\infty}^{\infty} {x(c\cdot t) \e^{-\jom t}\, dt}\nonumber\\
@@ -539,6 +546,7 @@
         \end{frame}	
 
         \begin{frame}{constant Q transform}{implementation}
+            \vspace{-5mm}
             \begin{columns}
                 \column{.4\linewidth}
                     \vspace{-5mm}
@@ -554,6 +562,7 @@
                     \begin{itemize}
                         \item   define tranformation matrix with maximum window length
                         \item   zeropad higher frequencies (left \& right)
+                        \bigskip
                         \item[$\Rightarrow$] independent definition of block and hop length
                     \end{itemize}
                     \vspace{15mm}

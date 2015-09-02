@@ -173,7 +173,8 @@
 		\end{frame}
 
 		\begin{frame}{fundamentals}{cepstrum 2/3}
-			\vspace{-4mm}
+			\vspace{-6mm}
+            \begin{footnotesize}
             \begin{eqnarray*}
 				c_x(i)	&=& \mathfrak{F}^{-1}\left\{\log\left(X(\jom)\right)\right\}\nonumber\\
                         \pause
@@ -183,7 +184,7 @@
                     \pause
 					\hat{c}_x(i_{\mathrm{s}}(n)\ldots i_{\mathrm{e}}(n)) &=& \sum\limits_{k=0}^{\nicefrac{\mathcal{K}}{2}-1}{\log\left(|X(k,n)|\right)\e^{\mathrm{j}ki\Delta\Omega}} 
 			\end{eqnarray*}
-				
+			\end{footnotesize}	
 			\vspace{-4mm}
             \figwithmatlab{Cepstrum}
 		\end{frame}
@@ -192,11 +193,12 @@
             \begin{itemize}
                 \item \textbf{summary}:
                     \begin{itemize}
-                        \item   cepstrum replaces the convolution operation with addition
-                        \item   result is the \textit{unfiltered} excitation signal plus the filter IR (both logarithmic)
+                        \item   cepstrum 'replaces' time domain convolution operation with addition
+                        \item   result is the \textit{unfiltered} excitation signal \textit{plus} the filter IR (both logarithmic)
                         \item   can be used for, e.g., \textit{spectral envelope extraction} or \textit{pitch detection}
+                        \bigskip
                         \item<2> the naming silliness knows no boundaries:\\
-                         cepstrum, quefrequency, liftering, \ldots
+                         cepstrum, quefrency, liftering, \ldots
                     \end{itemize}
             \end{itemize}
         \end{frame}
@@ -228,11 +230,12 @@
             \end{itemize}
 		\end{frame}
 		\begin{frame}{instantaneous features}{timbre: mel frequency cepstral coefficients 3/4}
-			\begin{columns}
+			\vspace{-2mm}
+            \begin{columns}[T]
                 \column{.75\textwidth}
                     \includegraphics[scale=.4]{MfccMelDct}
                 \column{.25\textwidth}
-                    mel-warped cosine functions for DCT
+                    mel-warped cosine bases for DCT
 			\end{columns}
 		\end{frame}
 		\begin{frame}{instantaneous features}{timbre: mel frequency cepstral coefficients 4/4}
@@ -288,7 +291,7 @@
             }
 		\end{frame}
 		\begin{frame}{instantaneous features}{tonalness: maximum of ACF 2/2}
-            \question{maximumdetection: how to avoid main lobe maxima?}
+            \question{maximum detection: how to avoid main lobe maxima?}
 			
 			\begin{itemize}
 				\item	minimum lag
@@ -344,33 +347,83 @@
 		\end{frame}
 
     \section[learned]{feature learning}
-        \begin{frame}{instantaneous features}{feature learning}
-            \textbf{TODO: SLIDES UNFINISHED}
+        \begin{frame}{instantaneous features}{feature learning~---~introduction}
             \begin{itemize}
-                \item   low-level features are relatively simple to compute, and possibly have only limited meaningfulness
-                \item   alternative: try to learn features from the data (usually unsupervised)
-                \item   \textbf{principle}
+                \item   \textbf{hand-crafted features}:
                     \begin{itemize}
-                        \item   put (a lot of) raw data at input, learn a way of reducing dimensionality
+                        \item   arbitrary definitions
+                        \item   simple to compute
+                        \item   mostly focus on one technical property
+                        \item   provide limited information
                     \end{itemize}
-                \item   \textbf{advantages}
+                    
+                \bigskip
+                \item<2-> \textbf{feature learning}:
+                    \begin{itemize}
+                        \item   \textit{automatically} learn features from data-set
+                    \end{itemize}
+            \end{itemize}
+		\end{frame}
+        \begin{frame}{instantaneous features}{feature learning~---~overview}
+            \begin{itemize}
+                \item   \textbf{principle}
+                    \begin{enumerate}
+                        \item   put (a lot of) raw data at input
+                        \item   learn a way of reducing dimensionality while keeping as much information as possible
+                    \end{enumerate}
+                \bigskip
+                \item<2->   \textbf{advantages}
                     \begin{itemize}
                         \item   features might contain more useful information than provided by hand-crafted features
-                        \item   no expert knowledge needed
-                        \item   possibly easier generalization
+                        \item   no expert knowledge required
+                        %\item   possibly easier generalization
                     \end{itemize}
-                \item   \textbf{disadvantages}
+                \smallskip
+                \item<3->   \textbf{disadvantages}
                     \begin{itemize}
                         \item   usually time consuming
                         \item   limited ways of controlling the type of information learned
                     \end{itemize}
             \end{itemize}
-            \bigskip
+		\end{frame}
+        \begin{frame}{instantaneous features}{feature learning~---~approaches 1/2}
             \begin{itemize}
-                \item   dictionary learning (sparse coding, nmf)
-                \item   neural networks and deep architectures (also semi-supervised and supervised)
-                \item   clustering (distance/similarity of point to cluster)
-                \item   PCA etc
+                \item   \textbf{dictionary learning} (sparse coding, non-negative matrix factorization)
+                    \begin{equation*}
+                        X = B\cdot A
+                    \end{equation*}
+                    \begin{itemize}
+                        \item[]   $X$: input signal to be modeled (often spectrogram)
+                        \item[]   $B$: dictionary/template matrix (often set of single spectra that comprise the basic building blocks of $X$)
+                        \item[]   $A$: activation matrix indicating the weight and superposition of templates 
+                    \end{itemize}
+                    \begin{itemize}
+                        \item   derive $B$,$A$, by minimizing a cost function, e.g. $||X-BA||_2$
+                    \end{itemize}
+                \item<2->[$\rightarrow$] templates are trained, activations are used as feature vector (length: number of templates)
+            \end{itemize}
+		\end{frame}
+        \begin{frame}{instantaneous features}{feature learning~---~approaches 2/2}
+            \begin{itemize}
+                \item   \textbf{clustering} 
+                    \begin{itemize}
+                        \item   find clusters in data set (e.g., from magnitude spectra or simple features)
+                        \item   store median of clusters (compare: template matrix)
+                        \smallskip
+                        \item<2->[$\rightarrow$]   features:
+                            \begin{itemize}
+                                \item   binary vector (length: number of clusters, zero except for closest cluster)
+                                \item   distance vector (distance to each cluster)
+                            \end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item<3->   neural networks and \textbf{deep architectures} 
+                    \begin{itemize}
+                        \item   stack multiple layers of simple learning blocks
+                        \item   each layer uses the output of the previous layer as input
+                        \smallskip
+                        \item<4->[$\rightarrow$]   feature: output of the highest layer
+                    \end{itemize}
             \end{itemize}
         \end{frame}
 
@@ -381,7 +434,9 @@
                 \smallskip
                 \item<2->   name 5 low level features
                 \smallskip
-                \item<3->   what would be typical algorithm parameters to extract, e.g., the \textit{spectral centroid}
+                \item<3->   what are typical feature extraction parameters 
+                \smallskip
+                \item<4->   discuss advantages and disadvantages of hand-crafted vs.\ learned features
             \end{enumerate}
         \end{frame}
 \end{document}

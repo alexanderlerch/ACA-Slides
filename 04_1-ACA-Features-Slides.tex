@@ -257,7 +257,7 @@
                     \end{footnotesize}
                 \item<3-> \textbf{kurtosis}: measure of PDF ``\textit{Gaussianity}''
                     \begin{equation*}
-                        v_{K}(n) = {\frac{1}{\sigma_x^4(n)\cdot \mathcal{I}}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{\left(\vphantom{\frac{1}{1}}x(i)-\mu_x(n)\right)^4}} - 3 
+                        v_{K}(n) = {\frac{1}{\sigma_x^4(n)\cdot \mathcal{K}}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{\left(\vphantom{\frac{1}{1}}x(i)-\mu_x(n)\right)^4}} - 3 
                     \end{equation*}
                     \begin{footnotesize}
                             \begin{itemize}
@@ -282,9 +282,12 @@
         \end{frame}
 		\begin{frame}{instantaneous features}{statistical features~---~quantiles \& quantile ranges}
 			dividing the PDF into (equal sized) subsets
-			\begin{equation*}
-				Q_x(c_p) = x\left|_{\int\limits_{-\infty}^{x}{p_x(y)\, dy} = c_p} \right.
-			\end{equation*}
+            \begin{footnotesize}
+			\begin{eqnarray*}
+				Q_\mathrm{X}(c_p) &=& \argmin\big (F_\mathrm{X}(x) \leq c_p\big)\\
+                with\quad F_\mathrm{X}(x) &=& {\int\limits_{-\infty}^{x}{p_\mathrm{x}(y)\, dy}}
+			\end{eqnarray*}
+            \end{footnotesize}
 			\figwithmatlab{PdfQuantiles}
         \end{frame}
 		\begin{frame}{instantaneous features}{statistical features~---~quantile examples}
@@ -292,14 +295,14 @@
 				\item	\textbf{median}
 						\pause
 						\begin{equation*}\label{eq:median}
-							Q_x(0.5) = x\left|_{\int\limits_{-\infty}^{x}{p_x(y)\, dy} = 0.5} \right.
+							Q_\mathrm{X}(0.5) = \argmin\big (F_\mathrm{X}(x) \leq 0.5\big)
 						\end{equation*}
-				\pause
-				\item	\textbf{quartiles}: $Q_x(0.25),\, Q_x(0.5)$, and $Q_x(0.75)$
-				\pause
-				\item	\textbf{quantile range}, e.g.
+				\bigskip
+				\item<2->	\textbf{quartiles}: $Q_\mathrm{X}(0.25),\, Q_\mathrm{X}(0.5)$, and $Q_\mathrm{X}x(0.75)$
+				\bigskip
+                \item<3->	\textbf{quantile range}, e.g.
 						\begin{equation*}
-							\Delta Q_x(0.9) = Q_x(0.95)-Q_x(0.05)
+							\Delta Q_\mathrm{X}(0.9) = Q_\mathrm{X}(0.95)-Q_\mathrm{X}(0.05)
 						\end{equation*}
 			\end{itemize}
         \end{frame}

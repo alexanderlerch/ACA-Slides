@@ -6,7 +6,7 @@ Version=4
 MainFile=..\04_1-ACA-Features-Slides.tex
 UseBibTeX=1
 UseMakeIndex=0
-ActiveProfile=LaTeX => PDF (aux)
+ActiveProfile=LaTeX => PDF
 ProjectLanguage=en
 ProjectDialect=US
 

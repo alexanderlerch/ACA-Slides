@@ -6,7 +6,7 @@ Version=4
 MainFile=..\03_2-ACA-Fundamentals-Slides.tex
 UseBibTeX=1
 UseMakeIndex=0
-ActiveProfile=LaTeX => PDF (aux)
+ActiveProfile=LaTeX => PDF
 ProjectLanguage=en
 ProjectDialect=US
 

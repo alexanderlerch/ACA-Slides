@@ -530,7 +530,7 @@
             \matlabexercise{convolution}
             
             \begin{enumerate}
-                \item   implement a moving average filter of length $\mathcal{J}$
+                \item   implement a moving average filter of length $\mathcal{J}$ ($b(j) = \frac{1}{\mathcal{J}}$)
                 		\begin{equation*}
                             y(i) = \sum\limits_{j=0}^{\mathcal{J}-1}{b(j)\cdot x(i-j)}
                         \end{equation*} 
@@ -539,7 +539,7 @@
                         \begin{equation*}
                             y(n) = (1-\alpha)\cdot x(n) + \alpha\cdot y(n-1)
                         \end{equation*}
-                \item   plot the impulse responses and magnitude transfer functions of both filters
+                \item   plot the impulse responses and magnitude transfer functions of both filters for various $\alpha$ and $\mathcal{J}$
                 \item   compare the output with matlab's \textsl{filter} function
             \end{enumerate}
         \end{frame}
