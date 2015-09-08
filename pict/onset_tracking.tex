@@ -1,0 +1,51 @@
+\begin{footnotesize}
+	\begin{picture}(100,26)
+		\setcounter{iXOffset}{0}
+		\setcounter{iYOffset}{5}
+		\setcounter{iXBlockSize}{28}
+		\setcounter{iYBlockSize}{16}
+		\setcounter{iYBlockSizeDiv2}{8}
+		\setcounter{iDistance}{8}
+
+		\put(\value{iXOffset}, 10.5)
+			{\text{{\shortstack[c]{Audio\\ Signal}}}}
+
+		\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+		\addtocounter{iXOffset}{\value{iDistance}}
+
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\vector(1,0){\value{iDistance}}}
+
+		\addtocounter{iXOffset}{\value{iDistance}}
+		\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+		
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{Novelty\\ Function}}}}
+
+		\addtocounter{iXOffset}{\value{iXBlockSize}}
+		\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\vector(1,0){\value{iDistance}}}
+
+		\addtocounter{iXOffset}{\value{iDistance}}
+		\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{Peak\\ Picking}}}}
+
+		\addtocounter{iXOffset}{\value{iXBlockSize}}
+		\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\vector(1,0){\value{iDistance}}}
+
+		\addtocounter{iXOffset}{\value{iDistance}}
+		\addtocounter{iXOffset}{-1}
+
+		%\addtocounter{iYOffset}{-2}
+		\put(\value{iXOffset}, 10.5)
+			{\text{{\shortstack[c]{Series of\\ Onset Times}}}}
+		
+	\end{picture}
+\end{footnotesize}
