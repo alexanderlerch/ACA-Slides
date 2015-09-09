@@ -361,6 +361,8 @@
                 \item<2-> \textbf{feature learning}:
                     \begin{itemize}
                         \item   \textit{automatically} learn features from data-set
+                        \item   meaning not obvious, can combine multiple properties
+                        
                     \end{itemize}
             \end{itemize}
 		\end{frame}
@@ -425,7 +427,32 @@
                         \item<4->[$\rightarrow$]   feature: output of the highest layer
                     \end{itemize}
             \end{itemize}
-        \end{frame}
+		\end{frame}
+        \begin{frame}{instantaneous features}{matlab exercise}
+            \matlabexercise{spectral centroid}
+            \begin{footnotesize}
+            \begin{enumerate}
+                \item   implement a function extracting the spectral centroid from a magnitude spectrum
+                    \begin{itemize}
+                        \item   use the following interface (output is one value)\\ \begin{scriptsize}\texttt{[v\_SC] = SpectralCentroid(MagSpec)}\end{scriptsize}
+                        \item   consider:
+                            \begin{enumerate}
+                                \item   what tests do you implement to verify your implementation
+                                \item   what additional code to avoid undefined outputs
+                            \end{enumerate}
+                    \end{itemize}
+                \item   implement a caller function reading an audio file and extracting the Spectral Centroid for each block using the function above
+                    \begin{itemize}
+                        \item   use the following interface (output is vector)\\ \begin{scriptsize}\texttt{[v\_SC,tInS] = extractSpectralCentroid(Path2AudioFile, BlockSize, HopSize)}\end{scriptsize}
+                        %\item   consider:
+                            %\begin{itemize}
+                                %\item   what to do with start and end blocks
+                                %\item   how to handle user inconsistencies (invalid path, hopsize larger than blocksize, ...)
+                            %\end{itemize}
+                    \end{itemize}
+            \end{enumerate}
+            \end{footnotesize}
+       \end{frame}
 
     \section[summary]{lecture summary}
         \begin{frame}{summary}{lecture content}
@@ -436,7 +463,9 @@
                 \smallskip
                 \item<3->   what are typical feature extraction parameters 
                 \smallskip
-                \item<4->   discuss advantages and disadvantages of hand-crafted vs.\ learned features
+                \item<4->   discuss the statement: 'MFCCs are a perceptual feature'
+                \smallskip
+                \item<5->   discuss advantages and disadvantages of hand-crafted vs.\ learned features
             \end{enumerate}
         \end{frame}
 \end{document}
