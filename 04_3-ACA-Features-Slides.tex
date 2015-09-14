@@ -61,6 +61,7 @@
             \begin{enumerate}   
                 \item   derive additional features
                 \item   aggregate existing features (e.g., one feature vector per file)
+                \item   reduce the number of features
                 \item   ensure similar scale and distribution
             \end{enumerate}
         \end{frame}
@@ -78,73 +79,117 @@
                         \item	 (anticausal) single-pole
                         \item	moving average
                     \end{itemize}
-                \smallskip
+                \bigskip
                 \item<3->   less common: non-linear combinations, e.g.
                     \begin{equation*}
                         v_{jl}(n) = v_j(n) \cdot v_l(n) 
                     \end{equation*}
             \end{itemize}
 		\end{frame}
-    \section[normalization]{feature normalization}
-		\begin{frame}{feature post-processing}{normalization 1/2}
-			problems for feature vector distances (and some classification engines)
-			\begin{itemize}
-				\item	different ranges and scaling factors
-				\item	non-symmetric distributions
-			\end{itemize}
-			\pause
-            \bigskip
-			\textbf{standard approach}
-				\begin{equation*}\label{eq:featnorm_standard}
-					v_{j,\mathrm{N}}(n) = \frac{v_j(n) - \mu_{v_j}}{\sigma_{v_j}}
-				\end{equation*}
-		\end{frame}
-		\begin{frame}{feature post-processing}{normalization 2/2}
-			\begin{itemize}
-				\item	transform feature to (app.) symmetric PDF: nonlinear function (log, exp)
-				\smallskip
-                \item<2->	normalize with median instead of mean
-                    \begin{equation}\label{eq:featnorm_median}
-                        v_{j,\mathrm{N}}(n) = \frac{v_j(n) - Q_{v_j}(0.5)}{s_{v_j}}
-                    \end{equation}
-                    \begin{equation}
-                        s_{v_j} = \sqrt{\frac{1}{\mathcal{N}}\sum\limits_{n=0}^{\mathcal{N}-1}{\big(v_j(n)-Q_{v_j}(0.5)\big)^2}}
-                    \end{equation}
-                \smallskip
-                \item<3->   alternatives: normalize range to $[0\ldots 1]$
-            \end{itemize}
-             
-		\end{frame}
 
     \section[aggregation]{feature aggregation}
 		\begin{frame}{feature post-processing}{feature aggregation}
-			calculate ``summary features'' from feature series: \textit{subfeatures}
-
-			\begin{itemize}
-				\item<2->	example subfeatures (often statistical descriptors):
-                    \begin{itemize}
-                        \item   mean, median, max
-                        \item   standard deviation
-                        \item   custom: anything that might be meaningful --- periodicity, slope, \ldots
+            \begin{itemize}
+                \item calculate \textit{summary features} from feature series: \textbf{subfeatures}
+                    %\begin{itemize}
+                        %\item<2->	 subfeature examples:
+                            \begin{itemize}
+                                \item   \textit{statistical descriptors}
+                                    \begin{itemize}
+                                        \item   mean, median, max, standard deviation
+                                    \end{itemize}
+                                        
+                                \item   \textit{hand crafted }
+                                    \begin{itemize}
+                                        \item anything that might be meaningful --- periodicity, slope, \ldots
+                                    \end{itemize}
+                            %\end{itemize}
                     \end{itemize}
-                \smallskip
-                \item<3->   potentially hierarchical process:
+                \bigskip
+                \item<3->   could be \textbf{hierarchical} process:
                     \begin{enumerate}
-                        \item   split feature series in overlapping blocks (\textit{texture window}, length a few seconds)
+                        \item   \textit{texture window}:\\ split feature series in overlapping blocks of a few seconds length
                         \item   compute subfeatures per block
                         \item   compute subfeatures of subfeature series
                     \end{enumerate}
+                \bigskip
+                \item<4->   note: also compare \textit{pooling} operation in machine learning
+            \end{itemize}
+		\end{frame}
+
+    \section[normalization]{feature normalization}
+		\begin{frame}{feature post-processing}{normalization 1/2}
+            \begin{itemize}
+                \item   raw features have
+                    \begin{itemize}
+                        \item	different ranges and scaling factors
+                        \item	possibly non-symmetric distributions
+                    \end{itemize}
                 \smallskip
-                \item<4->   also compare \textit{pooling} operation in machine learning
-			\end{itemize}
+                \item[$\Rightarrow$]<2->    potential problems with vector distances and some classifiers
+                \bigskip
+                \item[$\Rightarrow$]<3->    \textbf{feature normalization}
+                    \begin{itemize}
+                        \item \textit{standard approach} (zscore) \begin{flushright}$v_{j,\mathrm{N}}(n) = \frac{v_j(n) - \mu_{v_j}}{\sigma_{v_j}}$\end{flushright}
+                        \item \textit{alternative} \begin{flushright}$  v_{j,\mathrm{N}}(n) = \frac{v_j(n) - Q_{v_j}(0.5)}{s_{v_j}}$\end{flushright}
+                        with \begin{flushright}$ s_{v_j} = \sqrt{\frac{1}{\mathcal{N}}\sum\limits_{n=0}^{\mathcal{N}-1}{\big(v_j(n)-Q_{v_j}(0.5)\big)^2}}$\end{flushright}
+                     \end{itemize}
+            \end{itemize}
+			
+		\end{frame}
+		\begin{frame}{feature post-processing}{normalization 2/2}
+			\begin{itemize}
+                \item    \textbf{alternative normalizations}
+                    \begin{itemize}
+                        \item   normalize range to $[0\ldots 1]$
+                    \end{itemize}
+				\bigskip
+                \item<2->	\textbf{symmetrize pdf shape} 
+                    \begin{itemize}
+                        \item Box-Cox transform
+                            \begin{eqnarray*}
+                                v^{(\lambda)} = \left\{ 
+                                                \begin{array}{ll} 
+                                                    \frac{v^\lambda - 1}{\lambda}, 		& \lambda \neq 0\\ 
+                                                    \vphantom{\frac{1}{1}} 	\log(v), 	& \lambda = 0 \\ 
+                                                \end{array} 
+                                                \right. 
+                            \end{eqnarray*}
+                        \item   numerical methods \ldots
+                    \end{itemize}
+            \end{itemize}
+             
 		\end{frame}
         
     \section[reduction]{feature dimensionality reduction}
-		\begin{frame}{feature post-processing}{dimensionality reduction --- dimensionality issues 1/2}
+		\begin{frame}{feature post-processing}{dimensionality reduction ---introduction}
+            \begin{itemize}
+                \item   \textbf{problem}
+                    \begin{itemize}
+                        \item   many ML cannot cope properly with large amounts of irrelevant features
+                        \item   ML algorithms might degrade in performance
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{advantages}
+                    \begin{itemize}
+                        \item   reducing storage requirements
+                        \item   reducing training complexity
+                        \item   defying the curse of dimensionality
+                    \end{itemize}
+                \bigskip
+                \item<3->   \textbf{disadvantages}
+                    \begin{itemize}
+                        \item   additional workload for reduction
+                        \item   adding an additional layer of model complexity
+                    \end{itemize}
+            \end{itemize}
+		\end{frame}
+		\begin{frame}{feature post-processing}{dimensionality reduction --- dimensionality issues introduction}
             problems of high-dimensional data:
             \begin{itemize}
                 \item   increase in run-time
                 \item   overfitting
+                \item   curse of dimensionality
                 \item   number of required samples (training set size)
             \end{itemize}
             \pause
@@ -156,7 +201,7 @@
 				\includegraphics[scale=.2]{graph/curseofdimensionality}
 			\end{figure}
 		\end{frame}
-		\begin{frame}{feature post-processing}{dimensionality reduction --- dimensionality issues 2/2}
+		\begin{frame}{feature post-processing}{dimensionality reduction --- dimensionality issues 2/3}
             \begin{itemize}
                 \item   \textbf{overfitting}:
                     \begin{itemize}
@@ -165,7 +210,7 @@
                         \item[$\Rightarrow$]<2-> model cannot be estimated properly
                     \end{itemize}
                     
-                    \only<1-3>{
+                    \only<1-2>{
                     \figwithref{Overfitting}{\href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}}
                     %\begin{figure}
                         %\centering
@@ -181,11 +226,27 @@
                                 \item   \ldots
                             \end{itemize}
                     \end{itemize}
-                    \toremember{\textit{rule of thumb}:\\ don't bother if training set smaller than $\mathcal{F}^2$}
-                \bigskip\item<5-> \textbf{curse of dimensionality}: increasing dimensionality leads to sparse training data
+                    \pause
+                    \toremember{\textit{rule of thumb}:\\ don't bother with training sets smaller than $\mathcal{F}^2$}
+			\end{itemize}
+		\end{frame}
+		\begin{frame}{feature post-processing}{dimensionality reduction --- dimensionality issues 3/3}
+            \begin{itemize}
+                \item \textbf{curse of dimensionality}: 
                     \begin{itemize}
+                        \item   increasing dimensionality leads to sparse training data
                         \item   neighborhoods of data points become less concentrated
                         \item   model tends to be harder to estimate in higher-dimensional space
+                        \item   applies to distance-based algorithms
+                    \end{itemize}
+                \item   example
+                    \begin{itemize}
+                        \item   uniformly distributed data 
+                        \item   identify region required for \textbf{1\% of data}
+                        \item   2-D: 10\% of x-axis/y-axis
+                        \item   3-D: 21.5\% of x-axis/y-axis/z-axis
+                        \item   10-D: 63\%
+                        \item   100-D: 95\%
                     \end{itemize}
                 %\pause
                 %\item   \textbf{training set density}: 
@@ -228,7 +289,7 @@
 			\end{itemize}
 		\end{frame}
 		\begin{frame}{feature post-processing}{manual feature selection}
-            \begin{columns}
+            \begin{columns}[T]
             \column{.2\linewidth}
                 example scatter plots of pairs of features in a multi-class scenario
             \column{.8\linewidth}
@@ -241,20 +302,60 @@
 		\end{frame}
         
 		\begin{frame}{feature post-processing}{feature subset selection: introduction}
-			feature subset selection: 
-			\begin{itemize}
-				\item	\textbf{wrapper methods}:\\ use the ``classifier'' itself to evaluate feature performance
-				\pause
-				\item	\textbf{filter methods}:\\ use an objective function
-			\end{itemize}
+			\begin{enumerate}
+				\item	\textbf{wrapper methods}:
+                    \begin{itemize}
+                        \item \textit{description}
+                            \begin{itemize}
+                                \item  use the ``classifier'' itself to evaluate feature performance
+                            \end{itemize}
+                         \item<2-> \textit{advantages}
+                            \begin{itemize}
+                                \item   taking into account feature dependencies
+                                \item   model dependency
+                            \end{itemize}
+                         \item<3-> \textit{disadvantages}
+                            \begin{itemize}
+                                \item   complexity
+                                \item   risk of overfitting
+                            \end{itemize}
+                  \end{itemize}
+				
+				\bigskip
+                \item<4->	\textbf{filter methods}:
+                    \begin{itemize}
+                        \item \textit{description}
+                            \begin{itemize}
+                                \item  use an objective function
+                            \end{itemize}
+                         \item<5-> \textit{advantages}
+                            \begin{itemize}
+                                \item   easily scalable
+                                \item   independent of classification algorithm
+                            \end{itemize}
+                         \item<6-> \textit{disadvantages}
+                            \begin{itemize}
+                                \item   no interaction with classifier
+                                \item   no feature dependencies
+                            \end{itemize}
+                    \end{itemize}
+			\end{enumerate}
 		\end{frame}
 
         \begin{frame}{excursion}{simple classifier~---~nearest neighbor}
-            \begin{itemize}
-                \item	    \textbf{training}: store the feature vector (with class label) of each training sample
-                \item<2->	\textbf{classification}: for a new file/feature vector, detect the \textit{closest training vector} and choose its class as result
-            \end{itemize}
             \vspace{-3mm}
+            \begin{itemize}
+                \item	    \textbf{training}:
+                    \begin{itemize}
+                        \item store feature vector (\& class label) of each training sample
+                    \end{itemize}
+                \item<2->	\textbf{classification}:
+                    \begin{itemize}
+                        \item for new file/feature vector, detect \textit{closest training point}
+                        \item   choose closest point's class as result
+                    \end{itemize}
+            \end{itemize}
+            \vspace{-4mm}
             \only<1>{
                 \figwithmatlab{Scatter}
             }
@@ -264,87 +365,119 @@
         \end{frame}
         
 		\begin{frame}{feature post-processing}{feature subset selection: wrapper methods 1/2}
-			\begin{itemize}
-				\item	\textbf{single variable classification}: evaluate each feature individually, choose the top $N$:\\
-					subsets to test: $\mathcal{F}$
-					
-					\pause
-					potential problems
-					\begin{itemize}
-						\item	inter-feature correlation is not considered
-						\item	feature combinations are not considered
-					\end{itemize}
-				\pause
-				\item	\textbf{brute force subset selection}: evaluate all possible feature combinations, choose the optimal:\\
-					subsets to test: $2^\mathcal{F}$
-			\end{itemize}
+			\begin{enumerate}
+				\item	\textbf{single variable classification}:
+                    \begin{itemize}
+                        \item   \textit{procedure}
+                            \begin{itemize}
+                                \item   evaluate each feature individually
+                                \item   choose the top $N$
+                            \end{itemize}
+                        \item<2->  \textit{complexity} 
+                            \begin{itemize}
+                                \item   subsets to test: $\mathcal{F}$
+                            \end{itemize}
+                        \item<3->   \textit{challenges}
+                            \begin{itemize}
+                                \item	inter-feature correlation is not considered
+                                \item	feature combinations are not considered
+                            \end{itemize}
+                    \end{itemize}
+				\bigskip 
+                \item<4->	\textbf{brute force subset selection}
+                    \begin{itemize}
+                        \item   \textit{procedure}
+                            \begin{itemize}
+                                \item   evaluate all possible feature combinations
+                                \item   choose the optimal combination
+                            \end{itemize}
+                        \item<5->  \textit{complexity} 
+                            \begin{itemize}
+                                \item   subsets to test: $2^\mathcal{F}$
+                            \end{itemize}
+                        \item<6->   \textit{challenges}
+                            \begin{itemize}
+                                \item	best solution, but
+                                \item	not feasible with large number of features
+                            \end{itemize}
+                    \end{itemize}
+			\end{enumerate}
 		\end{frame}
 		\begin{frame}{feature post-processing}{feature subset selection: wrapper methods 2/2}
-			\begin{itemize}
-				\item	\textbf{sequential forward selection}: increase number of features step by step with the most promising feature
+            \vspace{-2mm}
+			\begin{enumerate}
+                \setcounter{enumi}{3}
+				\item	\textbf{sequential forward selection}
+                    \begin{itemize}
+                        \item   \textit{procedure}
+                            \begin{enumerate}
+                                \item	init: empty feature subset $\mathcal{V}_\mathrm{s} = {\emptyset}$
+                                \item<2->	find feature $v_j$ maximizing objective function
+                                            \begin{equation*}
+                                                v_j = \argmax_{\forall j | v_j \notin \mathcal{V}_\mathrm{s}} J({\mathcal{V}_\mathrm{s}} \bigcup v_j) 
+                                            \end{equation*}
+                                \item<3->	add feature $v_j$ to $\mathcal{V}_\mathrm{s}$ 
+                                \item<4->	go to step $2$
+                            \end{enumerate}
+                        \item<5->   \textit{challenges}
+                            \begin{itemize}
+                                \item	in theory, the optimal solution may be missed
+                            \end{itemize}
+                    \end{itemize}
 					
-					\pause
-					\begin{enumerate}
-						\item	init: empty feature subset $\mathcal{V}_\mathrm{s} = {\emptyset}$
-						\pause
-						\item	find feature $v_j$ maximizing objective function
-									\begin{equation}
-										v_j = \argmax_{\forall j | v_j \notin \mathcal{V}_\mathrm{s}} J({\mathcal{V}_\mathrm{s}} \bigcup v_j) 
-									\end{equation}
-						\pause						
-						\item	add feature $v_j$ to $\mathcal{V}_\mathrm{s}$ 
-						\pause						
-						\item	go to step $2$
-					\end{enumerate}
-				\pause
-				\item	\textbf{sequential backward elimination}: decrease number of features step by step by discarding the least promising feature
-				
-				\pause
-					\begin{enumerate}
-						\item	init: full feature set
-						\pause
-						\item	find feature $v_j$ with the least impact on objective function
-						\pause
-						\item	discard feature $v_j$
-						\pause
-						\item	go to step $2$
-					\end{enumerate}
-			\end{itemize}
+				\bigskip
+                \item<6->	\textbf{sequential backward elimination}
+                    \begin{itemize}
+                        \item   \textit{procedure}
+                            \begin{enumerate}
+                                \item	init: full feature set
+                                \item<7->	find feature $v_j$ with the least impact on objective function
+                                \item<8->	discard feature $v_j$
+                                \item<9->	go to step $2$
+                            \end{enumerate}
+                        \item<10->   \textit{challenges}
+                            \begin{itemize}
+                                \item	complex with a large number of features
+                            \end{itemize}
+                    \end{itemize}
+			\end{enumerate}
 		\end{frame}
-		\begin{frame}{feature post-processing}{feature subset selection: filter methods (PCA 1/2)}
-			principal component analysis: map features to new coordinate system 
-			\begin{equation}\label{eq:pca_an}
-				\vec{u}(n) = \mat{T}^\mathrm{T}\cdot\vec{v}(n) 
-			\end{equation}
-
-			\pause
-			transformation matrix ($\mathcal{F}\times\mathcal{F}$)	
-			\begin{equation}
-				\mat{T} =   \left[ 
-					  			\begin{array}{cccc}
-								\vec{c}_0 & \vec{c}_1 & \ldots & \vec{c}_{\mathcal{F}-1}\\
-								\end{array}  
-							\right] 
-			\end{equation}
-
-			\pause
-			properties
-			\begin{itemize}
-			\item	$\vec{c}_i$ point in the direction of  highest \emph{variance}
-			\pause
-			\item	variance concentrated in as few output components as possible
-			\pause
-			\item	$\vec{c}_i$ orthogonal
-					\begin{equation}
-						\vec{c}_i^\mathrm{T}\cdot \vec{c}_j = 0\quad \forall\enspace i \neq j
-					\end{equation}
-			\item	transformation is invertible
-					\begin{equation}\label{eq:pca_syn}
-						\vec{v}(n) = \mat{T}\cdot\vec{u}(n)
-					\end{equation}
-			\end{itemize}
+		\begin{frame}{feature post-processing}{feature space transformation: PCA introduction}
+            \begin{itemize}
+                \item   \textbf{objective}
+                    \begin{itemize}
+                        \item   map features to new coordinate system
+                            \begin{equation*}\label{eq:pca_an}
+                                \vec{u}(n) = \mat{T}^\mathrm{T}\cdot\vec{v}(n) 
+                            \end{equation*}
+                            \begin{itemize}
+                                \item   $\vec{u}(n)$: transformed features (same dimension as $\vec{v}(n)$)
+                                \item   $\mat{T}$: transformation matrix ($\mathcal{F}\times\mathcal{F}$)	
+                                    \begin{equation*}
+                                        \mat{T} =   \left[ 
+                                                        \begin{array}{cccc}
+                                                        \vec{c}_0 & \vec{c}_1 & \ldots & \vec{c}_{\mathcal{F}-1}\\
+                                                        \end{array}  
+                                                    \right] 
+                                    \end{equation*}
+                            \end{itemize}
+                    \end{itemize}
+                \item<2->   \textbf{properties}
+                    \begin{itemize}
+                        \item	$\vec{c}_0$ points in the direction of  highest \emph{variance}
+                        \item<3->	variance concentrated in as few output components as possible
+                        \item<4->	$\vec{c}_i$ orthogonal
+                                \begin{equation*}
+                                    \vec{c}_i^\mathrm{T}\cdot \vec{c}_j = 0\quad \forall\enspace i \neq j
+                                \end{equation*}
+                        \item<5->	transformation is invertible
+                                \begin{equation*}\label{eq:pca_syn}
+                                    \vec{v}(n) = \mat{T}\cdot\vec{u}(n)
+                                \end{equation*}
+                    \end{itemize}
+            \end{itemize}
 		\end{frame}
-		\begin{frame}{feature post-processing}{feature subset selection: filter methods (PCA 2/2)}
+		\begin{frame}{feature post-processing}{feature space transformation: PCA visualization}
 			\figwithmatlab{Pca}
 			
 			\vspace{-5mm}
@@ -352,9 +485,9 @@
 			calculation of the transformation matrix
 			\begin{enumerate}
 				\item	compute covariance matrix $\mat{R}$
-					\begin{equation}
+					\begin{equation*}
 						\mat{R} = \frac{1}{\mathcal{F}-1}\cdot \left(\vec{v} - \vec{\mu}_v\right)\left(\vec{v}^\mathrm{T} - \vec{\mu}^\mathrm{T}_v\right)
-					\end{equation}
+					\end{equation*}
 				\item	choose eigenvectors as axes for the new coordinate system
 			\end{enumerate}
 		\end{frame}
@@ -410,7 +543,7 @@
                 \smallskip
                 \item<4->   describe two ways of selecting features
                 \smallskip
-                \item<5->   what does PCA and what are the advantages
+                \item<5->   what is PCA and what are the advantages
             \end{enumerate}
         \end{frame}
 \end{document}
