@@ -50,7 +50,7 @@
                         \begin{itemize}
                             \item   e.g., with monophonic pitch tracking
                         \end{itemize}
-                    \item<2->	remove this frequency and related frequency components from signal
+                    \item<2->	remove this frequency and related frequency components
                         \begin{itemize}
                             \item   e.g., with subtraction
                         \end{itemize}
@@ -100,7 +100,7 @@
 		\begin{enumerate}
 			\item	auditory pitch tracking:
 				\begin{equation*}
-					r_{zz} (c,n,\eta) = \sum\limits_{\eta = 0}^{\mathcal{K}-1}{z_c(i)\cdot z_c(i+\eta)}
+					r_{zz} (c,n,\eta) = \sum\limits_{i = 0}^{\mathcal{K}-1}{z_c(i)\cdot z_c(i+\eta)}
 				\end{equation*}
 			\pause
 			\item	detect most likely frequency for all bands
@@ -205,8 +205,6 @@
 	\end{frame}
     
 	\begin{frame}{polyphonic pitch tracking}{NMF}
-	\end{frame}
-	\begin{frame}{polyphonic pitch tracking}{statistical approaches}
 	\end{frame}
             
    \section[summary]{lecture summary}

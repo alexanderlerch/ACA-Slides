@@ -162,7 +162,7 @@
 		\end{frame}
         
     \section[reduction]{feature dimensionality reduction}
-		\begin{frame}{feature post-processing}{dimensionality reduction ---introduction}
+		\begin{frame}{feature post-processing}{dimensionality reduction --- introduction}
             \begin{itemize}
                 \item   \textbf{problem}
                     \begin{itemize}
@@ -243,10 +243,12 @@
                     \begin{itemize}
                         \item   uniformly distributed data 
                         \item   identify region required for \textbf{1\% of data}
-                        \item   2-D: 10\% of x-axis/y-axis
-                        \item   3-D: 21.5\% of x-axis/y-axis/z-axis
-                        \item   10-D: 63\%
-                        \item   100-D: 95\%
+                            \begin{itemize}
+                                \item   2-D: 10\% of x-axis/y-axis
+                                \item   3-D: 21.5\% of x-axis/y-axis/z-axis
+                                \item   10-D: 63\%
+                                \item   100-D: 95\%
+                            \end{itemize}
                     \end{itemize}
                 %\pause
                 %\item   \textbf{training set density}: 
@@ -531,7 +533,16 @@
 		        	\right]         \end{equation}   }
             
 		\end{frame}
-	
+		\begin{frame}{feature post-processing}{feature space transformation: PCA exercise}
+            \matlabexercise{compute the principle components}
+                \begin{enumerate}
+                    \item   extract 3 features: Spectral Centroid, Spectral Flux, and RMS
+                    \item   normalize the features
+                    \item   compute the principle components (\texttt{pca()} statistics toolbox)
+                    \item   analyze the transformation matrix and the variances --- what can you learn about the input features
+                \end{enumerate}
+		\end{frame}
+
     \section[summary]{lecture summary}
         \begin{frame}{summary}{lecture content}
             \begin{enumerate}

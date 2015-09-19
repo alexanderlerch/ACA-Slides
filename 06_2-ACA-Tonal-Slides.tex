@@ -48,21 +48,24 @@
         }
 	\end{frame}
 	
-	\begin{frame}{fundamental frequency detection}{monophonic --- pre-processing}
-		examples for pre-processing steps
-		\begin{itemize}
-			\item	\textbf{downmixing}:\\ identical fundamental frequency in all channels
-			\pause
-			\item	\textbf{low-pass filter}:\\ cut off high partials
-			\pause
-			\item	\textbf{high-pass filter}:\\ remove DC and unnecessary bass frequencies
-			\pause
-			\item	(\textbf{pre-whitening}:)\\ remove spectral envelope to receive time domain pulse train
-			\item	\ldots
-		\end{itemize}
-	\end{frame}
+	%\begin{frame}{fundamental frequency detection}{monophonic --- pre-processing}
+		%examples for pre-processing steps
+		%\begin{itemize}
+			%\item	\textbf{downmixing}:\\ identical fundamental frequency in all channels
+			%\pause
+			%\item	\textbf{low-pass filter}:\\ cut off high partials
+			%\pause
+			%\item	\textbf{high-pass filter}:\\ remove DC and unnecessary bass frequencies
+			%\pause
+			%\item	(\textbf{pre-whitening}:)\\ remove spectral envelope to receive time domain pulse train
+			%\item	\ldots
+		%\end{itemize}
+	%\end{frame}
     
     \section[time domain]{monophonic pitch tracking}
+        \begin{frame}{pitch detection}{brainstorm}
+            \question{what are your ideas for detecting the pitch}
+        \end{frame}
 
 	
 	\begin{frame}{fundamental frequency detection}{monophonic --- zero crossing rate}
@@ -88,23 +91,22 @@
 	\end{frame}
 	
 	\begin{frame}{fundamental frequency detection}{monophonic --- auto correlation function}
-		\begin{equation*}
+		\vspace{-2mm}
+        \begin{equation*}
 			r_{xx}(\eta,n) = \sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)-\eta}{x(i)\cdot x(i+\eta)}
 		\end{equation*}
 		\pause
 		$\Rightarrow$ \textbf{detect maximum location}
 		
-		\pause
 		variants:
 		\begin{itemize}
-			\item	center clipping
+			\item<3->	center clipping
 					\begin{figure}
 					  	\centering
 						\input{pict/pitch_centerclipping}
 					  	\label{fig:centerclipping}
 					\end{figure}
-			\pause
-			\item	pre-whitening: LP, spectral envelope estimation															
+			\item<4->	pre-whitening: LP, spectral envelope estimation															
 		\end{itemize}
 	\end{frame}
 	
@@ -173,7 +175,7 @@
 	
 	\begin{frame}{fundamental frequency detection}{monophonic --- ACF of magnitude spectrum}
 		\begin{equation*}
-			r_{XX}(\eta,n) = \sum\limits_{k=0}^{\mathcal{K}/2-1}{|X(k,n)|\cdot |X(k+\eta,n)|}
+			r_{XX}(\eta,n) = \sum\limits_{k=-\mathcal{K}/2}^{\mathcal{K}/2-1}{|X(k,n)|\cdot |X(k+\eta,n)|}
 		\end{equation*}
 		\pause
 		$\Rightarrow$ \textbf{detect maximum location}
