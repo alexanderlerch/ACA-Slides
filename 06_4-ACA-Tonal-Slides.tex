@@ -20,8 +20,8 @@
                     \begin{itemize}
                         \item<2->   fundamental frequency detection in polyphonic signals
                             \begin{itemize}
-                                \item   historic methods
-                                \item   non-negative matrix factorization (NMF)
+                                \item   iterative subtraction
+                                %\item   non-negative matrix factorization (NMF)
                                 \item   other approaches
                             \end{itemize}
                     \end{itemize}
@@ -31,13 +31,16 @@
     \section[intro]{introduction}
         \begin{frame}{polyphonic pitch tracking}{problem statement}
             \begin{itemize}
-                \item monophonic detection:
+                \item \textbf{monophonic} detection:
                     \begin{itemize}
                         \item   exactly one fundamental frequency with sinusoidals at multiples of $f_0$ (harmonics)
                     \end{itemize}
-                \item   polyphonic detection:
+                \bigskip
+                \item   \textbf{polyphonic} detection:
                     \begin{itemize}
                         \item   multiple/unknown number of fundamental frequencies with harmonics
+                        \item   number of voices might change over time
+                        \item   complex mixture
                     \end{itemize}
             \end{itemize}
         \end{frame}
@@ -123,6 +126,7 @@
 		\end{enumerate}
 	\end{frame}
 	
+    \section[other]{other methods}
 	\begin{frame}{polyphonic pitch tracking}{exhaustive search}
 		\begin{enumerate}
 			\item	define set of all possible fundamental frequencies
@@ -205,6 +209,7 @@
 	\end{frame}
     
 	\begin{frame}{polyphonic pitch tracking}{NMF}
+        see special topic slides
 	\end{frame}
             
    \section[summary]{lecture summary}
@@ -213,8 +218,8 @@
                 \item    name three basic approaches to detect the fundamental frequency (monophonic) and discuss strengths and weaknesses
                 \smallskip
                 \item<2->  what are the typical challenges for polyphonic pitch trackers?
-                \smallskip
-                \item<3->    what are potential problems when using NMF for pitch detection
+                %\smallskip
+                %\item<3->    what are potential problems when using NMF for pitch detection
             \end{enumerate}
         \end{frame}
 \end{document}

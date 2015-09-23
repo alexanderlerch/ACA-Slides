@@ -70,21 +70,17 @@
 	
 	\begin{frame}{fundamental frequency detection}{monophonic --- zero crossing rate}
 		\begin{itemize}
-			\item	\textbf{number of zero crossings per block}
+			\item	\textbf{number of zero crossings per block} (inaccurate)
 				\begin{equation*}
 					T_0(n) = \frac{2\cdot \big(i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n)\big)}{f_{\mathrm{S}}\cdot\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{\left|\sign \left[x(i)\right]-\sign \left[x(i-1)\right]\right|}} 
 				\end{equation*}
-			\pause
-			\item	\textbf{average period length}
+			\item<2->	\textbf{average period length}
 				\begin{equation*}
-					T_0(n) = \frac{2}{\mathcal{Z}-1}\sum\limits_{z=0}^{\mathcal{Z}-2}{\Delta t_\mathrm{ZC}(z)}.
+					T_0(n) = \frac{2}{\mathcal{Z}-1}\sum\limits_{j=0}^{\mathcal{Z}-2}{\Delta t_\mathrm{ZC}(j)}.
 				\end{equation*}
-			\pause
-			\item	\textbf{variants}:
-				\pause
+			\item<3->	\textbf{variants}:
 				\begin{itemize}
 					\item	create histogram with distances and choose maximum
-					\pause
 					\item	use not (only) ZC but distance between local extrema
 				\end{itemize}
 		\end{itemize}
@@ -92,40 +88,40 @@
 	
 	\begin{frame}{fundamental frequency detection}{monophonic --- auto correlation function}
 		\vspace{-2mm}
-        \begin{equation*}
-			r_{xx}(\eta,n) = \sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)-\eta}{x(i)\cdot x(i+\eta)}
-		\end{equation*}
-		\pause
-		$\Rightarrow$ \textbf{detect maximum location}
+        \begin{itemize}
+            \item find \textbf{lag of ACF maximum}
+                \begin{equation*}
+                    r_{xx}(\eta,n) = \sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)-\eta}{x(i)\cdot x(i+\eta)}
+                \end{equation*}
+            \item<2->     \textbf{variants}:
+                \begin{itemize}
+                    \item<3->	center clipping
+                            \begin{figure}
+                                \centering
+                                \input{pict/pitch_centerclipping}
+                                \label{fig:centerclipping}
+                            \end{figure}
+                    \item<4->	pre-whitening: LP, spectral envelope estimation															
+                \end{itemize}
+        \end{itemize}
 		
-		variants:
-		\begin{itemize}
-			\item<3->	center clipping
-					\begin{figure}
-					  	\centering
-						\input{pict/pitch_centerclipping}
-					  	\label{fig:centerclipping}
-					\end{figure}
-			\item<4->	pre-whitening: LP, spectral envelope estimation															
-		\end{itemize}
+            
 	\end{frame}
 	
 	\begin{frame}{fundamental frequency detection}{monophonic --- average magnitude difference function}
-		\begin{equation*}
-			\mathrm{AMDF}_{xx}(\eta,n) = \frac{1}{i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n)+1}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)-\eta}{|x(i)- x(i+\eta)|} 
-		\end{equation*}
-		\pause
-		$\Rightarrow$ \textbf{detect minimum location}
-		
-		\pause
-		\vspace{3mm}
-		variants:
-		\begin{itemize}
-			\item	AMDF-weighted ACF
-				\begin{equation*}
-					r_{xx}'(\eta,n) = \frac{r_{xx}(\eta,n)}{\mathrm{AMDF}_{xx}(\eta,n) + 1} 
-				\end{equation*}
-		\end{itemize}
+        \begin{itemize}
+            \item find \textbf{lag of AMDF minimum}
+                \begin{equation*}
+                    \mathrm{AMDF}_{xx}(\eta,n) = \frac{1}{i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n)+1}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)-\eta}{|x(i)- x(i+\eta)|} 
+                \end{equation*}
+            \item<2-> \textbf{variants}:
+                \begin{itemize}
+                    \item	AMDF-weighted ACF
+                        \begin{equation*}
+                            r_{xx}'(\eta,n) = \frac{r_{xx}(\eta,n)}{\mathrm{AMDF}_{xx}(\eta,n) + 1} 
+                        \end{equation*}
+                \end{itemize}
+        \end{itemize}
 	\end{frame}
 	
     \section[frequency domain]{monophonic pitch tracking}
@@ -227,6 +223,16 @@
 	
 	\begin{frame}{fundamental frequency detection}{monophonic --- auditory-motivated pitch tracking 2/2}
 		\figwithmatlab{AuditoryPitchTracking}
+	\end{frame}
+    
+	\begin{frame}{fundamental frequency detection}{monophonic --- matlab exercise}
+		\matlabexercise{monophonic pitch tracking}
+        \begin{enumerate}
+            \item   implement HPS (blocksize 2048, hopsize 512, order 5)
+            \item   implement AMDF  (blocksize 2048, hopsize 512)
+            \item   plot the pitch results (MIDI pitch) for \texttt{sax\_example.wav} from the repository
+            \item   discuss the differences in the result. what are typical errors for the implemented algorithms 
+        \end{enumerate}
 	\end{frame}
 	
 
