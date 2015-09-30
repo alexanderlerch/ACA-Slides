@@ -57,16 +57,16 @@
         \end{frame}
         \begin{frame}{pitch detection resolution}{time domain (e.g., ACF)}
             period length quantized to multiple of inter-sample interval 
-            \begin{equation}
+            \begin{equation*}
                 T_\mathrm{Q} = j\cdot T_{\mathrm{S}}
-            \end{equation}
+            \end{equation*}
             \figwithmatlab{TimeDomainPitchError}
         \end{frame}
         \begin{frame}{pitch detection resolution}{frequency domain (e.g., HPS)}
 		frequency quantized to multiple of inter-bin interval
-		 \begin{equation}
+		 \begin{equation*}
 		 	f_\mathrm{Q} = k\cdot\frac{f_{\mathrm{S}}}{\mathcal{K}} 
-		 \end{equation}
+		 \end{equation*}
 		 \only<2>
 		 {
 			\begin{footnotesize}\begin{table}
@@ -93,11 +93,13 @@
         \begin{frame}{pitch detection resolution}{simple fix}
             \begin{itemize}
                 \item   \textbf{assumption}: pitch is stationary with minor deviations over time
+                \bigskip
                 \item<2-> \textbf{simple solution}: 
                     \begin{itemize}
                         \item   average pitch observations over blocks
-                        \item   the more blocks are averaged, the more result will approximate the \textit{real} (population) mean
+                        \item   the more blocks are averaged, the more result might approximate the \textit{real} (population) mean
                     \end{itemize}
+                \bigskip
                 \item<3->   \textbf{problems}:
                     \begin{enumerate}
                         \item   adds significant latency (non-realtime)
@@ -116,27 +118,25 @@
             \end{itemize}
         \end{frame}
         \begin{frame}{pitch detection resolution}{time domain workarounds}
-            virtually increase frequency resolution by
-            \bigskip
+            \vspace{-2mm}
+            virtually increase time resolution by upsampling
+            \figwithmatlab{SampleResolution}
+            
             \begin{enumerate}
-                \item   upsample input signal (cubic, sinc, etc.)
+                \item   the input signal
                     \begin{itemize}
-                        \item   significant workload increase!
-                        \item   TODO: ADD FIGURE
+                        \item   significant workload increase
                     \end{itemize}
-                \bigskip
-                \item<2->   interpolate detection function (ACF)
+                \item<2->   the detection function (ACF)
                     \begin{itemize}
                         \item   may be less accurate
-                        \item   TODO: ADD FIGURE
                     \end{itemize}
             \end{enumerate}
         \end{frame}
 	
     \section[frequency domain]{improving the pitch tracking resolution}
         \begin{frame}{pitch detection resolution}{frequency domain workarounds}
-            virtually increase frequency resolution by
-            \bigskip
+            virtually increase frequency resolution by upsampling
             \begin{enumerate}
                 \item<1->   increasing the FFT window length (decreases time resolution)
                 \bigskip
@@ -148,9 +148,10 @@
         \begin{frame}{pitch detection resolution}{spectrum interpolation}
             
             \begin{enumerate}
-                \item<1->   zeropad in the time domain\\ TODO: ADD FIGURE
-                \item<2->   use standard interpolation on the magnitude spectrum\\ TODO: ADD FIGURE
+                \item<1->   zeropad in the time domain
+                \item<1->   use standard interpolation on the magnitude spectrum
             \end{enumerate}
+            \figwithmatlab{FreqResolution}
         \end{frame}
         \begin{frame}{pitch detection resolution}{frequency reassignment: relation of phase and frequency 1/2}
            \videowithmatlab{Phasor} 
@@ -173,7 +174,7 @@
                     \draw[->] (-1.5cm,0cm) -- (1.5cm,0cm) node[right,fill=white] {$\Re(X)$};
                     \draw[->] (0cm,-1.5cm) -- (0cm,1.5cm) node[above,fill=white] {$\Im(X)$};
         
-                    \draw[fill=yellow] (0,0) -- (30:.85cm) arc (30:60:.85cm);
+                    \draw[fill=gtgold] (0,0) -- (30:.85cm) arc (30:60:.85cm);
                     \draw (45:1.2cm) node {$\Delta\Phi$};
                     \draw[->] (0cm,0cm) -- (0.8660cm,0.5cm);
                     \draw[->] (0cm,0cm) -- (0.5cm,0.8660cm);
@@ -241,7 +242,7 @@
                             \item	estimate unwrapped bin phase
                                     \begin{footnotesize}
                                     \begin{equation*}\label{eq:phi_est}
-                                        \hat{\Phi}(k,n) = \Phi(k,n-1) + \frac{2\pi k}{\mathcal{K}}\mathcal{H} 
+                                        \hat{\Phi}(k,n) = \Phi(k,n-1) + \underbrace{2\pi k\cdot\frac{\mathcal{H}}{\mathcal{K}}}_{=\omega_k\cdot\frac{\mathcal{H}}{f_\mathrm{s}}} 
                                     \end{equation*}
                                     \end{footnotesize}
 
@@ -294,20 +295,38 @@
             \matlabexercise{implementation of the instantaneous frequency computation}
             
             \begin{itemize}
-                \item   implement the computation of the instantaneous frequency per block as described int he previous slides
+                \item   implement the computation of the instantaneous frequency per block as described in the previous slides
                 \item   test for several input sinusoidals with various input frequencies
                     \begin{itemize}
                         \item   detect the local maxima and compare the instantaneous frequency at these bins with both the bin frequency and the original frequency
                     \end{itemize}
             \end{itemize}
         \end{frame}
-	%\begin{frame}{frequency detection}{frequency domain resolution: instantaneous frequency 2/2}
-		%estimate of instantaneous frequency at bin $k$
-		%\begin{footnotesize}		%\end{footnotesize}
-		%
-		%\pause	%\end{frame}
             
    \section[summary]{lecture summary}
+        \begin{frame}{pitch detection resolution}{frequency reassignment: applications}
+            \begin{itemize}
+                \item \textbf{improving frequency resolution}
+                    \begin{itemize}
+                        \item e.g., for detecting signal frequencies when using a filter bank
+                    \end{itemize}
+                \smallskip
+                \item<2-> \textbf{improving phase extrapolation}
+                    \begin{itemize}
+                        \item e.g., for accurate phase estimation in the \textit{phase vocoder}
+                    \end{itemize}
+                \smallskip
+                \item<3-> \textbf{grouping spectral bins}
+                    \begin{itemize}
+                        \item spectral leakage sidelobes have the same instantaneous frequency
+                    \end{itemize}
+                \smallskip
+                \item<4-> \textbf{tonalness detection}
+                    \begin{itemize}
+                        \item   the instantaneous frequency should be reasonably close to the bin frequency for the component to be considered tonal
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
         \begin{frame}{summary}{lecture content}
             \begin{enumerate}
                 \item       detection resolution is quantized for most pitch detection approaches
@@ -322,7 +341,7 @@
                 \item<3->   phase-based frequency detection allows an accurate frequency estimate in the spectrum if
                     \begin{itemize}
                         \item   the spectrum is sparse
-                        \item   the hop size is small compared to the spectrum
+                        \item   the hop size is small compared to the block size of the FFT
                     \end{itemize}
             \end{enumerate}
         \end{frame}

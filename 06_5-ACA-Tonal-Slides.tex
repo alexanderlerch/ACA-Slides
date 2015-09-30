@@ -19,11 +19,10 @@
                 \bigskip
                 \item<2->   \textbf{lecture content}
                     \begin{itemize}
-                        \item<2->   fundamental frequency detection in polyphonic signals
+                        \item<2->   tuning frequency detection in polyphonic signals
                             \begin{itemize}
-                                \item   historic methods
-                                \item   non-negative matrix factorization (NMF)
-                                \item   other approaches
+                                \item   problem description
+                                \item   summary general approaches
                             \end{itemize}
                     \end{itemize}
             \end{itemize}
@@ -91,16 +90,17 @@
                     \item   the temperament is unknown
                     \item   expressive intonation is unknown
                 \end{itemize}
-                \pause
-            \item   \textbf{typical processing steps}
+                
+            \bigskip
+            \item<2->   \textbf{typical processing steps}
                 \begin{enumerate}
-                    \item   estimate fundamental frequencies
-                    \pause
-                    \item   calculate deviation  $\Delta C$ from the nearest (equally tempered) pitch frequency in Cents
-                    \pause
-                    \item   average all deviations:  $\rightarrow \Delta \bar{C}$ 
-                    \pause
-                    \item   compute the tuning frequency from the average distance:
+                    \item<2->   estimate fundamental frequencies
+                    
+                    \item<3->   calculate deviation  $\Delta C$ from the nearest (equally tempered) pitch frequency in Cents
+                    
+                    \item<4->   average all deviations:  $\rightarrow \Delta \bar{C}$ 
+                    
+                    \item<5->   compute the tuning frequency from the average distance:
                         \begin{equation*}
                             \hat{f}_{A4} = \unit[440]{Hz} \cdot 2^\frac{\Delta \bar{C}}{1200}
                         \end{equation*}
@@ -179,7 +179,7 @@
                     \vspace{-5mm}
                     \figwithmatlab{Rprop}
 				}
-				\uncover<4>{
+				\only<4>{
                     \videowithmatlab{FilterbankAdaptation}
 				}
 		\end{enumerate}
