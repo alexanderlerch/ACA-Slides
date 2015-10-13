@@ -168,12 +168,14 @@
                         \pause
                         \item	modern scores: indication of overall tempo in \unit{BPM}
                     \end{itemize}
+                \smallskip
                 \item<2->	\textbf{bar}
                     \begin{itemize}
                         \item	score equivalent of perceptual meter
                         \pause
                         \item	begin of bar is marked by a vertical line
                     \end{itemize}
+                \smallskip
                 \item<3->	\textbf{time signature}
                     \begin{itemize}
                         \item	conveys length of bar
@@ -182,6 +184,7 @@
                                 \includegraphics[scale=.5]{onset_timesigs}
                             \end{flushright}}
                     \end{itemize}
+                \smallskip
                 \item<4->	\textbf{note value}
                             \only<4->{\begin{flushright}
                                 \vspace{-5mm}
@@ -206,6 +209,7 @@
                         \item	measure of probability for new events/signal change over time	
                     \end{itemize}
                 
+                \bigskip
                 \item<3->	\textbf{peak picking}
                     \begin{itemize}
                         \item	identify the most likely locations for onsets
@@ -219,6 +223,7 @@
                         \item	detection function
                         \item	difference function
                     \end{itemize}
+                \bigskip
                 \item<2->	\textbf{extraction}
                     \begin{enumerate}
                         \item<2->	extract features
@@ -229,22 +234,24 @@
             \end{itemize}
         \end{frame}
         \begin{frame}{onset detection}{novelty function examples 1/2}
-            \begin{itemize}
+            \begin{enumerate}
                 \item	\textbf{time domain}
                     \begin{itemize}
                         \item	extract time domain envelope
                         \item<2->	calculate the slope
                     \end{itemize}
                     \only<1-2>{\figwithmatlab{Onset}}
+                \bigskip
                 \item<3->	\textbf{pitch-based}: evaluate pitch changes\footfullcite{collins_using_2005}
                         \begin{figure}[t]
                             \centering
                             \includegraphics[scale=.25]{graph/pitch_onset}
                         \end{figure}
-            \end{itemize}
+            \end{enumerate}
         \end{frame}
         \begin{frame}{onset detection}{novelty function examples 2/2}
-            \begin{itemize}
+            \begin{enumerate}   
+                \setcounter{enumi}{2}
                 \item	\textbf{STFT-based}: compute block difference 
                     \begin{itemize}
                         \item	\textit{flux}
@@ -281,7 +288,7 @@
                             \end{figure}
                         }
                     \end{itemize}
-            \end{itemize}
+            \end{enumerate}
         \end{frame}
         \begin{frame}{onset detection}{novelty function: variants}
             \begin{itemize}
@@ -310,7 +317,7 @@
                         \item<2->	local maximum \& salient peak
                         \item<3->	higher than minimum likelihood
                         \item<4->	not too close to maxima with higher likelihood
-                        \item<5->	other possibilities: high attack slope, distance to prev minimum, \ldots
+                        \item<5->	other options: high attack slope, distance to prev min, \ldots
                     \end{itemize}
             \end{itemize}
         \end{frame}
@@ -336,14 +343,16 @@
             }
         \end{frame}
         \begin{frame}{onset detection}{evaluation}
-            \question{how do you properly evaluate a tempo detection or beat tracking system}
+            \question{how do you properly evaluate an onset detection system}
             \begin{itemize}
                 \item   methodology
+                \smallskip
                 \item   ground truth
                     \begin{itemize}
                         \item   how to get/generate
                         \item   necessary annotations
                     \end{itemize}
+                \smallskip
                 \item   metrics
                     \begin{itemize}
                         \item   how to measure the accuracy of your system
@@ -365,10 +374,10 @@
         \begin{frame}{tempo detection and beat tracking}{introduction}
             \begin{itemize}
                 \item \textbf{objectives}
-                    \begin{itemize}
+                    \begin{enumerate}
                         \item	find the tempo from the novelty function/onsets
                         \item	find the beat locations
-                    \end{itemize}
+                    \end{enumerate}
                 \bigskip
                 \item<2-> \textbf{systematic problems}:
                     \begin{enumerate}
@@ -490,11 +499,13 @@
             \question{how do you properly evaluate a tempo detection or beat tracking system}
             \begin{itemize}
                 \item   methodology
+                \smallskip
                 \item   ground truth
                     \begin{itemize}
                         \item   how to get/generate
                         \item   necessary annotations
                     \end{itemize}
+                \smallskip
                 \item   metrics
                     \begin{itemize}
                         \item   how to measure the accuracy of your system
