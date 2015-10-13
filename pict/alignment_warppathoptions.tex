@@ -1,0 +1,64 @@
+\begin{footnotesize}
+				\begin{picture}(50,30)
+                    \setlength\fboxsep{0pt}
+					
+					\setcounter{iXBlockSize}{5}
+					\setcounter{iYBlockSize}{5}
+					%\setcounter{iYBlockSizeDiv2}{2}
+					%\setcounter{iDistance}{8}
+
+                    \setcounter{i}{1}
+                    \setcounter{iXOffset}{0}
+                    \whiledo{\value{i}<5}
+					{
+                        \setcounter{iYOffset}{0}
+                        \setcounter{j}{1}
+                        \whiledo{\value{j}<5}
+                        {
+                            \put(\value{iXOffset}, \value{iYOffset})
+                                {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}
+                            \addtocounter{iYOffset}{\value{iYBlockSize}}
+                            \stepcounter{j}
+                        }
+                        \addtocounter{iXOffset}{\value{iXBlockSize}}
+                        \stepcounter{i}
+                    }
+					\put(5, 10)
+                        {\colorbox{gray!40}{\framebox(\value{iXBlockSize}, \value{iYBlockSize}){}}}
+					\put(7.5, 12.5)
+                        {{\vector(2,-1){10}}}
+					\put(7.5, 12.5)
+                        {{\vector(1,-1){5}}}
+					\put(7.5, 12.5)
+                        {{\vector(1,-2){5}}}
+
+                    \setcounter{i}{1}
+                    \setcounter{iXOffset}{25}
+                    \whiledo{\value{i}<5}
+					{
+                        \setcounter{iYOffset}{0}
+                        \setcounter{j}{1}
+                        \whiledo{\value{j}<5}
+                        {
+                            \put(\value{iXOffset}, \value{iYOffset})
+                                {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}
+                            \addtocounter{iYOffset}{\value{iYBlockSize}}
+                            \stepcounter{j}
+                        }
+                        \addtocounter{iXOffset}{\value{iXBlockSize}}
+                        \stepcounter{i}
+                    }
+					\put(30, 10)
+                        {\colorbox{gray!40}{\framebox(\value{iXBlockSize}, \value{iYBlockSize}){}}}
+					\put(32.5, 12.5)
+                        {{\line(1,0){5}}}
+					\put(32.5, 12.5)
+                        {{\vector(1,-1){5}}}
+					\put(37.5, 12.5)
+                        {{\vector(1,-1){5}}}
+					\put(32.5, 7.5)
+                        {{\vector(1,-1){5}}}
+					\put(32.5, 12.5)
+                        {{\line(0,-1){5}}}
+				\end{picture}
+\end{footnotesize}

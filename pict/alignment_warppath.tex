@@ -1,0 +1,51 @@
+\begin{footnotesize}
+				\begin{picture}(30,30)
+                    \setlength\fboxsep{0pt}
+					\setcounter{iXOffset}{10}
+					\setcounter{iXBlockSize}{5}
+					\setcounter{iYBlockSize}{5}
+					%\setcounter{iYBlockSizeDiv2}{2}
+					%\setcounter{iDistance}{8}
+
+                    \setcounter{i}{1}
+                    \whiledo{\value{i}<5}
+					{
+                        \setcounter{iYOffset}{10}
+                        \setcounter{j}{1}
+                        \whiledo{\value{j}<5}
+                        {
+                            \put(\value{iXOffset}, \value{iYOffset})
+                                {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}
+                            \addtocounter{iYOffset}{\value{iYBlockSize}}
+                            \stepcounter{j}
+                        }
+                        \addtocounter{iXOffset}{\value{iXBlockSize}}
+                        \stepcounter{i}
+                    }
+                    \setcounter{iXOffset}{12}
+                    \setcounter{iYOffset}{26}
+                    \setcounter{i}{1}
+                    \whiledo{\value{i}<5}
+					{
+                        \put(\value{iXOffset}, 6)
+                            {\arabic{i}}
+                        \put(6,\value{iYOffset})
+                            {\arabic{i}}
+                        \addtocounter{iYOffset}{-\value{iYBlockSize}}
+                        \addtocounter{iXOffset}{\value{iXBlockSize}}
+                        \stepcounter{i}
+                    }
+					\put(20, 3)
+						{\text{$n_\mathrm{A}$}}
+					\put(0, 20)
+						{\text{$n_\mathrm{B}$}}
+					\put(15, 20)
+                        {\colorbox{gray!40}{\framebox(\value{iXBlockSize}, \value{iYBlockSize}){}}}
+					\put(17.5, 22.5)
+                        {{\vector(1,0){5}}}
+					\put(17.5, 22.5)
+                        {{\vector(1,-1){5}}}
+					\put(17.5, 22.5)
+                        {{\vector(0,-1){5}}}
+				\end{picture}
+\end{footnotesize}
