@@ -58,14 +58,14 @@
 
             \begin{itemize}
                 \item   clusters of musical similarity?
-                \item[$\rightarrow$]<2->             hard to answer in general, there are many \textbf{systematic problems}
-                    \begin{itemize}
-                        \item<3->	\textbf{non-agreement on taxonomies}
-                        \item<4->   \textbf{genre label scope}: song, album, artist, piece of a song
-                        \item<5->	\textbf{ill-defined genre labels}: geographic (\textit{indian music}), historic (\textit{baroque}), technical (\textit{barbershop}), instrumentation (\textit{symphonic music}), usage (\textit{christmas songs})
-                        \item<6->	\textbf{taxonomy scalability}: genres and subgenres evolve over time
-                        \item<7->	\textbf{non-orthogonality}: several genres for one piece of music
-                    \end{itemize}
+                \item[$\rightarrow$]<2->             hard to answer in general, there are many\\ \textbf{systematic problems}
+                    \begin{enumerate}
+                        \item<4->	\textbf{non-agreement on taxonomies}
+                        \item<5->   \textbf{genre label scope}: song, album, artist, piece of a song
+                        \item<6->	\textbf{ill-defined genre labels}: geographic (\textit{indian music}), historic (\textit{baroque}), technical (\textit{barbershop}), instrumentation (\textit{symphonic music}), usage (\textit{christmas songs})
+                        \item<7->	\textbf{taxonomy scalability}: genres and subgenres evolve over time
+                        \item<8->	\textbf{non-orthogonality}: several genres for one piece of music
+                    \end{enumerate}
 
             \end{itemize}
             
@@ -152,38 +152,33 @@
             \end{itemize}
         \end{frame}
 
-        \begin{frame}{musical genre classification}{features}
+        \begin{frame}{musical genre classification}{instantaneous features}
             \begin{itemize}
                 \item	spectral features (\textbf{timbre}):
                 
-                    \pause
                     Spectral Centroid, MFCCs, Spectral Flux, \ldots
-                \pause
-                \item	pitch features (\textbf{tonal}):
+                \smallskip
+                \item<2->	pitch features (\textbf{tonal}):
                 
-                    \pause
                     pitch chroma distribution/change, \ldots
-                \pause
-                \item	rhythm features (\textbf{temporal}):
+                \smallskip
+                \item<3->	rhythm features (\textbf{temporal}):
                 
-                    \pause
                     onset density, beat histogram features, \ldots
-                \pause
-                \item	statistical features (\textbf{technical}):
+                \smallskip
+                \item<4->	statistical features (\textbf{technical}):
                 
-                    \pause
                     standard deviation, skewness, zero crossings, \ldots
-                \pause
-                \item	\textbf{intensity} features:
+                \smallskip
+                \item<5->	\textbf{intensity} features:
                 
-                    \pause
                     level variation, number of ``pauses'', \ldots
             \end{itemize}	
         \end{frame}
 
         \begin{frame}{musical genre classification}{feature extraction}
             \begin{enumerate}
-                \item	extract instantaneous features
+                \item	extract \textbf{instantaneous features}
                         \only<1>{
                             \vspace{-5mm}
                             \begin{flushright}
@@ -192,17 +187,17 @@
                             \vspace{-7mm}
                         }
                 \smallskip
-                \item<2->	compute derived features
+                \item<2->	compute \textbf{derived features} (derivative, filtered)
                 \smallskip
-                \item<3->	compute long term features \& subfeatures per texture window (length?)
+                \item<3->	compute \textbf{long term features} \& subfeatures per texture window
                 \smallskip	
-                \item<4->	(compute subfeatures per file)
+                \item<4->	compute \textbf{subfeatures} per file
                 \smallskip
-                \item<5->   normalize subfeatures
+                \item<5->   \textbf{normalize} subfeatures
                 \smallskip
-                \item<6->    select or transform subfeatures
+                \item<6->   (select or) \textbf{transform} subfeatures
                 \smallskip
-                \item<7->	feature vector $\rightarrow$ classifier input
+                \item<7->	feature vector $\rightarrow$ \textbf{classifier input}
                             \only<7->{
                             \vspace{-5mm}
                             \begin{flushright}
@@ -233,15 +228,16 @@
                         \item	mid channel energy vs.\ side channel energy
                         \item	spectral channel differences
                     \end{itemize}
-                \item	the same features at higher semantic levels:
+                \bigskip
+                \item<2->	features at \textbf{higher semantic levels}:
                     \begin{itemize}
                         \item   tempo, structure, harmonic complexity, instrumentation
                     \end{itemize}
             \end{itemize}
         \end{frame}
 
-        \begin{frame}{musical genre classification}{classifier: introduction}
-            supervised machine learning
+    \section[classifiers]{quick and dirty introduction into simple classifiers}
+        \begin{frame}{musical genre classification}{classification: general steps}
             \begin{enumerate}
                 \item	\textbf{define training set}: annotated results
                 \smallskip
@@ -251,32 +247,41 @@
                 \smallskip
                 \item<4->	\textbf{evaluate} classifier with test set
                 \smallskip
-                \item<5->	\textbf{adjust} classifier settings, return to 4.
+                \item<5->	(\textbf{adjust} classifier settings, return to 4.)
             \end{enumerate}
         \end{frame}
         \begin{frame}{musical genre classification}{classifier: rules of thumb}
             \begin{itemize}
-                \item	training set size vs.\ number of features
+                \item   \textbf{training set}
                     \begin{itemize}
-                        \item	training set too small $\Rightarrow$ \textit{overfitting}
-                        \item	feature number too large $\Rightarrow$ \textit{overfitting}
+                        \item	training set size vs.\ number of features
+                            \begin{itemize}
+                                \item	training set too small $\Rightarrow$ \textit{overfitting}
+                                \item	feature number too large $\Rightarrow$ \textit{overfitting}
+                            \end{itemize}
+                        \item<2->	training set \textbf{too noisy} $\Rightarrow$ \textit{underfitting}
+                        \item<3->	training set \textbf{not representative} $\Rightarrow$ \textit{bad classification performance}
                     \end{itemize}
-                \item<2->	training set \textbf{too noisy} $\Rightarrow$ \textit{underfitting}
-                \item<3->	training set \textbf{not representative} $\Rightarrow$ \textit{bad classification performance}
-                \item<4->	\textbf{poor classifier} $\Rightarrow$ \textit{bad classification performance}
+                \item<4->   \textbf{classifier}
                     \begin{itemize}
-                        \item	different classifier
+                        \item<4->	\textbf{poor classifier} $\Rightarrow$ \textit{bad classification performance}
+                            \begin{itemize}
+                                \item	different classifier
+                            \end{itemize}
                     \end{itemize}
-                \item<5->	\textbf{poor features} $\Rightarrow$ \textit{bad classification performance}
+                \item<5->   \textbf{features}
                     \begin{itemize}
-                        \item	feature selection
-                        \item	new, better features
-                    \end{itemize}
-                \item<6->	features \textbf{not normalized} $\Rightarrow$ possibly \textit{bad classification performance}
-                    \begin{itemize}
-                        \item	feature range
-                        \item	feature mean
-                        \item	feature distribution
+                        \item<5->	\textbf{poor features} $\Rightarrow$ \textit{bad classification performance}
+                            \begin{itemize}
+                                \item	feature selection
+                                \item	new, better features
+                            \end{itemize}
+                        \item<6->	features \textbf{not normalized} $\Rightarrow$ possibly \textit{bad classification performance}
+                            \begin{itemize}
+                                \item	feature range
+                                \item	feature mean
+                                \item	feature distribution
+                            \end{itemize}
                     \end{itemize}
             \end{itemize}
         \end{frame}
@@ -288,19 +293,15 @@
                         \item	otherwise, same requirements
                     \end{itemize}
                 
+                \bigskip
                 \item<2->	example: \textbf{$N$-fold cross validation}
                     \begin{enumerate}
-                        \item	split training set into $N$ parts (randomly, but preferably identical number per class)
-                        \pause
-                        \item	select one part as test set
-                        \pause
-                        \item	train the classifier with all observations from remaining $N-1$ parts
-                        \pause
-                        \item	compute the classification rate for the test set
-                        \pause
-                        \item	repeat until all $N$ parts have been tested
-                        \pause
-                        \item	overall result: \textit{average} classification rate
+                        \item<2->	split training set into $N$ parts (randomly, but preferably identical number per class)
+                        \item<3->	select one part as test set
+                        \item<4->	train the classifier with all observations from remaining $N-1$ parts
+                        \item<5->	compute the classification rate for the test set
+                        \item<6->	repeat until all $N$ parts have been tested
+                        \item<7->	overall result: \textit{average} classification rate
                     \end{enumerate}
             \end{itemize}
         \end{frame}
@@ -335,7 +336,7 @@
             \begin{itemize}
                 \item	\textbf{training}:
                     \begin{itemize}
-                        \item   map features to high dimensional space (plot from)
+                        \item   map features to high dimensional space
                             \figwithref{SVM}{\href{https://en.wikipedia.org/wiki/Support\_vector\_machine}{https://en.wikipedia.org/wiki/Support\_vector\_machine}}
                         \item   find separating hyperplane (linear classification) through maximum distance of support vectors (data points)
                     \end{itemize}
@@ -347,12 +348,15 @@
         \begin{frame}{musical genre classification}{results}
             \begin{itemize}
                 \item	classification results depend on training set, test set, and number of classes
+                \smallskip
                 \item<2->	typical ranges: 10 classes $\Rightarrow$ 50--80\%
-                \item<3->	note: results vary largely with dataset
+                \smallskip
+                \item<3->	note: results vary largely between datasets
                     \begin{itemize}
                         \item   ill-defined genre boundaries
-                        \item   non-uniform distributed classes
+                        \item   non-uniformly distributed classes
                         \item   overfitting through songs from same album or artist
+                        \item   \ldots
                     \end{itemize}
             \end{itemize}
         \end{frame}
@@ -398,7 +402,7 @@
 
         \begin{frame}{musical genre classification}{speech/music classification example: training set}
             \begin{itemize}
-                \item	use \textbf{training set} annotated as speech and music:
+                \item	use \textbf{dataset} annotated as speech and music:
                     \begin{itemize}
                         \item	requirements
                             \begin{itemize}
@@ -411,29 +415,31 @@
                                 \item	119 music files
                             \end{itemize}
                     \end{itemize}
-                \item	extract the features for the training set
+                \bigskip
+                \item	extract the features for the dataset
             \end{itemize}
         \end{frame}
 
-        \begin{frame}{musical genre classification}{speech/music classification example: evaluation}
-            \begin{itemize}
-                \item 
-                    \textbf{problem}: 
-                        \begin{itemize}
-                            \item   classifier has to be tested with observations \textit{unknown} during training
-                            \item   since annotation is tedious, datasets are often not large enough to split in training and test set
-                        \end{itemize}
-                \item<2-> 	\textbf{solution}: \textit{N-Fold Cross Validation}
-                    \begin{enumerate}
-                        \item	split training set into $N$ parts (randomly, but identical number per class)
-                        \item<3->	select one part as test set
-                        \item<4->	train the classifier with all observations from \textit{remaining} $N-1$ parts
-                        \item<5->	compute the classification rate for the \textit{test set}
-                        \item<6->	repeat until all $N$ parts have been tested
-                        \item<7->	overall result: \textit{average} classification rate
-                    \end{enumerate}
-            \end{itemize}
-        \end{frame}
+        %\begin{frame}{musical genre classification}{speech/music classification example: evaluation}
+            %\begin{itemize}
+                %\item 
+                    %\textbf{problem}: 
+                        %\begin{itemize}
+                            %\item   classifier has to be tested with observations \textit{unknown} during training
+                            %\item   since annotation is tedious, datasets are often not large enough to split in training and test set
+                        %\end{itemize}
+                %\bigskip
+                %\item<2-> 	\textbf{solution}: \textit{N-Fold Cross Validation}
+                    %\begin{enumerate}
+                        %\item	split training set into $N$ parts (randomly, but identical number per class)
+                        %\item<3->	select one part as test set
+                        %\item<4->	train the classifier with all observations from \textit{remaining} $N-1$ parts
+                        %\item<5->	compute the classification rate for the \textit{test set}
+                        %\item<6->	repeat until all $N$ parts have been tested
+                        %\item<7->	overall result: \textit{average} classification rate
+                    %\end{enumerate}
+            %\end{itemize}
+        %\end{frame}
 
         \begin{frame}{musical genre classification}{speech/music classification example: results (kNN)}
             \begin{itemize}

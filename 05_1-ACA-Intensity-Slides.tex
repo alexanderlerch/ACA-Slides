@@ -1,7 +1,7 @@
 % move all configuration stuff into one file so we can focus on the content
 \input{common}
 
-\subtitle{Part 4.3: Feature Post-Processing}
+\subtitle{Part 5.1: Intensity}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -44,12 +44,12 @@
                 \item[]<2-> \question{terms and definitions}
                 \vspace{-3mm}
                  \begin{itemize}
-                    \item	intensity
                     \item	magnitude
-                    \item	peak
+                    \item	intensity
                     \item	envelope
                     \item	level
                     \item	volume
+                    \item	velocity
                     \item	loudness
                  \end{itemize}
             \end{itemize}
@@ -108,6 +108,7 @@
                     \begin{itemize}
                         \item	equal-sized steps on the decibel scale not perceived as equal-sized loudness steps
                     \end{itemize}
+                \bigskip
                 \item<2>  perceptual loudness depends on
                     \begin{itemize}
                         \item	frequency
@@ -154,14 +155,12 @@
                 \input{eq/TimeRms}
             \end{equation*}
             \only<2>{
-                \question{discuss the feature}
                 \begin{itemize}
-                    \item   how would you describe its 'meaning'
                     \item   value of this feature for the hypothetical prototype signals
                         \begin{itemize}
                             \item   silence
-                            \item   rect.\ white noise (Amplitude $A$)
                             \item   sinusoidal (Amplitude $A$)
+                            %\item   rect.\ white noise (Amplitude $A$)
                         \end{itemize}
                 \end{itemize}
             }
@@ -218,18 +217,6 @@
                 v_{\mathrm{Peak}}(n) = \max_{i_{\mathrm{s}}(n) \leq i \leq i_{\mathrm{e}}(n)}{|x(i)|} 
             \end{equation*}
             \only<2>{
-                \question{discuss the feature}
-                \begin{itemize}
-                    \item   how would you describe its 'meaning'
-                    \item   value of this feature for the hypothetical prototype signals
-                        \begin{itemize}
-                            \item   silence
-                            \item   rect.\ white noise (Amplitude $A$)
-                            \item   sinusoidal (Amplitude $A$)
-                        \end{itemize}
-                \end{itemize}
-            }
-            \only<3>{
                 \vspace{-3mm}
                 \figwithref{FeaturesTimePeakEnvelope}{matlab source: matlab/displayFeatures.m}
             }
@@ -307,6 +294,15 @@
                 }
             \end{itemize}
             }
+        \end{frame}
+
+        \begin{frame}{intensity, magnitude \& loudness}{derived features}
+            \begin{itemize}
+                \item   number or ratio of pauses
+                \item   dynamic range
+                \item   statistical features from (RMS) histogram
+                \item   \ldots
+            \end{itemize}
         \end{frame}
                 
 
