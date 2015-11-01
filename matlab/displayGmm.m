@@ -1,4 +1,4 @@
-function displayPca()
+function displayGmm()
 
     addpath(fullfile(docroot,'techdoc','creating_plots','examples'))
 
