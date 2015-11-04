@@ -75,8 +75,8 @@
                         \item   \textbf{procedure}:
                             \begin{enumerate}
                                 \item	\textit{initialization}:\\ randomly select $K$ points in the feature space as initialization.
-                                \item<2->	\textit{update}:\\ compute mean/centroid for each cluster.
-                                \item<3->	\textit{assignment}:\\ assign each observation to the cluster with the mean/centroid of the closest cluster.
+                                \item<2->	\textit{assignment}:\\ assign each observation to the cluster with the mean/centroid of the closest cluster.
+                                \item<3->	\textit{update}:\\ compute mean/centroid for each cluster.
                                 \item<4->	\textit{iteration}:\\ go to step $2$ until the clusters converge.
                             \end{enumerate}
                     \end{itemize}
@@ -85,12 +85,34 @@
         \begin{frame}{audio similarity}{K-Means clustering example}
             \setcounter{i}{0}
             \setcounter{j}{1}
-            \whiledo{\value{i}<5}
+            \whiledo{\value{i}<6}
             {
                 \only<\value{j}>{\figwithref{KMeans-\arabic{i}}{matlab source: matlab/displayKMeans.m}}
                 \stepcounter{i}
                 \stepcounter{j}
             }
+            \only<1>{
+                \begin{itemize}
+                    \item   data points
+                \end{itemize}
+                }
+            \only<2>{
+                \begin{itemize}
+                    \item   init
+                    \item   assignment
+                \end{itemize}
+                }
+            \only<3-5>{
+                \begin{itemize}
+                    \item   update centroids
+                    \item   assignment
+                \end{itemize}
+                }
+            \only<6>{
+                \begin{itemize}
+                    \item   convergence
+                \end{itemize}
+                }
         \end{frame}
         \begin{frame}{audio similarity}{visualization in a 2D space}
             \begin{itemize}

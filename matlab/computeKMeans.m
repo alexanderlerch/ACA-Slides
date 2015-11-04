@@ -10,13 +10,14 @@ function [clusterIdx,state] = computeKMeans(fFeatureMatrix, K, numMaxIter, prevS
         state = updateState(fFeatureMatrix,...
             round(rand(1,size(fFeatureMatrix,2))*(K-1))+1, K);
     end
-    range   = [min(fFeatureMatrix,[],2) max(fFeatureMatrix,[],2)];
+    range       = [min(fFeatureMatrix,[],2) max(fFeatureMatrix,[],2)];
+    clusterIdx  = assignClusterLabels(fFeatureMatrix,state);
     
     for i=1:numMaxIter
-        clusterIdx  = assignClusterLabels(fFeatureMatrix,state);
         prevState   = state;
         state = updateState(fFeatureMatrix,clusterIdx,K);
         state = reinitState(state, clusterIdx, K, range);
+        clusterIdx  = assignClusterLabels(fFeatureMatrix,state);
         if (max(sum(abs(state.m-prevState.m)))==0)
             break;
         end
