@@ -487,8 +487,8 @@
 			calculation of the transformation matrix
 			\begin{enumerate}
 				\item	compute covariance matrix $\mat{R}$
-					\begin{equation*}
-						\mat{R} = \frac{1}{\mathcal{F}-1}\cdot \left(\vec{v} - \vec{\mu}_v\right)\left(\vec{v}^\mathrm{T} - \vec{\mu}^\mathrm{T}_v\right)
+                    \begin{equation*}
+						\mat{R} = \mathcal{E}\lbrace(V-\mathcal{E}\lbrace V\rbrace)(V-\mathcal{E}\lbrace V\rbrace)\rbrace%\frac{1}{\mathcal{F}-1}\cdot \left(\vec{v} - \vec{\mu}_v\right)\left(\vec{v}^\mathrm{T} - \vec{\mu}^\mathrm{T}_v\right)
 					\end{equation*}
 				\item	choose eigenvectors as axes for the new coordinate system
 			\end{enumerate}
