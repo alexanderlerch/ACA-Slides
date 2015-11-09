@@ -1,0 +1,76 @@
+\setcounter{iXOffset}{0}
+\setcounter{iYOffset}{100}
+\setcounter{iXBlockSize}{30}
+\setcounter{iYBlockSize}{10}
+\setcounter{iDistance}{5}
+\setcounter{iYBlockSizeDiv2}{5}
+
+\begin{picture}(30,100)
+
+    \put(-15, 93)
+        {\text{\shortstack[c]{Audio\\ Signal}}}
+    
+    \addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+    \addtocounter{iXOffset}{-\value{iDistance}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(1,0){\value{iDistance}}}
+    \addtocounter{iXOffset}{\value{iDistance}}
+    \addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {\only<2>{\textbf}{\shortstack[c]{STFT}}}}
+
+    \addtocounter{iXOffset}{15}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(0,-1){\value{iDistance}}}
+    \addtocounter{iXOffset}{-15}
+    \addtocounter{iYOffset}{-\value{iYBlockSize}}
+    \addtocounter{iYOffset}{-\value{iDistance}}
+    
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {\only<2>{\textbf}{\shortstack[c]{Power Spectrum}}}}
+
+    \addtocounter{iXOffset}{15}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(0,-1){\value{iDistance}}}
+    \addtocounter{iXOffset}{-15}
+    \addtocounter{iYOffset}{-\value{iYBlockSize}}
+    \addtocounter{iYOffset}{-\value{iDistance}}
+    
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {\only<3>{\textbf}{\shortstack[c]{Filterbank}}}}
+
+    \addtocounter{iXOffset}{15}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(0,-1){\value{iDistance}}}
+    \addtocounter{iXOffset}{-15}
+    \addtocounter{iYOffset}{-\value{iYBlockSize}}
+    \addtocounter{iYOffset}{-\value{iDistance}}
+    
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {\only<4>{\textbf}{\shortstack[c]{Frequency Filtering}}}}
+
+    \addtocounter{iXOffset}{15}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(0,-1){\value{iDistance}}}
+    \addtocounter{iXOffset}{-15}
+    \addtocounter{iYOffset}{-\value{iYBlockSize}}
+    \addtocounter{iYOffset}{-\value{iDistance}}
+    
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {\only<4>{\textbf}{\shortstack[c]{Temporal Filtering}}}}
+
+    \addtocounter{iXOffset}{15}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(0,-1){\value{iDistance}}}
+    \addtocounter{iXOffset}{-15}
+    \addtocounter{iYOffset}{-\value{iYBlockSize}}
+    \addtocounter{iYOffset}{-\value{iDistance}}
+    
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {\only<5>{\textbf}{\shortstack[c]{Quantization}}}}
+
+    \addtocounter{iXOffset}{\value{iXBlockSize}}
+    \addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(1,0){\value{iDistance}}}
+\end{picture}
