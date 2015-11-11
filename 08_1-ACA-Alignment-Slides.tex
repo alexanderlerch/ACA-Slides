@@ -220,7 +220,25 @@
                                 \end{array}  
                             \right]  
                     \end{equation*}
-                    
+        \end{frame}
+        \begin{frame}{alignment}{DTW: matlab implementation}
+            \matlabexercise{implement a DTW function in Matlab}
+            
+            \begin{enumerate}
+                \item   create a function with the interface\\ \texttt{function [p, C] = SimpleDtw(D)}
+                    \begin{itemize}
+                        \item   $p$: path through matrix ($\mathcal{N}_P\times 2$)
+                        \item   $C$: cost matrix (same dimension as $D$)
+                        \item   $D$: distance matrix ($\mathcal{N}_B\times \mathcal{N}_A$)
+                    \end{itemize}
+                \item   your function should contain 3 major code blocks
+                    \begin{itemize}
+                        \item   initialization
+                        \item   cost matrix computation
+                        \item   back-tracking for extracting the path indices
+                    \end{itemize}
+                \item   what would be a proper test case to validate your implementation
+            \end{enumerate}
         \end{frame}
         \begin{frame}{alignment}{DTW: variants}
             \begin{itemize}
