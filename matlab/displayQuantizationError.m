@@ -14,15 +14,15 @@ function displayQuantizationError()
 
     subplot(121)
     plot(x,xq)
-    xlabel('x')
-    ylabel('x_Q/\Delta')
+    xlabel('$x$')
+    ylabel('$x_Q/\Delta$')
     axis([x(1) x(end) xqTick(1) xqTick(end)])
     set(gca, 'XTick',[-1 -.5 0 .5 1], 'YTick',xqTick, 'YTickLabel',xqTickLabel)
     
     subplot(122)
     stairs(x,q)
-    xlabel('x')
-    ylabel('q_ /\Delta') % weird because epstopdf doesn't like Matlab 2015a output without the underscore
+    xlabel('$x$')
+    ylabel('$q_ /\Delta$') % weird because epstopdf doesn't like Matlab 2015a output without the underscore
     axis([x(1) x(end) qTick(1) qTick(end)])
     set(gca, 'XTick',[-1 -.5 0 .5 1], 'YTick',qTick, 'YTickLabel',qTickLabel)
 
