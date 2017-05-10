@@ -9,7 +9,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
     % generate title page
-	\input{titlepage}
+	\input{include/titlepage}
 
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
@@ -26,7 +26,7 @@
                         \item   processing steps in a typical ACA system
                     \end{itemize}
                 \bigskip
-                \item<2->   \textbf{learning outcomes}
+                \item<2->   \textbf{learning objectives}
                     \begin{itemize}
                         \item   understand goals and applications in ACA
                         \item   know the typical forms of content in an audio signal
@@ -43,7 +43,7 @@
             \begin{itemize}
                 \item   \textbf{goal}
                     \begin{itemize}
-                        \item   extract information about the content of audio data
+                        \item   analyze audio signal to extract information on musical content
                     \end{itemize}
                 \bigskip
                 \item<2->   \textbf{terminology}
@@ -51,13 +51,16 @@
                         \item	\textit{music information retrieval (MIR)}:
                             \begin{itemize}
                                 \item   analysis and retrieval of music data 
-                                \item   both audio and symbolic data
+                                \item   includes both audio and symbolic data
                             \end{itemize}
                                 
+                        \smallskip
                         \item	machine listening \& computer audition
                             \begin{itemize}
                                 \item   focus on the recognition and understanding of music
                             \end{itemize}
+                            
+                        \smallskip
                         \item	computational auditory scene analysis (CASA)
                             \begin{itemize}
                                 \item   focus on human perception \& cognition, understanding of the auditory scene
@@ -201,7 +204,7 @@
             \end{enumerate}
         \end{frame}
         \begin{frame}\frametitle{audio content}\framesubtitle{technical categories}
-            audio content can be structured into \textbf{5 technical fundamental categories:}
+            audio content can be structured into \textbf{5 technical basic categories:}
             
             \bigskip
             \begin{enumerate}
@@ -209,18 +212,22 @@
                     \begin{itemize}
                         \item   \textit{examples}: instrument(ation), playing technique, venue, audio processing, \ldots
                     \end{itemize}
+                        \smallskip
                 \item<3->	\textbf{intensity-related}: related to musical dynamics
                     \begin{itemize}
                         \item   \textit{examples}: accents, loudness, \ldots
                     \end{itemize}
+                        \smallskip
                 \item<4->	\textbf{tonal}: related to pitch
                     \begin{itemize}
                         \item   \textit{examples}: melody, chords, intonation, vibrato, \ldots
                     \end{itemize}
+                        \smallskip
                 \item<5->	\textbf{temporal}: related to rhythm and tempo
                     \begin{itemize}
                         \item   \textit{examples}: timing, meter, rhythmic patterns, \ldots
                     \end{itemize}
+                        \smallskip
                 \item<6->	\textbf{statistical \& technical}: related to signal properties
                     \begin{itemize}
                         \item   \textit{examples}: amplitude distribution, number of zero crossings, \ldots
@@ -230,6 +237,9 @@
 
     \section[ACA]{generic audio content analysis system}
         \begin{frame}\frametitle{audio content analysis}\framesubtitle{system overview}
+            \begin{textblock*}{100mm}(1cm,2cm)
+                \includegraphics[scale=.2]{waveform}
+            \end{textblock*}
             \begin{figure}
                 \centering
                 \only<1>{\input{pict/introduction_ACASystem}}
@@ -259,14 +269,25 @@
     \section{summary}
         \begin{frame}{summary}{lecture content}
             \begin{itemize}
-                \item       what is audio content?
+                \item   music information retrieval and \textbf{audio content analysis} 
+                    \begin{itemize}
+                        \item   aim at extracting data from the music signal
+                    \end{itemize}
                 \bigskip
-                \item<2->   what are the technical categories of interest?
+                \item      \textbf{audio content}
+                    \begin{itemize}
+                        \item   can relate to timbre, pitch, intensity, tempo and rhythm (but there is both lower level and higher level content)
+                        \item   is shaped by the musical ideas (score), the music performance, and the (studio) production
+                    \end{itemize}
                 \bigskip
-                \item<3->   what are the typical processing blocks of an ACA system?
+                \item   the \textbf{flow chart of an ACA system} at its most fundamental level shows
+                    \begin{itemize}
+                        \item   a feature extraction step to extract meaningful descriptors
+                        \item   a classification or inference step to produce a ``human'' result
+                    \end{itemize}
             \end{itemize}
             \begin{textblock*}{100mm}(14.5cm,7.5cm)
-                \includegraphics[height=.8cm,keepaspectratio]{summary}
+                \includegraphics[height=.8cm]{summary}
             \end{textblock*}
         \end{frame}
 \end{document}
