@@ -1,0 +1,326 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 1.0: Introduction to MIR/ACA}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331118&}{Chapter 1~---~Introduction}: pp.~1--6
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   audio content analysis
+                        \item   typical applications
+                        \item   audio content
+                        \item   processing steps in a typical ACA system
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning outcomes}
+                    \begin{itemize}
+                        \item   understand goals and applications in ACA
+                        \item   know the typical forms of content in an audio signal
+                        \item   understand the typical signal flow in an ACA system
+                    \end{itemize}
+            \end{itemize}
+            \begin{textblock*}{100mm}(14.5cm,7.5cm)
+                \includegraphics[height=.8cm,keepaspectratio]{directions}
+            \end{textblock*}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{introduction}{audio content analysis --- terminology}
+            \begin{itemize}
+                \item   \textbf{goal}
+                    \begin{itemize}
+                        \item   extract information about the content of audio data
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{terminology}
+                    \begin{itemize}
+                        \item	\textit{music information retrieval (MIR)}:
+                            \begin{itemize}
+                                \item   analysis and retrieval of music data 
+                                \item   both audio and symbolic data
+                            \end{itemize}
+                                
+                        \item	machine listening \& computer audition
+                            \begin{itemize}
+                                \item   focus on the recognition and understanding of music
+                            \end{itemize}
+                        \item	computational auditory scene analysis (CASA)
+                            \begin{itemize}
+                                \item   focus on human perception \& cognition, understanding of the auditory scene
+                            \end{itemize}
+                    \end{itemize}
+           \end{itemize}
+        \end{frame}
+        \begin{frame}{introduction}{audio content analysis --- research field}
+            \vspace{-7mm}
+            \begin{columns}
+            \column{.8\textwidth}
+            \begin{itemize}
+                \item<1->   \textbf{interdisciplinary}
+                    \begin{itemize}
+                        \item   digital signal processing
+                        \item   machine learning / data mining
+                        \item   musicology
+                        \item   psycho-acoustics
+                        \item   \ldots
+                    \end{itemize}
+                \smallskip
+                \item<2->   ISMIR \textbf{community}
+                            \begin{itemize}
+                                \item   annual conferences
+                                \item   conference papers \& Transactions
+                                \item   ISMIR-Community mailing list
+                                \item   MIREX: MIR Evaluation eXchange
+                            \end{itemize}
+                \smallskip
+                \item<3->   \textbf{related publications} 
+                    \begin{itemize}
+                        \item   \textit{conferences}: ICASSP, ICME, SMC, DAFx, ACM~MM, \ldots
+                        \item   \textit{journals}: TISMIR, TASLP, Computer Music, JNMR, JAES, \ldots
+                    \end{itemize}
+            \end{itemize}
+            \column{.2\textwidth}
+                \vspace{25mm}
+                \begin{figure}
+                    \includegraphics[height=.8cm,keepaspectratio]{logo_ismir}
+                \end{figure}
+            \end{columns}
+            \addreference{\href{http://www.ismir.net}{www.ismir.net}}
+        \end{frame}
+        \begin{frame}{introduction}{applications}
+            \begin{itemize}
+                \item	\textbf{organization} in large databases
+                    \begin{itemize}
+                        \item   search \& retrieval, classification, similarity
+                    \end{itemize}
+                \smallskip
+                \item<2->	\textbf{interfaces} to search and retrieval
+                    \begin{itemize}
+                        \item   fingerprinting, query-by-humming systems
+                    \end{itemize}
+                \smallskip
+                \item<3->	music \textbf{visualization}
+                    \begin{itemize}
+                        \item   symbolic (bars, harmony, score, \ldots), similarity mappings
+                    \end{itemize}
+                \smallskip
+                \item<4->	adaptive \textbf{processing}
+                    \begin{itemize}
+                        \item   adaptive effect parametrization or algorithm selection
+                    \end{itemize}
+                \smallskip
+                \item<5->	adaptive \textbf{interaction}
+                    \begin{itemize}
+                        \item   playlist generation, recommendation
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{introduction}{(commercial) examples}
+            \setbeamercovered{invisible} % uncover the graphics with the bullet points
+            \begin{itemize}
+                \item   \textbf{recommendation}, playlist generation
+                    \begin{columns}
+                        \column{.25\textwidth}
+                        \column{.25\textwidth}
+                            \includegraphics[scale=.1]{logo_spotify}
+                        \column{.25\textwidth}
+                            \includegraphics[scale=.05]{logo_lastfm}
+                        \column{.25\textwidth}
+                            \includegraphics[scale=.03]{logo_pandora}
+                    \end{columns}
+                \bigskip
+                \item<2->   \textbf{fingerprinting} 
+                    \begin{columns}
+                        \column{.25\textwidth}
+                        \column{.25\textwidth}
+                            \includegraphics[scale=.03]{logo_shazam}
+                        \column{.25\textwidth}
+                            \includegraphics[scale=.05]{logo_gracenote}
+                        \column{.25\textwidth}
+                    \end{columns}
+                \bigskip
+                \item<3->   \textbf{score following} 
+                   \begin{columns}
+                        \column{.25\textwidth}
+                        \column{.25\textwidth}
+                            \includegraphics[scale=.15]{logo_rockprodigy}
+                        \column{.25\textwidth}
+                            \includegraphics[scale=.75]{logo_smartmusic}
+                        \column{.25\textwidth}
+                    \end{columns}
+                \bigskip
+                \item<4->   (multi-) \textbf{pitch detection} 
+                    \begin{columns}
+                        \column{.25\textwidth}
+                        \column{.25\textwidth}
+                            \includegraphics[scale=.15]{logo_melodyne}
+                        \column{.25\textwidth}
+                        \column{.25\textwidth}
+                    \end{columns}
+            \end{itemize}
+        \end{frame}
+
+    \section[content]{audio content}
+        \begin{frame}{audio content}{sources}
+            \setbeamercovered{invisible}
+            \question{what are the sources of (musical) audio content?}
+
+            \begin{enumerate}
+                \item<2->	\textbf{score}:
+                    \begin{itemize}
+                        \item   definition of musical ideas
+                        \item   ``blue-print'' of the music
+                        \item   \textit{examples}: melody, key, harmony, rhythmic patterns, \ldots
+                    \end{itemize}
+                \item<3->	\textbf{performance}:
+                    \begin{itemize}
+                        \item   unique acoustic rendition
+                        \item   information in the score is interpreted, modified, added to
+                        \item   \textit{examples}: (micro-)tempo, dynamics, intonation, \ldots
+                    \end{itemize}
+                \item<4->	\textbf{production}:
+                    \begin{itemize}
+                        \item   aesthetic choices 
+                        \item   editing \& processing
+                        \item   \textit{examples}: sound quality (EQ, microphone positioning), changes in timing and pitch
+                    \end{itemize}
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}\frametitle{audio content}\framesubtitle{technical categories}
+            audio content can be structured into \textbf{5 technical fundamental categories:}
+            
+            \bigskip
+            \begin{enumerate}
+                \item<2->	\textbf{timbral}: related to sound quality
+                    \begin{itemize}
+                        \item   \textit{examples}: instrument(ation), playing technique, venue, audio processing, \ldots
+                    \end{itemize}
+                \item<3->	\textbf{intensity-related}: related to musical dynamics
+                    \begin{itemize}
+                        \item   \textit{examples}: accents, loudness, \ldots
+                    \end{itemize}
+                \item<4->	\textbf{tonal}: related to pitch
+                    \begin{itemize}
+                        \item   \textit{examples}: melody, chords, intonation, vibrato, \ldots
+                    \end{itemize}
+                \item<5->	\textbf{temporal}: related to rhythm and tempo
+                    \begin{itemize}
+                        \item   \textit{examples}: timing, meter, rhythmic patterns, \ldots
+                    \end{itemize}
+                \item<6->	\textbf{statistical \& technical}: related to signal properties
+                    \begin{itemize}
+                        \item   \textit{examples}: amplitude distribution, number of zero crossings, \ldots
+                    \end{itemize}
+            \end{enumerate}
+        \end{frame}
+
+    \section[ACA]{generic audio content analysis system}
+        \begin{frame}\frametitle{audio content analysis}\framesubtitle{system overview}
+            \begin{figure}
+                \centering
+                \only<1>{\input{pict/introduction_ACASystem}}
+                \only<2>{\input{pict/introduction_ACASystem_2}}
+                \only<3->{\input{pict/introduction_ACASystem_3}}
+            \end{figure}
+            
+            \begin{columns}
+                \column{.5\textwidth}
+                    \begin{itemize}
+                        \item<2->[]	\textbf{feature extraction}
+                                \begin{itemize}
+                                    \item 	dimensionality reduction
+                                    \item	meaningful representation
+                                \end{itemize}
+                    \end{itemize}
+                \column{.5\textwidth}
+                    \begin{itemize}
+                        \item<3->[]	\textbf{classification}
+                                \begin{itemize}
+                                    \item	map or convert feature to comprehensible domain
+                                \end{itemize}
+                    \end{itemize}
+            \end{columns}
+        \end{frame}
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item       what is audio content?
+                \bigskip
+                \item<2->   what are the technical categories of interest?
+                \bigskip
+                \item<3->   what are the typical processing blocks of an ACA system?
+            \end{itemize}
+        \end{frame}
+
+    \section{course outline}
+        \begin{frame}{course outline}{overview 1/2}
+            \begin{enumerate}
+                \item	\textbf{fundamentals}
+                        \begin{itemize}
+                            \item	digital audio signals
+                            \item	convolution \& block based processing
+                            \item	Fourier transform and filters
+                            \item	correlation
+                        \end{itemize}
+                \smallskip
+                \item<2->	\textbf{instantaneous features}
+                        \begin{itemize}
+                            \item	audio pre-processing
+                            \item	statistical and spectral features
+                            \item	feature post-processing
+                        \end{itemize}
+                \smallskip
+                \item<3->	\textbf{intensity}
+                        \begin{itemize}
+                            \item	level \& loudness
+                        \end{itemize}
+                \smallskip
+                \item<4->	\textbf{tonal analysis}
+                        \begin{itemize}
+                            \item	fundamental frequency
+                            \item	tuning frequency
+                            \item	key and chords
+                        \end{itemize}
+            \setcounter{iDistance}{\value{enumi}}
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}{course outline}{overview 2/2}
+            \begin{enumerate}
+            \setcounter{enumi}{\value{iDistance}}
+                \item	\textbf{temporal analysis}
+                        \begin{itemize}
+                            \item	onset detection
+                            \item	tempo \& beat
+                            \item	downbeat \& time signature
+                        \end{itemize}
+                \smallskip
+                \item<2->	\textbf{genre, similarity \& mood}
+                \smallskip
+                \item<3->	\textbf{alignment}
+                        \begin{itemize}
+                            \item	audio-to-audio
+                            \item	audio-to-score
+                        \end{itemize}
+                \smallskip
+                \item<4->	\textbf{audio fingerprinting}
+                \smallskip
+                \item<5->	\textbf{structural segmentation}
+            \end{enumerate}
+        \end{frame}
+\end{document}
+
