@@ -1,4 +1,4 @@
-\documentclass[hyperref={pdfpagelabels=false,colorlinks=true,linkcolor=white,urlcolor=blue},t]{beamer}
+\documentclass[aspectratio=169,hyperref={pdfpagelabels=false,colorlinks=true,linkcolor=white,urlcolor=blue},t]{beamer}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -10,11 +10,15 @@
 \usepackage{fancybox}
 \usepackage[absolute,overlay]{textpos} 
 \usepackage{media9} % avi2flv: "C:\Program Files\ffmpeg\bin\ffmpeg.exe" -i TuneFreqFilterbank.avi -b 600k -s 441x324 -r 15 -acodec copy TuneFreqFilterbank.flv
+\usepackage{animate}
+\usepackage{gensymb}
+\usepackage{multirow}
 \usepackage{silence}
 \usepackage[backend=bibtex,style=ieee]{biblatex}
 \WarningFilter{biblatex}{Patching footnotes failed}
 \WarningFilter{latexfont}{Font shape}
 \WarningFilter{latexfont}{Some font shapes}
+\WarningFilter{gensymb}{Not defining}
 \AtEveryCitekey{\iffootnote{\tiny}{}}
 \addbibresource{references}
 
@@ -43,6 +47,7 @@
 \DeclareMathOperator*{\hwr}{HWR}
 \DeclareMathOperator*{\flip}{flip}
 \DeclareMathOperator*{\sinc}{sinc}
+\DeclareMathOperator*{\floor}{floor}
 \newcommand{\e}{{e}}
 \newcommand{\jom}{\mathrm{j}\omega}
 \newcommand{\jOm}{\mathrm{j}\Omega}
@@ -117,9 +122,10 @@
 
 \newcommand{\toremember}[1]{%\vspace{-4mm}
                           \begin{columns}[T]
-                            \column{.7\textwidth}
+                            \column{.8\textwidth}
                                 \textbf{#1}
-                            \column{.3\textwidth}
+                            \column{.2\textwidth}
+                                \vspace{-4mm}
                                 \begin{flushright}
                                      \includegraphics[scale=.5]{exclamation_mark}
                                 \end{flushright}
@@ -139,7 +145,7 @@
                           \end{columns}}
 
 \newcommand{\addreference}[1]{                    
-                    \begin{textblock*}{\baselineskip }(1.15\textwidth,.4\textheight)
+                    \begin{textblock*}{\baselineskip }(1.12\textwidth,.3\textheight) %(1.15\textwidth,.4\textheight)
                         \rotatebox{90}{\tiny #1}
                     \end{textblock*}}
                     
@@ -195,8 +201,8 @@
         %\includegraphics[height=.8cm,keepaspectratio]{CenterMusicTechnology-solid-2lines-white-CoAtag}
         
     \end{beamercolorbox}
-    \begin{textblock*}{100mm}(8.3cm,.65cm)
-        \includegraphics[height=.8cm,keepaspectratio]{CenterMusicTechnology-solid-2lines-white-CoAtag}
+    \begin{textblock*}{100mm}(11.6cm,.7cm)
+        \includegraphics[height=.8cm,keepaspectratio]{logo_GTCMT_black}
     \end{textblock*}
 }
 
@@ -214,6 +220,10 @@
 \setbeamercolor{bibliography entry author}{fg=black}
 \setbeamercolor*{bibliography entry title}{fg=black}
 \setbeamercolor*{bibliography entry note}{fg=black}
+
+%\usepackage{pgfpages}
+%\setbeameroption{show notes}
+%\setbeameroption{show notes on second screen=right}
 %---------------------------------------------------------------------------------
 % fontsize
 \let\Tiny=\tiny
@@ -226,8 +236,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % title information
-\title[]{MUSI-6201~---~Computational Music Analysis}   
+\title[]{Introduction to Audio Content Analysis}   
 \author[alexander lerch]{alexander lerch} 
 %\institute{~}
 %\date[Alexander Lerch]{}
-\titlegraphic{\vspace{-16mm}\includegraphics[scale=.25]{title}}
+\titlegraphic{\vspace{-16mm}\includegraphics[width=\textwidth,height=3cm]{title}}

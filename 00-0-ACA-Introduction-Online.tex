@@ -1,0 +1,146 @@
+% move all configuration stuff into one file so we can focus on the content
+\input{common}
+
+
+\subtitle{Module 0.0: Introduction to the online course}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{titlepage}
+
+    \section[about]{about alexander lerch}
+        \begin{frame}{introduction}{about alexander lerch}
+            %\begin{itemize}
+                %\item \textbf{alexander lerch}
+                    \begin{itemize}
+                        \item   \textbf{education}
+                            \begin{itemize}
+                                \item   Electrical Engineering (Technical University Berlin)
+                                \item   Tonmeister (University of Arts Berlin)
+                            \end{itemize}
+                \smallskip
+                        \item   \textbf{professional}
+                            \begin{itemize}
+                                \item   Assistant Professor at the \href{http://gtcmt.gatech.edu}{Georgia Tech Center for Music Technology}
+                                \item   previous: CEO at \href{http://www.zplane.de}{zplane.development}
+                            \end{itemize}
+                \smallskip
+                        \item   \textbf{research focus}
+                            \begin{itemize}
+                                \item   Music Information Retrieval (MIR)
+                                \item   intelligent music software
+                            \end{itemize}
+                    \end{itemize}
+                    
+                    \addreference{links to optional resources will appear here $\rightarrow$ \href{https://www.linkedin.com/in/lerch}{Lerch's online profile}}
+        \end{frame}
+
+    \section[course intro]{course introduction}
+        \begin{frame}{introduction}{course introduction}
+            \begin{itemize}
+                \item   Audio Content Analysis and Music Information Retrieval (MIR):
+                \item   extract and infer descriptors from music signals
+                \item   answers questions and tasks such as
+                    \begin{itemize}
+                        \item   ``What is the tempo/key/mood of this song?''
+                        \item   ``Transcribe this signal into a musical score.''
+                        \item   \ldots
+                    \end{itemize}
+                \bigskip
+                \item<2->   MIR is commercially interesting for, e.g.,
+                    \begin{itemize}
+                        \item   music recommendation
+                        \item   music identification
+                        \item   intelligent music production
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+    \section[course goals]{course goals}
+        \begin{frame}{introduction}{course goals}
+            after successful completion of this course, you will
+            \smallskip
+            \begin{enumerate}
+                \item   have a good \textbf{overview of typical tasks} in MIR
+                \item   \textbf{understand algorithmic approaches} in a large variety of basic MIR systems
+                \item   be able to \textbf{implement MIR systems} in Matlab
+                \item   be able to \textbf{formally evaluate} systems with common datasets and metrics
+            \end{enumerate}
+        \end{frame}
+        
+    \section[course overview]{course overview}
+        \begin{frame}{introduction}{course overview}
+            the course is structured into 9 different topic areas
+            \begin{enumerate}
+                \item   Introduction to ACA and MIR
+                \item   Fundamentals of DSP
+                \item   Instantaneous (Low-Level) Features
+                \item   Analysis of Intensity
+                \item   Tonal Analysis
+                \item   Temporal Analysis
+                \bigskip
+                \item   Alignment
+                \item   Genre, Similarity, \& Mood
+                \item   Audio Fingerprinting
+            \end{enumerate}
+        \end{frame}
+        
+    \section[course prerequisites]{course prerequisites}
+        \begin{frame}{introduction}{prerequisites}
+            \begin{itemize}
+                \item   basic knowledge in \textbf{DSP}
+                    \begin{itemize}
+                        \item signals \& systems, block diagrams, \ldots
+                    \end{itemize}
+                \bigskip
+                \item	familiarity with \textbf{Matlab} 
+                    \begin{itemize}
+                        \item   m-files and functions, scripting, file I/O, \ldots
+                    \end{itemize}
+                \bigskip
+                \item	helpful: knowledge of \textbf{machine learning} concepts
+                    \begin{itemize}
+                        \item   classification \& regression, training and testing, evaluation metrics
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section[course materials]{course materials}
+        \begin{frame}{introduction}{course materials \& resources}
+            \vspace{-4mm}
+            \begin{columns}[T]
+                \column{.8\textwidth}
+                    \begin{itemize}
+                        \item   \textbf{text book}: ``An Introduction to Audio Content Analysis'':
+                        
+                            \href{https://ieeexplore.ieee.org/servlet/opac?bknumber=6266785}{ieeexplore.ieee.org/servlet/opac?bknumber=6266785}
+
+                        \smallskip
+                        \item<2->  \textbf{optional reading}
+                            
+                            \begin{itemize}
+                                \item   \footnotesize Mueller, M. ``Fundamentals of Music Processing''. Springer (2015)
+                                \item   \footnotesize Li, T., Ogihara, M. and Tzanetakis, G.  (Eds.) ``Music Data Mining''. CRC Press (2012)
+                                \item   \footnotesize Klapuri, A. and Davy, M. (Eds.) ``Signal Processing Methods for Music Transcription''. Springer (2006)
+                            \end{itemize}
+                            \normalsize
+
+                        \smallskip
+                        \item<3->   \textbf{online resources} @AudioContentAnalysis.org: 
+                            \begin{itemize}
+                                \item   slides
+                                \item   datasets
+                                \item   matlab code
+                            \end{itemize}
+                        \smallskip
+                        \item<4->   \textbf{software}: Matlab
+                    \end{itemize}
+                \column{.2\textwidth}
+                     \href{https://ieeexplore.ieee.org/servlet/opac?bknumber=6266785}{\includegraphics[scale=.1]{cover_aca}}
+                    \vspace{40mm}
+             \end{columns}
+            \addreference{\href{http://www.AudioContentAnalysis.org}{www.AudioContentAnalysis.org}}
+       \end{frame}
+\end{document}
+
