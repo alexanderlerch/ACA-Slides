@@ -1,0 +1,150 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colors
+\definecolor{gtgold}{HTML}{E0AA0F} %{rgb}{0.88,0.66,1,0.06} [234, 170, 0]/256
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% math
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\atan}{atan}
+\DeclareMathOperator*{\arcsinh}{arcsinh}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\tcdf}{tcdf}
+\DeclareMathOperator*{\si}{sinc}
+\DeclareMathOperator*{\princarg}{princarg}
+\DeclareMathOperator*{\arccosh}{arccosh}
+\DeclareMathOperator*{\hwr}{HWR}
+\DeclareMathOperator*{\flip}{flip}
+\DeclareMathOperator*{\sinc}{sinc}
+\DeclareMathOperator*{\floor}{floor}
+\newcommand{\e}{{e}}
+\newcommand{\jom}{\mathrm{j}\omega}
+\newcommand{\jOm}{\mathrm{j}\Omega}
+\newcommand   {\mat}[1]    		{\boldsymbol{\uppercase{#1}}}		%bold
+\renewcommand {\vec}[1]    		{\boldsymbol{\lowercase{#1}}}		%bold
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% media9
+\newcommand{\includeaudio}[1]{{\includemedia[
+                        addresource=audio/#1.mp3,
+                        width=5mm,
+                        height=5mm,
+                        activate=onclick,
+                        flashvars={
+                            source=audio/#1.mp3  
+                            &autoPlay=true
+                        }]
+                        {\includegraphics[width=5mm, height=5mm]{SpeakerIcon}}
+                        {APlayer.swf}}}
+\newcommand{\audioautoplay}[1]{{\begin{center}\includemedia[
+                            addresource=audio/#1.mp3,
+                            width=.1\linewidth,
+                            height=.01\linewidth,
+                            activate=pageopen,
+                            flashvars={
+                                source=audio/#1.mp3  
+                                &autoPlay=true
+                            }]
+                            {}
+                            {APlayer.swf}\end{center}}}
+
+\newcommand{\includevideo}[1]{{\begin{center}\includemedia[
+                        addresource=video/#1.mp4,
+                        width=0.8\linewidth,
+                        height=0.4\linewidth,
+                        activate=onclick,
+                        flashvars={
+                            source=video/#1.mp4  
+                            &autoPlay=true
+                        }]
+                        {}
+                        {VPlayer.swf}\end{center}}}
+\newcommand{\videowithmatlab}[1]{{\begin{center}\includemedia[
+                        addresource=video/animate#1.mp4,
+                        width=0.8\linewidth,
+                        height=0.4\linewidth,
+                        activate=onclick,
+                        flashvars={
+                            source=video/animate#1.mp4  
+                            &autoPlay=true
+                        }]
+                        {}
+                        {VPlayer.swf}\end{center}\addreference{matlab source: matlab/animate#1.m}}}
+                        
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% other commands
+\newcommand{\question}[1]{%\vspace{-4mm}
+                          \setbeamercovered{invisible}
+                          \begin{columns}[T]
+                            \column{.8\textwidth}
+                                \textbf{#1}
+                            \column{.2\textwidth}
+                                \vspace{-4mm}
+                                \begin{flushright}
+                                     \includegraphics[scale=.5]{question_mark}
+                                \end{flushright}
+                                \vspace{6mm}
+                          \end{columns}\pause\vspace{-10mm}}
+
+\newcommand{\toremember}[1]{%\vspace{-4mm}
+                          \begin{columns}[T]
+                            \column{.8\textwidth}
+                                \textbf{#1}
+                            \column{.2\textwidth}
+                                \vspace{-4mm}
+                                \begin{flushright}
+                                     \includegraphics[scale=.5]{exclamation_mark}
+                                \end{flushright}
+                                \vspace{6mm}
+                          \end{columns}\vspace{-6mm}}
+
+\newcommand{\matlabexercise}[1]{%\vspace{-4mm}
+                          \setbeamercovered{invisible}
+                          \begin{columns}[T]
+                            \column{.8\textwidth}
+                                \textbf{matlab exercise}: #1
+                            \column{.2\textwidth}
+                                \begin{flushright}
+                                     \includegraphics[scale=.5]{logo_matlab}
+                                \end{flushright}
+                                %\vspace{6mm}
+                          \end{columns}}
+
+\newcommand{\addreference}[1]{                    
+                    \begin{textblock*}{\baselineskip }(1.12\textwidth,.3\textheight) %(1.15\textwidth,.4\textheight)
+                        \rotatebox{90}{\tiny #1}
+                    \end{textblock*}}
+                    
+\newcommand{\figwithmatlab}[1]{
+                    \begin{figure}
+                        \centering
+                        \includegraphics{#1}
+                        %\label{fig:#1}
+                    \end{figure}
+                    
+                    \addreference{matlab source: matlab/display#1.m}}                    
+\newcommand{\figwithref}[2]{
+                    \begin{figure}
+                        \centering
+                        \includegraphics{#1}
+                        \label{fig:#1}
+                    \end{figure}
+                    
+                    \addreference{#2}}                    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% counters
+\newcounter{i}
+\newcounter{j}
+\newcounter{iXOffset}
+\newcounter{iYOffset}
+\newcounter{iXBlockSize}
+\newcounter{iYBlockSize}
+\newcounter{iYBlockSizeDiv2}
+\newcounter{iDistance}
