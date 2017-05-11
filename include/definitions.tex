@@ -84,12 +84,12 @@
                             \column{.8\textwidth}
                                 \textbf{#1}
                             \column{.2\textwidth}
-                                \vspace{-4mm}
+                                \vspace{-8mm}
                                 \begin{flushright}
                                      \includegraphics[scale=.5]{question_mark}
                                 \end{flushright}
                                 \vspace{6mm}
-                          \end{columns}\pause\vspace{-10mm}}
+                          \end{columns}\pause\vspace{-12mm}}
 
 \newcommand{\toremember}[1]{%\vspace{-4mm}
                           \begin{columns}[T]
@@ -115,9 +115,10 @@
                                 %\vspace{6mm}
                           \end{columns}}
 
-\newcommand{\addreference}[1]{                    
+\newcommand{\addreference}[1]{  
+                  
                     \begin{textblock*}{\baselineskip }(1.12\textwidth,.3\textheight) %(1.15\textwidth,.4\textheight)
-                        \rotatebox{90}{\tiny #1}
+                        \rotatebox{90}{\tiny {#1}}
                     \end{textblock*}}
                     
 \newcommand{\figwithmatlab}[1]{
@@ -127,7 +128,7 @@
                         %\label{fig:#1}
                     \end{figure}
                     
-                    \addreference{matlab source: matlab/display#1.m}}                    
+                    \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/display#1.m}{matlab/display#1.m}}}
 \newcommand{\figwithref}[2]{
                     \begin{figure}
                         \centering
@@ -135,7 +136,13 @@
                         \label{fig:#1}
                     \end{figure}
                     
-                    \addreference{#2}}                    
+                    \addreference{#2}}  
+                                    
+\newcommand{\inserticon}[1]{
+
+                    \begin{textblock*}{100mm}(14.5cm,7.5cm)
+                        \includegraphics[height=.8cm,keepaspectratio]{#1}
+                    \end{textblock*}}            
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

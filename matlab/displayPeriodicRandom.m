@@ -17,18 +17,23 @@ function displayPeriodicRandom()
     
     subplot(211)
     plot(t,xp)
-    ylabel('x_{periodic}(t)')
+    ylabel('$x_\mathrm{periodic}(t)$')
     axis([t(1) t(end) floor(-10*max(abs(xp)))/10 ceil(10*max(abs(xp)))/10])
+    set(gca,'XTickLabel',[])
     
     subplot(212)
     plot(t,xr)
-    xlabel('t [s]')
-    ylabel('x_{random}(t)')
+    xlabel('$t\; [s]$')
+    ylabel('$x_\mathrm{random}(t)$')
     axis([t(1) t(end) floor(-10*max(abs(xr)))/10 ceil(10*max(abs(xr)))/10])
 
     colorGtGold = [234, 170, 0]/256;
     annotation(hFigureHandle,'doublearrow',[0.40 0.50],[0.90 0.90],'Color',colorGtGold);
-    annotation(hFigureHandle,'textbox',[0.42 0.83 0.026 0.067],'Color',colorGtGold,'EdgeColor','none','String',{'T_0'});
+    annotation(hFigureHandle,'textbox',[0.42 0.83 0.026 0.067],...
+        'Color',colorGtGold,...
+        'EdgeColor','none',...
+        'String',{'$T_0$'},...
+        'interpreter','latex');
     
     printFigure(hFigureHandle, cOutputFilePath)
 end

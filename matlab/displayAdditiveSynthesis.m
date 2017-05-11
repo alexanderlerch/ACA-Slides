@@ -20,8 +20,8 @@ function displayAdditiveSynthesis()
         plot (t,x_sa(i+1,:), 'Color', colorGtGold)
         hold off;  
         axis([-.5 .5 -1.25 1.25]);
-        ylabel('x_{Saw}')
-        xlabel('t / T_0')
+        ylabel('$x_\mathrm{Saw}$')
+        xlabel('$t / T_0$')
         lh = legend('Perfect',[num2str(aiOrder(i)) ' Harmonics'], 'Location', 'SouthWest');
         printFigure(hFigureHandle, [cOutputFilePath 'Saw-' num2str(i)])
     end
@@ -33,8 +33,8 @@ function displayAdditiveSynthesis()
         plot (t,x_re(i+1,:), 'Color', colorGtGold)
         hold off;  
         axis([-.5 .5 -1.25 1.25]);
-        ylabel('x_{Rect}')
-        xlabel('t / T_0')
+        ylabel('$x_\mathrm{Rect}$')
+        xlabel('$t / T_0$')
         lh = legend('Perfect',[num2str(aiOrder(i)) ' Harmonics'], 'Location', 'SouthWest');
         printFigure(hFigureHandle, [cOutputFilePath 'Rect-' num2str(i)])
     end

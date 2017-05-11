@@ -1,0 +1,218 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 2.0: Fundamentals~---~Signals}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~7--9
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   deterministic \& periodic signals
+                        \item   Fourier Series
+                        \item   random signals
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   knowledge of basic signal categories
+                        \item   understanding of every periodic signal comprising fundamental frequency and harmonics at integer multiples
+                        \item   basic interpretation of the Fourier Series
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{audio signals}{signal categories}
+            \begin{itemize}
+                \item	\textbf{deterministic signals}:\\
+                        \textit{predictable}: future shape of the signal can be known (example: sinusoidal)
+                \pause		
+                \item	\textbf{random signals}:\\
+                        \textit{unpredictable}: no knowledge can help to predict what is coming next (example: white noise)
+            \end{itemize}
+            
+            \bigskip
+            \pause
+            ``real-world'' audio signals can be modeled as time-variant combination of 
+            \begin{itemize}
+                \item	(quasi-)periodic parts
+                \item	(quasi-)random parts
+            \end{itemize}
+        \end{frame}
+
+    \section[signals]{signals}
+        \begin{frame}{audio signals}{periodic signals 1/5}
+            \setbeamercovered{invisible}
+            \vspace{-2mm}
+            periodic signals: most prominent examples of deterministic signals
+            \begin{eqnarray*}
+                x(t) 	&=& x(t+T_0)\\
+                f_0 	&=& \frac{1}{T_0} =  \frac{\omega_0}{2\pi}
+            \end{eqnarray*}
+
+            \vspace{-4mm}
+            \only<2>{
+                \figwithmatlab{PeriodicRandom}
+             }
+            \vphantom{\includegraphics{PeriodicRandom}}
+        \end{frame}
+
+        \begin{frame}{audio signals}{periodic signals 2/5}
+            periodic signal $\Rightarrow$ representation in \textbf{Fourier series}\footnote{\tiny Jean-Baptiste Joseph Fourier, 1768--1830}
+            \begin {equation*}
+                x(t) = \sum\limits_{k=-\infty}^{\infty} {\color<5>{gtgold}{a_k}} {\color<4>{gtgold}{\e^{\mathrm{j}{\color<2-3>{gtgold}{\omega_0}} {\color<3>{gtgold}{k}} t}}} \nonumber
+            \end {equation*}
+            \begin{itemize}
+                \item<2-> $\omega_0 = 2\pi\cdot f_0$
+                \item<3-> $k\omega_0$: integer multiples of the lowest frequency
+                \item<4-> $\e^{\jom_0kt} = \cos(\omega_0kt) + \mathrm{j} \sin(\omega_0kt)$
+                \item<5-> $a_k$: Fourier coefficients --- amplitude of each component
+                    \begin {equation*}\label{eq:fourier_coeff}
+                        a_k = \frac{1}{T_0}\int\limits_{-\nicefrac{T_0}{2}}^{\nicefrac{T_0}{2}} x(t) \e^{-\jom_0kt}\, dt \nonumber
+                    \end {equation*}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{audio signals}{periodic signals 3/5}
+            \begin{block}{Fourier series}
+                \begin{itemize}
+                    \item   \textbf{every} periodic signal can be represented in a Fourier series
+                    \item   a periodic signal \textbf{contains only} frequencies at integer multiples of the fundamental frequency $f_0$
+                    \bigskip
+                    \item<2->   Fourier series can only be applied to periodic signals
+                    \item<2->   Fourier series is analytically elegant but only of limited practical use as the fundamental period has to be known
+                \end{itemize}
+            \end{block}
+            \inserticon{lightbulb}
+        \end{frame}
+
+        \begin{frame}{audio signals}{periodic signals 4/5}
+            reconstruction of periodic signals with limited number of sinusoidals:
+            \begin {equation*}
+                \hat{x}(t) = \sum\limits_{k=-\mathcal{K}}^{\mathcal{K}} a_k e^{\jom_0kt}
+            \end {equation*}
+            %\vspace{-5mm}
+            \only<1>{
+                    \vspace{-4mm}
+                    \begin{figure}
+                        \centering
+                        \includegraphics{AdditiveSynthesisSaw-1.pdf}
+                    \end{figure}
+                \addreference{{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAdditiveSynthesis.m}{matlab/displayAdditiveSynthesis.m}}}
+            }
+            
+            \setcounter{i}{1}
+            \whiledo{\value{i}<6}	
+            {
+                \pause
+                \only<\value{beamerpauses}>
+                {
+                    \vspace{-4mm}
+                    \begin{figure}
+                        \centering
+                        \includegraphics{AdditiveSynthesisSaw-\arabic{i}}
+                    \end{figure}
+                    \audioautoplay{additivesynthesis_saw_\arabic{i}}
+                    
+                    \addreference{{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAdditiveSynthesis.m}{matlab/displayAdditiveSynthesis.m}}}
+                }
+                \stepcounter{i} 
+            }	
+            
+            \setcounter{i}{1}
+            \whiledo{\value{i}<6}	
+            {
+                \pause
+                \only<\value{beamerpauses}>
+                {
+                    \vspace{-4mm}
+                    \begin{figure}
+                        \centering
+                        \includegraphics{AdditiveSynthesisRect-\arabic{i}.pdf}
+                    \end{figure}
+                    \audioautoplay{additivesynthesis_rect_\arabic{i}}
+                    
+                    \addreference{{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAdditiveSynthesis.m}{matlab/displayAdditiveSynthesis.m}}}
+                }
+                \stepcounter{i} 
+            }	
+        \end{frame}
+        \begin{frame}{audio signals}{periodic signals 5/5}
+            youtube example --- mechanical additive synthesis:
+            
+            \bigskip
+            \bigskip
+            \bigskip
+            \bigskip
+            \begin{center}
+                \href{http://youtu.be/8KmVDxkia_w}{youtu.be/8KmVDxkia\_w}
+            \end{center}
+            %      
+            \inserticon{video}
+        \end{frame}
+
+        \begin{frame}{audio signals}{random process 1/2}
+            \textbf{random process}: ensemble of random series
+            \figwithmatlab{RandomProcess}%{matlab/displayRandomProcess.m}
+        \end{frame}
+
+        \begin{frame}{audio signals}{random process 2/2}
+            \begin{block}{random process}
+                \begin{itemize}
+                    \item   ensemble of random series
+                    \item   each series represents a \textit{sample} of the process
+                    \item   the following value is \textit{indetermined}, regardless of any amount of knowledge
+                \end{itemize}
+            \end{block}
+            \begin{itemize}
+                \item   special case: \textbf{stationarity}\\ statistical properties such as the mean are time invariant
+                \item   example: white noise
+            \end{itemize}
+            \inserticon{lightbulb}
+        \end{frame}
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   signals can be categorized into \textbf{deterministic and random signals}
+                    \begin{itemize}
+                        \item   deterministic signal can be described in a mathematical function
+                        \item   random processes can only be described by their general properties
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{periodic signals}
+                    \begin{itemize}
+                        \item   periodic signals are probably the most music-related deterministic signal
+                        \item   any periodic (pitched) signal is a sum of weighted sinusoidals
+                        \item   frequencies \textit{only} at the fundamental frequency and integer multiples
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{random} signals
+                    \begin{itemize}
+                        \item   noise, unpredictable
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{real-world} signals
+                    \begin{itemize}
+                        \item   can be seen as a time-varying mixture of these two signal categories
+                    \end{itemize}
+            \end{itemize}
+            \begin{textblock*}{100mm}(14.5cm,7.5cm)
+                \includegraphics[height=.8cm]{summary}
+            \end{textblock*}
+        \end{frame}
+\end{document}
