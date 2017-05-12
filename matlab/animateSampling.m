@@ -1,30 +1,32 @@
 function animateSampling()
 
-    hFigureHandle = generateFigure(10.7,5.42);
+    bVideoOut     = false;
+    hFigureHandle = generateFigure(12,5);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
-    cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
+    if bVideoOut
+        cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
+    else
+        cOutputFilePath = [cPath '/../graph/animateSampling/' strrep(cName, 'animate', '')];
+    end
  
-    writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
-    writerObj.FrameRate = 10;
-    writerObj.Quality   = 100;
-    open(writerObj);
-
+    if bVideoOut
+        writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
+        writerObj.FrameRate = 10;
+        writerObj.Quality   = 100;
+        open(writerObj);
+    end
+    
     fs  = 300;
     i   = 1;
     for (fmax = 100:4:300)
         [X] = generateSampleData(fmax,fs);
         X   = [fliplr(X) X];
         
-        plot((-length(X)/2+1:length(X)/2)/fs,X(1,:));%,'LineWidth', 2*iPlotLineWidth);
+        plot((-length(X)/2+1:length(X)/2)/fs,X(1,:));
 
         hold on
         if (fs*.5 < fmax)
-%             H = area(linspace(.5,fmax/fs,fmax-.5*fs),X(1,.5*fs+1:fmax));
-%             set(H,'FaceColor', [.6 .6 .6]);
-%            H = area(linspace(2-fmax/fs,1.5,fmax-.5*fs),X(3,2*fs-fmax+1:fs*1.5));
-%            set(H,'FaceColor', [.4 .4 .4]);
-    
             H = area(linspace(.5,fmax/fs,fmax-.5*fs),X(1,length(X)/2+.5*fs+1:length(X)/2+fmax));
             set(H,'FaceColor', [.6 .6 .6]);
             H = area(linspace(-fmax/fs,-.5,fmax-.5*fs),fliplr(X(1,length(X)/2+.5*fs+1:length(X)/2+fmax)));
@@ -49,19 +51,24 @@ function animateSampling()
         set(gca,'XTick',[-2 -1 -.5 0 .5 1 2]);
         set(gca,'YTick',[0]);
         axis([-2 2 0.1 1.1]);
-        ylabel('|X(f)|');
-        xlabel('f/f_S');
+        ylabel('$|X(f)|$');
+        xlabel('$f/f_\mathrm{S}$');
         hold off
         
-        %printFigure(hFigureHandle, [cOutputFilePath '-' num2str(i)]); 
-        frame = getframe;
-        writeVideo(writerObj,frame);
+        if bVideoOut
+            frame = getframe;
+            writeVideo(writerObj,frame);
+        else
+            printFigure(hFigureHandle, [cOutputFilePath '-' num2str(i,'%.2d')]); 
+        end
 
         i=i+1;
         
     end
 
-    close(writerObj); 
+    if bVideoOut
+        close(writerObj); 
+    end
     
 end
 

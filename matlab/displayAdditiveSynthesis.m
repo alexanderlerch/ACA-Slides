@@ -26,7 +26,7 @@ function displayAdditiveSynthesis()
         printFigure(hFigureHandle, [cOutputFilePath 'Saw-' num2str(i)])
     end
     
-    % plot saw
+    % plot rect
     for (i = 1:size(x_re,1)-1)
         plot (t,x_re(1,:), 'Color', colorGrey)
         hold on;

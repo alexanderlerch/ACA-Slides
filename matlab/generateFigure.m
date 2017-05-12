@@ -1,8 +1,8 @@
 function hFigureHandle = generateFigure(fWidthInCm, fHeightInCm)
     
     % dimension & location
-    fMaxHeight  = 7;
-    fMaxWidth   = 10.8;
+    fMaxHeight  = 6.8;
+    fMaxWidth   = 12;
     fPaperPos   = [0 0];
     
     % layout

@@ -1,0 +1,166 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 2.1: Fundamentals~---~Sampling}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~9--11
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   deterministic \& periodic signals
+                        \item   Fourier Series
+                        \item   random signals
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   knowledge of basic signal categories
+                        \item   understanding of every periodic signal comprising fundamental frequency and harmonics at integer multiples
+                        \item   basic interpretation of the Fourier Series
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{digital signals}{introduction}
+            \textit{digital} signals are represented with a limited number of values
+            
+            \bigskip
+            $\Rightarrow$
+            \begin{enumerate}
+                \item	{\color{gtgold}\textbf{sampling}}: time discretization
+                
+                continuous time $\mapsto$ discrete equidistant points in time 
+                
+                
+                \smallskip
+                \item	\textbf{quantization}: amplitude discretization
+                
+                continuous amplitude $\mapsto$ discrete, pre-defined, set of values
+            \end{enumerate}
+        \end{frame}
+        
+    \section{sampling}
+        \begin{frame}{sampling}{basic concept}
+            \figwithmatlab{Sampling01}
+                
+            \begin{itemize}
+                \item   $f_\mathrm{S}\;[\unit{Hz}]$: number of samples per second
+                \item   $T_\mathrm{S} = \nicefrac{1}{f_\mathrm{S}}\;[\unit{s}]$: distance between two neighboring samples
+            \end{itemize}
+        \end{frame}
+            
+        \begin{frame}{sampling}{sampling frequencies}
+            \question{What are typical sample rates}
+            
+            
+            \begin{itemize}
+                \item	\unit[8--16]{kHz}: speech (phone)
+                \item	\unit[44.1--48]{kHz}: (consumer) audio/music
+                \item	\unit[$>$48]{kHz}: production audio
+            \end{itemize}
+            \pause
+            
+            \bigskip
+            \begin{table}
+                \centering
+                    \begin{tabular}{l|p{.1\textwidth}p{.1\textwidth}p{.1\textwidth}p{.1\textwidth}p{.1\textwidth}p{.1\textwidth}}
+                        $f_\mathrm{S}$ & \unit[44.1]{kHz} & \unit[32]{kHz} & \unit[22.05]{kHz} & \unit[16]{kHz} & \unit[8]{kHz} & \unit[6]{kHz}\\
+                        & \includeaudio{sampling_44}& \includeaudio{sampling_32}& \includeaudio{sampling_22}& \includeaudio{sampling_16}& \includeaudio{sampling_08}& \includeaudio{sampling_06} \\
+                    \end{tabular}
+            \end{table}
+            \inserticon{audio}
+        \end{frame}	
+            
+    \section{ambiguity}
+        \begin{frame}{sampling}{sampling ambiguity}
+            \figwithmatlab{Sampling02}
+        \end{frame}	
+        
+        \begin{frame}{sampling}{sampling ambiguity --- wagon-wheel effect}
+            \only<1>{\figwithref{StageCoach}{\url{flickr.com/photos/fotoguy49057/12209056184}}}
+            \visible<2->{
+                compare speed of wheel (spokes) $f_\mathrm{wheel}$ between real world and video recording for an accelerating stage coach
+                \begin{columns}[T]
+                    \column{0.5\textwidth}
+                        
+                        \begin{enumerate}
+                            \item<2->	$f_\mathrm{wheel} < \frac{f_\mathrm{S}}{2}$\\
+                                speeding up
+                            \item<3->	$\frac{f_\mathrm{S}}{2} < f_\mathrm{wheel} < f_\mathrm{S}$\\
+                                slowing down
+                            \item<4->	$f_\mathrm{wheel} = f_\mathrm{S}$:\\
+                            standing still
+                            \item<4->	$\ldots$
+                        \end{enumerate}
+                                    
+                    \column{0.5\textwidth}
+                        \includegraphics[scale=0.5]{StageCoach}
+                \end{columns}
+            }
+            
+            \only<5->{
+            \vspace{5mm}
+            video example: \href{https://youtu.be/QYYK4tlCMlY}{youtu.be/QYYK4tlCMlY}
+            }
+            \inserticon{video}
+        \end{frame}	
+        
+        \begin{frame}{digital signals}{sampling ambiguity --- spectral domain}
+            \begin{center}
+                \animategraphics[autoplay,loop]{10}{animateSampling/Sampling-}{01}{48}        
+            \end{center}
+            \inserticon{video}
+        \end{frame}	
+        
+    \section{theorem}
+        \begin{frame}{digital signals}{sampling theorem}
+            \toremember{}
+            
+            \begin{block}{sampling theorem}
+                A sampled signal can be reconstructed without loss of information if the sample rate $f_\mathrm{S}$ is higher than twice the bandwidth $f_\mathrm{max}$ of the original audio signal.
+                
+                \begin{equation*}
+                    f_\mathrm{S} > 2\cdot f_\mathrm{max}
+                \end{equation*}
+            \end{block}
+            
+            \bigskip
+            $\nicefrac{f_\mathrm{S}}{2}$ is also referred to as the \textit{Nyquist}\footnote{\tiny Harry Nyquist, 1889--1976}-rate
+        \end{frame}	
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   a continuous signal is sampled to be \textbf{discrete in time}
+                    \begin{itemize}
+                        \item   number of samples per second is called sampling rate or sampling frequency
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{sampling theorem}
+                    \begin{itemize}
+                        \item   A sampled signal can be reconstructed without loss of information if the sample rate $f_\mathrm{S}$ is higher than twice the bandwidth f max of the original audio signal.
+                        \item   if the sampling theorem is violated
+                            \begin{itemize}
+                                \item   reconstruction is ambiguous
+                                \item   aliasing occurs
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

@@ -1,6 +1,6 @@
 function displaySampling02()
 
-    hFigureHandle = generateFigure(10.8,8);
+    hFigureHandle = generateFigure(12,8);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -11,20 +11,21 @@ function displaySampling02()
     for (i = 1:size(x,1))
         subplot(3,size(x,1),i)
         plot(t,x(i,:))
-        ylabel('x(t)')
-        xlabel('t [ms]')
+        ylabel('$x(t)$')
+        %xlabel('$t\; [ms]$')
         title(['$f_S = ' num2str(f0(i)/1000) ' kHz$'])
         axis([t(1) 1 -1.1 1.1])
     
         subplot(3,size(x,1),i+size(x,1))
         stem(ts, xs(i,:), 'k-','MarkerFaceColor',[0 0 0],'MarkerSize',3) 
-        ylabel(['x(i) @' num2str(fs/1000) 'kHz'])
-        xlabel('i')
+        ylabel(['$x_{' num2str(fs/1000) 'kHz}(i)$'])
+        xlabel('$t\; [ms]$')
         axis([ts(1) 1 -1.1 1.1])
     end
     subplot(3,1,3)
     plot(t,x)
-    xlabel('t [ms]')
+    xlabel('$t\; [ms]$')
+    ylabel('$x_n(t), x_n(i)$')
     axis([t(1) 1 -1.1 1.1])
     hold on;
     stem(ts, xs(1,:), 'k-','MarkerFaceColor',[0 0 0],'MarkerSize',5)
