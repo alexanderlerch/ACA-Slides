@@ -1,6 +1,6 @@
-function displaySampling01()
+function displayQuantization()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(10,4.55);
     
     iStart      = 66000;
     iLength     = 768;
@@ -19,13 +19,14 @@ function displaySampling01()
     
     subplot(211)
     plot(tt,xt)
-    ylabel('x(t)')
+    ylabel('$x(t)$')
     axis([tt(1) tt(end) -1.1 1.1])
+    set(gca,'XTickLabel',[])
     
     subplot(212)
     stairs(tt,xq,'LineWidth',1.1)
-    xlabel('t [s]')
-    ylabel('x_Q(t)')
+    xlabel('$t\; [s]$')
+    ylabel('$x_\mathrm{Q}(t)$')
     axis([tt(1) tt(end) -1.1 1.1])
 
     printFigure(hFigureHandle, cOutputFilePath)
