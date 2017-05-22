@@ -1,17 +1,22 @@
 function animateCorrelation()
 
-    %hFigureHandle = generateFigure(10.8,6.45);
-    hFigureHandle = generateFigure(3*10.8,3*6.45);
+    bVideoOut     = false;
+    hFigureHandle = generateFigure(12,5);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
-    cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
+    if bVideoOut
+        cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
+    else
+        mkdir([cPath '/../graph/' cName '/']);
+        cOutputFilePath = [cPath '/../graph/' cName '/' strrep(cName, 'animate', '')];
+    end
  
-    writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
-    writerObj.FrameRate = 12;
-    writerObj.Quality   = 90;
-    open(writerObj);
-    set(gca,'nextplot','replacechildren');
-    set(gcf,'Renderer','zbuffer');
+    if bVideoOut
+        writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
+        writerObj.FrameRate = 10;
+        writerObj.Quality   = 100;
+        open(writerObj);
+    end
 
     t       = 0:499;
     rect    = [zeros(1,150) ones(1,50) zeros(1,300)];
@@ -22,9 +27,9 @@ function animateCorrelation()
     for (k = 0:-1:-250)
         subplot(211),plot(t,rect,t,[tri(-k+1:end),zeros(1,-k)])
         axis([t(1) t(end) 0 1.1])
-        legend('x(t)',['y(t-' int2str(-k) ')'])
         myarea = rect.*[tri(-k+1:end),zeros(1,-k)];
         hold on;area(t,myarea);hold off;
+        legend('$x(t)$',['$y(t-' int2str(-k) ')$'],'mult.\ area')
 
         subplot(212)
         r(-k+1) = rect*[tri(-k+1:end),zeros(1,-k)]';
@@ -33,9 +38,14 @@ function animateCorrelation()
         ylabel('$r_{xy}$')
         xlabel('$\eta$')
 
-        frame = getframe(hFigureHandle);
-        writeVideo(writerObj,frame);
+        if bVideoOut
+            frame = getframe;
+            writeVideo(writerObj,frame);
+        else
+            printFigure(hFigureHandle, [cOutputFilePath '-' num2str(-k,'%.3d')]); 
+        end
     end    
-    close(writerObj);
-    
+    if bVideoOut
+        close(writerObj); 
+    end
 end
