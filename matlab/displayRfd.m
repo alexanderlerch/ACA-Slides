@@ -18,7 +18,7 @@ function displayRfd()
     hold off;
     axis([-.8 .8 0 .05])
     legend('measured rfd', 'laplace dist');
-    xlabel('x')
+    xlabel('$x$')
     ylabel('rel. num. of occurences')
     
     printFigure(hFigureHandle, cOutputFilePath)

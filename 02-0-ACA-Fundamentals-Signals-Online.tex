@@ -54,7 +54,7 @@
             \end{itemize}
         \end{frame}
 
-    \section[signals]{signals}
+    \section[periodic signals]{periodic signals}
         \begin{frame}{audio signals}{periodic signals 1/5}
             \setbeamercovered{invisible}
             \vspace{-2mm}
@@ -165,6 +165,7 @@
             \inserticon{video}
         \end{frame}
 
+    \section[random signals]{random signals}
         \begin{frame}{audio signals}{random process 1/2}
             \textbf{random process}: ensemble of random series
             \figwithmatlab{RandomProcess}%{matlab/displayRandomProcess.m}
@@ -184,6 +185,44 @@
             \end{itemize}
             \inserticon{lightbulb}
         \end{frame}
+
+    \section[signal description]{description of (random) signals}
+            \begin{frame}{statistical signal description}{probability density function}
+                PDF $p_x(x)$
+                \begin{itemize}
+                    \item	abscissa: possible (amplitude) values
+                    \item	ordinate: probability
+                \end{itemize}
+                \pause
+                \begin{eqnarray*}
+                    p_x(x)&\geq& 0 , and\\	
+                    \int\limits_{-\infty}^{\infty}{p_x(x)\, dx} &=& 1	
+                \end{eqnarray*}
+                \pause
+                RFD---Relative Frequency Distribution (sample of PDF)
+                \begin{itemize}
+                    \item[] histogram of (amplitude) values
+                \end{itemize}
+            \end{frame}	
+            
+            \begin{frame}{statistical signal description}{PDF examples}
+                \question{What is the PDF of the following prototype signals:}
+                \only<2>{
+                \begin{itemize}
+                    \item	square wave
+                    \item	sawtooth wave
+                    \item	sine wave
+                    \item	white noise (uniform, gaussian)
+                    \item	DC
+                \end{itemize}}
+                \only<3>{
+                \figwithmatlab{PdfExamples}
+                }
+            \end{frame}
+                
+            \begin{frame}{statistical signal description}{RFD: real world signals}
+                \figwithmatlab{Rfd}
+            \end{frame}	
 
     \section{summary}
         \begin{frame}{summary}{lecture content}

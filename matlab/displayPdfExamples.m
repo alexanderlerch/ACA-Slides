@@ -18,10 +18,10 @@ function displayPdfExamples()
             hold off
         end
         if (i>2)
-            xlabel('x');
+            xlabel('$x$');
         end
         if (mod(i,2)==1)
-            ylabel('p_x(x)');
+            ylabel('$p_x(x)$');
         end
 
         title(deblank(cTitle(i,:)));
