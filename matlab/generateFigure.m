@@ -45,6 +45,7 @@ function hFigureHandle = generateFigure(fWidthInCm, fHeightInCm)
     set(hFigureHandle,'defaultTextFontSize', iFontSize);
     set(hFigureHandle,'defaultLineLineWidth',iPlotLineWidth);
     set(hFigureHandle,'defaultTextInterpreter',cInterpreter);
+    set(hFigureHandle,'defaultLegendInterpreter',cInterpreter)
     set(hFigureHandle,'defaultAxesTickLabelInterpreter',cInterpreter)
     set(hFigureHandle,'defaultAxesXGrid','on');
     set(hFigureHandle,'defaultAxesYGrid','on');

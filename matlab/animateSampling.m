@@ -7,7 +7,7 @@ function animateSampling()
     if bVideoOut
         cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
     else
-        cOutputFilePath = [cPath '/../graph/animateSampling/' strrep(cName, 'animate', '')];
+        cOutputFilePath = [cPath '/../graph/' cName '/' strrep(cName, 'animate', '')];
     end
  
     if bVideoOut
