@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=..\02-2-ACA-Fundamentals-Quantization-Online.tex
+MainFile=..\02-02-ACA-Fundamentals-Quantization-Online.tex
 UseBibTeX=1
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PDF

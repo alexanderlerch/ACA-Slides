@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=..\01-0-ACA-Introduction-2-MIR-Online.tex
+MainFile=..\01-00-ACA-Introduction-2-MIR-Online.tex
 UseBibTeX=1
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PDF
