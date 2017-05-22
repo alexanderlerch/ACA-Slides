@@ -1,0 +1,203 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 2.2: Fundamentals~---~Quantization}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~11--13
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   discretization of signals in amplitude
+                        \item   properties of the quantization error
+                        \item   number representation in Matlab
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   understanding the principle and impact of quantization
+                        \item   representing audio signals in Matlab
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{digital signals}{introduction}
+            \textit{digital} signals are represented with a limited number of values
+            
+            \bigskip
+            $\Rightarrow$
+            \begin{enumerate}
+                \item	\textbf{sampling}: time discretization
+                
+                continuous time $\mapsto$ discrete equidistant points in time 
+                
+                
+                \smallskip
+                \item	{\color{gtgold}\textbf{quantization}}: amplitude discretization
+                
+                continuous amplitude $\mapsto$ discrete, pre-defined, set of values
+            \end{enumerate}
+        \end{frame}
+        
+        \begin{frame}{digital signals}{quantization}
+            \vspace{-3mm}
+            \begin{itemize}
+                \item   continuous amplitude values are mapped to pre-defined, equidistant set of values
+                %\item<2->   quantization steps are most frequently \textbf{equidistant}
+                \item<1->   signal stored in binary $\Rightarrow$ \# quantization steps equals \textbf{power of 2}
+                \smallskip
+                \item<2->   \textbf{example: 4-bit quantization}
+                    \begin{itemize}
+                        \item	\textit{word length}: $w = \log_2(\mathcal{M}) = \unit[4]{bit}$
+                        \item	\textit{number of quantization steps}: $\mathcal{M} = 2^w = 16$
+                    \end{itemize}
+            \end{itemize}
+            
+            \vspace{-3mm}
+            \visible<2->{
+            \figwithmatlab{Quantization}}
+        \end{frame}	
+
+        \begin{frame}{digital signals}{quantization wordlength}
+            \question{What are typical wordlengths?}
+            
+            \begin{itemize}
+                \item	\unit[8]{bit}: speech
+                \item	\unit[12--14]{bit}: low quality audio/music
+                \item	\unit[16]{bit}: (consumer) audio/music
+                \item	\unit[$>$16]{bit}: production audio
+            \end{itemize}
+            \pause
+            
+            \bigskip
+            \begin{table}
+                \centering
+                    \begin{tabular}{l|ccccc}
+                        $w$ & \unit[16]{bit} & \unit[12]{bit} & \unit[8]{bit} & \unit[4]{bit} &\unit[2]{bit}\\
+                        & \includeaudio{quantized_16}& \includeaudio{quantized_12}& \includeaudio{quantized_8}& \includeaudio{quantized_4}& \includeaudio{quantized_2} \\
+                    \end{tabular}
+            \end{table}
+            \inserticon{audio}
+        \end{frame}	
+
+    \section[error]{quantization error}
+        \begin{frame}{digital signals}{quantization error}
+            \begin{figure}
+                \input{pict/fundamentals_Quantization}
+            \end{figure}
+            \bigskip
+            \pause
+            
+            model for quantization: \\
+            quantization noise $q$ is added to input signal $x$
+            \begin{eqnarray*}
+                x_{\mathrm{Q}}(i)   &=& x(i) + q(i)\\
+                q(i) &=& x(i) - x_{\mathrm{Q}}(i)
+            \end{eqnarray*}
+        \end{frame}		
+        \begin{frame}{digital signals}{quantization error magnitude}
+            \question{What is the maximum amplitude of the quantization error?}
+
+            \figwithmatlab{QuantizationError}
+        \end{frame}	
+
+        \begin{frame}{digital signals}{quantization error properties}
+            Under the assumption that the signal has a variance much higher than the quantization step size (no derivation), we find that the quantization error
+            \begin{itemize}
+                \item   is white noise and uncorrelated to signal,
+                \item   is uniformly distributed, and
+                \item   its power $W_\mathrm{Q}$ is directly related to the wordlength.
+            \end{itemize}
+            
+            \pause
+            \bigskip
+            The quantizer quality is usually given by its \textit{Signal-to-Noise Ratio (SNR)}
+			\begin{equation*}\label{eq:snr}
+				SNR = 10\cdot\log_{10}\left(\frac{W_{\mathrm{S}}}{W_{\mathrm{Q}}}\right)\; [dB] 
+			\end{equation*}
+        \end{frame}	
+        
+        \begin{frame}{digital signals}{quantization: SNR}
+            \vspace{-3mm}
+            \toremember{}
+            \begin{block}{signal-to-noise ratio (quantizer)}
+                \centering
+                \begin{equation*}
+                    SNR = 6.02\cdot w + c_{\mathrm{S}}\quad [dB]
+                \end{equation*}
+                \vspace{-5mm}
+                \begin{itemize}
+                    \item	every additional bit adds app.\ \unit[6]{dB} SNR
+                    \item	constant $c_{\mathrm{S}}$ depends on \textit{signal} (scaling and PDF)
+                \end{itemize}
+            \end{block}
+            \pause
+            \begin{itemize}
+                \item	square wave (full scale): $c_{\mathrm{S}} =  \unit[10.80]{dB}$
+                \item	sinusoidal wave (full scale): $c_{\mathrm{S}} =  \unit[1.76]{dB}$
+                \item	rectangular {PDF} (full scale): $c_{\mathrm{S}} =  \unit[0]{dB}$
+                \item	Gaussian {PDF} (full scale = $4\sigma_{g}$): $c_{\mathrm{S}} =  \unit[-7.27]{dB}$
+            \end{itemize}
+        \end{frame}		
+           
+    \section[discrete amplitude range]{amplitude range of a discrete signal}
+        \begin{frame}{digital signals}{amplitude in DSP}
+            \begin{itemize}
+                \item<1->   when represented as integer, different wordlengths lead to different maximum amplitude ranges
+                \item<2->	most common: normalize to the absolute maximum integer value and represent the signal in \textbf{floating point format}
+                \item<3->[$\Rightarrow$]   signal amplitude:
+                    \begin{equation*}
+                        -1 \leq x_{\mathrm{Q}} < 1
+                    \end{equation*}
+                \item<3->[$\Rightarrow$]	level: \\
+                    \begin{center}max.\ amplitude $\mapsto \unit{0}{dBFS}$\end{center}
+                \item<4->   floating point representation
+                    \begin{equation*}
+                        x_{\mathrm{Q}} = M_{\mathrm{G}}\cdot 2^{E_{\mathrm{G}}}
+                    \end{equation*}
+                \item<5->   internal float point representation usually treated as signal being \textbf{not quantized}
+            \end{itemize}
+        \end{frame}
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item  \textbf{quantization process}
+                    \begin{itemize}
+                        \item   modeled as addition of noise
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{quantization error properties}
+                    \begin{itemize}
+                        \item   maximum amplitude is half the step size
+                        \item   number of steps depends on wordlength
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{SNR}
+                    \begin{itemize}
+                        \item   SNR depends on input signal characteristic and wordlength
+                        \item   SNR increases linearly (\unit[6]{dB}/bit) with wordlength
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{signals in Matlab}
+                    \begin{itemize}
+                        \item   maximum amplitude independent of wordlength (-1\ldots 1)
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
