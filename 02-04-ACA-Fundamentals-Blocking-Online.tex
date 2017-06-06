@@ -1,0 +1,134 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 2.4: Fundamentals~---~Blocking}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~18--20
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   splitting the audio signal into blocks
+                        \item   block length and hop size
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe the reasons for blocking
+                        \item   summarize the principle using the correct terminology
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+   \section[blocking]{block-based processing}
+        \begin{frame}{block based processing}{introduction}
+            \begin{itemize}
+                \item   typical audio applications \textbf{process blocks} of audio data  
+                \item   instead of having a function called per sample, it is called with block of samples
+                \bigskip
+                \item   \textbf{reasons}:
+                    \begin{itemize}
+                        \item   block based processing methods such as the Short-Time Fourier Transform
+                        \item	quasi-stationary signal properties within block
+                        \item	audio hardware characteristics (real-time systems)
+                        \item	efficiency (memory allocation, SIMD)
+                    \end{itemize}
+                \smallskip
+                \item<2->   typical block lengths:
+                    \begin{itemize}
+                        \item   1\ldots thousands of samples
+                        \item   often powers of 2
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{block based processing}{description}
+            \vspace{-4mm}
+            \figwithmatlab{Blocking}
+            \pause
+            \begin{columns}
+                \column{.6\textwidth}
+                    \vspace{-11mm}
+                    \begin{figure}
+                        \centering
+                        \input{pict/fundamentals_BlockProcessing}	
+                    \end{figure}
+                \column{.4\textwidth}
+                    \begin{itemize}
+                        \item   $\mathcal{K}$: block length
+                        \item   $\mathcal{H}$: hop size
+                        \item   $n$: block index
+                        \item   $i$: sample index
+                    \end{itemize}
+            \end{columns}
+        \end{frame}
+    \section[definitions]{terms \& definitions}
+        \begin{frame}{block based processing}{terms and definitions}
+            \begin{columns}
+                \column{.75\textwidth}
+                    \begin{itemize}
+                        \item   \textbf{block boundaries}:
+                            \begin{eqnarray*}
+                                i_{\mathrm{s}}(n)	&=& i_{\mathrm{s}}(n-1) + \mathcal{H}\\
+                                i_{\mathrm{e}}(n)		&=& i_{\mathrm{s}}(n) + \mathcal{K} - 1
+                            \end{eqnarray*}
+                        \item   \textbf{overlap ratio}:
+                            \begin{equation*}
+                                o_{\mathrm{r}}	= \frac {\mathcal{K}-\mathcal{H}}{\mathcal{K}}
+                            \end{equation*}
+                        \item   \textbf{time stamp}:
+                            \begin{equation*}
+                                t_{\mathrm{s}}(n) = \frac{i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n)+1}{2\cdot f_{\mathrm{S}}} + \frac{i_{\mathrm{s}}(n)}{f_{\mathrm{S}}} = \frac{\mathcal{K}}{2\cdot f_{\mathrm{S}}} + \frac{i_{\mathrm{s}}(n)}{f_{\mathrm{S}}} 
+                            \end{equation*}
+                    \end{itemize}
+                \column{.25\textwidth}
+                    \begin{itemize}
+                        \item   $\mathcal{K}$: block length
+                        \item   $\mathcal{H}$: hop size
+                        \item   $n$: block index
+                        \item   $i$: sample index
+                        \item   $f_\mathrm{S}$: sample rate
+                    \end{itemize}
+            \end{columns}
+        \end{frame}	
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{audio signal is typically split into blocks}
+                \item   each block processed individually
+                \smallskip
+                \item   \textbf{terms}:
+                    \begin{itemize}
+                        \item   \textit{block length}:
+                            \begin{itemize}
+                                \item minimum: $1$
+                                \item   typical: $256 \ldots 16384$
+                            \end{itemize}
+                        \item   \textit{hop size}:
+                            \begin{itemize}
+                                \item minimum: $1$
+                                \item   maximum: block length
+                                \item   typical: half of block length
+                            \end{itemize}
+                        \item   block \textit{time stamp}:
+                            \begin{itemize}
+                                \item typically refers to middle of block
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
