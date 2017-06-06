@@ -1,6 +1,6 @@
 function displaySpectrogram()
 
-    hFigureHandle = generateFigure(10.8,6.4);
+    hFigureHandle = generateFigure(12,6);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -16,9 +16,9 @@ function displaySpectrogram()
     c = colorbar;
     c.Label.String = '[dB]';
     set(gca,'YDir','normal');
-    xlabel('t [s]')
-    ylabel('f [kHz]')
+    xlabel('$t$ [s]')
+    ylabel('$f$ [kHz]')
 
-    print(hFigureHandle, '-dpng', '-r600', strcat(cOutputFilePath,'.png'));
+    %print(hFigureHandle, '-dpng', '-r600', strcat(cOutputFilePath,'.png'));
     printFigure(hFigureHandle, cOutputFilePath)
 end
