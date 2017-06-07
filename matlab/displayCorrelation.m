@@ -1,6 +1,6 @@
 function displayCorrelation()
 
-    hFigureHandle = generateFigure(10.8,9);
+    hFigureHandle = generateFigure(10,6);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
