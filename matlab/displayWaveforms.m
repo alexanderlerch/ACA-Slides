@@ -1,6 +1,6 @@
 function displayWaveforms()
 
-    hFigureHandle = generateFigure(10.8,4);
+    hFigureHandle = generateFigure(12,4);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -13,8 +13,8 @@ function displayWaveforms()
         
         subplot(1,3,i), plot(t,x)
         axis([t(1) t(end) -1 1])
-        ylabel([ 'x(t) (' deblank(cExamples(i,:)) ')'])
-        xlabel('t [s]')
+        ylabel([ '$x(t)$ (' deblank(cExamples(i,:)) ')'])
+        xlabel('$t$ [s]')
     end
 
     printFigure(hFigureHandle, cOutputFilePath)

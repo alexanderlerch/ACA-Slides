@@ -1,0 +1,201 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 3.0: Feature Extraction~---~Introduction and Pre-processing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331120}{Chapter 3~---~Instantaneous Features}: pp.~31--35
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   introduction to the concept of features
+                        \item   audio pre-processing for feature extraction
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe the process of feature extraction
+                        \item   list possible pre-processing option and explain potential use cases
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{instantaneous features}{introduction}
+            remember the flow chart of a general ACA system:
+            \vspace{-3mm}
+            \begin{figure}
+                \input{pict/introduction_ACASystem_2}
+            \end{figure}
+            
+            \vspace{-2mm}
+            \pause
+            \textbf{feature}:
+            \begin{itemize}
+                \item<2->   \textit{terminology}: 
+                    \begin{itemize}
+                        \item   audio descriptor
+                        \item   instantaneous/short-term/\color<3->{gtgold}{low-level feature}
+                    \end{itemize}
+                \item<2->   \textit{characteristics}:
+                    \begin{itemize}
+                        \item	not necessarily musically, perceptually, or semantically meaningful
+                        \item	low-level: usually one value per block
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{instantaneous features}{feature}
+            \toremember{}
+            \begin{block}{a feature \ldots}
+            \begin{itemize}
+                \item   is task-specific, i.e.\ contains information relevant to the task,
+                \bigskip
+                \item   may be custom-designed, chosen from a set of established features, or learned from data,
+                \bigskip
+                \item   can be a representation of any data (audio, meta data, other features, ...),
+                \bigskip
+                \item   is not necessarily musically, perceptually, or semantically meaningful or interpretable
+            \end{itemize}
+            \end{block}
+        \end{frame}
+        
+        \begin{frame}{instantaneous features}{feature example}
+            waveform envelope of three different signals 
+            
+            \figwithmatlab{Waveforms}
+            
+            \vspace{-2mm}
+            \begin{columns}
+                \column{.16\textwidth}
+                \column{.25\textwidth}\centering
+                    \hspace{8mm}\includeaudio{excerpt_pop}
+                \column{.25\textwidth}\centering
+                    \includeaudio{excerpt_stringquartet}
+                \column{.25\textwidth}\centering
+                    \hspace{-10mm}\includeaudio{excerpt_speech}
+                \column{.09\textwidth}
+            \end{columns}
+            
+            \bigskip
+            \begin{itemize}
+                \item<2->   envelopes of waveforms can have distinct shape
+                \item<2->[$\Rightarrow$] a feature describing envelope shape could help to distinguish these signal types
+            \end{itemize}
+            \inserticon{audio}
+        \end{frame}
+
+        \begin{frame}{instantaneous features}{feature extraction}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{.6\linewidth}
+            \flushright{\includeaudio{sax_example}}
+            \vspace{-5mm}
+            \begin{figure}
+            \vspace{-8mm}
+                \includegraphics[height=10mm,width=.7\columnwidth]{waveform}\\ \vspace{-3mm}
+                \includegraphics[scale=.08]{FeatureExtraction}
+                
+            \end{figure}
+            \column{.4\linewidth}
+                \begin{itemize}
+                    \item   repeat for every block
+                    \item   repeat for every feature: \textit{Spectral Centroid}, \textit{RMS}, \textit{MFCCs}, \ldots
+                    \bigskip
+                    \item[$\Rightarrow$] feature matrix per audio input
+                \end{itemize}
+            \end{columns}
+            \inserticon{audio}
+        \end{frame}
+
+    \section[pre-proc]{audio pre-processing}
+        \begin{frame}{instantaneous features}{audio pre-processing}
+            \begin{itemize}
+                \item   \textbf{pre-processing}: audio is treated before feature extraction (task dependent)
+                \bigskip
+                \item   \textbf{possible goals} 
+                    \begin{itemize}
+                        \item   \textit{reduce amount of data} (e.g., down-sampling)
+                        \item   \textit{remove irrelevant information} (e.g., surround channels of multi-channel signal)
+                        \item   \textit{remove information that might impact analysis} (e.g., DC offset)
+                        \item   \textit{increase robustness} (e.g., normalization)
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{instantaneous features}{audio pre-processing examples 1/2}
+            \begin{itemize}
+                \item   \textbf{down-mixing}
+                    \[
+                        x(i) = \frac{1}{\mathcal{C}}\sum\limits_{c=0}^{\mathcal{C}-1}{x_c(i)} 
+                    \]
+                    \begin{itemize}
+                        \item   \textit{variants}: different channel weights, $\nicefrac{\pi}{2}$ phase shift in one channel, \ldots
+                    \end{itemize}
+                    
+                \bigskip
+                \item<2->   \textbf{normalization}
+                    \[
+                        x(i) = \frac{x_s(i)}{\max\limits_{\forall i}\big(|x_s(i)|\big)} 
+                    \]
+                    \begin{itemize}
+                        \item   \textit{variants}: RMS, LUFS normalization
+                        \item   real-time?
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{instantaneous features}{audio pre-processing examples 2/2}
+            \begin{itemize}
+                \item   \textbf{filtering}
+                    \begin{itemize}
+                        \item   \textit{DC removal}
+                            \[
+                                x(i) = x_{\mathrm{DC}}(i) - \frac{1}{\mathcal{I}}\sum\limits_{i=0}^{\mathcal{I}-1}{x_{\mathrm{DC}}(i)} 
+                            \]
+                        \item   other filters: high/band pass, smoothing, ...
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{sample rate reduction}
+                \bigskip
+                \item<3->   \textbf{quality enhancement} (denoising, etc.)
+                \bigskip
+                \item<3->   \ldots
+            \end{itemize}
+        \end{frame}
+        
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{feature}
+                    \begin{itemize}
+                        \item   descriptor with condensed relevant information
+                        \item   not necessarily interpretable by humans
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{low-level feature extraction}
+                    \begin{itemize}
+                        \item   usually extracted per short block of samples
+                        \item   many features can be extracted from audio data, resulting in feature matrix
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{pre-processing}
+                    \begin{itemize}
+                        \item   remove irrelevant data,
+                        \item   clean relevant data
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
