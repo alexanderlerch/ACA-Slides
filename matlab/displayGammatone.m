@@ -1,6 +1,6 @@
 function displayGammatone()
 
-    hFigureHandle = generateFigure(10.8,6.4);
+    hFigureHandle = generateFigure(12,5.9);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -10,16 +10,17 @@ function displayGammatone()
     
     subplot(211),
     plot(t,h)
-
-    xlabel('t [s]')
-    ylabel('h(t)')
-    legend('f_c=1kHz')
+    axis([t(1) t(end) -1.05 1.05])
+    
+    xlabel('$t$ [s]')
+    ylabel('$h(t)$')
+    legend('$f_\mathrm{c}=1$ kHz')
     
     subplot(212),
     plot(f,H),
-    axis([0.1 16 -60 1])
-    xlabel('f [kHz]')
-    ylabel('|H(f)| [dB]')
+    axis([0.1 16 -60 3])
+    xlabel('$f$ [kHz]')
+    ylabel('$|H(f)|$ [dB]')
 
     printFigure(hFigureHandle, cOutputFilePath)
 end

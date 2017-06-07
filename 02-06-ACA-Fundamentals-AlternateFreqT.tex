@@ -1,0 +1,190 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 2.6: Fundamentals~---~Non-Fourier Time-Frequency Transforms}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~9--11
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   constant-Q transform (CQT)
+                        \item   Gammatone filterbank
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   discussing the advantages and disadvantages of different time-frequency transforms
+                        \item   explaining the principles of the CQT and auditory filterbanks
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{other time frequency transforms}{introduction}
+            \begin{itemize}
+                \item   Fourier transform continues to be much-used tool in audio signal processing and MIR
+                \bigskip
+                \item   but there are disadvantages, e.g.
+                    \begin{itemize}
+                        \item   frequency axis does not directly map to (perceptual) pitch axis
+                        \item   frequency and time resolution inversely related
+                        \smallskip
+                        \item<2->[$\Rightarrow$] \textbf{alternative transforms} can be used
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+    \section[CQT]{constant-Q transform}
+        \begin{frame}{constant-Q transform}{introduction}
+            \begin{itemize}
+                \item<1-> DFT has a \textit{linear} frequency axis:
+                    \begin{itemize}
+                        \item	not perceptually meaningful: \textit{logarithmic} is better match
+                        \item	low frequency resolution at low frequencies
+                    \end{itemize}
+                \bigskip
+                \item<2->[$\Rightarrow$] compute DFT-like transform {\color{gtgold}{at specific frequencies}}
+                    \begin{itemize}
+                        \item   space frequencies logarithmically (constant $\mathcal{Q}$)
+                        \item   resulting abscissa resolution is pitch-related
+                    \end{itemize}
+            \end{itemize}
+            
+            \bigskip
+            \visible<2->{\begin{equation*}
+                \mathcal{Q} = \frac{f}{\Delta f} = \frac{1}{2^{\nicefrac{1}{c}}-1}
+            \end{equation*}
+            }
+        \end{frame}	
+
+        \begin{frame}{constant Q transform}{implementation 1/2}
+            
+            \begin{columns}
+            \column{0.55\textwidth}
+            \begin{eqnarray*}
+                X_\mathrm{CQ}(k,n) &=& \frac{1}{\mathcal{K}(k)}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{w_k(i-i_{\mathrm{s}})\cdot x(i) \e^{\mathrm{j}2\pi \frac{\mathcal{Q}\cdot(i-i_{\mathrm{s}})}{\mathcal{K}(k)}}}\\
+                \mathcal{K}(k) &=& \frac{f_{\mathrm{S}}}{f(k)} \mathcal{Q}
+            \end{eqnarray*} 
+            
+            \column{0.45\textwidth}
+            \begin{itemize}
+                \item   $f(k)$: frequency of bin index $k$
+                \item   $\mathcal{K}(k)$: blocklength for bin index $k$
+                \item   $\mathcal{Q}$: measure of pitch res.
+                \item   $w_k$: window function
+                \item   $i_\mathrm{s},i_\mathrm{e}$: start and stop time indices of block
+                \item   $f_\mathrm{S}$: sample rate
+            \end{itemize}
+            \end{columns}
+            \bigskip
+            \begin{itemize}
+                \item   long window for low frequencies (high freq res, low time res)
+                \item   short window for high frequencies (low freq res, high time res)
+            \end{itemize}
+        \end{frame}	
+
+        \begin{frame}{constant Q transform}{implementation 2/2}
+            \vspace{-5mm}
+            \begin{columns}
+                \column{.4\linewidth}
+                    \begin{center}\textbf{non-overlapping}\end{center}
+                    \vspace{-8mm}
+                    \begin{figure}
+                    \centering
+                        \scalebox{1.2}{\input{pict/fundamentals_CQT}}
+                    \end{figure}
+                \column{.6\linewidth}
+                    \begin{center}\textbf{overlapping}\end{center}
+                    \vspace{10mm}
+                    \begin{itemize}
+                        \item   define transformation matrix with maximum window length
+                        \item   zeropad higher frequencies (left \& right)
+                        \bigskip
+                        \item[$\Rightarrow$] independent definition of block and hop length
+                    \end{itemize}
+                    \vspace{15mm}
+                \end{columns}
+        \end{frame}	
+
+        \begin{frame}{constant Q transform}{CQT vs.\ DFT}
+            \textbf{CQT}:
+            \bigskip
+            \begin{itemize}
+                \item<1->[+]	perceptually/musically adapted frequency resolution
+                \smallskip
+                \item<2->[--]	time resolution depends on frequency
+                \smallskip
+                \item<3->[--]	not invertible
+                \smallskip
+                \item<4->[--]	no optimized implementation (compare FFT)
+            \end{itemize}
+        \end{frame}	
+
+    \section{Auditory Filterbanks}
+        \begin{frame}{auditory filterbanks}{introduction}
+            FT and related transforms bad models of physiological properties of the human ear:
+                \begin{itemize}
+                    \item   frequency resolution (critical bands)
+                    \item   frequency scale (pitch resolution)
+                    \item   loudness \& masking
+                    \item   event perception \&  time integration
+                \end{itemize}
+            
+            \smallskip
+            $\Rightarrow$ \textbf{auditory filterbanks}
+            
+            \pause
+            \bigskip
+            not as widely used as one might think because
+            
+            \begin{enumerate}
+                \item<3->	computationally inefficient
+                \item<3->	analysis only: no invertibility (mostly)
+                \item<3->	not proven to be superior
+            \end{enumerate}
+        \end{frame}	
+
+        \begin{frame}{auditory filterbanks}{gammatone filterbank}
+            \vspace{-6mm}
+            \begin{equation*}
+                h(i) = \frac{ a \cdot\left(\nicefrac{i}{f_{\mathrm{S}}}\right)^{\mathcal{O}-1}\cdot \cos\left( 2\pi \cdot f_{\mathrm{c}} \frac{ i}{f_{\mathrm{S}}} \right) }{\e^{\nicefrac{2\pi i \Delta f}{f_{\mathrm{S}}}}}
+            \end{equation*}
+            \vspace{-4mm}
+            \figwithmatlab{Gammatone}
+        \end{frame}	
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   a continuous signal is sampled to be \textbf{discrete in time}
+                    \begin{itemize}
+                        \item   number of samples per second is called sampling rate or sampling frequency
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{sampling theorem}
+                    \begin{itemize}
+                        \item   A sampled signal can be reconstructed without loss of information if the sample rate $f_\mathrm{S}$ is higher than twice the bandwidth f max of the original audio signal.
+                        \item   if the sampling theorem is violated
+                            \begin{itemize}
+                                \item   reconstruction is ambiguous
+                                \item   aliasing occurs
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
