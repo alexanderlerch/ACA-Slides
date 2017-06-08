@@ -1,6 +1,6 @@
 function displayCepstrum()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(12,4.5);
     
     iStart  = 66000;
     iLength = 4096;
@@ -31,7 +31,7 @@ function displayCepstrum()
     subplot(212)
     plot(q,cepstrum(1024:3072))
     xlabel('Quefrency [s]')
-    ylabel('$\hat{c}_x(i)$','Interpreter','latex')
+    ylabel('$\hat{c}_x(i)$')
     axis([q(1) q(end) -.25 .5])
 
     printFigure(hFigureHandle, cOutputFilePath)

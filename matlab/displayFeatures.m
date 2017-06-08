@@ -34,7 +34,7 @@ function displayFeatures()
  
     for (i=1:size(cFeatureNames,1))
         cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '') deblank(cFeatureNames(i,:))];
-        hFigureHandle   = generateFigure(10.8,6);
+        hFigureHandle   = generateFigure(12,5.5);
  
         [v, tv]         = ComputeFeature (deblank(cFeatureNames(i,:)), x, fs);
 
@@ -42,15 +42,15 @@ function displayFeatures()
         subplot(211), 
         imagesc(tf,f(1:floor(end/2))/1000,20*log10(abs(X(1:floor(end/2),:))))
         axis xy;
-        ylabel(['f [kHz]'])
+        ylabel(['$f$ [kHz]'])
         
         subplot(212)
         [AX,H2,H1] = plotyy(t,x, tv,v);
         set(AX(1),'XLim', [0 max(t(end),tv(end))], 'YLim', [-1 1])
         set(AX(2),'XLim', [0 max(t(end),tv(end))], 'YLim', [min(min(v)) max(max(v))])        
-        xlabel('t [s]')
-        ylabel(AX(1),'x(i)')
-        ylabel(AX(2),'v(n)')
+        xlabel('$t$ [s]')
+        ylabel(AX(1),'$x(i)$')
+        ylabel(AX(2),'$v(n)$')
 
         printFigure(hFigureHandle, cOutputFilePath)
     end
