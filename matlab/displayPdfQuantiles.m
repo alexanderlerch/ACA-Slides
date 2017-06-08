@@ -2,7 +2,7 @@ function displayPdfQuantiles()
 
     addpath(fullfile(docroot,'techdoc','creating_plots','examples'))
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(9.5,6);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -23,8 +23,8 @@ function displayPdfQuantiles()
         h(1).FaceColor = color(i,:);
         line([x1(qidx(1,i)) x1(qidx(1,i))],[0 y_annot(mod(i+1,2)+1)],'Color',[.5 .5 .5],'LineWidth',.5);
         [figx figy] = dsxy2figxy([x1(qidx(1,i))-.1 x1(qidx(1,i))],[y_annot(mod(i+1,2)+1) y_annot(mod(i+1,2)+1)]);
-        annotation('textarrow',figx,figy, 'String', ['Q_x(' num2str(qp(i),2) ')=' num2str(x1(qidx(1,i)),2)],...
-            'Color',color(i,:), 'FontSize',6,'Headlength',5,'HeadWidth',4) 
+        annotation('textarrow',figx,figy, 'String', ['$Q_x(' num2str(qp(i),2) ')=' num2str(x1(qidx(1,i)),2) '$'],...
+            'Color',color(i,:), 'FontSize',6,'Headlength',5,'HeadWidth',4,'interpreter','latex') 
     end
     ylabel('Gaussian')
     hold off;
@@ -41,10 +41,10 @@ function displayPdfQuantiles()
         h(1).FaceColor = color(i,:);
         line([x2(qidx(2,i)) x2(qidx(2,i))],[0 y_annot(mod(i+1,2)+1)],'Color',[.5 .5 .5],'LineWidth',.5);
         [figx figy] = dsxy2figxy([x2(qidx(2,i))-.1 x2(qidx(2,i))],[y_annot(mod(i+1,2)+1) y_annot(mod(i+1,2)+1)]);
-        annotation('textarrow',figx,figy, 'String', ['Q_x(' num2str(qp(i),2) ')=' num2str(x2(qidx(2,i)),2)],...
-            'Color',color(i,:), 'FontSize',6,'Headlength',5,'HeadWidth',4) 
+        annotation('textarrow',figx,figy, 'String', ['$Q_x(' num2str(qp(i),2) ')=' num2str(x2(qidx(2,i)),2) '$'],...
+            'Color',color(i,:), 'FontSize',6,'Headlength',5,'HeadWidth',4,'interpreter','latex') 
     end
-    ylabel('Chi^2')    
+    ylabel('Chi$^2$')    
     xlabel('x')
     
     hold off;
