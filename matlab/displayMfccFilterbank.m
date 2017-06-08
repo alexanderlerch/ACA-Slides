@@ -1,6 +1,6 @@
 function displayMfccFilterbank()
 
-    hFigureHandle = generateFigure(10.8,4);
+    hFigureHandle = generateFigure(12,4);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
