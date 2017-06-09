@@ -1,12 +1,12 @@
 function displayLoudnessWeighting()
 
-    hFigureHandle = generateFigure(10.8,4);
+    hFigureHandle = generateFigure(12,4);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
  
     % read sample data
-    [f, H,cLegend]  = generateSampleData();
+    [f, H]  = generateSampleData();
 
     semilogx(f,H)
     
@@ -18,7 +18,7 @@ function displayLoudnessWeighting()
     printFigure(hFigureHandle, cOutputFilePath)
 end
 
-function [f,H,cLegend] = generateSampleData()
+function [f,H] = generateSampleData()
     fs              = 48000;
 
     % bs 1770
@@ -88,6 +88,4 @@ function [f,H,cLegend] = generateSampleData()
     % omit BS1770
     H = H(:,2:end);
     
-    cLegend = char('BS.1770','ITU-R BS.468','A Weighting','C Weighting','Z Weighting'   )
-
 end

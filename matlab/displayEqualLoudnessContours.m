@@ -1,6 +1,6 @@
 function displayEqualLoudnessContours()
 
-    hFigureHandle = generateFigure(10.8,8);
+    hFigureHandle = generateFigure(12,8);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];

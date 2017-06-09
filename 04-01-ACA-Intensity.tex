@@ -1,0 +1,340 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 4.1: Intensity}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331121}{Chapter 4~---~Intensity}: pp.~71--78
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   quick overview: human perception of loudness 
+                        \item   intensity related features
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   discuss level and loudness
+                        \item   list and describe typical intensity related low level features
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+   \section[intro]{introduction}
+        \begin{frame}{intensity, magnitude \& loudness}{introduction}
+            \begin{columns}
+            \column{0.6\linewidth}
+                \begin{itemize}
+                    \item   intensity-related descriptors \textbf{commonly used}
+                        \begin{itemize}
+                            \item	waveform view
+                            
+                            \item	level monitoring (PPM, VU,\ldots)
+                            
+                         \end{itemize}
+                \end{itemize}
+            \column{0.4\linewidth}
+                \begin{figure}%
+                    \includegraphics[width=\columnwidth]{waveforms}%
+
+                    \vspace{8mm}
+                    \includegraphics[width=\columnwidth]{ppmulator}%
+                \end{figure}
+            \end{columns}
+            \pause
+            \bigskip
+            \bigskip
+            \bigskip
+            \textbf{related terms}: magnitude $\bullet$ intensity $\bullet$ envelope $\bullet$ level $\bullet$ volume $\bullet$ velocity $\bullet$ loudness
+            
+        \end{frame}
+
+    \section[perception]{loudness perception}
+        \begin{frame}{intensity, magnitude \& loudness}{human perception 1/2}
+            perception has non-linear relation to magnitude/RMS:
+            \begin{itemize}
+                \item	model: logarithmic relation
+                    \begin{equation*}
+                        v_\mathrm{dB}(n) = 20\cdot\log_{10}\left(\frac{v(n)}{v_0}\right)
+                    \end{equation*}
+        
+
+                    \begin{itemize}
+                        \item	$v_0$: reference constant (\unit[0]{dB} point)
+                            \begin{itemize}
+                                \item   digital: $v_0 = 1$ $\Rightarrow \unit{dBFS}$
+                                \item   sound pressure $v_0 = 20\cdot10^{-6}$ $\Rightarrow \unit{dBSPL}$
+                            \end{itemize}
+                        
+                        \smallskip
+                        \item	scaling	factor: \unit[1]{dB} $\approx$ JNDL for sound pressure level
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{intensity, magnitude \& loudness}{side note: level computation}
+            \begin{itemize}
+                \item if $v(n) = 0\quad\Rightarrow$: computation of $\log_{10}(0)$
+                \item<2-> \textbf{work-arounds}
+                    \begin{enumerate}[a]
+                        \item	add constant $\epsilon$
+                            \begin{equation*}
+                                v_\mathrm{dB}(n) = 20\cdot\log_{10}(v(n) + \epsilon)
+                            \end{equation*}
+                            \only<2>{\vspace{-6mm}\figwithmatlab{LogEpsilon}}
+
+                        \item<3->	add \textbf{if} statement	
+                            \begin{equation*}
+                                v_\mathrm{trunc}(n)  =   \left\{ 
+                                            \begin{array}{ll} 
+                                                v(n), & \text{if } v(n) \geq \epsilon \\
+                                                \epsilon, & \text{otherwise }
+                                            \end{array} 
+                                            \right. 
+                            \end{equation*}
+                    \end{enumerate}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{intensity, magnitude \& loudness}{human perception 2/2}
+            \only<1-2>{
+            \begin{itemize}
+                \item   decibel scale is \textit{not} loudness scale:
+                    \begin{itemize}
+                        \item	equal-sized steps on the decibel scale not perceived as equal-sized loudness steps
+                    \end{itemize}
+                \bigskip
+                \item<2>  perceptual phenomenon loudness depends on
+                    \begin{itemize}
+                        \item	frequency
+                        \item	cochlear resolution
+                        \item	masking effects
+                    \end{itemize}
+            \end{itemize}
+            }
+            \only<3>{
+            \figwithmatlab{EqualLoudnessContours}
+            }
+        \end{frame}	
+        
+
+    \section[music]{loudness in music}
+        \begin{frame}{intensity, magnitude \& loudness}{dynamics in music}
+            \begin{itemize}
+                \item	\textbf{score}:
+                        \begin{itemize}
+                            \item	only several rough dynamic steps,e.g.:\\ \emph{\textbf{pp}}, \textit{\textbf{p}}, \emph{\textbf{mf}}, \emph{\textbf{f}}, \emph{\textbf{ff}}
+                            \item<1->	comparably vague instructions on volume modifications, e.g.:\\ \textsl{crescendo}, \textsl{decrescendo}, \emph{\textbf{sf}}
+                            \item<1->	dynamics influenced by
+                                    \begin{itemize}
+                                        \item	instrumentation
+                                        \item	timbre
+                                        \item	number of voices
+                                        \item	context and musical tension
+                                    \end{itemize}
+                        \end{itemize}
+                \smallskip
+                \item<2->	\textbf{MIDI}:
+                        \begin{itemize}
+                            \item	$128$ velocity steps
+                            \item	no standardized relation to magnitude, power, \ldots
+                        \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+
+    \section[features]{loudness features}
+        \begin{frame}{intensity, magnitude \& loudness}{features: root mean square 1/2}
+            \vspace{-6mm}
+            \begin{equation*}
+                \input{eq/TimeRms}
+            \end{equation*}
+            \only<2>{
+                \begin{itemize}
+                    \item   value of this feature for the hypothetical prototype signals
+                        \begin{itemize}
+                            \item   silence
+                            \item   sinusoidal (Amplitude $A$)
+                            %\item   rect.\ white noise (Amplitude $A$)
+                        \end{itemize}
+                \end{itemize}
+            }
+            \only<3>{
+                \vspace{-4mm}
+                \figwithref{FeaturesTimeRms}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayFeatures.m}{matlab/displayFeatures.m}}
+            }
+            \vspace{50mm}
+        \end{frame}
+        \begin{frame}{intensity, magnitude \& loudness}{features: root mean square 2/2}
+                \textbf{common variants}  (sample processing only):
+                \begin{itemize}
+                    \item<1->	reduce computational complexity
+                        \begin{footnotesize}
+                        \begin{eqnarray*}
+                            v^2_{\mathrm{RMS}}(n) &=& \frac{x(i_{\mathrm{e}}(n))^2 - x(i_{\mathrm{s}}(n-1))^2}{i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n) + 1} + v^2_{\mathrm{RMS}}(n-1) \\
+                            v_{\mathrm{RMS}}(n)	&=& \sqrt{v^2_{\mathrm{RMS}}(n)}
+                        \end{eqnarray*}
+                        \end{footnotesize}
+                    \smallskip
+                    \item<2->	single pole approximation
+                        \begin{footnotesize}
+                        \begin{eqnarray*}
+                            v_\mathrm{tmp}(i)	&=& \alpha\cdot v_\mathrm{tmp}(i-1) + (1-\alpha)\cdot x(i)^2\\
+                            v^*_{\mathrm{RMS}}(i)		&=& \sqrt{v_\mathrm{tmp}(i)}
+                        \end{eqnarray*}
+                        \end{footnotesize}
+                \end{itemize}
+        \end{frame}
+        \begin{frame}{intensity, magnitude \& loudness}{features: weighted root mean square}
+            \begin{columns}
+            \column{0.6\linewidth}
+                \vspace{-8mm}
+                \begin{figure}
+                    \centering
+                    \input{pict/lowlevelfeatures_rmsblock}
+                \end{figure}
+            \column{0.4\linewidth}
+            $H(z)$:
+            \begin{itemize}
+                \item	A, B, C weighting
+                \item	RLB (BS.1770)
+                \item	\ldots
+            \end{itemize}
+            \end{columns}
+            \vspace{-3mm}
+            
+            \only<2->{
+            \figwithmatlab{LoudnessWeighting}
+            }
+        \end{frame}
+
+         \begin{frame}{intensity, magnitude \& loudness}{features: peak envelope (max)}
+            \vspace{-5mm}
+            \begin{equation*}
+                v_{\mathrm{Peak}}(n) = \max_{i_{\mathrm{s}}(n) \leq i \leq i_{\mathrm{e}}(n)}{|x(i)|} 
+            \end{equation*}
+            \only<2>{
+                \vspace{-3mm}
+                \figwithref{FeaturesTimePeakEnvelope}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayFeatures.m}{matlab/displayFeatures.m}}
+            }
+            \vspace{50mm}
+        \end{frame}
+        
+        \begin{frame}{intensity, magnitude \& loudness}{features: peak envelope (PPM) 1/2}
+            \begin{figure}
+                \centering
+                \input{pict/lowlevelfeatures_ppm}
+            \end{figure}	
+            \only<1>{\vspace{30mm}}
+            \only<2->{
+            \begin{itemize}
+                \only<2-3>{
+                \item \textbf{release state} ($|x(i)| < v_{\mathrm{PPM}}(i-1)\Rightarrow\lambda = \alpha_\mathrm{RT}$)
+                    \invisible<2>{
+                    \begin{eqnarray*}
+                        v_{\mathrm{PPM}}(i) &=& v_{\mathrm{PPM}}(i-1) - \alpha_\mathrm{RT}\cdot v_{\mathrm{PPM}}(i-1)\nonumber\\
+                                    &=& (1-\alpha_\mathrm{RT})\cdot v_{\mathrm{PPM}}(i-1) 
+                    \end{eqnarray*}
+                    }
+                }
+                \only<4-5>{
+                \item \textbf{attack state} ($|x(i)| \geq v_{\mathrm{PPM}}(i-1)\Rightarrow\lambda = 0$)
+                    \invisible<4>{
+                    \begin{eqnarray*}
+                        v_{\mathrm{PPM}}(i) &=& \alpha_\mathrm{AT}\cdot\big(|x(i)| - v_{\mathrm{PPM}}(i-1)\big) + v_{\mathrm{PPM}}(i-1)\nonumber\\
+                                    &=& \alpha_\mathrm{AT}\cdot |x(i)| + (1-\alpha_\mathrm{AT})\cdot v_{\mathrm{PPM}}(i-1) 
+                    \end{eqnarray*}
+                    }
+                }
+            \end{itemize}
+            }
+        \end{frame}
+        \begin{frame}{intensity, magnitude \& loudness}{features: peak envelope (PPM) 2/2}
+            \vspace{-3mm}
+            \figwithref{FeaturesTimePeakEnvelope}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayFeatures.m}{matlab/displayFeatures.m}}
+            
+            \vspace{-2mm}
+            \begin{itemize}
+                \item   gold: max per block
+                \item   blue: PPM
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{intensity, magnitude \& loudness}{features: zwicker loudness}
+            \vspace{-3mm}
+    		\begin{figure}
+            \scalebox{.8}
+            {
+                \centering
+                \input{pict/lowlevelfeatures_zwicker}
+            }
+    		\end{figure}
+            \vspace{-5mm}
+            
+            \uncover<2->{
+            \begin{itemize}
+                
+                \item	
+                \only<2>{ outer ear transfer function\footfullcite{hammershoi_methods_2002}
+                \begin{figure}
+                    \includegraphics[scale=.25]{graph/OETF}
+                \end{figure}
+                }
+                
+                \only<3>{	excitation patterns\footfullcite{schleske_website}
+                \begin{figure}
+                    \includegraphics[scale=.5]{graph/excitationpatterns}
+                \end{figure}
+                }
+                \only<4>{	specific loudness\footfullcite{specloudness_website}
+                \begin{figure}
+                    \includegraphics[scale=.35]{graph/specificloudness}
+                \end{figure}
+                }
+                \only<5>{	overall loudness
+                \[ v_\mathrm{loud} = \sum_{\forall i} z_i\]
+                }
+            \end{itemize}
+            }
+        \end{frame}
+
+        \begin{frame}{intensity, magnitude \& loudness}{derived features}
+            \begin{itemize}
+                \item   number or ratio of pauses
+                \item   dynamic range
+                \item   other statistical features from (RMS) histogram
+                \item   \ldots
+            \end{itemize}
+        \end{frame}
+        
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{loudness perception}
+                    \begin{itemize}
+                        \item   nonlinear relation to magnitude or power
+                        \item   depends also on frequency, level, and signal (masking)
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{typical features}
+                    \begin{itemize}
+                        \item   derived from envelope (peak, RMS, weighted RMS)
+                        \item   derived from histogram (range, mode)
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
