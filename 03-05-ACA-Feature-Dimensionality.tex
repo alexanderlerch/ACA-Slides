@@ -1,0 +1,448 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 3.5: Feature Dimensionality Reduction}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331120}{Chapter 3~---~Instantaneous Features}: pp.~66--69
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   problems of dimensionality
+                        \item   feature selection
+                        \item   feature transformation/mapping
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe potential challenges with high-dimensional feature spaces
+                        \item   discuss advantages and disadvantages of various methods for feature selection
+                        \item   summarize PCA as feature transformation method
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+		\begin{frame}{introduction}{dimensionality reduction}
+            \begin{itemize}
+                \item   \textbf{problem}
+                    \begin{itemize}
+                        \item   many ML approaches cannot cope with large amounts of irrelevant features
+                        \item   ML algorithms might degrade in performance
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{advantages}
+                    \begin{itemize}
+                        \item   reducing storage requirements
+                        \item   reducing training complexity
+                        \item   defying the ``curse of dimensionality''
+                    \end{itemize}
+                \bigskip
+                \item<3->   \textbf{disadvantages}
+                    \begin{itemize}
+                        \item   additional workload for reduction
+                        \item   adding an additional layer of model complexity
+                    \end{itemize}
+            \end{itemize}
+		\end{frame}
+        
+		\begin{frame}{introduction}{dimensionality issues}
+            \vspace{-2mm}
+            problems of high-dimensional data:
+            \begin{itemize}
+                \item   increase in run-time
+                \item   overfitting
+                \item   curse of dimensionality
+                \item   required amount of training samples 
+            \end{itemize}
+			
+			\only<2->{
+            \smallskip
+			$\Rightarrow$ increasing number of input features may \textit{decrease} classification performance
+            \figwithmatlab{SequentialForwardSelection}
+            }
+		\end{frame}
+
+    \section[challenges]{high data dimensionality challenges}
+		\begin{frame}{dimensionality issues}{overfitting}
+            \vspace{-2mm}
+            \begin{itemize}
+                \item   \textbf{overfitting}:
+                    \begin{itemize}
+                        \item   lack of training data
+                        \item   overly complex model
+                        \item[$\Rightarrow$]<2-> model cannot be estimated properly
+                    \end{itemize}
+                    
+                    \only<2>{
+                    \bigskip
+                    \bigskip
+                    \figwithref{Overfitting}{\href{https://en.wikipedia.org/wiki/Overfitting}{https://en.wikipedia.org/wiki/Overfitting}}
+                    %\begin{figure}
+                        %\centering
+                        %\includegraphics[scale=.3]{graph/overfitting}
+                    %\end{figure}
+                    }
+                    \bigskip
+                    \begin{itemize}
+                        \item<3-> required training set size depends on 
+                            \begin{itemize}
+                                \item   classifier and its parametrization
+                                \item   number of classes
+                                \item   \ldots
+                            \end{itemize}
+                        \bigskip
+                        \item<3-> \textit{rule of thumb}:\\ don't bother with training sets smaller than $\mathcal{F}^2$
+                    \end{itemize}
+                    \vspace{50mm}
+			\end{itemize}
+		\end{frame}
+		\begin{frame}{dimensionality issues}{curse of dimensionality}
+            \begin{itemize}
+                \item \textbf{curse of dimensionality}: 
+                    \begin{itemize}
+                        \item   increasing dimensionality leads to sparse training data
+                        \item   neighborhoods of data points become less concentrated
+                        \item   model tends to be harder to estimate in higher-dimensional space
+                        \item   applies to distance-based algorithms
+                    \end{itemize}
+            \end{itemize}
+            \begin{columns}
+            \column{.45\linewidth}
+            \begin{itemize}
+                \item   \textbf{example} (uniformly distributed data )
+                    \begin{itemize}
+                        \item   identify region on axis covering \textbf{1\% of data}
+                            \begin{itemize}
+                                \item   1-D: 1\% of x-axis
+                                \item   2-D: 10\% of x-axis/y-axis
+                                \item   3-D: 21.5\% of x-axis/y-axis/z-axis
+                                \item   10-D: 63\%
+                                \item   100-D: 95\%
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+            \column{.55\linewidth}
+            \vspace{-8mm}
+            \begin{center}
+                \animategraphics[loop]{2}{animateCurseOfDimensionality/CurseOfDimensionality-}{00}{02}        
+            \end{center}
+            \end{columns}
+            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/animateCurseOfDimensionality.m}{matlab/animateCurseOfDimensionality.m}}
+                %\pause
+                %\item   \textbf{training set density}: 
+                    %example: 1NN ($9$ training samples)
+                    %\only<3>{
+                        %$\mathcal{F} = 1$
+                    %\begin{figure}
+                        %\centering
+                        %\includegraphics[scale=.3]{graph/1nn-1}
+                    %\end{figure}
+                    %}
+                    %\only<4>{
+                        %$\mathcal{F} = 2$
+                     %\begin{figure}
+                        %\centering
+                        %\includegraphics[scale=.25]{graph/1nn-2}
+                    %\end{figure}
+                   %}
+                    %\only<5>{
+                        %$\mathcal{F} = 3$
+                     %\begin{figure}
+                        %\centering
+                        %\includegraphics[scale=.25]{graph/1nn-3}
+                    %\end{figure}
+                   %}
+                     %\vspace{50mm}
+		\end{frame}
+
+    \section[reduction]{dimensionality reduction}
+		\begin{frame}{dimensionality reduction}{introduction}
+			\begin{itemize}
+				\item	\textbf{feature subset selection}:\\ discard least helpful features
+                    \pause
+                    \begin{itemize}
+                        \item	high ``discriminative'' or descriptive power
+                        \item	non-correlation to other features
+                        \item	invariance to irrelevancies
+                    \end{itemize}
+				\bigskip
+				\item<2->	\textbf{feature space transformation}:\\ map feature space
+			\end{itemize}
+		\end{frame}
+        
+    \section[selection]{feature subset selection}
+		\begin{frame}{feature subset selection}{manual feature selection}
+            \begin{columns}[T]
+            \column{.2\linewidth}
+                example scatter plots of pairs of features in a multi-class scenario
+            \column{.8\linewidth}
+%                \begin{figure}
+%                    \centering
+%                    \hspace{-5mm}\vspace{-5mm}
+                    \includegraphics{noise_subfeatures}
+%                \end{figure}
+            \end{columns}
+		\end{frame}
+        
+		\begin{frame}{feature subset selection}{introduction}
+            \vspace{-2mm}
+			\begin{enumerate}
+				\item	\textbf{wrapper methods}:
+                    \begin{itemize}
+                        \item \textit{description}
+                            \begin{itemize}
+                                \item  use the ``classifier'' itself to evaluate feature performance
+                            \end{itemize}
+                         \item \textit{advantages}
+                            \begin{itemize}
+                                \item   taking into account feature dependencies
+                                \item   model dependency
+                            \end{itemize}
+                         \item \textit{disadvantages}
+                            \begin{itemize}
+                                \item   complexity
+                                \item   risk of overfitting
+                            \end{itemize}
+                  \end{itemize}
+				
+				\smallskip
+                \item<2->	\textbf{filter methods}:
+                    \begin{itemize}
+                        \item \textit{description}
+                            \begin{itemize}
+                                \item  use an objective function
+                            \end{itemize}
+                         \item<2-> \textit{advantages}
+                            \begin{itemize}
+                                \item   easily scalable
+                                \item   independent of classification algorithm
+                            \end{itemize}
+                         \item<2-> \textit{disadvantages}
+                            \begin{itemize}
+                                \item   no interaction with classifier
+                                \item   no feature dependencies
+                            \end{itemize}
+                    \end{itemize}
+			\end{enumerate}
+		\end{frame}
+
+        %\begin{frame}{excursion}{simple classifier~---~nearest neighbor}
+            %\vspace{-3mm}
+            %\begin{itemize}
+                %\item	    \textbf{training}:
+                    %\begin{itemize}
+                        %\item store feature vector (\& class label) of each training sample
+                    %\end{itemize}
+                %\item<2->	\textbf{classification}:
+                    %\begin{itemize}
+                        %\item for new file/feature vector, detect \textit{closest training point}
+                        %\item   choose closest point's class as result
+                    %\end{itemize}
+            %\end{itemize}
+            %\vspace{-4mm}
+            %\only<1>{
+                %\figwithmatlab{Scatter}
+            %}
+            %\only<2->{
+                %\figwithref{Scatter-nn}{matlab source: matlab/displayScatter.m}
+            %}
+        %\end{frame}
+        
+		\begin{frame}{feature subset selection}{wrapper methods 1/2}
+            \vspace{-2mm}
+			\begin{enumerate}
+				\item	\textbf{single variable classification}:
+                    \begin{itemize}
+                        \item   \textit{procedure}
+                            \begin{itemize}
+                                \item   evaluate each feature individually
+                                \item   choose the top $N$
+                            \end{itemize}
+                        \item<1->  \textit{complexity} 
+                            \begin{itemize}
+                                \item   subsets to test: $\mathcal{F}$
+                            \end{itemize}
+                        \item<1->   \textit{challenges}
+                            \begin{itemize}
+                                \item	inter-feature correlation is not considered
+                                \item	feature combinations are not considered
+                            \end{itemize}
+                    \end{itemize}
+				\smallskip 
+                \item<2->	\textbf{brute force subset selection}
+                    \begin{itemize}
+                        \item   \textit{procedure}
+                            \begin{itemize}
+                                \item   evaluate all possible feature combinations
+                                \item   choose the optimal combination
+                            \end{itemize}
+                        \item<2->  \textit{complexity} 
+                            \begin{itemize}
+                                \item   subsets to test: $2^\mathcal{F}$
+                            \end{itemize}
+                    \end{itemize}
+			\end{enumerate}
+		\end{frame}
+		\begin{frame}{feature subset selection}{wrapper methods 2/2}
+            \vspace{-2mm}
+			\begin{enumerate}
+                \setcounter{enumi}{3}
+				\item	\textbf{sequential forward selection}
+                    \begin{itemize}
+                        \item   \textit{procedure}
+                            \begin{enumerate}
+                                \item	init: empty feature subset $\mathcal{V}_\mathrm{s} = {\emptyset}$
+                                \item<1->	find feature $v_j$ maximizing objective function
+                                            \begin{equation*}
+                                                v_j = \argmax_{\forall j | v_j \notin \mathcal{V}_\mathrm{s}} J({\mathcal{V}_\mathrm{s}} \bigcup v_j) 
+                                            \end{equation*}
+                                \item<1->	add feature $v_j$ to $\mathcal{V}_\mathrm{s}$ 
+                                \item<1->	go to step $2$
+                            \end{enumerate}
+                    \end{itemize}
+					
+				\smallskip
+                \item<2->	\textbf{sequential backward elimination}
+                    \begin{itemize}
+                        \item   \textit{procedure}
+                            \begin{enumerate}
+                                \item	init: full feature set
+                                \item<2->	find feature $v_j$ with the least impact on objective function
+                                \item<2->	discard feature $v_j$
+                                \item<2->	go to step $2$
+                            \end{enumerate}
+                    \end{itemize}
+			\end{enumerate}
+		\end{frame}
+        
+    \section[mapping]{feature space transformation}
+		\begin{frame}{feature space transformation}{PCA introduction}
+            \begin{itemize}
+                \item   \textbf{objective}
+                    \begin{itemize}
+                        \item   map features to new coordinate system
+                            \begin{equation*}\label{eq:pca_an}
+                                \vec{u}(n) = \mat{T}^\mathrm{T}\cdot\vec{v}(n) 
+                            \end{equation*}
+                            \begin{itemize}
+                                \item   $\vec{u}(n)$: transformed features (same dimension as $\vec{v}(n)$)
+                                \item   $\mat{T}$: transformation matrix ($\mathcal{F}\times\mathcal{F}$)	
+                                    \begin{equation*}
+                                        \mat{T} =   \left[ 
+                                                        \begin{array}{cccc}
+                                                        \vec{c}_0 & \vec{c}_1 & \ldots & \vec{c}_{\mathcal{F}-1}\\
+                                                        \end{array}  
+                                                    \right] 
+                                    \end{equation*}
+                            \end{itemize}
+                    \end{itemize}
+                \item<2->   \textbf{properties}
+                    \begin{itemize}
+                        \item	$\vec{c}_0$ points in the direction of  highest \emph{variance}
+                        \item<2->	variance concentrated in as few output components as possible
+                        \item<2->	$\vec{c}_i$ orthogonal
+                                \begin{equation*}
+                                    \vec{c}_i^\mathrm{T}\cdot \vec{c}_j = 0\quad \forall\enspace i \neq j
+                                \end{equation*}
+                        \item<2->	transformation is invertible
+                                \begin{equation*}\label{eq:pca_syn}
+                                    \vec{v}(n) = \mat{T}\cdot\vec{u}(n)
+                                \end{equation*}
+                    \end{itemize}
+            \end{itemize}
+		\end{frame}
+		\begin{frame}{feature space transformation}{PCA visualization}
+			\vspace{-3mm}
+			\figwithmatlab{Pca}
+			
+			\vspace{-5mm}
+			\pause
+			calculation of the transformation matrix
+			\begin{enumerate}
+				\item	compute covariance matrix $\mat{R}$
+                    \begin{equation*}
+						\mat{R} = \mathcal{E}\lbrace(V-\mathcal{E}\lbrace V\rbrace)(V-\mathcal{E}\lbrace V\rbrace)\rbrace%\frac{1}{\mathcal{F}-1}\cdot \left(\vec{v} - \vec{\mu}_v\right)\left(\vec{v}^\mathrm{T} - \vec{\mu}^\mathrm{T}_v\right)
+					\end{equation*}
+				\item	choose eigenvectors as axes for the new coordinate system
+			\end{enumerate}
+		\end{frame}
+
+		\begin{frame}{introduction}{PCA example}
+            \only<1>{
+                \textbf{pca input}
+                \figwithref{PcaExample_input}{matlab source: matlab/displayPcaExample.m}
+            }
+            \only<2>{
+                \textbf{pca output}
+                \figwithref{PcaExample_output}{matlab source: matlab/displayPcaExample.m}
+            }
+             \only<3>{
+            \textbf{pca eigenvalues}
+                \figwithref{PcaExample_latent}{matlab source: matlab/displayPcaExample.m}
+            }
+            \only<4>{
+            \textbf{pca transformation matrix}
+                    \begin{equation}\left[ 
+				  			\begin{array}{cccccc} 
+   -0.4187 &   0.3467  & -0.4569  &  0.4143 &  -0.1271 &  -0.5549\\
+   -0.3908 &   0.1815  &  0.8136  & -0.0289 &   0.2060 &  -0.3304\\
+   -0.4516 &   0.3384  &  0.0859  &  0.2413 &  -0.2919 &   0.7285\\
+   -0.4337 &   0.1699  & -0.3337  & -0.7243 &   0.3747 &   0.0816\\
+    0.3802 &   0.5599  & -0.0381  &  0.2808 &   0.6622 &   0.1524\\
+    0.3679 &   0.6245  &  0.0956  & -0.4071 &  -0.5267 &  -0.1495\nonumber
+                             \end{array}  
+		        	\right]         \end{equation}   }
+            \only<5>{
+            \textbf{pca transformation matrix}
+                    \begin{equation}\left[ 
+				  			\begin{array}{cccccc} 
+   \textcolor{gtgold}{-0.4187} &   0.3467  & \textcolor{gtgold}{-0.4569}  &  0.4143 &  -0.1271 &  \textcolor{gtgold}{-0.5549}\\
+   -0.3908 &   0.1815  &  \textcolor{gtgold}{0.8136}  & -0.0289 &   0.2060 &  -0.3304\\
+   \textcolor{gtgold}{-0.4516} &   0.3384  &  0.0859  &  0.2413 &  -0.2919 &   \textcolor{gtgold}{0.7285}\\
+   \textcolor{gtgold}{-0.4337} &   0.1699  & -0.3337  & \textcolor{gtgold}{-0.7243} &   0.3747 &   0.0816\\
+    0.3802 &   \textcolor{gtgold}{0.5599}  & -0.0381  &  0.2808 &   \textcolor{gtgold}{0.6622} &   0.1524\\
+    0.3679 &   \textcolor{gtgold}{0.6245}  &  0.0956  & -0.4071 &  \textcolor{gtgold}{-0.5267} &  -0.1495\nonumber
+                             \end{array}  
+		        	\right]         \end{equation}   }
+            
+		\end{frame}
+        
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{dimensionality problems}
+                    \begin{itemize}
+                        \item   overfitting
+                        \item   insufficient training data $\Rightarrow$ feature space sparse
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{feature selection}
+                    \begin{itemize}
+                        \item   select a subset of features that ``performs best''
+                        \item   wrapper methods use the classifier itself as objective function while filter methods define a separate objective function
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{feature transformation}
+                    \begin{itemize}
+                        \item   map feature space into new space and discard irrelevant dimensions
+                        \item   still requires computation of all features
+                        \item   dimensions cannot be easily interpreted
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
