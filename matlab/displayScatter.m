@@ -60,6 +60,6 @@ function [v] = ExtractFeaturesFromFile(cFilePath)
     feature = ComputeFeature (deblank(cFeatureNames(1,:)), x, fs);
     v(1,1)    = mean(feature);
     
-    feature = ComputeFeature (deblank(cFeatureNames(1,:)), x, fs);
+    feature = ComputeFeature (deblank(cFeatureNames(2,:)), x, fs);
     v(2,1)    = std(feature);
 end
