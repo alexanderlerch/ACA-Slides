@@ -1,0 +1,220 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+\subtitle{Module 3.4: Feature Extraction~---~Feature Postprocessing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331120}{Chapter 3~---~Instantaneous Features}: pp.~63--66
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item       derived features
+                        \item       feature aggregation
+                        \item       feature normalization
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item       discuss the advantages of specific derived features
+                        \item       summarize the principles of feature aggregation
+                        \item       list two forms of feature normalization and explain their usefulness
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+   \section[intro]{introduction}
+        \begin{frame}{feature post-processing}{introduction 1/2}
+            \begin{itemize}
+                \item   extracting multiple instantaneous features leads to 
+                    \begin{itemize}
+                        \item[$\rightarrow$]   one feature vector per block, or
+                        \item[$\rightarrow$]   one feature matrix per audio file
+                    \end{itemize}
+            \end{itemize}
+            \bigskip
+			\begin{eqnarray*}
+				\mat{V} &=& \left[\vec{v}(0)\; 			\vec{v}(1)\; 				\ldots\;	\vec{v}(\mathcal{N}-1)\right]  \nonumber\\ 
+				&=& 				 
+						\left[ 
+				  			\begin{array}{cccc} 
+							v_0(0)					&	v_0(1) 					&	\ldots	&	v_0(\mathcal{N}-1)\\
+							v_1(0)					&	v_1(1) 					&	\ldots	&	v_1(\mathcal{N}-1)\\
+							\vdots					&	\vdots 					&	\ddots		&	\vdots	\\
+							v_{\mathcal{F}-1}(0)	&	v_{\mathcal{F}-1}(1) 	&	\ldots	&	v_{\mathcal{F}-1}(\mathcal{N}-1)\\
+							\end{array}  
+						\right] 
+			\end{eqnarray*}
+            
+            \bigskip
+            \begin{footnotesize}
+                dimensions:  $\mathcal{F}\times \mathcal{N}$ (number of features and number of blocks, resp.)
+            \end{footnotesize}
+        \end{frame}
+        
+        \begin{frame}{feature post-processing}{introduction 2/2}
+            
+            multiple options for feature matrix processing:
+            \begin{enumerate}   
+                \item   derive additional features
+                \item   aggregate existing features (e.g., one feature vector per file)
+                \item   ensure similar scale and distribution
+            \end{enumerate}
+        \end{frame}
+
+    \section[derived]{derived features}
+		\begin{frame}{feature post-processing}{examples of derived features}
+            \begin{columns}
+                \column{.5\linewidth}
+                \begin{itemize}
+                    \item   \textbf{diff}: use the change in value
+                        \begin{equation*}
+                            v_{j,\Delta}(n) = v_j(n) - v_j(n-1) 
+                        \end{equation*}
+                    \smallskip
+                    \item<2-> \textbf{smoothed}: remove high frequency content by low-pass filtering
+                        \begin{itemize}
+                            \item	 (anticausal) single-pole
+                                \begin{equation*}
+                                    v_{j,\mathrm{LP}}(n) = (1-\alpha)\cdot v_j(n) - \alpha\cdot v_{j,\mathrm{LP}}(n-1) 
+                                \end{equation*}
+                            \item	moving average
+                        \end{itemize}
+                \end{itemize}
+                
+                \column{.5\linewidth}
+                \vspace{-10mm}
+                \begin{figure}%
+                    \includegraphics{DerivedFeatures}%
+                \end{figure}
+            \end{columns}
+		\end{frame}
+
+    \section[aggregation]{feature aggregation}
+		\begin{frame}{feature post-processing}{feature aggregation}
+            feature aggregation:\footnote{also compare \textit{pooling} operation in machine learning} compute \textit{summary features} from feature series $\Rightarrow$ \textbf{subfeatures} 
+            
+            \bigskip
+            \begin{itemize}
+                \item \textbf{reasons}
+                    \begin{itemize}
+                        \item   only one feature vector required per file
+                        \item   data reduction
+                        \item   characteristics of distribution or change over time contain additional info
+                    \end{itemize}
+                \smallskip
+                \item   \textbf{examples}
+                    \begin{itemize}
+                        \item   \textit{statistical descriptors}
+                            \begin{itemize}
+                                \item   mean, median, max, standard deviation
+                            \end{itemize}
+                                
+                        \item   \textit{hand crafted }
+                            \begin{itemize}
+                                \item anything that might be meaningful --- periodicity, slope, \ldots
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+		\end{frame}
+
+    \section[aggregation]{feature aggregation}
+		\begin{frame}{feature post-processing}{feature aggregation}
+            \begin{itemize}
+                \item       could be for whole file or \textbf{texture window}:\\ split feature series in overlapping blocks of a few seconds length
+                \bigskip
+                \item<2->   could be \textbf{hierarchical} process:
+                    \begin{enumerate}
+                        \item   compute subfeatures per window
+                        \item   compute subfeatures of subfeature series
+                        \item   (go to 1.)
+                    \end{enumerate}
+            \end{itemize}
+		\end{frame}
+
+    \section[normalization]{feature normalization}
+		\begin{frame}{feature post-processing}{normalization 1/2}
+            \begin{itemize}
+                \item   raw features have
+                    \begin{itemize}
+                        \item	different ranges and scaling factors
+                        \item	possibly non-symmetric distributions
+                    \end{itemize}
+                \smallskip
+                \item[$\Rightarrow$]<2->    potential problems with vector distances and some classifiers
+                \bigskip
+                \item[$\Rightarrow$]<3->    \textbf{feature normalization}
+                    \begin{itemize}
+                        \item   look at the feature distribution of the whole \textit{training data} set
+                        \item   extract statistical descriptors (range, mean, standard deviation)
+                        \item   decide for normalization approach
+                        \item   normalize both training and test set with \textit{the same} values
+                    \end{itemize}
+            \end{itemize}
+			
+		\end{frame}
+		\begin{frame}{feature post-processing}{normalization 2/2}
+            \begin{itemize}
+                \item   \textbf{normalization methods}:
+                    \begin{itemize}
+                        \item   z-score \[v_{j,\mathrm{N}}(n) = \frac{v_j(n) - \mu_{v_j}}{\sigma_{v_j}}\]
+                        \item   range \[v_{j,\mathrm{N}}(n) = \frac{v_j(n) - \min(v_j)}{\max(v_j)-\min(v_j)}\]
+                    \end{itemize}
+                \item   \textbf{pdf symmetrization}
+                    \begin{itemize}
+                        \item Box-Cox transform
+                            \begin{eqnarray*}
+                                v^{(\lambda)} = \left\{ 
+                                                \begin{array}{ll} 
+                                                    \frac{v^\lambda - 1}{\lambda}, 		& \lambda \neq 0\\ 
+                                                    \vphantom{\frac{1}{1}} 	\log(v), 	& \lambda = 0 \\ 
+                                                \end{array} 
+                                                \right. 
+                            \end{eqnarray*}
+                        \item   numerical methods \ldots
+                    \end{itemize}
+            \end{itemize}
+             
+		\end{frame}
+        
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{feature matrix should be processed to adapt to task and classifier}
+                    \begin{itemize}
+                        \item   derive additional features
+                        \item   aggregate features
+                        \item   normalize features
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{derived features}
+                    \begin{itemize}
+                        \item   take existing features and ``create'' new ones
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{aggregate features: subfeatures}
+                    \begin{itemize}
+                        \item   combine blocks of features by computing, e.g., statistical features from them (mean, standard deviation, \ldots)
+                        \item   subfeature vector is used as classifier input or as intermediate feature series
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{feature normalization}
+                    \begin{itemize}
+                        \item   avoid different value ranges might impacting classifier
+                        \item   handle different feature distributions
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
