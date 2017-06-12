@@ -1,0 +1,362 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 5.1: Terminology \& Notation of Pitch}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~82--91
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   pitch-related music terminology: interval, mode, tonic, chord
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   name musical intervals and notate them in score notation
+                        \item   explain pitch distance
+                        \item   discuss whether a chord is a harmony
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[musical pitch]{pitch in music}
+        \begin{frame}{musical pitch}{notation and names}
+            
+            each octave (freq factor $2$) is split into $12$ pitch classes
+            \begin{columns}
+            \column{0.35\linewidth}
+            \begin{figure}
+            \scalebox{.8}
+            {
+                \input{pict/pitch_pitchclass}
+            }
+            \end{figure}
+            \column{0.5\linewidth}
+            \begin{figure}
+                \includegraphics{pitch_pitches}
+            \end{figure}
+            \end{columns}
+
+            \begin{footnotesize}
+                \begin{table}
+                    \centering
+                    \begin{tabular}{cccccccccccc} %{\textwidth}{@{\extracolsep{\fill}}ccccccccccccc}
+                        \\ \hline
+                        \bf{\emph{$0$}}	 & \bf{\emph{$1$}}	 & \bf{\emph{$2$}}	 & \bf{\emph{$3$}}	 & \bf{\emph{$4$}}	 & \bf{\emph{$5$}}	 & \bf{\emph{$6$}}	 & \bf{\emph{$7$}}	 & \bf{\emph{$8$}}	 & \bf{\emph{$9$}}	 & \bf{\emph{$10$}}	 & \bf{\emph{$11$}}\\ 
+                         \hline
+                        \bf{$C$}	 & $C\sharp / D\flat$	 & $D$	 & $D\sharp / E\flat$	 & E	 & $F$	 & $F\sharp / G\flat$	 & $G$	 & $G\sharp / A\flat$	 & $A$	 & $A\sharp / B\flat$	 & $B$\\
+                    \end{tabular}
+                \end{table}
+            \end{footnotesize}
+        \end{frame}
+        
+        %\begin{frame}{musical pitch}{ --- pitch classes 2/2}
+            %\begin{footnotesize}
+                %\begin{table}
+                    %\centering
+                    %\begin{tabular}{cccccccccccc} %{\textwidth}{@{\extracolsep{\fill}}ccccccccccccc}
+                        %\\ \hline
+                        %\bf{\emph{Index}}	 & \bf{\emph{Name}}	 & \bf{\emph{Solf\'ege Name}}	 & \bf{\emph{$\Delta\mathrm{ST}$}}\\ 
+                         %\hline
+                        %\bf{$0$}	 & $C$	 & Do	 & 1\\
+                        %\bf{$2$}	 & $D$	 & Re	 & 2\\
+                        %\bf{$4$}	 & $E$	 & Mi	 & 2\\
+                        %\bf{$5$}	 & $F$	 & Fa	 & 1\\
+                        %\bf{$7$}	 & $G$	 & Sol	 & 2\\
+                        %\bf{$9$}	 & $A$	 & La	 & 2\\
+                        %\bf{$11$}	 & $B$	 & Si	 & 2\\
+                    %\end{tabular}
+                %\end{table}
+            %\end{footnotesize}
+        %\end{frame}
+
+    \section{intervals}
+        \begin{frame}{musical pitch}{intervals}
+            \vspace{-8mm}
+            \begin{columns}
+            \column{0.47\linewidth}
+            \begin{scriptsize}
+                \begin{table}
+                    \centering
+                    \begin{tabular}{lccccccccccc} %{\textwidth}{@{\extracolsep{\fill}}ccccccccccccc}
+                        \\ \hline
+                        \bf{\emph{Interval}}	 & \bf{\emph{Enharmonic Equivalent}}	 & \bf{\emph{$\Delta\mathrm{ST}$}}\\ 
+                         \hline
+                        \bf{Unison}	 & Diminished Second	 & 0\\
+                        \bf{Minor Second}	 & Augmented Unison	 & 1\\
+                        \bf{(Major) Second}	 & Diminished Third	 & 2\\
+                        \bf{Minor Third}	 & Augmented Second	 & 3\\
+                        \bf{Major Third}	 & Diminished Fourth	 & 4\\
+                        \bf{(Perfect) Fourth}	 & Augmented Third	 & 5\\
+                        \bf{Augmented Fourth}	 & Diminished Fifth/Tritone	 & 6\\
+                        \bf{(Perfect) Fifth}	 & Diminished Sixth	 & 7\\
+                        \bf{Minor Sixth}	 & Augmented Fifth	 & 8\\
+                        \bf{Major Sixth}	 & Diminished Seventh	 & 9\\
+                        \bf{Minor Seventh}	 & Augmented Sixth	 & 10\\
+                        \bf{Major Seventh}	 & Diminished Octave	 & 11\\
+                        \bf{(Perfect) Octave}	 & Augmented Seventh	 & 12\\
+                    \end{tabular}
+                \end{table}
+            \end{scriptsize}
+            \column{0.5\linewidth}
+            \begin{figure}
+                \includegraphics[scale=.8]{pitch_intervals}
+            \end{figure}
+            \end{columns}
+        \end{frame}
+
+    \section{key}
+        \begin{frame}{musical pitch}{tonic \& mode}
+            \begin{columns}
+            \column{0.38\linewidth}
+            \begin{itemize}
+                \item	\textbf{tonic}: first scale degree
+                        \begin{itemize}
+                            \item	most ``important'' pitch class
+                        \end{itemize}
+                
+                \item	\textbf{mode}: set of diatonic pitch relationships
+                        \begin{itemize}
+                            \item	Major: 2, 2, 1, 2, 2, 2, 1
+                            \item	Minor: 2, 1, 2, 2, 1, 2, 2
+                        \end{itemize}
+            \end{itemize}
+            \column{0.5\linewidth}
+                \vspace{-10mm}
+                \begin{figure}[t]
+                    \centering
+                    \includegraphics[scale=.65]{pitch_modes}
+                \end{figure}
+            \end{columns}
+
+        \end{frame}
+        
+        \begin{frame}{musical pitch}{key \& key signature 1/2}
+            \begin{itemize}
+                \item	\textbf{key}:\\ defined by \textit{tonic} (root note) and \textit{mode}
+                        
+                        \begin{itemize}
+                            \item<1->	defines a set of pitch classes constructing both  pitch and harmonic content
+                            
+                        \end{itemize}
+                \bigskip        
+                \item<2->	\textbf{modulation} (local key changes): common in various styles, uncommon in others
+                \bigskip        
+                \item<3->	\textbf{key signature}:\\ indicates current key with accidentals (score notation)
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{musical pitch}{key \& key signature 2/2}
+            \vspace{-3mm}
+                \begin{figure}[t]
+                    \centering
+                    \includegraphics[scale=.6]{pitch_keys}
+                \end{figure}
+        \end{frame}
+        
+        \begin{frame}{musical pitch}{key: circle of fifths}
+            \vspace{-9mm}
+            \begin{figure}
+            \scalebox{.9}
+            {
+                    \centering
+                    \input{pict/pitch_circleoffifths}
+                
+            }	
+            \end{figure}
+        \end{frame}
+        
+    \section{chords}
+        \begin{frame}{musical pitch}{chords}
+            \begin{itemize}
+                \item	simultaneous use of several pitches $\Rightarrow$ \textbf{chords}
+                \item	usually constructed of (major/minor) thirds
+                \begin{figure}[t]
+                    \centering
+                    \includegraphics[scale=.85]{pitch_chords}
+                \end{figure}
+                
+                \smallskip
+                \item<2->	note:
+                        \begin{itemize}
+                            \item	chord type independent of pitch doubling, pitch order
+                            \item	same label for keys and chords
+                        \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{musical pitch}{ chord inversion}
+            \begin{itemize}
+                \item	most common: root note is lowest note
+                \item	otherwise: chord inversion
+                \begin{figure}[t]
+                    \centering
+                    \includegraphics{pitch_chordinversions}
+                \end{figure}
+                
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{musical pitch}{ harmony}
+            \begin{itemize}
+                \item	key and tonal context define chord's \textit{harmonic function}
+                \smallskip
+                \item   examples:
+                \begin{itemize}
+                    \item	\textbf{tonic}:\\ chord on 1st scale degree (tonal center)
+                    \item	\textbf{dominant}:\\ chord on 5th scale degree (often moves to tonic)
+                    \item	\textbf{subdominant}:\\ chord on 4th scale degree
+                    \item	\ldots
+                \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section{MIDI pitch}
+        \begin{frame}{musical pitch}{ MIDI pitch}
+                \begin{eqnarray*}\label{eq:midi_pitch}
+                    \mathfrak{p}(f) &=& 69 + 12\cdot\log_2\left(\frac{f}{f_\mathrm{A4}}\right) \\
+                    f(\mathfrak{p}) &=& f_{A4}\cdot2^{\frac{\mathfrak{p}-69}{12}}
+                \end{eqnarray*}
+                
+                \pause
+                MIDI pitch mapping to \textit{pitch class}
+                \begin{equation*}\label{eq:pcidx}
+                    \mathrm{PC}(\mathfrak{p}) = \mod(\mathfrak{p}, 12) 
+                \end{equation*}
+                
+        \end{frame}
+    
+    \section{Cent}
+        \begin{frame}{musical pitch}{  (MIDI) pitch distance}
+                \textbf{cent}: pitch distance between two frequencies
+                \begin{footnotesize}
+                \begin{eqnarray*}\label{eq:cent}
+                    \Delta C(f_1,f_2)	&=& 100\cdot\big(\mathfrak{p}(f_1) - \mathfrak{p}(f_2)\big)\\
+                                        \pause
+                                        &=& 100\cdot\left(\left(69 + 12\cdot\log_2\left(\frac{f_1}{f_{A4}}\right)\right) - \left(69 + 12\cdot\log_2\left(\frac{f_2}{f_{A4}}\right)\right)\right)\\
+                                        \pause
+                                        &=& 1200\cdot\log_2\left( \frac{f_1}{f_2} \right) 
+                \end{eqnarray*}
+                \end{footnotesize}
+                \bigskip
+                $\Rightarrow$ $\unit[100]{cents}$ span one semitone
+        \end{frame}
+        
+    \section{temperament}
+        \begin{frame}{musical pitch}{ temperament}
+            \begin{itemize}
+                \item	equally tempered scale:
+                    \begin{itemize}
+                        \item   octave split into 12 equidistant notes (on log scale)
+                        \item   not key dependent,any modulation possible
+                        \item   enharmonic equivalence: $C\sharp = D\flat$
+                        \item   typical scale for keyboard instruments
+                    \end{itemize}
+                    
+
+
+                %\item<3->	deviations of other scales
+                    %\begin{tiny}\begin{table}
+                        %\centering
+                        %\begin{tabular}{lcccccc} %{c|p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}}
+                            %\\ \hline
+                            %\bf{\emph{Pitch Class}}	 & \bf{\emph{Equally}}	 & \bf{\emph{Pythagorean}}	 & \bf{\emph{Meantone}}	 & \bf{\emph{Diatonic Major}}	 & \bf{\emph{Diatonic Minor}}\\ 
+                             %\hline
+                            %\bf{$C$}	 & $0$	 & $0$	 & $0$	 & $0$	 & $0$\\
+                            %\bf{$C^\#$}	 & $0$	 & $-$	 & $-$	 & $-$	 & $-$\\
+                            %\bf{$D$}	 & $0$	 & $+3.9$	 & $-6.9$	 & $+3.9$	 & $+3.9$\\
+                            %\bf{$E^b$}	 & $0$	 & $-$	 & $-$	 & $-$	 & $+15.6$\\
+                            %\bf{$E$}	 & $0$	 & $+7.8$	 & $-13.7$	 & $-13.7$	 & $-$\\
+                            %\bf{$F$}	 & $0$	 & $-2.0$	 & $+3.4$	 & $-2.0$	 & $-2.0$\\
+                            %\bf{$F^\#$}	 & $0$	 & $-$	 & $-$	 & $-$	 & $-$\\
+                            %\bf{$G$}	 & $0$	 & $+2.0$	 & $-3.5$	 & $+2.0$	 & $+2.0$\\
+                            %\bf{$A^b$}	 & $0$	 & $-$	 & $-$	 & $-$	 & $+13.7$\\
+                            %\bf{$A$}	 & $0$	 & $+5.9$	 & $-10.2$	 & $-15.6$	 & $-$\\
+                            %\bf{$B^b$}	 & $0$	 & $-$	 & $-$ 	 & $-$	 & $+17.6$\\
+                            %\bf{$B$}	 & $0$	 & $+9.8$	 & $-17.1$	 & $-11.7$	 & $-$\\
+                        %\end{tabular}
+                    %\end{table}\end{tiny}			
+            \end{itemize}
+            \bigskip
+            
+            \begin{equation*}
+                \frac{f_1}{f_2} = 2^{\nicefrac{N}{12}} 
+            \end{equation*}
+            
+             \begin{itemize}
+                \item	other scales can sound purer for specific keys but are less commonly used
+            \end{itemize}
+       \end{frame}
+        
+    \section{intonation}
+        \begin{frame}{musical pitch}{ intonation \& vibrato}
+            \begin{itemize}
+                \item	\textbf{expressive intonation}: deviation of pitch frequency from temperament depending on musical context
+                        \begin{itemize}
+                            \item	leading tones
+                            \item	``pure'' intervals
+                        \end{itemize}
+
+                \item<2->	\textbf{vibrato}
+                        \begin{itemize}
+                            \item	periodic modulation around mean pitch
+                            \pause
+                            \item 	frequency: app. 4--10 \unit{Hz}, range: app. 20--300 \unit{cents}	
+                        \end{itemize}
+                \bigskip
+                \item<3-> applies only to instruments with
+                    \begin{itemize}
+                        \item<4->   continuous frequency scales: vocals, string instruments, trombone, \ldots
+                        \item<5->   other possibilities to adjust frequency: guitar, wind instruments, \ldots
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{pitch}
+                    \begin{itemize}
+                        \item   each octave split into 12 pitches
+                        \item   \textit{pitch class} is an octave-independent representation of pitch
+                    \end{itemize}
+                \smallskip
+                \item   \textbf{intervals}
+                    \begin{itemize}
+                        \item   distance between two pitches
+                    \end{itemize}
+                \smallskip
+                \item   \textbf{key}
+                    \begin{itemize}
+                        \item   defined by \textit{tonic} and mode
+                    \end{itemize}
+                \smallskip
+                \item   \textbf{chord}
+                    \begin{itemize}
+                        \item   combination of three or more pitches
+                        \item   usually stacked thirds
+                        \item   can be inverted
+                    \end{itemize}
+                \smallskip
+                \item   \textbf{cent}
+                    \begin{itemize}
+                        \item   metric for pitch distance
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
