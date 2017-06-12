@@ -4,7 +4,7 @@ function displayPerceptualPitch()
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
     end
 
-    hFigureHandle = generateFigure(10.8,4);
+    hFigureHandle = generateFigure(12,4);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];

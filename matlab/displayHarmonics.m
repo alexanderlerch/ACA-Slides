@@ -1,19 +1,24 @@
-function displayLoudnessWeighting()
+function displayHarmonics()
 
-    hFigureHandle = generateFigure(10.8,4);
+    hFigureHandle = generateFigure(12,4);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
  
-    % read sample data
-    [f, H,cLegend]  = generateSampleData();
-
-    semilogx(f,H)
+    harm = ones(1,8);
     
-    legend ('BS.1770 MC','ITU-R BS.468','A Weighting','C Weighting','Z Weighting','Location','SouthEast');
-    xlabel('$f$ [Hz]')
-    ylabel('$|H(f)|$ [dB]')
-    axis([50 16000 -25 15])
+    for (k = 1:length(harm))
+        harm(k) = harm(k) * 1/k^2;
+    end
+    stem(20*log10(harm), 'filled','BaseValue',-40)
+    
+    gtgold = [234 170 0]/256;
+    hold on;
+    stem(1,20*log10(harm(1)), 'MarkerFaceColor',gtgold,'MarkerEdgeColor',gtgold)
+    hold off
+    xlabel('$f/f_0$')
+    ylabel('magnitude [dB]')
+    axis([1 8 -40 5])
 
     printFigure(hFigureHandle, cOutputFilePath)
 end

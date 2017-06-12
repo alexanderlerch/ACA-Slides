@@ -1,0 +1,147 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 5.0: Human Perception of Pitch}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~79--82
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   pitch as perceptual phenomenon 
+                        \item   non-linear relation of frequency and pitch
+                        \item   frequency content of a simple pitched sound
+                        \item   dimensions of pitch perception
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe basic properties of models for pitch
+                        \item   explain the two dimensions of pitch perception
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{tonal analysis}{introduction}
+            \begin{itemize}
+                \item \textbf{pitch \& pitch-based properties} belong to the most important parameters describing music
+                    \begin{itemize}
+                        \item   melody
+                        \item   harmony
+                        \item   tonality
+                        \item   tuning \& intonation
+                    \end{itemize}
+                \bigskip
+                \item<2-> \textbf{related ACA tasks}
+                    \begin{itemize}
+                        \item   fundamental frequency detection
+                        \item   key detection
+                        \item   chord detection
+                        \item   tuning frequency \& temperament estimation
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section[perception]{pitch perception}
+         \begin{frame}{pitch perception}{pitch definition}
+            \begin{block}{\textbf{definition (American Standards Association)}}
+                pitch is that attribute of auditory sensation in terms of which sounds may be ordered on a musical scale\footfullcite{asa_acoustical_1960}
+            \end{block}
+            \bigskip    
+            \begin{itemize}
+                \item<2->   temporal variations in pitch give rise to a sense of melody
+                \item<2->   closely related to frequency, but \textbf{subjective}
+
+                \bigskip
+                \item<3->[$\Rightarrow$]   assigning a pitch value to a sound means \textbf{specifying the frequency of a pure tone having the same subjective pitch} as the sound
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{pitch perception}{fundamental frequency}
+            \vspace{-2mm}
+                    \figwithmatlab{Harmonics}
+            \begin{itemize}
+                \item	dominant \textit{fundamental} frequency ($f_0,2f_0,3f_0,\ldots$)
+                    %\vspace{-3mm}
+
+                
+                \item<2->	higher fundamental frequency $\Rightarrow$ higher pitch (mono-dimensional)
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch perception}{frequency \& pitch}
+            \figwithmatlab{PerceptualPitch}
+            \only<1>{
+                \textbf{non-linear} pitch frequency relation:
+                    \begin{itemize}
+                        \item	perceptual pitch distance $\neq$ frequency distance
+                        
+                        \item[$\Rightarrow$]	\textit{models} for psycho-acoustic/physiological data
+                            \begin{itemize}
+                                \item	\textit{Mel} scale (equal pitch distance)
+
+                                \item	\textit{Bark} scale (critical band width)
+
+                                \item	physiological frequency location (basilar membrane)
+                            \end{itemize}
+                    \end{itemize}
+            }            
+            \only<2-3>{
+            \begin{eqnarray*}
+                \text{\textbf{Fant}:} &          \mathfrak{m}_\mathrm{F}(f) = 1000\cdot \log_{2}\left(1 + \frac{f}{\unit[1000]{Hz}} \right)\\
+                \text{\textbf{O'Shaughnessy}:} & \mathfrak{m}_\mathrm{S}(f) = 2595\cdot \log_{10}\left(1 + \frac{f}{\unit[700]{Hz}} \right)\\
+                \pause
+                &                       \mathfrak{m}_\mathrm{S}(f) = 1127\cdot \log\left(1 + \frac{f}{\unit[700]{Hz}} \right)
+            \end{eqnarray*}
+            }
+            \only<4>{
+            \begin{eqnarray*}
+                \text{\textbf{Schr\"oder}:} &         \mathfrak{z}_\mathrm{S}(f) = 7\cdot\arcsinh\left( \frac{f}{\unit[650]{Hz}} \right) \\
+                \text{\textbf{Terhardt}:} &         \mathfrak{z}_\mathrm{T}(f) = 13.3\cdot\arctan\left( 0.75\cdot\frac{f}{\unit[1000]{Hz}} \right) \\
+                \text{\textbf{Zwicker}:} &          \mathfrak{z}_Z(f) = 13\cdot\atan\left( 0.76\cdot\frac{f}{\unit[1000]{Hz}} \right) + 3.5\cdot \atan\left( \frac{f}{\unit[7500]{Hz}} \right) 
+            \end{eqnarray*}
+            }
+            \only<5>{
+                \begin{eqnarray*}
+                    \text{\textbf{ERB}:} &         \mathfrak{e}(f) = 9.26 \log \left( 1 + \frac{f}{228.7} \right)  \\
+                    \text{\textbf{Cochlear Map}:} &          \mathfrak{x}(f)	= \frac{1}{2.1} \log_{10}\left( \frac{f}{165.4} + 1 \right)  
+                \end{eqnarray*}
+            }
+            \vspace{80mm}
+        \end{frame}
+
+        \begin{frame}{pitch perception}{pitch dimensions}
+            \textbf{2 dimensions of musical pitch}
+            \begin{itemize}
+                \item   \textbf{tone height}: monotonic relationship to frequency (increasing frequency $\Rightarrow$ increasing pitch)
+                \item<2->   \textbf{tone chroma}: two tones separated by octave sound similar (same \textit{pitch class})
+                \only<2>{\figwithmatlab{PitchHelix}}
+            \end{itemize}
+        \end{frame}
+        
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{pitch}
+                    \begin{itemize}
+                        \item   subjective phenomenon
+                        \item   non-linear monotonic relationship to frequency (tone height increases with fundamental frequency)
+                        \item   pitch grouping based on powers of two: tone chroma perception
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
