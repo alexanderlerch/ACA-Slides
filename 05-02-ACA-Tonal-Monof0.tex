@@ -1,0 +1,301 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 5.2: Fundamental Frequency Detection in Monophonic Signals}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~91--103
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   established approaches to monophonic pitch tracking in
+                            \begin{itemize}
+                                \item   time domain
+                                \item   frequency domain
+                            \end{itemize}
+                        \item   
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   define the task of monophonic pitch tracking
+                        \item   summarize the principles between time-domain $f_0$-trackers and describe one detailed examples
+                        \item   summarize the principles between frequency-domain $f_0$-trackers and describe one detailed examples
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+
+	\begin{frame}{fundamental frequency}{introduction}
+        \begin{block}{\textbf{remember}}
+            Fourier series: every (quasi-)periodic sound is a combination of sinusoidals with integer frequency ratios
+        \end{block}
+        \begin{eqnarray*}
+            x(t) 	&\approx& x(t+T_0)\nonumber\\
+            x(t) &\approx& \sum\limits_{k=-\infty}^{\infty} a(k) \e^{\jom_0kt}\nonumber
+        \end{eqnarray*}
+        
+		\begin{itemize}
+			\item<2->[]	$f_0$: musically, perceptually most ``relevant'' frequency
+		\end{itemize}
+        \only<2->{
+        \begin{figure}[t]
+            \centering
+            \includegraphics[scale=.7]{pitch_harmonics}
+        \end{figure}
+        }
+	\end{frame}
+	
+	%\begin{frame}{monophonic fundamental frequency detection}{pre-processing}
+		%examples for pre-processing steps
+		%\begin{itemize}
+			%\item	\textbf{downmixing}:\\ identical fundamental frequency in all channels
+			%\pause
+			%\item	\textbf{low-pass filter}:\\ cut off high partials
+			%\pause
+			%\item	\textbf{high-pass filter}:\\ remove DC and unnecessary bass frequencies
+			%\pause
+			%\item	(\textbf{pre-whitening}:)\\ remove spectral envelope to receive time domain pulse train
+			%\item	\ldots
+		%\end{itemize}
+	%\end{frame}
+    
+    \section[mono f0]{monophonic pitch tracking}
+        \begin{frame}{pitch detection}{task definition}
+            \begin{itemize}
+                \item   detect the fundamental frequency $f_0$
+                \item   there is only one fundamental frequency at a time
+                \bigskip
+                \item   related subtasks:
+                    \begin{itemize}
+                        \item   detect when there is no fundamental frequency
+                        \item   segment into notes
+                            \begin{itemize}
+                                \item   start time and stop time
+                                \item   average not frequency
+                                \item   vibrato detection
+                            \end{itemize}
+                        \item   map to pitch scale
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+	\section[time domain]{time domain methods}
+	\begin{frame}{monophonic fundamental frequency detection}{zero crossing rate}
+		\begin{itemize}
+			\item	\textbf{number of zero crossings per block} (inaccurate)
+				\begin{equation*}
+					T_0(n) = \frac{2\cdot \big(i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n)\big)}{f_{\mathrm{S}}\cdot\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{\left|\sign \left[x(i)\right]-\sign \left[x(i-1)\right]\right|}} 
+				\end{equation*}
+			\item<2->	\textbf{average period length}
+				\begin{equation*}
+					T_0(n) = \frac{2}{\mathcal{Z}-1}\sum\limits_{j=0}^{\mathcal{Z}-2}{\Delta t_\mathrm{ZC}(j)}.
+				\end{equation*}
+			\item<3->	\textbf{variants}:
+				\begin{itemize}
+					\item	create histogram with distances and choose maximum
+					\item	use not (only) ZC but distance between local extrema
+				\end{itemize}
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{auto correlation function}
+		\vspace{-2mm}
+        \begin{itemize}
+            \item find \textbf{lag of ACF maximum}
+                \begin{equation*}
+                    r_{xx}(\eta,n) = \sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)-\eta}{x(i)\cdot x(i+\eta)}
+                \end{equation*}
+            \item<2->     \textbf{variants}:
+                \begin{itemize}
+                    \item<3->	center clipping
+                            \begin{figure}
+                                \centering
+                                \input{pict/pitch_centerclipping}
+                                \label{fig:centerclipping}
+                            \end{figure}
+                   % \item<4->	pre-whitening: LP, spectral envelope estimation															
+                \end{itemize}
+        \end{itemize}
+		
+            
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{average magnitude difference function}
+        \begin{itemize}
+            \item find \textbf{lag of AMDF minimum}
+                \begin{equation*}
+                    \mathrm{AMDF}_{xx}(\eta,n) = \frac{1}{i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n)+1}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)-\eta}{|x(i)- x(i+\eta)|} 
+                \end{equation*}
+            \item<2-> \textbf{variants}:
+                \begin{itemize}
+                    \item	AMDF-weighted ACF
+                        \begin{equation*}
+                            r_{xx}'(\eta,n) = \frac{r_{xx}(\eta,n)}{\mathrm{AMDF}_{xx}(\eta,n) + 1} 
+                        \end{equation*}
+                \end{itemize}
+        \end{itemize}
+	\end{frame}
+	
+    \section[frequency domain]{frequency domain methods}
+	\begin{frame}{monophonic fundamental frequency detection}{harmonic product spectrum 1/2}
+        \vspace{-10mm}
+        \begin{columns}
+            \column{0.5\textwidth}
+                \vspace{4mm}
+                \begin{equation*}\label{eq:hps}
+                    X_{\mathrm{HPS}}(k,n) = \prod\limits_{j=1}^{\mathcal{O}}{|X(j\cdot k,n)|^2}
+                \end{equation*}
+                
+                first published in the 1960s by Noll (graph from that paper)
+            \column{0.5\textwidth}
+				\begin{figure}
+                    \includegraphics[scale=.25]{HPS_Noll}
+                \end{figure}
+		\end{columns}
+        \vspace{-5mm}
+        \footfullcite{noll_pitch_1969}
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{harmonic product spectrum 2/2}
+		\figwithmatlab{HarmonicProductSpectrum}
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{harmonic sum spectrum}
+        \begin{itemize}
+            \item   sum instead product sum
+        \begin{equation*}\label{eq:hss}
+            X_{\mathrm{HSS}}(k,n) = \sum\limits_{j=1}^{\mathcal{O}}{|X(j\cdot k,n)|^2} 
+        \end{equation*}
+        \bigskip
+
+                \begin{itemize}
+                    \item<1->   \textbf{advantage}
+                        \begin{itemize}
+                            \item   robust against missing harmonics
+                        \end{itemize}
+                    \item<1->   \textbf{disadvantage}
+                        \begin{itemize}
+                            \item   less pronounced peak
+                        \end{itemize}
+                \end{itemize}
+        \end{itemize}
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{ACF of magnitude spectrum}
+        \vspace{-3mm}
+		\begin{equation*}
+			r_{XX}(\eta,n) = \sum\limits_{k=-\mathcal{K}/2}^{\mathcal{K}/2-1}{|X(k,n)|\cdot |X(k+\eta,n)|}
+		\end{equation*}
+		\pause
+		$\Rightarrow$ \textbf{detect maximum location}
+        
+        \vspace{-1mm}
+        \only<2->{
+		\figwithmatlab{AcfOfFft}
+        }
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{cepstral pitch detection}
+		\begin{enumerate}
+			\item	compute cepstrum
+			\item	detect periodicities
+		\end{enumerate}
+		\figwithmatlab{Cepstrum}
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{spectral maximum likelihood}
+        \begin{itemize}
+            \item   create \textbf{template matrix} with (smoothed) delta pulses for all possible frequencies
+            
+            \item<2->   compute the \textbf{cross correlation} ($lag=0$) between spectrum and all templates
+            
+            \item<3->   pick the result with the \textbf{highest correlation} $\Rightarrow$ frequency estimate (graph see \footfullcite{cuadra_website})
+        \end{itemize}
+        \only<3->{
+		\begin{figure}
+			\centering
+				\includegraphics[scale=.4]{graph/pitch_maximumlikelihood}
+		\end{figure}
+        }
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{auditory-motivated pitch tracking 1/2}
+		\begin{enumerate}
+			\item	\textbf{filterbank} of band bass filters (e.g., mel scale)
+			\item<2->	\textbf{HWR}
+			\item<3->	\textbf{smoothing}
+			\item<4->	within-band periodicity estimate (e.g. \textbf{ACF})
+			\item<5->	\textbf{combination} of bands
+		\end{enumerate}
+	\end{frame}
+	
+	\begin{frame}{monophonic fundamental frequency detection}{auditory-motivated pitch tracking 2/2}
+        \begin{columns}
+        \column{.3\linewidth}
+            \begin{enumerate}
+                \item   filterbank output
+                \bigskip
+                \bigskip
+                \bigskip
+                \item   half wave rectification
+                \bigskip
+                \bigskip
+                \bigskip
+                \item   smoothed output
+            \end{enumerate}
+        \column{.7\linewidth}
+            \vspace{-13mm}
+            \begin{figure}%
+            \includegraphics[width=1.1\columnwidth]{AuditoryPitchTracking}%
+            \end{figure}
+        \end{columns}
+        \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAuditoryPitchTracking.m}{matlab/displayAuditoryPitchTracking.m}}
+	\end{frame}
+    
+	%\begin{frame}{monophonic fundamental frequency detection}{matlab exercise}
+		%\matlabexercise{monophonic pitch tracking}
+        %\begin{enumerate}
+            %\item   implement HPS (blocksize 2048, hopsize 512, order 5)
+            %\item   implement AMDF  (blocksize 2048, hopsize 512)
+            %\item   plot the pitch results (MIDI pitch) for \texttt{sax\_example.wav} from the repository
+            %\item   discuss the differences in the result. what are typical errors for the implemented algorithms 
+        %\end{enumerate}
+	%\end{frame}
+        
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{basic approach}
+                    \begin{itemize}
+                        \item   all approaches look for \textbf{periodicity}
+                            \begin{itemize}
+                                \item   waveform similarity in time domain
+                                \item   equidistant harmonics/peaks in freq domain
+                            \end{itemize}
+                        \item   
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{state-of-the-art}
+                    \begin{itemize}
+                        \item   despite the age of the presented methods, tweaked versions of the presented approaches are still often considered state-of-the-art
+                        \item   especially combinations of different approaches can be very successful
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

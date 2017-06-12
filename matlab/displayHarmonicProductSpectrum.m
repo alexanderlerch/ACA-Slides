@@ -4,7 +4,7 @@ function displayHarmonicProductSpectrum()
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
     end
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(12,6);
     
     iStart  = 66000;
     iLength = 4096;
@@ -30,7 +30,7 @@ function displayHarmonicProductSpectrum()
     P   = 10*log10(P);
     
     subplot(211)
-   	semilogx(f,flipud(X)');
+   	semilogx(f,(X)');
     axis([.1 f(end) -100 0])
 
     legend('j=1','j=2','j=3','j=4')

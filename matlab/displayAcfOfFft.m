@@ -1,6 +1,6 @@
 function displayAcfOfFft()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(12,5);
     
     iStart  = 66000;
     iLength = 4096;
@@ -29,7 +29,7 @@ function displayAcfOfFft()
     subplot(212)
     plot(f,P(1:iLength/2+1))
     xlabel('$\eta_f$')
-    ylabel('$r_\mathrm{XX}$')
+    ylabel('$r_\mathrm{XX}(\eta)$')
     axis([f(1) f(end) 0 .03])
 
     printFigure(hFigureHandle, cOutputFilePath)
