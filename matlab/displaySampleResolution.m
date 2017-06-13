@@ -1,6 +1,6 @@
 function displaySampleResolution()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(12,4);
     
     iStart  = 66000;
     iLength = 4096;
@@ -35,7 +35,8 @@ function displaySampleResolution()
 %     plot(tri,ri);
 %     axis([tr(range(2,1)) tr(range(2,2)) .94 .97])    
     
-    xlabel('$samples$')
+    xlabel('samples')
+    ylabel('$x(i)$')
     
     printFigure(hFigureHandle, cOutputFilePath)
 end

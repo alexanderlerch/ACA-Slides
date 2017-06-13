@@ -1,6 +1,6 @@
 function displayTimeDomainPitchError()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(12,5);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -8,11 +8,11 @@ function displayTimeDomainPitchError()
     % read sample data
     [f,e_p,cLegend]  = generateSampleData();
     
-    semilogx(f,e_p);
+    semilogx(f,e_p,'LineWidth',.5);
     axis([f(1) f(end) -90 90])
     
     xlabel('$f$ [Hz]');
-    ylabel('$f_\mathrm{Q}-f$ [cent]');
+    ylabel('$1200\cdot\log_2\left(\frac{f_\mathrm{Q}}{f}\right)$ [cent]');
     lh = legend(cLegend);
     set(lh,'Location','NorthWest','Interpreter','latex')
 

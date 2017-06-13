@@ -7,6 +7,7 @@ function animateSampling()
     if bVideoOut
         cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
     else
+        mkdir([cPath '/../graph/' cName '/']);
         cOutputFilePath = [cPath '/../graph/' cName '/' strrep(cName, 'animate', '')];
     end
  

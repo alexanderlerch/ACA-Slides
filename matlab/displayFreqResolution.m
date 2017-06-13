@@ -1,6 +1,6 @@
 function displayFreqResolution()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(8,5);
     
     iStart  = 66000;
     iLength = 4096;
@@ -26,14 +26,14 @@ function displayFreqResolution()
     plot(f,X,fi,Xz);
     axis([f(range(1,1)) f(range(1,2)) 0 45])    
     xlabel('$f$ [Hz]')
-    ylabel('$|X(f)|$')
+    ylabel('$|X_\mathrm{ZP}(f)|$')
     legend('normal','zeropad')
     subplot(212);
     plot(f,X,fi,Xi);
     axis([f(range(1,1)) f(range(1,2)) 0 45])    
     
     xlabel('$f$ [Hz]')
-    ylabel('$|X(f)|$')
+    ylabel('$|X_\mathrm{IP}(f)|$')
     legend('normal','interpol')
     
     printFigure(hFigureHandle, cOutputFilePath)

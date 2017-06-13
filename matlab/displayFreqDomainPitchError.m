@@ -1,6 +1,6 @@
 function displayFreqDomainPitchError()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(12,5);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -8,11 +8,11 @@ function displayFreqDomainPitchError()
     % read sample data
     [f,e_p,cLegend]  = generateSampleData();
     
-    plot(f,e_p);
+    plot(f,e_p,'LineWidth',.5);
     axis([f(1) 2000 -1000 1000])
     
     xlabel('$f$ [Hz]');
-    ylabel('$f_\mathrm{Q}-f$ [cent]');
+    ylabel('$1200\cdot\log_2\left(\frac{f_\mathrm{Q}}{f}\right)$ [cent]');
     lh = legend(cLegend);
     set(lh,'Location','NorthEast','Interpreter','latex')
 

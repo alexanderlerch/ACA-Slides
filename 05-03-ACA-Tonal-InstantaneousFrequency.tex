@@ -1,0 +1,393 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 5.3: Instantaneous Frequency}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                \begin{itemize}
+                    \item \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~21--23
+                    \item   \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~92--93
+                \end{itemize}
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   frequency detection error for sampled signals
+                        \item   instantaneous frequency/frequency reassignment
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   list the factors influencing frequency resolution in time and frequency domains
+                        \item   explain the frequency error in Cent
+                        \item   implement an instantaneous frequency estimate
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{pitch detection resolution}{introduction}
+            \begin{itemize}
+                \item (fundamental) frequency detection on digital signals (discrete in time and frequency)
+                \item[$\Rightarrow$] quantized result
+            \end{itemize}
+            
+            \pause
+            
+            error being made due to \textit{discrete} signal processing
+            
+            \begin{itemize}
+                \item   \textbf{time domain}:
+                    \begin{itemize}
+                        \item   detection of \textit{period length}
+                        \item[$\Rightarrow$] maximum error depends on distance between two samples (sample rate)
+                    \end{itemize}
+                \bigskip
+                \item<3->   \textbf{frequency domain}:
+                    \begin{itemize}
+                        \item detection of \textit{bin frequency}
+                        \item[$\Rightarrow$] maximum error depends on distance between two frequency bins (block length and sample rate)
+                    \end{itemize}
+                %\bigskip
+                %\item<4->[] \textbf{BUT}
+                    %\begin{itemize}
+                        %\item<5->   a more meaningful error metric is neither \unit{s} nor \unit{Hz} but \textit{Cent}
+                    %\end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{time domain (e.g., ACF)}
+            \vspace{-2mm}
+            period length quantized to multiple of inter-sample interval $T_\mathrm{S}$
+            \begin{eqnarray*}
+                &T_\mathrm{Q} &= j\cdot T_{\mathrm{S}}\\
+                \Rightarrow &f_\mathrm{Q} &= \frac{1}{j\cdot T_{\mathrm{S}}}
+            \end{eqnarray*}
+            \vspace{-5mm}
+            \figwithmatlab{TimeDomainPitchError}
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{frequency domain (e.g., HPS)}
+		frequency quantized to multiple of inter-bin interval
+		 \begin{equation*}
+		 	f_\mathrm{Q} = k\cdot\frac{f_{\mathrm{S}}}{\mathcal{K}} 
+		 \end{equation*}
+		 \only<1>
+		 {
+			\begin{footnotesize}\begin{table}
+				\centering
+				\begin{tabular}{lccc} %{c|p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}}
+                    \\ \hline
+                    \bf{\emph{$\mathcal{K}$}}	 & \bf{\emph{$\Delta f\;[\unit{Hz}]$}}	 & \bf{\emph{$k_\mathrm{ST}$}}	 & \bf{\emph{$f(k_\mathrm{ST})\;[\unit{Hz}]$}}\\ 
+                     \hline
+                    \bf{256}	 & 187.5	 & 35	 & 6562.5\\
+                    \bf{512}	 & 93.75	 & 35	 & 3281.25\\
+                    \bf{1024}	 & 46.875	 & 35	 & 1640.625\\
+                    \bf{2048}	 & 23.4375	 & 35	 & 820.3125\\
+                    \bf{4096}	 & 11.7188	 & 35	 & 410.1563\\
+                    \bf{8192}	 & 5.8594	 & 35	 & 205.0781\\
+                    \bf{16384}	 & 2.9297	 & 35	 & 102.5391\\
+				\end{tabular}
+			\end{table}\end{footnotesize}
+		}
+		\only<2>
+		{
+            \vspace{-3mm}
+            \figwithmatlab{FreqDomainPitchError}
+        }
+        \end{frame}
+    \section[solutions]{improving the frequency resolution}
+        \begin{frame}{pitch detection resolution}{simple fix}
+            \begin{itemize}
+                \item   \textbf{assumption}: pitch is stationary with minor deviations over time
+                \bigskip
+                \item<2-> \textbf{simple solution}: 
+                    \begin{itemize}
+                        \item   average pitch observations over blocks
+                        \item   the more blocks are averaged, the more result might approximate the \textit{real} (population) mean
+                    \end{itemize}
+                \bigskip
+                \item<3->   \textbf{problems}:
+                    \begin{enumerate}
+                        \item   adds significant latency (non-realtime)
+                        \item   will not work for time-variant signals (speech, music)
+                    \end{enumerate}
+            \end{itemize}
+        \end{frame}
+    
+        \begin{frame}{pitch detection resolution}{time domain observations}
+            \figwithmatlab{TimeDomainPitchError}
+            
+            \begin{itemize}
+                \item   error depends on fundamental frequency
+                \item   error depends on sample rate
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{time domain workarounds}
+            \vspace{-2mm}
+            virtually increase time resolution by upsampling
+            \figwithmatlab{SampleResolution}
+            
+            \begin{enumerate}
+                \item[$+$] higher virtual resolution
+                \item[$-$] significant workload increase
+            \end{enumerate}
+        \end{frame}
+	
+    %\section[frequency domain]{improving the pitch tracking resolution}
+        \begin{frame}{pitch detection resolution}{frequency domain workarounds}
+            different ways of increasing frequency resolution in the frequency domain
+            \begin{enumerate}
+                \item<1->   increasing the FFT window length (decreases time resolution)
+                \bigskip
+                \item<2->   interpolating  the spectrum
+                \bigskip
+                \item<3->   applying frequency reassignment
+            \end{enumerate}
+        \end{frame}
+
+        \begin{frame}{pitch detection resolution}{spectrum interpolation}
+            \begin{columns}
+            \column {.3\linewidth}
+            \begin{enumerate}
+                \item<1->   zeropad in time domain
+                \bigskip
+                \bigskip
+                \bigskip
+                \item<1->   use standard interpolation on magnitude spectrum
+            \end{enumerate}
+            \column {.5\linewidth}
+                \vspace{-6mm}
+                \begin{figure}%
+                \includegraphics{FreqResolution}%
+                \end{figure}
+            \end{columns}
+            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayFreqResolution.m}{matlab/displayFreqResolution.m}}
+        \end{frame}
+    \section{frequency reassignment}
+        \begin{frame}{pitch detection resolution}{frequency reassignment: relation of phase and frequency 1/2}
+            \begin{columns}
+            \column{.5\linewidth}
+            \vspace{-10mm}
+            \begin{center}
+                \animategraphics[autoplay,loop]{10}{animatePhasor/Phasor-}{00}{80}        
+            \end{center}
+            \column{.5\linewidth}
+           \begin{itemize}
+                \item   phasor representation:
+                    \begin{enumerate}
+                        \item   sine value is defined by magnitude and phase
+                        \item   decreasing the amplitude $\Rightarrow$ shorter vector
+                        \item   increasing the frequency $\Rightarrow$ increasing speed
+                    \end{enumerate}
+            \end{itemize}
+            \end{columns}
+                        \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/animateSampling.m}{matlab/animateSampling.m}}
+            \inserticon{video}
+
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{frequency reassignment: relation of phase and frequency 2/2}
+
+            \begin{columns}
+            \column{0.3\textwidth}
+                \begin{figure}
+                \begin{tiny}
+                \begin{tikzpicture}[scale=1,cap=round,>=latex]
+                    % draw the coordinates
+                    \draw[->] (-1.5cm,0cm) -- (1.5cm,0cm) node[right,fill=white] {$\Re(X)$};
+                    \draw[->] (0cm,-1.5cm) -- (0cm,1.5cm) node[above,fill=white] {$\Im(X)$};
+        
+                    \draw[fill=gtgold] (0,0) -- (30:.85cm) arc (30:60:.85cm);
+                    \draw (45:1.2cm) node {$\Delta\Phi$};
+                    \draw[->] (0cm,0cm) -- (0.8660cm,0.5cm);
+                    \draw[->] (0cm,0cm) -- (0.5cm,0.8660cm);
+        
+                    % draw the unit circle
+                    \draw[thick] (0cm,0cm) circle(1cm);
+            
+                    \foreach \x in {0,30,...,360} {
+        %	                % dots at each point
+                            \filldraw[black] (\x:1cm) circle(0.2pt);
+                    }
+                \end{tikzpicture}
+                \end{tiny}
+                \end{figure}
+             \column{0.7\textwidth}
+            \begin{itemize}
+                \item   relation of frequency and phase change:
+                    \begin{itemize}
+                        \item<2-> time for full rotation is period length $T$ with \[f = \frac{1}{T}\]
+                        \item<3-> time for fractional rotation $\Delta\Phi$ is corresponding fraction of period length \[f = \frac{\Delta\Phi}{\Delta t}\]
+                        \item<4-> in other words: 
+                        \begin{eqnarray*}
+                            \Phi(t) &=& \omega\cdot t\\
+                            \Rightarrow \frac{d\Phi(t)}{dt} &=& \omega = 2\pi f
+                        \end{eqnarray*}
+                    \end{itemize}
+            \end{itemize}
+            \end{columns}
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{frequency reassignment: principles}
+            frequency domain:
+            \begin{itemize}
+                \item   instead of using the bin frequency
+                    \[ f(k) = k*\frac{f_\mathrm{S}}{\mathcal{K}}\]
+                \item   we use the phase of each bin $\Phi(k,n)$
+                \item   to compute the frequency from the phase difference of neighboring blocks
+                    \begin{equation*}\label{eq:phasediff}
+                        \omega_{\mathrm{I}}(k,n)	\propto \Phi(k,n)-\Phi(k,n-1)
+                    \end{equation*}
+                \item<2->   $\omega_{\mathrm{I}}(k,n)$ is called \textbf{instantaneous frequency} per block per bin
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{frequency reassignment: scaling factor}
+            \begin{itemize}
+                \item instantaneous frequency calculation has to take into account
+                    \begin{itemize}
+                        \item   hop size $\mathcal{H}$
+                        \item   sample rate $f_\mathrm{S}$
+                    \end{itemize}
+                
+                    \begin{equation*}
+                        \omega_{\mathrm{I}}(k,n) = \frac{\Delta\Phi_{\mathrm{u}}(k,n)}{\mathcal{H}}\cdot f_{\mathrm{S}} 
+                    \end{equation*}
+                \item<1-> problem: phase ambiguity
+                    \begin{equation*}
+                        \Phi(k,n) = \Phi(k,n) + j\cdot 2\pi
+                    \end{equation*}
+                \item<2->[$\Rightarrow$] \textit{phase unwrapping}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{frequency reassignment: phase unwrapping}
+
+            \begin{enumerate}
+                \item	compute unwrapped phase $\Phi_{\mathrm{u}}(k,n)$ 
+                        \begin{itemize}
+                            \item	estimate unwrapped bin phase
+                                    \begin{footnotesize}
+                                    \begin{equation*}\label{eq:phi_est}
+                                        \hat{\Phi}(k,n) = \Phi(k,n-1) + \underbrace{2\pi k\cdot\frac{\mathcal{H}}{\mathcal{K}}}_{=\omega_k\cdot\frac{\mathcal{H}}{f_\mathrm{s}}} 
+                                    \end{equation*}
+                                    \end{footnotesize}
+
+                            \item<2->	unwrap phase by shifting current phase to estimate's range
+                                    \begin{footnotesize}
+                                    \begin{equation*}
+                                        \Phi_{\mathrm{u}}(k,n) = \hat{\Phi}(k,n) + \princarg\left[ \Phi(k,n) - \hat{\Phi}(k,n) \right]
+                                    \end{equation*}
+                                    \end{footnotesize}
+                        \end{itemize}
+
+                \item<3->	compute unwrapped phase difference
+                        \begin{footnotesize}
+                        \begin{eqnarray*}
+                            \Delta\Phi_{\mathrm{u}}(k,n)	&=& \Phi_{\mathrm{u}}(k,n) - \Phi(k,n-1)\nonumber\\
+                                                \pause
+                                                &=& \hat{\Phi}(k,n) + \princarg\left[ \Phi(k,n) - \hat{\Phi}(k,n) \right] - \Phi(k,n-1)\nonumber \\
+                                                \pause
+                                                &=& \frac{2\pi k}{\mathcal{K}}\mathcal{H} + \princarg\left[ \Phi(k,n) - \Phi(k,n-1) - \frac{2\pi k}{\mathcal{K}}\mathcal{H} \right]\nonumber
+                        \end{eqnarray*}
+                        \end{footnotesize}
+            \end{enumerate}
+        
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{frequency reassignment: problems}
+                \begin{itemize}
+                    \item   \textbf{overlapping spectral components}
+                        \begin{itemize}
+                            \item   sinusoidal components often overlap (spectral leakage, several instruments playing the same pitch, ...)
+                                \begin{itemize}
+                                    \item[$\Rightarrow$] ``incorrect'' phase estimate
+                                    \item<1-> spectrum should be as sparse as possible, increase STFT length
+                                \end{itemize}
+                        \end{itemize}
+                    \bigskip
+                    \item<2->   \textbf{inaccurate phase unwrapping} 
+                        \begin{itemize}
+                            \item   unwrapping algorithm is based on assumption of similarity between predicted and measured phase
+                            \item<2-> decrease hop size
+                        \end{itemize}
+                \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch detection resolution}{frequency reassignment: example}
+            \figwithmatlab{InstantaneousFreq}
+        \end{frame}
+        %\begin{frame}{pitch detection resolution}{note on time reassignment, other ways}
+        %\end{frame}
+        %\begin{frame}{pitch detection resolution}{frequency reassignment: matlab exercise}
+            %\matlabexercise{implementation of the instantaneous frequency computation}
+            %
+            %\begin{itemize}
+                %\item   implement the computation of the instantaneous frequency per block as described in the previous slides
+                %\item   test for several input sinusoidals with various input frequencies
+                    %\begin{itemize}
+                        %\item   detect the local maxima and compare the instantaneous frequency at these bins with both the bin frequency and the original frequency
+                    %\end{itemize}
+            %\end{itemize}
+        %\end{frame}
+            
+        \begin{frame}{pitch detection resolution}{frequency reassignment: applications}
+            \begin{itemize}
+                \item \textbf{improving frequency resolution}
+                    \begin{itemize}
+                        \item e.g., for detecting signal frequencies when using a filter bank
+                    \end{itemize}
+                \bigskip
+                \item<2-> \textbf{improving phase extrapolation}
+                    \begin{itemize}
+                        \item e.g., for accurate phase estimation in the \textit{phase vocoder}
+                    \end{itemize}
+                \bigskip
+                \item<3-> \textbf{grouping spectral bins}
+                    \begin{itemize}
+                        \item spectral leakage sidelobes have the same instantaneous frequency
+                    \end{itemize}
+                \bigskip
+                \item<4-> \textbf{tonalness detection}
+                    \begin{itemize}
+                        \item   the instantaneous frequency should be reasonably close to the bin frequency for the component to be considered tonal
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+   \section[summary]{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{frequency resolution of sampled signals depends on}
+                    \begin{itemize}
+                        \item   time domain: sample rate
+                        \item   freq domain: sample rate, block size
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{pitch detection error \textsl{in Cent} also depends on input frequency}
+                    \begin{itemize}
+                        \item   time domain: high error at high frequencies
+                        \item   freq domain: high error at low frequencies
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{possible solutions}
+                    \begin{itemize}
+                        \item   time domain: 
+                            \begin{itemize}
+                                \item upsampling/interpolation
+                            \end{itemize}
+                        \item   freq domain: 
+                            \begin{itemize}
+                                \item   zeropadding/interpolation
+                                \item   frequency reassignment (instantaneous frequency)
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

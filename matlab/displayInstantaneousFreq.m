@@ -1,6 +1,6 @@
 function displayInstantaneousFreq()
 
-    hFigureHandle = generateFigure(10.8,7);
+    hFigureHandle = generateFigure(12,6);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -11,7 +11,7 @@ function displayInstantaneousFreq()
     subplot(211)
     plot(f,X(1,:));
     axis([f(1) f(end) 0 0.5])
-    xlabel('$f [Hz]$');
+    xlabel('$f$ [Hz]');
     ylabel('$|X(f)|$');
     
     subplot(212)
@@ -19,7 +19,7 @@ function displayInstantaneousFreq()
     axis([0 length(f_I)+1 min(f_I) max(f_I)])
 
     xlabel('$k$');
-    ylabel('$|f_I(k)|$');
+    ylabel('$|f_\mathrm{I}(k)|$');
     lh = legend(cLegend);
     set(lh,'Location','SouthEast','Interpreter','latex')
 
@@ -55,7 +55,7 @@ function [f,X,f_I, cLegend] = generateSampleData()
     cLegend = {};
     for (i=1:length(fFreq))
         fDiff(i,:) = abs([fFreqRes*(k(i)-1)-fFreq(i) f_I(k(i))-fFreq(i)]);
-        cLegend{i}          = ['$|f_{max}-f| = ' num2str(fDiff(i,1),'%2.2f') '$ Hz, $|f_I-f| = ' num2str(fDiff(i,2),'%2.2f') '$ Hz'];
+        cLegend{i}          = ['$|f_\mathrm{max}-f| = ' num2str(fDiff(i,1),'%2.2f') '$ Hz, $|f_\mathrm{I}-f| = ' num2str(fDiff(i,2),'%2.2f') '$ Hz'];
     end
     cLegend = char(cLegend);
 end
