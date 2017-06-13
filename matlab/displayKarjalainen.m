@@ -1,6 +1,6 @@
 function displayKarjalainen()
 
-    hFigureHandle = generateFigure(10.8,7);
+    hFigureHandle = generateFigure(12,7);
     
     iStart  = 66000;
     iLength = 4096;
