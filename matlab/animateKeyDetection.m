@@ -1,26 +1,37 @@
 function animateKeyDetection()
 
-    hFigureHandle = generateFigure(10.8,6.45);
+    bVideoOut     = false;
+    hFigureHandle   = generateFigure(12,6.8);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
-    cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
+    if bVideoOut
+        cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
+    else
+        mkdir([cPath '/../graph/' cName '/']);
+        cOutputFilePath = [cPath '/../graph/' cName '/' strrep(cName, 'animate', '')];
+    end
  
-    writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
-    writerObj.FrameRate = 12;
-    writerObj.Quality   = 90;
-    open(writerObj);
-    set(gca,'nextplot','replacechildren');
-    set(gcf,'Renderer','zbuffer');
-
+    if bVideoOut
+        writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
+        writerObj.FrameRate = 10;
+        writerObj.Quality   = 100;
+        open(writerObj);
+        set(gca,'nextplot','replacechildren');
+        set(gcf,'Renderer','zbuffer');
+        framerate = writerObj.FrameRate;
+    else
+        framerate = 1;
+    end
+    
     [testprofile, refprofile]   = generateSampleData();
 
-    iNumFrames  = 12;
+    iNumFrames      = 12;
     
     for (i = 1:iNumFrames)
         dist(i)    = sqrt(sum(abs(testprofile-refprofile).^2));
         subplot(211)
         plot(1:12,testprofile,'o-', 'Color',[234/256 170/256 0]), hold on
-        plot(1:12,refprofile, 'ko-','LineWidth',3), hold off
+        plot(1:12,refprofile, 'ko-','LineWidth',1.5), hold off
         set(gca,'XTick',1:12),xlim([1 12])
         set(gca,'XTickLabel',{'C', 'C#', 'D', 'D#', 'E','F', 'F#', 'G', 'G#', 'A', 'A#','B'})
         xlabel('Pitch Class');
@@ -35,9 +46,13 @@ function animateKeyDetection()
         ylabel('Distance');
 
         refprofile = circshift(refprofile,[0 1]);
-        for (k =1:writerObj.FrameRate)
-            frame = getframe(hFigureHandle);
-            writeVideo(writerObj,frame);
+        for (k =1:framerate)
+            if bVideoOut
+                frame = getframe;
+                writeVideo(writerObj,frame);
+            else
+                printFigure(hFigureHandle, [cOutputFilePath '-' num2str(i,'%.2d')]); 
+            end
         end
     end  
     
@@ -47,12 +62,18 @@ function animateKeyDetection()
     hold on,
     bar(dist,'FaceColor',[234/256 170/256 0]);
     hold off
-    for (k =1:2*writerObj.FrameRate)
-        frame = getframe(hFigureHandle);
-        writeVideo(writerObj,frame);
+    for (k =1:2*framerate)
+        if bVideoOut
+            frame = getframe;
+            writeVideo(writerObj,frame);
+        else
+            printFigure(hFigureHandle, [cOutputFilePath '-' num2str(i,'%.2d')]); 
+        end
     end
     
-    close(writerObj);
+    if bVideoOut
+        close(writerObj); 
+    end
     
 end
 

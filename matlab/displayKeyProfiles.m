@@ -1,6 +1,6 @@
 function displayKeyProfiles()
 
-    hFigureHandle = generateFigure(10.8,8);
+    hFigureHandle = generateFigure(14,8);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -36,6 +36,7 @@ function displayKeyProfiles()
     axis([0 12 0 1.5])
     xlabel('Key')
     ylabel('$d_\mathrm{E} (C\ Maj.)$')
+    h_legend=legend('o', 's', 'd', '5', 'p', 't','Location','bestoutside');
     
     subplot(122)
     scale           = 1.9/sqrt(2);
@@ -49,9 +50,8 @@ function displayKeyProfiles()
     ph=findall(gca,'type','text');
     ps=get(ph,'string');
     ps(1:end)={''};
-    ps =  {'A','Eb','E','Bb', 'B', 'F', 'F\#', 'C','Db', 'G', 'Ab', 'D', '', '','Distance to C Major','',''};
+    ps =  {'A','Eb','E','Bb', 'B', 'F', 'F\#', 'C','Db', 'G', 'Ab', 'D', '', '', '', '','Distance to C Major','',''};
     set(ph,{'string'},ps');
-    h_legend=legend('o', 's', 'd', '5', 'p', 't','Location','southeast');
    
     printFigure(hFigureHandle, cOutputFilePath)
 end

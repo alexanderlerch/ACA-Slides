@@ -1,6 +1,6 @@
 function displayTuningFreqDistribution()
 
-    hFigureHandle = generateFigure(10.8,7);
+    hFigureHandle = generateFigure(12,4);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -11,7 +11,7 @@ function displayTuningFreqDistribution()
     bar(f,p,'k'), grid on
     axis([427 453 0 .25])
 
-    xlabel('$f_{A4}$ [Hz]');
+    xlabel('$f_\mathrm{A4}$ [Hz]');
     ylabel('RDF');
 
     printFigure(hFigureHandle, cOutputFilePath)

@@ -1,16 +1,27 @@
 function animateFilterbankAdaptation()
 
-    hFigureHandle = generateFigure(10.8,6.45);
+    bVideoOut     = false;
+    hFigureHandle = generateFigure(12, 4);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
-    cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
+    if bVideoOut
+        cOutputFilePath = [cPath '/../video/' strrep(cName, 'display', '')];
+    else
+        mkdir([cPath '/../graph/' cName '/']);
+        cOutputFilePath = [cPath '/../graph/' cName '/' strrep(cName, 'animate', '')];
+    end
  
-    writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
-    writerObj.FrameRate = 12;
-    writerObj.Quality   = 90;
-    open(writerObj);
-    set(gca,'nextplot','replacechildren');
-    set(gcf,'Renderer','zbuffer');
+    if bVideoOut
+        writerObj = VideoWriter([cOutputFilePath '.mp4'],'MPEG-4');
+        writerObj.FrameRate = 10;
+        writerObj.Quality   = 100;
+        open(writerObj);
+        set(gca,'nextplot','replacechildren');
+        set(gcf,'Renderer','zbuffer');
+        framerate = writerObj.FrameRate;
+    else
+        framerate = 1;
+    end
 
     iNumFrames  = 75;
     fStartFreq  = 220;
@@ -25,15 +36,23 @@ function animateFilterbankAdaptation()
         end   
         hold off;
         axis([ f(j,1,k) f(j,end,k) -18 1]);
-        xlabel('$f [Hz]$')
+        xlabel('$f$ [Hz]')
         ylabel('$|H(f)|$ [dB]')
-        lh = legend(['$f_{A4} =$ ' num2str(fFreq*2,'%2.2f') ' Hz']);
+        lh = legend(['$\hat{f}_{A4} =$ ' num2str(fFreq*2,'%2.2f') ' Hz']);
         set(lh,'Interpreter','latex');
 
-        frame = getframe(hFigureHandle);
-        writeVideo(writerObj,frame);
-    end    
-    close(writerObj);
+       
+        if bVideoOut
+            frame = getframe;
+            writeVideo(writerObj,frame);
+        else
+            printFigure(hFigureHandle, [cOutputFilePath '-' num2str(i,'%.2d')]); 
+        end
+    end
+
+    if bVideoOut
+        close(writerObj); 
+    end
     
 end
 
