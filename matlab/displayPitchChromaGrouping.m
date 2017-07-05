@@ -1,6 +1,6 @@
 function displayPitchChromaGrouping()
 
-    hFigureHandle = generateFigure(10.8,6);
+    hFigureHandle = generateFigure(12,6.8);
     
     if(exist('ComputeFeature') ~=2)
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
@@ -20,7 +20,7 @@ function displayPitchChromaGrouping()
     set(AX(2),'YTick',[]);
     set(AX(1),'XTick',ptick)
     set(get(AX(1),'Ylabel'),'String','$|X(k,n)|$');
-    set(get(AX(2),'Ylabel'),'String','$w_E$');
+    set(get(AX(2),'Ylabel'),'String','$w_\mathrm{E}$');
     xlabel('MIDI Pitch')
 
     printFigure(hFigureHandle, cOutputFilePath)

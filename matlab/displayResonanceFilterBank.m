@@ -1,6 +1,6 @@
 function displayResonanceFilterBank()
 
-    hFigureHandle = generateFigure(10.8,6);
+    hFigureHandle = generateFigure(12,5);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
@@ -31,7 +31,7 @@ function [f,H] = generateSampleData()
         H(i,:) = abs(W);
 
         H(i,:) = H(i,:)/log2((10*i)/12); % just example weighting for plot
-        H(i,:) = 20*log10(H(i,:));
+        H(i,:) = 20*log10(abs(H(i,:)));
     end
 end
 

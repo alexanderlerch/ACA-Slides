@@ -1,6 +1,6 @@
 function displayKrumhanslKeyProfile()
 
-    hFigureHandle = generateFigure(12,5);
+    hFigureHandle = generateFigure(7,5);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];

@@ -1,6 +1,6 @@
 function displayPitchChroma()
 
-    hFigureHandle = generateFigure(10.8,6);
+    hFigureHandle = generateFigure(12,5);
     
     if(exist('ComputeFeature') ~=2)
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
