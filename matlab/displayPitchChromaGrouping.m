@@ -1,6 +1,6 @@
 function displayPitchChromaGrouping()
 
-    hFigureHandle = generateFigure(12,6.8);
+    hFigureHandle = generateFigure(12,6);
     
     if(exist('ComputeFeature') ~=2)
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');

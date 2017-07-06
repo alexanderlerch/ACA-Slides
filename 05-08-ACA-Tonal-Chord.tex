@@ -1,0 +1,349 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 5.8: Chord Detection}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~125--127
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   musical chords and harmony
+                        \item   sample chord detection
+                        \item   Hidden Markov Models (HMMs) and the Viterbi algorithm
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   name basic chords and describe the concept of chord inversions
+                        \item   discuss commonalities and differences between chord \& key detection
+                        \item   discuss the usefulness of HMMs for chord detection
+                        \item   explain the Viterbi algorithm with an example
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section{chords}
+        \begin{frame}{musical pitch}{chords}
+            \begin{itemize}
+                \item	simultaneous use of several pitches $\Rightarrow$ \textbf{chords}
+                \item	usually constructed of (major/minor) thirds
+                \begin{figure}[t]
+                    \centering
+                    \includegraphics[scale=.85]{pitch_chords}
+                \end{figure}
+                
+                \smallskip
+                \item<2->	note:
+                        \begin{itemize}
+                            \item	chord type independent of pitch doubling, pitch order
+                            \item	same label for keys and chords
+                        \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{musical pitch}{ chord inversion}
+            \begin{itemize}
+                \item	most common: root note is lowest note
+                \item	otherwise: chord inversion
+                \begin{figure}[t]
+                    \centering
+                    \includegraphics{pitch_chordinversions}
+                \end{figure}
+                
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{musical pitch}{ harmony}
+            \begin{itemize}
+                \item	key and tonal context define chord's \textit{harmonic function}
+                \smallskip
+                \item   examples:
+                \begin{itemize}
+                    \item	\textbf{tonic}:\\ chord on 1st scale degree (tonal center)
+                    \item	\textbf{dominant}:\\ chord on 5th scale degree (often moves to tonic)
+                    \item	\textbf{subdominant}:\\ chord on 4th scale degree
+                    \item	\ldots
+                \end{itemize}
+            \end{itemize}
+        \end{frame}
+    \section{chord detection}
+        \begin{frame}{chord detection}{introduction: key vs.\ chord detection}
+
+            \begin{itemize}
+                \item	\textbf{commonalities}
+                    \begin{itemize}
+                        \item<1->	chords are octave independent $\Rightarrow$ pitch chroma sufficient
+                        \item<1->	process flow: pitch chroma extraction $+$ classification
+                    \end{itemize}
+                \bigskip
+                \item<2->	\textbf{differences}
+                    \begin{itemize}
+                        \item	time frame for pitch chroma calculation
+                        \item	templates
+                        \item	number of templates/chords
+                        \item	many results per song (time series)
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch chroma}{introduction}
+            \vspace{-3mm}
+            \begin{itemize}
+                \item	pitch class distribution: 12-dimensional vector
+                \item   map all pitch class bands in all octaves to one
+            \end{itemize}
+            {\vspace{-12mm}\visible<2->{\begin{flushright}{\includeaudio{sax_example}}\end{flushright}}}
+            \only<1>{\vspace{1mm}\figwithmatlab{PitchChromaGrouping}}
+            \only<2>{\vspace{4mm}\figwithmatlab{PitchChroma}}
+            \only<3->{
+            
+            \bigskip
+            \bigskip
+            \begin{block}{pitch chroma properties}
+            \begin{itemize}
+                \item	\textbf{no} octave information
+                    \begin{itemize}
+                        \item	no differentiation between prime and octave
+                        \item   no info on inversion
+                    \end{itemize}
+                \item	robust, timbre-independent representation
+            \end{itemize}
+            \end{block}
+            
+            }  
+            \vspace{50mm}
+            \inserticon{audio}
+        \end{frame}
+
+        \begin{frame}{chord detection}{chord template}
+            \begin{itemize}
+                \item similar to key detection we can simply compare an extracted pitch chroma with a template
+                    \begin{itemize}
+                        \item	simplest possible template and distance: linear transformation  
+                    
+                            example~---~C major: $\Gamma(0,j) = [\nicefrac{1}{3},0,0,0,\nicefrac{1}{3},0,0,\nicefrac{1}{3},0,0,0,0]$
+                        \smallskip
+                        \item[$\Rightarrow$]	instantaneous chord likelihood:
+                        \begin{equation*}
+                            {\psi}(c,n) = \sum\limits_{j = 0}^{11}{\Gamma(c,j)\cdot \nu(j,n)}
+                        \end{equation*}
+                    \end{itemize}	
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{chord detection}{chord progression 1/2}
+            apply \textbf{musical knowledge} to increase the result's robustness and accuracy:
+            
+            \begin{itemize}
+                \item	different probabilities for different chord progressions (similar to key modulations), e.g.
+                \begin{itemize}
+                    \item	cadences: I-IV-V-I
+                    \item	sequences: circle progression
+                    
+                \end{itemize}
+            \end{itemize}
+
+            $\Rightarrow$ model for \textit{chord progression probabilities}
+            \begin{enumerate}
+                \item<2->	\textit{analytical model} based on music theory
+                    \begin{itemize}
+                        \item	circle of fifths (?!)
+                        \item	key profile correlation (?!)
+                    \end{itemize}
+                \item<3->	\textit{empirical model} based on data
+                    \begin{itemize}	
+                        \item	annotate audio
+                        \item	symbolic score
+                    \end{itemize}
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}{chord detection}{chord progression 2/2}
+            \question{what properties do chord progression probabilities depend on}
+
+            \begin{itemize}
+                \item 	musical key
+                \item	larger musical context (model order)
+                \item	style
+                \item   tempo/length??
+            \end{itemize}
+        \end{frame}
+    \section[HMMs]{Hidden Markov Models \& Viterbi algorithm}
+        \begin{frame}{chord detection}{markov chain}
+            \begin{figure}
+                \centering
+                    \includegraphics[scale=.1]{graph/MarkovChain}
+            \end{figure}
+            \addreference{from: \url{https://commons.wikimedia.org/wiki/File:Markovkate_01.svg}}
+            \begin{itemize}
+                \item   two possible states E, A
+                \item   transition probabilities to other state(s) and to self
+                \item   sum of transition probabilities equals 1
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{chord detection}{hidden markov model: variables}
+            \begin{itemize}
+                \item	\textbf{states}:\\ unknown/hidden
+                \smallskip
+                \item	\textbf{transition probability}:\\ probability of transitioning from one state to the other
+                \smallskip
+                \item   \textbf{observations}:\\ measureable time series
+                \smallskip
+                \item	\textbf{emission probability}:\\ probability of a state given an observation
+                \smallskip
+                \item	\textbf{start probability}:\\ probability of the initial state
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{chord detection}{hidden markov model: variables}
+            \vspace{-5mm}
+            \begin{figure}
+                \centering
+                    \includegraphics[scale=.25]{graph/HiddenMarkovModel}
+            \end{figure}
+            \addreference{from \url{https://en.wikipedia.org/wiki/File:HiddenMarkovModel.svg}}
+            \vspace{-5mm}
+            \begin{footnotesize}
+                \begin{itemize}
+                    \item	X: states
+                    \item	y: possible observations
+                    \item	a: state transition probabilities
+                    \item	b: emission probabilities
+                \end{itemize}
+            \end{footnotesize}
+        \end{frame}
+        \begin{frame}{chord detection}{hidden markov model: example (WP) 1/2}
+            \begin{itemize}
+                \item   \textbf{scenario}
+                    \begin{itemize}
+                        \item   doctor diagnoses fever by how patients feel
+                        \item   patient may feel normal, dizzy, or cold
+                        \item   patient visits multiple days in a row 
+                    \end{itemize}
+            \end{itemize}
+            \question{what are the states and observations in this case}
+            
+            \begin{itemize}
+                \item	\textbf{states} %: \textit{healthy}, \textit{fever}
+                    \begin{itemize}
+                        \item   \textit{healthy}
+                        \item   \textit{fever}
+                    \end{itemize}
+                \item   \textbf{observations}: %\textit{normal}, \textit{cold}, \textit{dizzy}
+                    \begin{itemize}
+                        \item   \textit{normal}
+                        \item   \textit{cold}
+                        \item   \textit{dizzy}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{chord detection}{hidden markov model: example (WP) 2/2}
+            %\begin{columns}[T]
+            %\column{.6\textwidth}
+            \vspace{-5mm}
+            \only<1>{
+            \begin{itemize}
+                \item   \textbf{start probabilities} (initial state assumption)
+                    \begin{itemize}
+                        \item   \textit{healthy}: $ 0.6$
+                        \item   \textit{fever}: $0.4$
+                    \end{itemize}
+                \item<2->   \textbf{emission probabilities} (prob of obs given state)
+                    \begin{itemize}
+                        \item   \textit{healthy}: normal $0.5$, cold $0.4$, dizzy $0.1$
+                        \item   \textit{fever}: : normal $0.1$, cold $0.3$, dizzy $0.6$
+                    \end{itemize}
+                \item<3->   \textbf{transition probabilities}
+                    \begin{itemize}
+                        \item   \textit{healthy}: healthy $0.7$, fever $0.3$
+                        \item   \textit{fever}: : healthy $0.4$, fever $0.6$
+                    \end{itemize}
+            \end{itemize}
+            }
+            \only<2>{
+            \begin{figure}
+                \includegraphics[scale=.6]{viterbi_example}
+            \end{figure}
+            }
+            %\column{.4\textwidth}
+            %\only<4->{
+                    %\includegraphics[scale=.35]{HmmExample}
+            %}
+            %\end{columns}
+            %\addreference{from: \url{https://en.wikipedia.org/wiki/File:An_example_of_HMM.png}}
+        \end{frame}
+        \begin{frame}{chord detection}{hidden markov model: example (WP) 2/2}
+
+            \begin{itemize}
+                \item[]   \textbf{three observations}:\\ Day 1 \textit{normal} $\rightarrow$ Day 2 \textit{cold} $\rightarrow$ Day 3 \textit{dizzy}
+            \end{itemize}
+            \setcounter{i}{0}
+            \whiledo{\value{i}<4}	
+            {
+                \only<\value{beamerpauses}>
+                {
+                    \begin{figure}
+                    \centering
+                        \includegraphics[scale=.5]{viterbi_example_\arabic{i}}
+                    \end{figure}
+                }
+                \ifthenelse{\equal{\value{i}}{3}}{}{\pause}
+                \stepcounter{i} 
+            }	
+            %\visible<1->{\addreference{from: \url{https://en.wikipedia.org/wiki/Viterbi_algorithm\#/media/File:Viterbi_animated_demo.gif}}}
+        \end{frame}
+        \begin{frame}{chord detection}{HMMs for chord detection}
+            \begin{itemize}
+                \item   states $\rightarrow$ chords
+                \item   observations $\rightarrow$ pitch chroma
+                \item   emission probability $\rightarrow$ trained with pitch chroma
+                \item   transition probability $\rightarrow$ trained from dataset
+                \item   start probability $\rightarrow$ chord statistics (style dependent?)
+            \end{itemize}
+        \end{frame}
+                
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{chords}
+                    \begin{itemize}
+                        \item   combination of three or more pitches
+                        \item   usually stacked thirds
+                        \item   can be inverted
+                    \end{itemize}
+                \smallskip
+                \item   \textbf{chord detection}
+                    \begin{itemize}
+                        \item   processing steps
+                            \begin{itemize}
+                                \item   pitch chroma extraction
+                                \item   template matching
+                                \item   chord transition model
+                            \end{itemize}
+                    \end{itemize}
+                \smallskip
+                \item   \textbf{Viterbi algorithm}
+                    \begin{itemize}
+                        \item   find globally optimal path through state space
+                        \item   estimate state sequence with
+                            \begin{itemize}
+                                \item   emission probabilities 
+                                \item   transition probabilities
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
