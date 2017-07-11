@@ -1,6 +1,6 @@
 function displayOnset()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(12,4.8);
     
     iStart  = 330000;
     iLength = 8192;

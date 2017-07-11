@@ -1,0 +1,244 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 6.0: Introduction to Tempo \& Rhythm Terminology}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 6~---~Temporal Analysis}: pp.~129--135
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   terminology for rhythm detection
+                        \item   perceptually motivated rhythm accuracy
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe the terms onset, tempo, meter, bar, and rhythm
+                        \item   give two examples of typical onset times for musical instruments
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{temporal events}{introduction}
+            \begin{itemize}
+                \item  \textbf{categorization of temporal parameters}:
+                    \begin{itemize}
+                        \item	\textit{score} parameters:\\ structure, time signature, rhythm, \ldots
+                        \item	\textit{performance} parameters:\\ tempo, timing, \ldots
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{perception of temporal parameters}:
+                    \begin{itemize}
+                        \item	audio signal/stream is segmented into distinct events $\Rightarrow$ \textit{onsets} (segment start)
+                        \item	humans \textit{structure and group} these events due to position, salience, \ldots
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section[perception]{human perception of temporal events}
+        \begin{frame}{human perception of temporal events}{introduction to onsets}
+            \vspace{-3mm}
+            \begin{itemize}
+                \item   \textbf{onset} is start of a musical event
+                \smallskip
+                \item<1->   \textbf{properties}:
+                    \begin{itemize}
+                        \item<1->	position
+                        \item<1->	strength, salience
+                        \item<1->	length?
+                    \end{itemize}
+            \end{itemize}
+                \vspace{-3mm}
+                {\figwithmatlab{Onset}}
+        \end{frame}
+
+        \begin{frame}{human perception of temporal events}{initial transients}
+            \begin{flushright}
+                \includegraphics[scale=.4]{Onset}
+            \end{flushright}
+            \vspace{-30mm}
+           \begin{itemize}
+                \item	percussive instruments:
+                \begin{itemize}
+                    \item   \unit[3-20]{ms}
+                \end{itemize}
+                \smallskip
+                \item	woodwind instruments:
+                \begin{itemize}
+                    \item   up to \unit[300]{ms}
+                \end{itemize}
+                \bigskip
+                \item<2->	typical range:\\ \unit[15--50]{ms}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{human perception of temporal events}{human detection accuracy}
+            \begin{itemize}
+                \item	\textit{detection \& discrimination} of 2 subsequent onsets
+                    \begin{itemize}
+                        \item	detection $\Delta t > \unit[2]{ms}$, discrimination $\Delta t > \unit[20]{ms}$\only<1>{\footfullcite{hirsh_auditory_1959}}
+                    \end{itemize}
+                
+                \smallskip
+                \item<2->	\textit{prediction} of looped monophonic instrument onsets
+                    \begin{itemize}
+                        \item	IOI \unit[600]{ms}: $\sigma = \unit[12]{ms}$\only<2>{\footfullcite{gordon_perception_1984}}
+                        \item	IOI $<$ \unit[240]{ms}: $\sigma = \unit[10]{ms}$\only<2>{\footfullcite{friberg_perception_1992}}
+                    \end{itemize}
+
+                \smallskip
+                \item<3->	manual onset time \textit{annotation}
+                    \begin{itemize}
+                        \item	piano: mean abs.\ error: \unit[4.3]{ms}, max: \unit[35]{ms}\only<3>{\footfullcite{repp_diversity_1992}}
+                        \item	various: mean abs.\ error: \unit[10]{ms}, max: \unit[30]{ms}\only<3>{\footfullcite{leveau_methodology_2004}}
+                    \end{itemize}
+                
+                \smallskip
+                \item<4->	ensemble performance
+                    \begin{itemize}
+                        \item	string \& woodwind: deviations up to  \unit[30-50]{ms}\only<4>{\footfullcite{rasch_synchronization_1979}}
+                        \item	piano: $\sigma = \unit[14-38]{ms}$\only<4>{\footfullcite{shaffer_timing_1984}}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{human perception of temporal events}{offsets}
+            \question{what about offsets/end of notes}
+
+            \begin{itemize}
+                \item   \textbf{perceptually not as important} as an onset
+                    \begin{itemize}
+                        \item   offset are often ignored in rhythm perception
+                    \end{itemize}
+                \smallskip
+                \item	\textbf{systematic difficulties}: when does a note end?
+                    \begin{itemize}
+                        \item	performer stops excitation
+                        \item	instrument stops oscillation
+                        \item	listener cannot recognize it anymore
+                    \end{itemize}
+                \smallskip
+                \item	\textbf{practical difficulties}: hard to detect
+                    \begin{itemize}
+                        \item	low volume
+                        \item	reverberation
+                        \item	masking
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{human perception of temporal events}{tempo, meter \& rhythm}
+            \vspace{-2mm}
+            \begin{itemize}
+                \item	\textbf{tempo}: perceived equal duration pulses at a ``natural'' rate~---~tactus
+                    \begin{itemize}
+                        
+                        \item<1->	constant tempo
+                            \begin{footnotesize}
+                            \begin{equation*}\label{eq:tempo_mean}
+                                \mathfrak{T} = \frac{ \mathcal{B}\cdot \unit[60]{s}}{\Delta t_\mathrm{s}}\;\; [\unit{BPM}] 
+                            \end{equation*}
+                            \end{footnotesize}
+                        \item<1->	dynamic tempo
+                            \begin{footnotesize}
+                            \begin{equation*}
+                                \mathfrak{T}_\mathrm{local}(j) = \frac{\unit[60]{s}}{t_\mathrm{b}(j+1)-t_\mathrm{b}(j)}\;\; [\unit{BPM}] 
+                            \end{equation*}
+                            \end{footnotesize}
+                            
+                            
+                        \item    perceived overall tempo?
+                            \begin{itemize}
+                                \item	average, main, mode, \ldots
+                            \end{itemize}
+                    \end{itemize}
+                \item<2->	\textbf{meter}
+                    \begin{itemize}
+                        \item	group of strong and weak musical elements/beats
+                        
+                        \item	typically 3 to 7 beats (app.\ \unit[5]{s})
+                    \end{itemize}
+                
+                \item<3->	\textbf{rhythm}
+                    \begin{itemize}
+                        \item	group length \unit[1--8]{beats}
+                        \item	defined by accents and time intervals
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section[musical]{musical notation of temporal events}
+        \begin{frame}{musical notation of temporal events}{tempo, time signature, bar \& note value}
+            \begin{itemize}
+                \item	\textbf{tempo}
+                    \begin{itemize}
+                        \item	\textsl{Largo}, \textsl{Adagio}, \textsl{Andante}, \textsl{Moderato}, \textsl{Allegro}, \textsl{Presto}
+                        \item	\textsl{ritardando}, \textsl{accelerando}, \ldots
+                        \item	modern scores: indication of overall tempo in \unit{BPM}
+                    \end{itemize}
+                \smallskip
+                \item<1->	\textbf{bar}
+                    \begin{itemize}
+                        \item	score equivalent of perceptual meter
+                        \item	begin of bar is marked by a vertical line
+                    \end{itemize}
+                \smallskip
+                \item<1->	\textbf{time signature}
+                    \begin{itemize}
+                        \item	conveys length of bar
+                            \only<1->{\begin{flushright}
+                                \vspace{-10mm}
+                                \includegraphics[scale=.5]{onset_timesigs}
+                            \end{flushright}}
+                    \end{itemize}
+                \smallskip
+                \item<1->	\textbf{note value}
+                            \only<1->{\begin{flushright}
+                                \vspace{-5mm}
+                                \includegraphics[scale=.6]{onset_notevalues}
+                            \end{flushright}}
+            \end{itemize}
+        \end{frame}
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{perceptual terms}
+                    \begin{itemize}
+                        \item   onset
+                        \item   tempo
+                        \item   meter
+                        \item   rhythm
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{musical terms}
+                    \begin{itemize}
+                        \item   tempo
+                        \item   bar
+                        \item   time signature
+                        \item   note value
+                        \item   rhythm
+                    \end{itemize}
+                \item   \textbf{accuracy range of interest}
+                    \begin{itemize}
+                        \item   \unit[2--300]{ms}
+                    \end{itemize}
+            \end{itemize}
+            
+            \inserticon{summary}
+        \end{frame}
+\end{document}
