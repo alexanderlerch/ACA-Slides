@@ -1,0 +1,249 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 6.1: Onset Detection}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Temporal Analysis}: pp.~135--139
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   detection of the start of musical events
+                        \item   fundamental methods for generating a novelty function
+                        \item   fundamental methods for peak picking
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe the term onset
+                        \item   implement an automatic onset detection system
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{onset detection}{problem statement}
+            \begin{itemize}
+                \item \textbf{onset}: begin of musical event
+
+                \bigskip
+                \item   \textbf{polyphonic} audio signals:
+                    \begin{itemize}
+                        \item   unknown number of voices and events
+                        \item   multiple onsets occur at ``the same'' time
+                        \item   onset might be obfuscated by other musical content
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{onset detection}{overview}
+            \begin{figure}
+                \centering
+                \input{pict/onset_tracking}
+            \end{figure}
+            
+            \begin{enumerate}
+                \item<2-> 	\textbf{novelty function}
+                    \begin{itemize}
+                        \item	measure of probability for new events/signal change over time	
+                    \end{itemize}
+                
+                \bigskip
+                \item<3->	\textbf{peak picking}
+                    \begin{itemize}
+                        \item	identify the most likely locations for onsets
+                    \end{itemize}
+            \end{enumerate}
+        \end{frame}
+        
+   \section{novelty function}
+        \begin{frame}{onset detection}{novelty function}
+            \begin{itemize}
+                \item	\textbf{terms}
+                    \begin{itemize}
+                        \item	detection function
+                        \item	difference function
+                    \end{itemize}
+                \bigskip
+                \item<1->	\textbf{processing steps}
+                    \begin{enumerate}
+                        \item<2->	extract features
+                        \item<3->	compute derivative
+                        \item<4->	smooth result
+                        \item<5->	apply Half-Wave-Rectification $HWR$
+                    \end{enumerate}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{onset detection}{novelty function examples 1/3}
+            \begin{enumerate}
+                \item	\textbf{time domain}
+                    \begin{itemize}
+                        \item	extract time domain envelope
+                        \item<1->	calculate slope
+                    \end{itemize}
+                    \only<1>{\figwithmatlab{Onset}}
+                \bigskip
+                \item<2->	\textbf{pitch-based}: evaluate pitch changes\footfullcite{collins_using_2005}
+                        \begin{figure}[t]
+                            \centering
+                            \includegraphics[scale=.25]{graph/pitch_onset}
+                        \end{figure}
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}{onset detection}{novelty function examples 2/3}
+            \begin{enumerate}   
+                \setcounter{enumi}{2}
+                \item	\textbf{STFT-based}: compute block difference 
+                    \begin{itemize}
+                        \item	\textit{flux}
+                        \only<1->
+                        {
+                            \begin{itemize}
+                                \item $d_\mathrm{hai}(n) = \sum\limits_{k = 0}^{\mathcal{K}/2-1}{\log_2\left(\frac{|X(k,n)|}{|X(k,n-1)|}\right)}$
+                                \item $d_\mathrm{lar}(n) = \sum\limits_{k = k(f_{\mathrm{min}})}^{k(f_{\mathrm{max}})}{\sqrt{|X(k,n)|}-\sqrt{|X(k,n-1)|}}$
+                            \end{itemize}
+                        }
+                        \item<2->	\textit{cosine distance}
+                        \only<2->
+                        {
+                           \begin{itemize}
+                                \item $d_\mathrm{foo}(n)	= 1 - \frac{\sum\limits_{k = 0}^{\mathcal{K}/2-1}{|X(k,n)|\cdot |X(k,n-1)|}}{\sqrt{\left(\sum\limits_{k=0}^{\mathcal{K}/2-1}{|X(k,n)|^2}\right)\cdot \left(\sum\limits_{k=0}^{\mathcal{K}/2-1}{|X(k,n-1)|^2}\right)}}$
+                            \end{itemize}
+                        }
+                        \item<3->	\textit{complex}
+                        \only<3->
+                        {
+                            \begin{equation*}
+                                d_\mathrm{dux}(n) = \sum\limits_{k = 0}^{\mathcal{K}/2-1}{|X(k,n)-X(k,n-1)|}
+                            \end{equation*}
+                        }
+                    \end{itemize}
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}{onset detection}{novelty function examples 3/3}
+            \begin{enumerate}   
+                \setcounter{enumi}{2}
+                \item	\textbf{STFT-based} cont'd 
+                    \begin{itemize}
+                        \item<1->	\textit{Goto}-distance\footfullcite{goto_music_1995}
+                            \begin{itemize}
+                                \item	higher power than closest preceding and following bins
+                            \end{itemize}
+                        \only<1>-
+                        {							
+                            \begin{figure}
+                                \centering
+                                \includegraphics[scale=.25]{goto_onset}
+                            \end{figure}
+                        }
+                    \end{itemize}
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}{onset detection}{novelty function: variants}
+            \begin{itemize}
+                \item	\textbf{number of frequency bands}
+                    \begin{itemize}
+                        \item	varies: 1, 3, 6, 21, 960, FFT length, ...
+                        \item<2->	larger number of bands not necessarily better\\ $\rightarrow$ adjust number of bands adaptively?
+                    \end{itemize}
+                \bigskip
+                \item<3->	\textbf{combination of bands}
+                    \begin{itemize}
+                        \item	(weight and) add novelty functions per band
+                        \item<4->	onset detection per band and combine results
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+    \section{peak picking}
+        \begin{frame}{onset detection}{peak picking: introduction}
+            \vspace{-4mm}
+            \begin{itemize}
+                \item	detect onsets in the smoothed novelty function
+                    \vspace{-1mm}
+                    \figwithmatlab{NoveltyFunction}
+                \vspace{-3mm}
+                \item<2->	typical \textbf{criteria}
+                    \begin{itemize}
+                        \item<2->	local maximum \& salient peak
+                        \item<2->	higher than minimum likelihood
+                        \item<2->	not too close to maxima with higher likelihood
+                        \item<2->	other options: high attack slope, distance to prev. min, \ldots
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{onset detection}{peak picking: thresholding}
+            \only<1>{
+            \begin{itemize}
+                \item options for thresholding
+                    \begin{itemize}
+                        \item \textbf{fixed} threshold
+                        \begin{equation*}
+                            G_{d,\mathrm{c}} = \lambda_1 
+                        \end{equation*}
+                        \item<1->	\textbf{smoothed} threshold
+                        \begin{equation*}
+                            G_{d,\mathrm{ma}} = \lambda_2 + \sum\limits_{j=0}^{\mathcal{O}-1}{b(j)\cdot d(i-j)}
+                        \end{equation*}
+                        \item<1->	\textbf{median} threshold
+                        \begin{equation*}
+                            G_{d,\mathrm{me}} = \lambda_2 + \hat{Q}_d(0.5) 
+                        \end{equation*}
+                    \end{itemize}
+            \end{itemize}
+            }
+            \only<2>{
+            \figwithmatlab{PeakPicking}
+            }
+        \end{frame}
+        %\begin{frame}{onset detection}{evaluation}
+            %\question{how do you properly evaluate an onset detection system}
+            %\begin{itemize}
+                %\item   methodology
+                %\smallskip
+                %\item   ground truth
+                    %\begin{itemize}
+                        %\item   how to get/generate
+                        %\item   necessary annotations
+                    %\end{itemize}
+                %\smallskip
+                %\item   metrics
+                    %\begin{itemize}
+                        %\item   how to measure the accuracy of your system
+                    %\end{itemize}
+            %\end{itemize}
+        %\end{frame}
+
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{novelty function}
+                    \begin{itemize}
+                        \item   measure of unexpectedness - likelihood of an event
+                            \begin{itemize}
+                                \item   often a measure similar to flux
+                            \end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{peak picking}
+                    \begin{itemize}
+                        \item   detecting peaks (onsets) in the novelty function
+                        \item   usually done by smoothing and adaptive thresholding
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

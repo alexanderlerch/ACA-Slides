@@ -1,6 +1,6 @@
 function displayPeakPicking()
 
-    hFigureHandle = generateFigure(10.8,7);
+    hFigureHandle = generateFigure(12,6.8);
     
     if(exist('ComputeNoveltyFunction') ~=2)
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
@@ -20,7 +20,7 @@ function displayPeakPicking()
     plot(tx,abs(x),'Color',.8*[1 1 1]);
     plot(tv,v);
     hold off;
-    xlabel('$t$ [s]')
+    ylabel('Envelope')
     axis([tx(1) tx(end) 0 1.01])
     
     subplot(212),
@@ -30,6 +30,8 @@ function displayPeakPicking()
     plot(tg,g(2,:),'Color',.8*[1 1 1])
     stem(td(onsetidx),d(onsetidx),'filled');
     hold off;
+    xlabel('$t$ [s]')
+    legend('novelty','threshold','onsets')
     axis([td(1) td(end) 0 max(d)*1.01])
     
     printFigure(hFigureHandle, cOutputFilePath)

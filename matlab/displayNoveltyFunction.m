@@ -1,6 +1,6 @@
 function displayNoveltyFunction()
 
-    hFigureHandle = generateFigure(10.8,5);
+    hFigureHandle = generateFigure(12,4.8);
     
     if(exist('ComputeNoveltyFunction') ~=2)
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
