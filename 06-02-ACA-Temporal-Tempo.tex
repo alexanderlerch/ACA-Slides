@@ -1,0 +1,231 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 6.2: Tempo Detection}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 6~---~Temporal Analysis}: pp.~146--148
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   introduction to tempo detection and beat tracking
+                        \item   overview over basic approaches
+                        \item    typical challenges
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   discuss advantages and disadvantages for different approaches to tempo detection and beat tracking
+                        \item   summarize the typical challenges of beat tracking systems
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{tempo detection \& beat tracking}{problem statement}
+            \begin{itemize}
+                \item   \textbf{tempo detection}
+                    \begin{itemize}
+                        \item   detect speed of regular pulse (foot-tapping rate)
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{beat tracking}
+                    \begin{itemize}
+                        \item   detect the time instances the tempo pulses occur (beat phase)
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+       \begin{frame}{tempo detection \& beat tracking}{introduction}
+            \begin{itemize}
+                \item \textbf{objectives}
+                    \begin{enumerate}
+                        \item	find the tempo from the novelty function/onsets
+                        \item	find the beat locations
+                    \end{enumerate}
+                \bigskip
+                \item \textbf{systematic problems}:
+                    \begin{enumerate}
+                        \item	distinguish \textit{hierarchical levels}
+                            \begin{itemize}
+                                \item[]	
+                                \item	meter
+                                \item	beat
+                                \item	subbeat/tatum
+                            \end{itemize}
+                            \vspace{-17mm}
+                            \begin{flushright}
+                                \includegraphics[scale=.25]{graph/periodiclevels}
+                            \end{flushright}
+                        \item<1->	detect \textit{beats without onsets}
+                        \item<1->	recognize \textit{onsets without beats}
+                    \end{enumerate}
+            \end{itemize}
+        \end{frame}
+
+    \section{oscillator approach}
+        \begin{frame}{tempo detection \& beat tracking}{oscillator approach}
+            \textbf{Beat tracking with an oscillator}\footfullcite{large_beat_1995}
+            \begin{figure}
+                \centering
+                    \includegraphics[scale=.3]{graph/BPM_large_oscillator}
+            \end{figure}
+            
+            \begin{enumerate}
+                \item	initialize pulse generator (tempo estimate, beat position estimate)
+                \item<2->	predict next beat location with pulse
+                \item<3->	adapt acc.\ to distance (predicted vs.\ real onset position)
+                    \begin{itemize}
+                        \item	beat period
+                        \item	beat phase
+                    \end{itemize}
+                \item<4->	predict with adapted settings
+                \item<4->   adapt \ldots
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}{tempo detection \& beat tracking}{oscillator approach: initialization}
+            \question{How to estimate the initial tempo}
+
+            \begin{itemize}
+                \item	location of maximum of \textbf{ACF of novelty function}
+                \item<2->	maximum of \textbf{IOI histogram}
+                    \begin{figure}
+                        \centering
+                            \includegraphics[scale=.3]{graph/ioi_hist}
+                    \end{figure}
+                \item<2->	maximum of \textbf{beat spectrum/histogram}
+                \item<2->	\ldots
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{tempo detection \& beat tracking}{multi-agent approach}
+            \begin{enumerate}
+                \item	run \textbf{multiple beat trackers} with different parameters
+                    \begin{itemize}
+                        \item	initial tempo
+                        \item	initial beat phase
+                        \item	adaptation speed
+                    \end{itemize}
+                \item<2->	compute reliability/confidence criteria:
+                
+                    \begin{itemize}
+                        \item	match beat and onset times
+                        \item<3->	tempo stability
+                        \item<4->	majority of different agents
+                        \item   \ldots
+                    \end{itemize}
+                \item<5->	choose\textbf{ most reliable agent} (or path between agents)
+            \end{enumerate}
+        \end{frame}
+        
+    \section{filterbank approach}
+        \begin{frame}{tempo detection \& beat tracking}{filterbank approach}
+            \begin{columns}[T]
+            \column{.5\linewidth}
+                \begin{enumerate}
+                    \item	design \textbf{filterbank} (e.g. comb resonators spaced 1 beat)
+                    \item<2->	compute filter output energy	
+                    \item<3->	pick maximum
+                \end{enumerate}
+            \column{.5\linewidth}
+                \only<1>{
+                \begin{figure}
+                    \centering
+                        \includegraphics[scale=.25]{graph/BPM_Scheirer_filterbank}
+                \end{figure}
+                }
+                \only<2->{
+                \begin{figure}
+                    \centering
+                        \includegraphics[scale=.25]{graph/BPM_Scheirer_beatspectrum}
+                \end{figure}
+                }
+            \end{columns}
+            plots by Scheirer\footfullcite{scheirer_tempo_1998}
+        \end{frame}
+
+    \section{template approach}
+        \begin{frame}{tempo detection \& beat tracking}{template-based approach}
+            \begin{enumerate}
+                \item	define set of \textbf{template pulses} in all tempi
+                \smallskip
+                \item<1->	compute CCF between novelty function (or its ACF) and all templates
+                \smallskip
+                \item<1->	choose template with highest correlation as tempo
+                \smallskip
+                \item<1->	choose lag with highest correlation as beat phase
+            \end{enumerate}
+        \end{frame}
+
+    \section{challenges}
+        \begin{frame}{tempo detection \& beat tracking}{typical problems}
+            \begin{enumerate}
+                \item	tempo: detection of \textbf{double/half tempo} (triple, \ldots)
+                \smallskip
+                \item<1->	phase: detection of \textbf{off-beats}
+                \smallskip
+                \item<1->	tempo \& phase: strongly depends on \textbf{initialization values}
+                \smallskip
+                \item<1->	tempo \& phase: only \textbf{slow adaptation} --- no sudden tempo changes
+            \end{enumerate}
+            
+            challenges with adaptation speed example:                     \includeaudio{sonata-ck330_auftakt}
+        \end{frame}
+        %\begin{frame}{tempo detection \& beat tracking}{evaluation}
+            %\question{how do you properly evaluate a tempo detection or beat tracking system}
+            %\begin{itemize}
+                %\item   methodology
+                %\smallskip
+                %\item   ground truth
+                    %\begin{itemize}
+                        %\item   how to get/generate
+                        %\item   necessary annotations
+                    %\end{itemize}
+                %\smallskip
+                %\item   metrics
+                    %\begin{itemize}
+                        %\item   how to measure the accuracy of your system
+                    %\end{itemize}
+            %\end{itemize}
+        %\end{frame}
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{tempo analysis}
+                    \begin{itemize}
+                        \item   similar to pitch detection on a different scale
+                            \begin{itemize}
+                                \item   periodicity analysis of novelty function
+                                \item   time or spectral domain
+                            \end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{typical approaches}
+                    \begin{itemize}
+                        \item   oscillator
+                        \item   histogram/beat spectrum
+                        \item   template correlation
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{main challenges}
+                    \begin{itemize}
+                        \item   double/half tempo
+                        \item   adaptation to sudden tempo changes
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
