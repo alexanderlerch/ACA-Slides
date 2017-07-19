@@ -4,7 +4,8 @@ function displayDtw()
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
     end
 
-    fDimensions = [8.23, 7]; % weird dimension to work around epstopdf problems
+%    fDimensions = [8.23, 7]; % weird dimension to work around epstopdf problems
+    fDimensions = [8, 6.8]; % weird dimension to work around epstopdf problems
     hFigureHandle = generateFigure(fDimensions(1), fDimensions(2));
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));

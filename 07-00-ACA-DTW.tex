@@ -1,0 +1,420 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 7.0: Dynamic Time Warping}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 7: Alignment} (pp.~139--146)
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   Dynamic Time Warping (DTW):
+                        \item[] synchronization of two sequences with similar content
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   explain the standard DTW algorithm
+                        \item   discuss disadvantages of and modifications to the standard DTW algorithm
+                        \item   implement DTW
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{dynamic time warping}{problem statement}
+            \begin{columns}
+            \column{.5\linewidth}
+            \begin{itemize}
+                \item   align/\textbf{synchronize two sequences}
+                    \begin{itemize}
+                        \item	\textit{similar} musical content
+                        \item	\textit{different} tempo and timing
+                            \begin{itemize}
+                                \item[]	$A(n_\mathrm{A})\quad n_\mathrm{A} \in [0;\mathcal{N}_\mathrm{A}-1]$
+                                \item[]	$B(n_\mathrm{B})\quad n_\mathrm{B} \in [0;\mathcal{N}_\mathrm{B}-1]$
+                            \end{itemize}
+                        \bigskip
+                        \item[$\Rightarrow$] find the alignment path that 
+                            \begin{itemize}
+                                \item   minimizes the pairwise distance between sequences
+                                \item   covers the whole sequence
+                                \item   does only move forward in time
+                            \end{itemize}
+                    \end{itemize}
+                \end{itemize}
+            \column{.5\linewidth}
+                \begin{figure}
+                    \includegraphics[width=\columnwidth]{SequenceAlignment}
+                \end{figure}
+            \end{columns}
+            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySequenceAlignment.m}{matlab/displaySequenceAlignment.m}}
+        \end{frame}
+    \section[DTW]{dynamic time warping}
+        \begin{frame}{dynamic time warping}{overview}
+            \begin{itemize}
+                \item   dynamic programming technique
+                \smallskip
+                \item   time is warped non-linearly to match sequences
+                \smallskip
+                \item   finds optimal match between two sequences given a cost function
+                \smallskip
+                \item   the overall cost indicates the overall distance between the sequences
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{dynamic time warping}{processing steps}
+            \begin{columns}
+            \column{.6\linewidth}
+                \begin{enumerate}
+                    \item   extract suitable features\\ $\Rightarrow$ two series of feature vectors
+                    \smallskip
+                    \item<1->	compute distance matrix\\ $\mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B})$
+                    \smallskip
+                    \item<1->	compute alignment path\\ $\vec{P}(n_\mathrm{P})$ with $n_\mathrm{P} \in
+                [0;\mathcal{N}_{\mathrm{P}}-1]$
+                        \begin{itemize}
+                            \item[$\Rightarrow$]	minimal \textit{overall} distance
+                        \end{itemize}
+                    \smallskip
+                    \item<1->   (align sequences using dynamic time stretching)
+                \end{enumerate}
+            \column{.4\linewidth}
+                \begin{figure}
+                    \includegraphics[width=\columnwidth]{SimMatrix}
+                \end{figure}
+            \end{columns}
+            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySimMatrix.m}{matlab/displaySimMatrix.m}}
+        \end{frame}
+    \section[distance]{distance matrix}
+        \begin{frame}{dynamic time warping}{distance matrix computation}
+            given 2 sequences of vectors, compute the distance between all pairs of observations
+            \begin{columns}
+            \column{.6\linewidth}
+                \begin{itemize}
+                    \item   given 2 sequences of vectors, compute the distance between all pairs of observations
+                    \smallskip
+                    \item<1->	compute distance matrix\\ $\mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B})$
+                    \smallskip
+                        \begin{itemize}
+                            \item   example  $\mat{D}_{\mathrm{AB}}(1,n_\mathrm{B})$ is the distance of the first vector in Seq.\ A to all vectors in Seq.\ B
+                        \end{itemize}
+                \end{itemize}
+            \column{.4\linewidth}
+                \begin{figure}
+                    \includegraphics[width=\columnwidth]{SimMatrix}
+                \end{figure}
+            \end{columns}
+            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySimMatrix.m}{matlab/displaySimMatrix.m}}
+        \end{frame}
+    \section[path]{path}
+        \begin{frame}{dynamic time warping}{path properties 1/2}
+            \begin{itemize}
+                    \item	\textbf{boundaries}: covers both $A,B$ from beginning to end
+                            \begin{eqnarray*}
+                                \vec{P}(0) 		&=& [0, 0] \\
+                                \vec{P}(\mathcal{N}_{\mathrm{P}}-1) 	&=& [\mathcal{N}_\mathrm{A}-1, \mathcal{N}_\mathrm{B}-1] 
+                            \end{eqnarray*}
+                    
+                    \item<2->	\textbf{causality}: only forward movement
+                            \begin{eqnarray*}
+                                n_\mathrm{A}\big|_{\vec{P}(n_\mathrm{P})} \leq n_\mathrm{A}\big|_{\vec{P}(n_\mathrm{P}+1)} \\ 
+                                n_\mathrm{B}\big|_{\vec{P}(n_\mathrm{P})} \leq n_\mathrm{B}\big|_{\vec{P}(n_\mathrm{P}+1)} 
+                            \end{eqnarray*}
+                    
+                    \item<3->	\textbf{continuity}: no jumps
+                            \begin{eqnarray*}
+                                n_\mathrm{A}\big|_{\vec{P}(n_\mathrm{P}+1)} \leq (n_\mathrm{A}+1)\big|_{\vec{P}(n_\mathrm{P})} \\ 
+                                n_\mathrm{B}\big|_{\vec{P}(n_\mathrm{P}+1)} \leq (n_\mathrm{B}+1)\big|_{\vec{P}(n_\mathrm{P})} 
+                            \end{eqnarray*}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{alignment}{path properties 2/2}
+                \begin{figure}
+                    \input{pict/alignment_warppath}
+                \end{figure}
+
+                \question{what is the minimum/maximum path length}
+                    \begin{equation*}
+                        \mathcal{N}_\mathrm{P, min} = \max(\mathcal{N}_\mathrm{A}, \mathcal{N}_\mathrm{B})
+                    \end{equation*}
+                    \begin{equation*}
+                        \mathcal{N}_\mathrm{P, max} = \mathcal{N}_\mathrm{A} + \mathcal{N}_\mathrm{B} - 2
+                    \end{equation*}
+        \end{frame}
+    \section[cost]{cost matrix}
+        \begin{frame}{alignment}{DTW: overall cost}
+            \begin{itemize}
+                \item	every path has an \textit{overall cost}
+                    \begin{equation*}
+                        \mathfrak{C}_{\mathrm{AB}}(j) = \sum\limits_{n_\mathrm{P}= 0}^{\mathcal{N}_{\mathrm{P}}-1}{\mat{D}\big(\vec{P}_j(n_\mathrm{P})\big)} 
+                    \end{equation*}
+                \item<2->	\textit{optimal} path minimizes the overall cost
+                    \begin{eqnarray*}
+                        \mathfrak{C}_{\mathrm{AB},min} &=& \min\limits_{\forall j}\big(\mathfrak{C}_{\mathrm{AB}}(j)\big) \\
+                        j_\mathrm{opt} 				&=& \argmin\limits_{\forall j}\big(\mathfrak{C}_{\mathrm{AB}}(j)\big) 
+                    \end{eqnarray*}
+                \item[$\Rightarrow$]<2-> stay in the 'valleys' of distance matrix
+            \end{itemize}
+            \question{how to determine the optimal path}
+        \end{frame}
+        \begin{frame}{alignment}{DTW: accumulated cost 1/2}
+            accumulated cost: \textit{cost matrix}
+                \begin{equation*}\label{eq:acccost}
+                            \mat{C}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B}) = \mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B}) + \min\left\{
+                                                    \begin{array}{llr} 
+                                                        \mat{C}_{\mathrm{AB}}(n_\mathrm{A}-1, n_\mathrm{B}-1)\\
+                                                        \mat{C}_{\mathrm{AB}}(n_\mathrm{A}-1, n_\mathrm{B}) \\
+                                                        \mat{C}_{\mathrm{AB}}(n_\mathrm{A},	n_\mathrm{B}-1)
+                                                    \end{array} 
+                                                    \right. 
+                \end{equation*}
+                \begin{itemize}
+                    \item	initialization
+                        \begin{equation*}
+                            \mat{C}_{\mathrm{AB}}(0,0) 	= \mat{D}_{\mathrm{AB}}(0,0) 
+                        \end{equation*}
+                \end{itemize}
+                \begin{figure}
+                    \input{pict/alignment_warppath}
+                \end{figure}
+        \end{frame}
+        \begin{frame}{alignment}{DTW: accumulated cost 2/2}
+            \vspace{-5mm}
+            \figwithmatlab{DtwCost}
+        \end{frame}
+        \begin{frame}{dynamic time warping}{DTW: example}
+            \begin{textblock*}{100mm}(1cm,2.5cm)
+                \includegraphics[scale=.5]{SequenceAlignment}
+            \end{textblock*}
+            \figwithmatlab{Dtw}
+        \end{frame}
+        \begin{frame}{alignment}{DTW: algorithm description 1/2}
+                \begin{itemize}
+                    \item	\textbf{initialization}:
+                        \begin{footnotesize}
+                            \begin{equation*}
+                                \mat{C}_{\mathrm{AB}}(0,0) = \mat{D}_{\mathrm{AB}}(0,0) ,
+                                \mat{C}_{\mathrm{AB}}(n_\mathrm{A},-1) = \infty ,
+                                \mat{C}_{\mathrm{AB}}(-1,n_\mathrm{B}) = \infty \nonumber
+                            \end{equation*}
+                        \end{footnotesize}
+                    \item<2->	\textbf{recursion}:
+                        \begin{footnotesize}
+                            \begin{eqnarray*}
+                                \mat{C}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B}) &=& \mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B}) + \min\left\{
+                                                            \begin{array}{l} 
+                                                                \mat{C}_{\mathrm{AB}}(n_\mathrm{A}-1, n_\mathrm{B}-1)\\
+                                                                \mat{C}_{\mathrm{AB}}(n_\mathrm{A}-1, n_\mathrm{B}) \\
+                                                                \mat{C}_{\mathrm{AB}}(n_\mathrm{A},	n_\mathrm{B}-1)
+                                                            \end{array} 
+                                                            \right. \\
+                                j &=& \argmin\left\{
+                                                            \begin{array}{l} 
+                                                                \mat{C}_{\mathrm{AB}}(n_\mathrm{A}-1, n_\mathrm{B}-1)\\
+                                                                \mat{C}_{\mathrm{AB}}(n_\mathrm{A}-1, n_\mathrm{B}) \\
+                                                                \mat{C}_{\mathrm{AB}}(n_\mathrm{A},	n_\mathrm{B}-1)
+                                                            \end{array} 
+                                                            \right. \\
+                                \Delta\vec{P}(n_\mathrm{A},n_\mathrm{B}) &=& \left\{ 
+                                                            \begin{array}{ll} 
+                                                              [-1, -1] &\mbox{if }	j = 0 \\{} 
+                                                              [-1, 0] &\mbox{if }	j = 1 \\{}
+                                                              [0, -1] &\mbox{if }	j = 2  
+                                                            \end{array} 
+                                                            \right.
+                            \end{eqnarray*}
+                        \end{footnotesize}
+                \end{itemize}
+        \end{frame}
+        \begin{frame}{alignment}{DTW: algorithm description 2/2}
+                \begin{itemize}
+                    \item	\textbf{termination}:
+                        \begin{footnotesize}
+                            \begin{equation*}
+                                n_\mathrm{A}= \mathcal{N}_\mathrm{A}-1 \wedge n_\mathrm{B} = \mathcal{N}_\mathrm{B}-1 
+                            \end{equation*}
+                        \end{footnotesize}
+                    \bigskip
+                    \item<2->	\textbf{path backtracking}:
+                        \begin{footnotesize}
+                            \begin{equation*}
+                                \vec{P}(n_\mathrm{P}) = \vec{P}(n_\mathrm{P}+1) + \Delta\vec{P}\big(\vec{P}(n_\mathrm{P}+1)\big), \;n_\mathrm{P} = \mathcal{N}_{\mathrm{P}}-2, \mathcal{N}_{\mathrm{P}}-3,\ldots, 0 \nonumber
+                            \end{equation*}
+                        \end{footnotesize}
+                \end{itemize}
+        \end{frame}
+    \section{example}
+        \begin{frame}{dynamic time warping}{example}
+            \begin{eqnarray*}
+                A &=& [1,\ 2,\ 3,\ 0] ,\nonumber\\
+                B &=& [1,\ 0,\ 2,\ 3,\ 1] ,\nonumber
+            \end{eqnarray*}
+            \question{compute distance matrix, cost matrix, and DTW path}
+                    \begin{equation*}
+                        \only<2-3>{
+                        \mat{D}_{\mathrm{AB}} =   \left[ 
+                                        \begin{array}{cccc}
+                                        0					&	\color{black}{1}	&	\color{black}{2}	&	\color{black}{1}\\
+                                        1					&	\color{black}{2}	&	\color{black}{3}	&	\color{black}{0}\\
+                                        \color{black}{1}	&	0 					&	\color{black}{1}	&	\color{black}{2}\\
+                                        \color{black}{2}	&	\color{black}{1}	&	0							&	\color{black}{3}\\
+                                        \color{black}{0}	&	\color{black}{1}	&	\color{black}{2}	&	1\\
+                                    \end{array}  
+                                \right]
+                                \quad\quad
+                        \visible<3>{
+                        \mat{C}_{\mathrm{AB}} =   \left[ 
+                                        \begin{array}{cccc}
+                                        0					&	\leftarrow\color{black}{1}	&	\leftarrow\color{black}{3}	&	\leftarrow\color{black}{4}\\
+                                        \uparrow 1					&	\nwarrow\color{black}{2}	&	\nwarrow\color{black}{4}	&	\nwarrow\color{black}{3}\\
+                                        \uparrow\color{black}{2}	&	\nwarrow 1 					&	\leftarrow\color{black}{2}	&	\leftarrow\color{black}{4}\\
+                                        \uparrow\color{black}{4}	&	\uparrow\color{black}{2}	&	\nwarrow 1							&	\leftarrow\color{black}{4}\\
+                                        \uparrow\color{black}{4}	&	\uparrow\color{black}{3}	&	\uparrow\color{black}{3}	&	\nwarrow 2\\
+                                    \end{array}  
+                                \right]  
+                                }
+                                }
+                        \only<4>{
+                    \mat{D}_{\mathrm{AB}} =   \left[ 
+                                    \begin{array}{cccc}
+                                    \color{gtgold}{0}			&	\textcolor[gray]{0.6}{1}	&	\textcolor[gray]{0.6}{2}	&	\textcolor[gray]{0.6}{1}\\
+                                    \color{gtgold}{1}			&	\textcolor[gray]{0.6}{2}	&	\textcolor[gray]{0.6}{3}	&	\textcolor[gray]{0.6}{0}\\
+                                    \textcolor[gray]{0.6}{1}	&	\color{gtgold}{0} 			&	\textcolor[gray]{0.6}{1}	&	\textcolor[gray]{0.6}{2}\\
+                                    \textcolor[gray]{0.6}{2}	&	\textcolor[gray]{0.6}{1}	&	\color{gtgold}{0}			&	\textcolor[gray]{0.6}{3}\\
+                                    \textcolor[gray]{0.6}{0}	&	\textcolor[gray]{0.6}{1}	&	\textcolor[gray]{0.6}{2}	&	\color{gtgold}{1}\\
+                                \end{array}  
+                            \right]  
+                                \quad\quad
+                        \mat{C}_{\mathrm{AB}} =   \left[ 
+                                        \begin{array}{cccc}
+                                        \color{gtgold}{0}       	&	\leftarrow\textcolor[gray]{0.6}{1}	&	\leftarrow\color[gray]{0.6}{3}	&	\leftarrow\color[gray]{0.6}{4}\\
+                                        \color{gtgold}{\uparrow 1}	&	\nwarrow\color[gray]{0.6}{2}	&	\nwarrow\color[gray]{0.6}{4}	&	\nwarrow\color[gray]{0.6}{3}\\
+                                        \uparrow\color[gray]{0.6}{2}	&	\color{gtgold}{\nwarrow 1}  &	\leftarrow\color[gray]{0.6}{2}	&	\leftarrow\color[gray]{0.6}{4}\\
+                                        \uparrow\color[gray]{0.6}{4}	&	\uparrow\color[gray]{0.6}{2}	&	\color{gtgold}{\nwarrow 1}  &	\leftarrow\color[gray]{0.6}{4}\\
+                                        \uparrow\color[gray]{0.6}{4}	&	\uparrow\color[gray]{0.6}{3}	&	\uparrow\color[gray]{0.6}{3}	&	\color{gtgold}{\nwarrow 2}\\
+                                    \end{array}  
+                                \right]  
+                                }
+                    \end{equation*}
+        \end{frame}
+        %\begin{frame}{alignment}{DTW: matlab implementation}
+            %\matlabexercise{implement a DTW function in Matlab}
+            %
+            %\begin{enumerate}
+                %\item   create a function with the interface\\ \texttt{function [p, C] = SimpleDtw(D)}
+                    %\begin{itemize}
+                        %\item   $p$: path through matrix ($\mathcal{N}_P\times 2$)
+                        %\item   $C$: cost matrix (same dimension as $D$)
+                        %\item   $D$: distance matrix ($\mathcal{N}_B\times \mathcal{N}_A$)
+                    %\end{itemize}
+                %\item   your function should contain 3 major code blocks
+                    %\begin{itemize}
+                        %\item   initialization
+                        %\item   cost matrix computation
+                        %\item   back-tracking for extracting the path indices
+                    %\end{itemize}
+                %\item   what would be a proper test case to validate your implementation
+            %\end{enumerate}
+        %\end{frame}
+    \section[variants]{DTW variants}
+        \begin{frame}{dynamic time warping}{variants}
+            \begin{itemize}
+                \item	transition weights: favor specific path directions
+                    \begin{footnotesize}
+                        \begin{equation*}
+                            \mat{C}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B}) = \min\left\{
+                                                    \begin{array}{lll} 
+                                                    \mat{C}_{\mathrm{AB}}(n_\mathrm{A}-1,n_\mathrm{B}-1)	&+& \lambda_\mathrm{d}\cdot\mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B})\\
+                                                    \mat{C}_{\mathrm{AB}}(n_\mathrm{A}-1,n_\mathrm{B}) 	&+& \lambda_\mathrm{v}\cdot\mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B})\\
+                                                    \mat{C}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B}-1) 	&+& \lambda_\mathrm{h}\cdot\mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B})
+                                                    \end{array} 
+                                                    \right.\nonumber
+                        \end{equation*}
+                    \end{footnotesize}
+                \item<2->	step types
+                \begin{figure}
+                    \input{pict/alignment_warppathoptions}
+                \end{figure}
+                
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{dynamic time warping}{optimization}
+            \vspace{-3mm}
+            \begin{itemize}
+                \item \textbf{challenge}:  distance matrix dimensions  $\mathcal{N}_\mathrm{A}\cdot \mathcal{N}_\mathrm{B}$
+                \smallskip
+                \item[$\Rightarrow$] DTW \textit{inefficient} for long sequences 
+                    \begin{itemize}
+                        \item	high memory requirements
+                        \item	large number of operations
+                    \end{itemize}
+            \end{itemize}
+            \vspace{-2mm}
+            \begin{columns}
+            \column{.4\linewidth}
+                 
+                    \begin{enumerate}
+                        \item<2->[] \textbf{optimizations}: 
+                        \item<2->	maximum time and tempo deviation
+                        \item<3->	sliding window 
+                        \item<4->	multi-scale DTW (several downsampled iterations)
+                    \end{enumerate}
+            \column{.6\linewidth}
+                \only<2>{
+                    \vspace{-8mm}
+                    \begin{figure}
+                        \centerline{\includegraphics{DtwConstraints}}
+                    \end{figure}
+                }
+                \only<3>{
+                    \vspace{-4mm}
+                    \begin{figure}
+                        \centerline{\includegraphics[scale=.3]{dtw_match}}
+                    \end{figure}
+                }
+                \only<4>{
+                    \vspace{-4mm}
+                    \begin{figure}
+                        \centerline{\includegraphics[scale=.4]{multiscaledtw}}
+                    \end{figure}
+                }
+            \end{columns}
+            \vspace{-2mm}
+            \only<2>{\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayDtwConstraints.m}{matlab/displayDtwConstraints.m}}}
+            \only<3>{\footfullcite{dixon_match:_2005}}
+            \only<4>{\footfullcite{muller_efficient_2006}}
+
+        \end{frame}
+
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{dynamic time warping}
+                    \begin{itemize}
+                        \item   find globally optimal alignment path between two sequences
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{processing steps}
+                    \begin{enumerate}
+                        \item   compute distance matrix
+                        \item   compute cost matrix
+                        \item   back-track path
+                    \end{enumerate}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

@@ -25,8 +25,8 @@ function displaySimMatrix()
     imagesc(tv,tv,D)
     c=colormap('jet');
     colormap(flipud(c));
-    xlabel('lag')
-    ylabel('lag')
+    xlabel('$n_\mathrm{A}$ [s]')
+    ylabel('$n_\mathrm{B}$ [s]')
 
     printFigure(hFigureHandle, cOutputFilePath)
 

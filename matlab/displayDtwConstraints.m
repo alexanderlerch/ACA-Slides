@@ -4,7 +4,7 @@ function displayDtwConstraints()
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
     end
 
-    fDimensions = [10.8, 4]; % weird dimension to work around epstopdf problems
+    fDimensions = [10, 5]; 
     hFigureHandle = generateFigure(fDimensions(1), fDimensions(2));
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));

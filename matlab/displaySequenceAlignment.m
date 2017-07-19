@@ -1,6 +1,6 @@
 function displaySequenceAlignment()
 
-    fDimensions = [10.8, 6];
+    fDimensions = [8, 6];
     hFigureHandle = generateFigure(fDimensions(1), fDimensions(2));
     
     if(exist('ToolSimpleDtw') ~=2)
