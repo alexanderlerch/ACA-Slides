@@ -1,0 +1,217 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 7.1: Audio-to-Audio \& Audio-to-Score Alignment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 7: Alignment} (pp.~146--150)
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   Dynamic Time Warping (DTW):
+                        \item[] synchronization of two sequences with similar content
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   explain the standard DTW algorithm
+                        \item   discuss disadvantages of and modifications to the standard DTW algorithm
+                        \item   implement DTW
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[A2A]{Audio to audio alignment}
+        \begin{frame}{audio-to-audio alignment}{introduction}
+            \begin{itemize}
+                \item	\textbf{objective}
+                    \begin{itemize}
+                        \item	align two sequences of audio
+                    \end{itemize}
+                \bigskip
+                \item<2->	\textbf{use cases}
+                    \begin{itemize}
+                        \item	\textit{quick browsing} for certain parts in recordings
+                        \item	\textit{timing adjustment} (backing vocals, loops, \ldots)
+                        \item	\textit{automated dubbing}
+                        \item	\textit{musicological analysis} (timing of several performances)
+                    \end{itemize}
+                \bigskip
+                \item<3->	\textbf{processing steps}
+                    \begin{itemize}
+                        \item	extract suitable features
+                        \item	compute distance matrix
+                        \item	compute alignment path
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{audio-to-audio alignment}{alignment path computation}
+            \vspace{-2mm}
+            $\rightarrow$ prerequisite: Module 7.0---Dynamic Time Warping
+            \vspace{-3mm}
+            \figwithmatlab{Dtw}
+        \end{frame}
+
+        \begin{frame}{audio-to-audio alignment}{features}
+            \vspace{-2mm}
+            \only<1-2>{
+                \begin{itemize}
+                    \item	\textbf{use case examples}
+                        \begin{itemize}
+                            \item	\textbf{quick browsing} --- find the same part across files\\
+                                $\Rightarrow$ use \textit{pitch based} features
+                            \item	\textbf{timing adjustment} --- backing vocals to lead vocals\\
+                                $\Rightarrow$ use \textit{intensity based} features
+                            \item	\textbf{automated dubbing} --- same speaker several recordings\\
+                                $\Rightarrow$ use \textit{intensity based} and \textit{timbre based} features
+                        \end{itemize}
+                    \smallskip
+                    \item<2-> \textbf{feature categories}
+                        \begin{itemize}
+                            \item	\textbf{intensity}: energy, onset probability, \ldots
+                            \item	\textbf{tonal}: pitch chroma, \ldots
+                            \item	\textbf{timbral}: MFCCs, spectral shape, \ldots
+                        \end{itemize}
+                    \item<2->[] plot from \footfullcite{kirchhoff_evaluation_2011}
+                \end{itemize}
+            }
+            \only<3>{
+                \begin{figure}
+                    \centerline{\includegraphics[scale=.5]{graph/ATAA_features}}
+                \end{figure}
+            }
+        \end{frame}
+        
+        \begin{frame}{audio-to-audio alignment}{compute distance matrix --- distance measures}
+            \begin{itemize}
+                \item	typical distance measures
+                    \only<1-4>{
+                    \begin{itemize}
+                        \item<1-4>	\emph{{Euclidean distance}}:
+                                $d_\mathrm{E}(s) = \sqrt{\sum\limits_{j = 0}^{11}{\big(\nu_\mathrm{e}(j)-\nu_\mathrm{t,s}(j)\big)^2}} $
+                        \item<2-4>	\emph{{Manhattan distance}}:
+                                $d_\mathrm{M}(s) = \sum\limits_{j = 0}^{11}{\big|\nu_\mathrm{e}(j)-\nu_\mathrm{t,s}(j)\big|} $
+                        \item<3-4>	\emph{{Cosine distance}}:
+                                $d_\mathrm{C}(s) = 1-\left( \frac{\sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)\cdot\nu_\mathrm{t,s}(j)}}{\sqrt{\sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)^2}}\sqrt{\cdot \sum\limits_{j = 0}^{11}{\nu_\mathrm{t,s}(j)^2}}}\right) $
+                        \item<4-4>	\emph{{Kullback-Leibler divergence}}:
+                                $d_\mathrm{KL}(s) = \sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)\cdot\log\left(\frac{\nu_\mathrm{e}(j)}{\nu_\mathrm{t,s}(j)}\right)}$
+                    \end{itemize}
+                    }
+                \smallskip
+                \item<5->	data-driven approach: train classifier with 2-class problem \footfullcite{kirchhoff_evaluation_2011}
+                    \only<5>{
+                        \begin{figure}
+                            \centerline{\includegraphics[scale=.5]{graph/ATAA_feature_training}}
+                        \end{figure}
+                    }
+                    \only<6>{
+                        \begin{figure}
+                            \centerline{\includegraphics[scale=.5]{graph/ATAA_simmatrix_compare}}
+                        \end{figure}
+                    }
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{audio-to-audio alignment}{typical results}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{.7\linewidth}
+                \vspace{-3mm}\begin{figure}
+                    \centerline{\includegraphics[width= \columnwidth]{graph/ATAA_results}}
+                \end{figure}
+            \column{.3\linewidth}
+                \begin{table}
+                    \begin{tabular}{p{.55\columnwidth}l}
+                        \textbf{originals}\linebreak
+                        \begin{scriptsize}
+                            left:~instrumental\hfill \linebreak
+                            right:~a capella
+                        \end{scriptsize} & \textbf{synced}\\
+                        \includeaudio{originals_splanky} & \includeaudio{synced_splanky}
+                    
+                    \end{tabular}
+                \end{table}
+            \end{columns}
+            \footfullcite{kirchhoff_evaluation_2011}
+            \inserticon{audio}
+        \end{frame}
+        
+    \section[A2S]{Audio to score alignment}
+        \begin{frame}{audio-to-score alignment}{overview}
+            \begin{itemize}
+                \item   \textbf{objective}
+                    \begin{itemize}
+                        \item align an audio sequence with a score sequence
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{use cases}
+                    \begin{itemize}
+                        \item   score viewer
+                        \item   music education
+                        \item   identify matching score/audio via cost function
+                        \item   musicological analysis
+                    \end{itemize}
+                \bigskip
+                \item<3->   \textbf{processing steps}
+                    \begin{itemize}
+                        \item   see audio-to-audio alignment
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{audio-to-score alignment}{challenges}
+            \begin{itemize}
+                \item   features from \textbf{different domains} (no timbre and proper loudness information in the score)
+                    \begin{itemize}
+                        \item   \textit{approach 1}: convert score into audio-like representation
+                            \begin{itemize}
+                                \item   MIDI-to-audio
+                                \item   use model for harmonics and ADSR
+                            \end{itemize}
+                        \item   \textit{approach 2}: convert audio into score-like representation
+                            \begin{itemize}
+                                \item   audio-to-MIDI 
+                                \item   pitch chroma
+                                \item   event-based segmentation
+                            \end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item<2->   pauses and rests
+                    \begin{itemize}
+                        \item   DTW algorithm has no graceful way of dealing with pauses
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{dynamic time warping}
+                    \begin{itemize}
+                        \item   find globally optimal alignment path between two sequences
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{processing steps}
+                    \begin{enumerate}
+                        \item   compute distance matrix
+                        \item   compute cost matrix
+                        \item   back-track path
+                    \end{enumerate}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
