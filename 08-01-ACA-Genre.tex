@@ -1,0 +1,402 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 8.1: Musical Genre Classification}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~151--155)
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   musical genre
+                        \item   processing steps in basic genre classifiers
+                        \item   example: genre classification with a kNN
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   discuss ambiguities in the definition of musical genre and the possible impact on automatic systems
+                        \item   describe the processing steps for traditional musical genre classifiers
+                        \item   implement your own music genre classifier with Matlab
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{musical genre classification}{introduction}
+            \begin{itemize}
+                \item	one of the first research topics in MIR
+                \item<2->	classic \textit{machine learning }task
+                \item<3->	related fields:
+                    \begin{itemize}
+                        \item	speech-music classification
+                        \item	instrument recognition
+                        \item   artist identification
+                        \item   music emotion recognition
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{musical genre classification}{applications}
+            \begin{itemize}
+                \item	large music databases:
+                    \begin{itemize}
+                        \item	annotation
+                        \item	sorting, browsing, retrieving
+                    \end{itemize}
+                \item recommendation systems
+                \item	automatic playlist generation
+                \item	mashup generation
+            \end{itemize}
+        \end{frame}
+
+    \section[genre]{musical genre}
+        \begin{frame}{musical genre classification}{genre: definition}
+            \question{what is \textit{musical genre}}
+
+            \begin{itemize}
+                \item   clusters of musical similarity?
+                \item[$\rightarrow$]<2->             hard to answer in general, there are many\\ \textbf{systematic problems}
+                \smallskip
+                    \begin{enumerate}
+                        \item<3->	\textbf{non-agreement on taxonomies}
+                        \item<3->   \textbf{genre label scope}: song, album, artist, piece of a song
+                        \item<3->	\textbf{ill-defined genre labels}: geographic (\textit{indian music}), historic (\textit{baroque}), technical (\textit{barbershop}), instrumentation (\textit{symphonic music}), usage (\textit{christmas songs})
+                        \item<3->	\textbf{taxonomy scalability}: genres and subgenres evolve over time
+                        \item<3->	\textbf{non-orthogonality}: several genres for one piece of music
+                    \end{enumerate}
+
+            \end{itemize}
+            
+        \end{frame}
+        \begin{frame}{musical genre classification}{genre: taxonomy examples}
+                \vspace{-20mm}
+                \begin{center}
+                \scalebox{.6}
+                {
+                    \input{pict/genre_taxonomies}
+                }
+                \end{center}
+        \end{frame}
+
+        \begin{frame}{musical genre classification}{observations with humans}
+            \begin{columns}
+                \column{.5\linewidth}
+                    \begin{enumerate}
+                        \item   human classification far from perfect: \unit[75--90]{\%} for limited set of classes
+                        \item<2-> for many genres, humans need only a fraction of a second to classify
+                        \item<2->[$\Rightarrow$]	short time timbre features sufficient?
+                    \end{enumerate}
+                \column{.5\linewidth}
+                    \begin{figure}
+                        \centering
+                        \only<1>{
+                            \includegraphics[scale=.2]{graph/genre_human_classification}
+                            }
+                        \only<2>{
+                            \includegraphics[scale=.15]{graph/genre_shorttime_classification}
+                            }
+                    \end{figure}
+            \end{columns}
+            \begin{flushright}plots from \footfullcite{lippens_comparison_2004},\footfullcite{gjerdingen_scanning_2008}\end{flushright}
+        \end{frame}
+    
+    \section[MGC]{automatic musical genre classification}
+
+        \begin{frame}{musical genre classification}{overview}
+            \begin{figure}
+                \input{pict/genre_flowchart.tex}
+            \end{figure}
+            \begin{enumerate}
+                    \item	\textbf{feature extraction}
+                            \begin{itemize}
+                                \item 	dimensionality reduction
+                                \item	meaningful representation
+                            \end{itemize}
+                    \bigskip
+                    \item<2->	\textbf{classification}
+                            \begin{itemize}
+                                \item	map or convert feature to comprehensible domain
+                            \end{itemize}
+            \end{enumerate}
+        \end{frame}
+
+    \section{features}
+        \begin{frame}{musical genre classification}{feature categories}
+            \vspace{-3mm}
+            \begin{itemize}
+                \item	\textbf{high level similarities}?
+                    \begin{itemize}
+                        \item	melody, hook lines, bass lines, harmony progression
+                        \item	rhythm \& tempo
+                        \item	structure
+                        \item	instrumentation \& timbre
+                    \end{itemize}
+                \smallskip
+                \item<2->	\textbf{technical feature categories}
+                    \begin{itemize}
+                        \item	tonal
+                        \item	technical
+                        \item	timbral
+                        \item	temporal
+                        \item	intensity
+                    \end{itemize}
+                \smallskip
+                \item<3->       \textbf{extracted features should be}
+                    \begin{itemize}
+                        \item   extractable (not: time envelope in polyphonic signals)
+                        \item   relevant (not: pitch chroma for instrument ID)
+                        \item   non-redundant
+                        \item   have discriminative power
+                        \item   (robust to noise)
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{musical genre classification}{instantaneous features}
+            \begin{itemize}
+                \item	spectral features (\textbf{timbre}):
+                
+                    Spectral Centroid, MFCCs, Spectral Flux, \ldots
+                \smallskip
+                \item<2->	pitch features (\textbf{tonal}):
+                
+                    pitch chroma distribution/change, \ldots
+                \smallskip
+                \item<3->	rhythm features (\textbf{temporal}):
+                
+                    onset density, beat histogram features, \ldots
+                \smallskip
+                \item<4->	statistical features (\textbf{technical}):
+                
+                    standard deviation, skewness, zero crossings, \ldots
+                \smallskip
+                \item<5->	\textbf{intensity} features:
+                
+                    level variation, number of ``pauses'', \ldots
+            \end{itemize}	
+        \end{frame}
+
+        \begin{frame}{musical genre classification}{feature extraction}
+            \begin{enumerate}
+                \item	extract \textbf{instantaneous features}
+                        \only<1>{
+                            \vspace{-5mm}
+                            \begin{flushright}
+                                \includegraphics[scale=.05]{graph/FeatureExtraction}
+                            \end{flushright}
+                            \vspace{-7mm}
+                        }
+                \smallskip
+                \item<2->	compute \textbf{derived features} (derivative, filtered)
+                \smallskip
+                \item<3->	compute \textbf{long term features} \& subfeatures per texture window
+                \smallskip	
+                \item<4->	compute \textbf{subfeatures} per file
+                \smallskip
+                \item<5->   \textbf{normalize} subfeatures
+                \smallskip
+                \item<6->   (select or) \textbf{transform} subfeatures
+                \smallskip
+                \item<7->	feature vector $\rightarrow$ \textbf{classifier input}
+                            \only<7->{
+                            \vspace{-15mm}
+                            \begin{flushright}
+                                \includegraphics[scale=.7]{graph/Scatter}
+                            \end{flushright}
+                            }
+            \end{enumerate}
+            \vspace{20mm}
+        \end{frame}
+        \begin{frame}{musical genre classification}{long term features 1/2}
+            derived from beat histogram\footfullcite{tzanetakis_musical_2002}
+            \begin{figure}
+                \centering
+                \includegraphics[scale=.25]{graph/genre_beat_histogram}
+            \end{figure}
+        \end{frame}
+        \begin{frame}{musical genre classification}{long term features 2/2}
+            derived from pitch histogram or pitch chroma\footfullcite{tzanetakis_pitch_2002}
+            \begin{figure}
+                \centering
+                \includegraphics[scale=.12]{graph/genre_pitchhisto}
+            \end{figure}
+        \end{frame}
+        \begin{frame}{musical genre classification}{additional feature examples}
+            \begin{itemize}
+                \item	\textbf{stereo features}
+                    \begin{itemize}
+                        \item	mid channel energy vs.\ side channel energy
+                        \item	spectral channel differences
+                    \end{itemize}
+                \bigskip
+                \item<2->	features at \textbf{higher semantic levels}:
+                    \begin{itemize}
+                        \item   tempo, structure, harmonic complexity, instrumentation
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{musical genre classification}{results}
+            \begin{itemize}
+                \item	classification results depend on training set, test set, and number of classes
+                \smallskip
+                \item<2->	typical ranges: 10 classes $\Rightarrow$ 50--80\%
+                \smallskip
+                \item<3->	note: results vary largely between datasets
+                    \begin{itemize}
+                        \item   ill-defined genre boundaries
+                        \item   non-uniformly distributed classes
+                        \item   overfitting through songs from same album or artist
+                        \item   \ldots
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+    \section[example]{real world example}
+        \begin{frame}{musical genre classification}{speech/music classification baseline example}
+            \begin{enumerate}
+                \item	extract features
+                \smallskip
+                \item   represent each file with its 2-dimensional feature vector
+                \smallskip
+                \item   kNN to classify unknown audio files
+                \smallskip
+                \item   evaluate classification performance
+            \end{enumerate}
+        \end{frame}
+
+        \begin{frame}{musical genre classification}{speech/music classification example: features 1/2}
+            for each audio file
+            \begin{enumerate}
+                \item	split input signal into (overlapping) blocks
+                \item	compute 2 feature series (spectral centroid, RMS)
+                \item<2->	aggregate feature series to one value each
+                    \begin{itemize}
+                        \item	\textit{mean} of Spectral Centroid
+                            \begin{equation*}
+                                \mu_\mathrm{SC} = \frac{1}{N}\sum_{\forall n}{v_\mathrm{SC}(n)}
+                            \end{equation*}
+                        \item	\textit{standard deviation} of RMS
+                            \begin{equation*}
+                                \sigma_\mathrm{RMS} = \sqrt{\frac{1}{N}\sum_{\forall n}{(v_\mathrm{RMS}(n)-\mu_\mathrm{RMS})^2}}
+                            \end{equation*}
+                    \end{itemize}
+                \item<3->	represent each file as 2-dimensional vector
+                    \begin{equation*}
+                        \big(\mu_\mathrm{SC}, \sigma_\mathrm{RMS}\big)^\mathrm{T}
+                    \end{equation*}
+            \end{enumerate}				
+        \end{frame}
+
+        \begin{frame}{musical genre classification}{speech/music classification example: features 2/2}
+            \figwithmatlab{Scatter}
+        \end{frame}
+
+        \begin{frame}{musical genre classification}{speech/music classification example: training set}
+            \begin{itemize}
+                \item	use \textbf{dataset} annotated as speech and music:
+                    \begin{itemize}
+                        \item	requirements
+                            \begin{itemize}
+                                \item	large compared to number of features
+                                \item	representative for use case (diverse)
+                            \end{itemize}
+                        \item	here (toy example):
+                            \begin{itemize}
+                                \item	64 speech files
+                                \item	64 music files
+                            \end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item	extract the features for the dataset
+                    \begin{itemize}
+                        \item   centroid mean
+                        \item   rms std
+                    \end{itemize}
+                \bigskip
+                \item	procedure: Leave-One-Out-Cross-Validation
+            \end{itemize}
+        \end{frame}
+
+        %\begin{frame}{musical genre classification}{speech/music classification example: evaluation}
+            %\begin{itemize}
+                %\item 
+                    %\textbf{problem}: 
+                        %\begin{itemize}
+                            %\item   classifier has to be tested with observations \textit{unknown} during training
+                            %\item   since annotation is tedious, datasets are often not large enough to split in training and test set
+                        %\end{itemize}
+                %\bigskip
+                %\item<2-> 	\textbf{solution}: \textit{N-Fold Cross Validation}
+                    %\begin{enumerate}
+                        %\item	split training set into $N$ parts (randomly, but identical number per class)
+                        %\item<3->	select one part as test set
+                        %\item<4->	train the classifier with all observations from \textit{remaining} $N-1$ parts
+                        %\item<5->	compute the classification rate for the \textit{test set}
+                        %\item<6->	repeat until all $N$ parts have been tested
+                        %\item<7->	overall result: \textit{average} classification rate
+                    %\end{enumerate}
+            %\end{itemize}
+        %\end{frame}
+
+        \begin{frame}{musical genre classification}{speech/music classification example: results (kNN)}
+            \begin{itemize}
+                \item   \textbf{confusion matrix}:
+                    \begin{table}
+                        \centering
+                        \begin{tabular}{l|cc|ccccccccc} %{\textwidth}{@{\extracolsep{\fill}}ccccccccccccc}
+                            \bf{\emph{}}	 & \bf{\emph{speech}}	 & \bf{\emph{music}} & \# files	 \\ 
+                             \hline
+                            \bf{speech}	 & $\mathbf{53}$	 & $11$	 & $64$\\
+                            \bf{music}	 & $10$	 & $\mathbf{54}$ & $64$
+                        \end{tabular}
+                    \end{table}
+                \item<2->$\Rightarrow$ \textbf{classification rate}: 
+                    \begin{equation*}
+                        \frac{53 + 54}{64 + 64} = 83.59\%
+                    \end{equation*}
+                \smallskip
+                \item<3->   single feature classification results
+                    \begin{itemize}
+                        \item	Spectral Centroid: $64.84\%$
+                        \item	RMS: $76.56\%$
+                    \end{itemize}
+            \end{itemize}
+            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/computeMusicSpeechClassification.m}{matlab/computeMusicSpeechClassification.m}}
+                        
+        \end{frame}
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{musical genre}
+                    \begin{itemize}
+                        \item   ill-defined, subjective, no general agreement
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{MGC: features}
+                    \begin{enumerate}
+                        \item   from all possible categories as all categories might depend on genre
+                    \end{enumerate}
+                \bigskip
+                \item   \textbf{MGC: classifier}
+                    \begin{enumerate}
+                        \item   any classifier works, and most have been used
+                    \end{enumerate}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
