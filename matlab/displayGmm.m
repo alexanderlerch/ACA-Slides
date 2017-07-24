@@ -2,7 +2,7 @@ function displayGmm()
 
     addpath(fullfile(docroot,'techdoc','creating_plots','examples'))
 
-    hFigureHandle   = generateFigure(10.8,6);
+    hFigureHandle   = generateFigure(12,5);
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
