@@ -26,6 +26,7 @@ function displayKMeans()
     plotcolor = [.8 0 0];
     printFigure(hFigureHandle, [cOutputFilePath '-' num2str(iFigIdx)]);iFigIdx = iFigIdx+1;
     [clusterIdx,state] = computeKMeans(v, numClusters, 1);
+    printFigure(hFigureHandle, [cOutputFilePath '-' num2str(iFigIdx)]);iFigIdx = iFigIdx+1;
     for (i = 1:5)
         scatter(v(1,:),v(2,:), iMarkerSize*2,[0 0 0],'filled','o');
         axis([0 1 0 1]);set(gca,'visible','off');

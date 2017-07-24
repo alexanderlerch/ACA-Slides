@@ -1,0 +1,187 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 8.2: Music Similarity}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~156--157)
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   music similarity and its relation to musical genre
+                        \item   clustering and visualization of feature space
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe potential issues with algorithms for measuring music similarity
+                        \item   implement a simple k-Means algorithm
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{music similarity}{introduction}
+            \begin{itemize}
+                \item	genre classification is just a grouping by specific interpretation of similarity
+                    \begin{itemize}
+                        \item	similar set of features
+                        \item	ambiguous 'ground truth'
+                        \item   unclear value/impact of low level and high level features
+                    \end{itemize}
+                \bigskip
+                \item<2->	 \textbf{differences} to genre classification
+                    \begin{itemize}
+                        %\item	\textit{mood}: often not a classification but regression
+                        \item	\textit{similarity}: distance measure instead of categorizing into classes
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+
+    \section[similarity]{audio similarity}
+        \begin{frame}{audio similarity}{introduction}
+            \begin{itemize}
+                \item   \textbf{perception} of music similarity
+                    \begin{itemize}
+                        \item	multi-dimensional (melodic, rhythmic, sound quality, \ldots)
+                        \item	user dependent
+                        \item	associative, may also depend on editorial data
+                        \item	may be context dependent
+                    \end{itemize}
+                \bigskip
+                \item<2->   genres are \textbf{clusters of musical similarity}
+                \item<2->[$\Rightarrow$]	genre classification is a \textit{special case} of audio similarity measures
+                \item<3->	instead of assigning (genre) labels, the similarity/distance between (pairs) of files is measured
+            \end{itemize}
+        \end{frame}
+    \section{clustering}
+        \begin{frame}{audio similarity}{K-Means clustering example}
+            \begin{itemize}
+                \item   simple k-means example
+                    \begin{itemize}
+                        \item   \textbf{goal}: minimize intra-cluster variance
+                        \item   \textbf{distance}: Euclidean
+                        \item   \textbf{procedure}:
+                            \begin{enumerate}
+                                \item	\textit{initialization}:\\ randomly select $K$ points in the feature space as initialization.
+                                \item<2->	\textit{assignment}:\\ assign each observation to the cluster with the mean/centroid of the closest cluster.
+                                \item<3->	\textit{update}:\\ compute mean/centroid for each cluster.
+                                \item<4->	\textit{iteration}:\\ go to step $2$ until the clusters converge.
+                            \end{enumerate}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{audio similarity}{K-Means clustering example}
+            \begin{columns}
+            \column{.5\linewidth}
+                    \begin{itemize}
+                        \item<1->   data points
+                        \item<2->   init randomly
+                        \item<3->   iteration
+                            \begin{itemize}
+                                \item   assign data points to closest centroid
+                                \item   update centroids
+                            \end{itemize}
+                        \item<7->   terminate when convergence
+                    \end{itemize}
+            \column{.5\linewidth}
+            \setcounter{i}{0}
+            \setcounter{j}{1}
+            \whiledo{\value{i}<7}
+            {
+                %\only<\value{j}>{\figwithref{KMeans-\arabic{i}}{matlab source: matlab/displayKMeans.m}}
+                \only<\value{j}>{\begin{figure}\includegraphics{KMeans-\arabic{i}}\end{figure}}
+                \stepcounter{i}
+                \stepcounter{j}
+            }
+            \end{columns}
+            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayKMeans.m}{matlab/displayKMeans.m}}
+        \end{frame}
+        \begin{frame}{audio similarity}{visualization in a 2D space}
+            \begin{itemize}
+                \item \textbf{problem}
+                    \begin{itemize}
+                        \item   feature space is high-dimensional
+                        \item[$\rightarrow$] cannot be visualized
+                    \end{itemize}
+                \bigskip
+                \item<2-> find \textbf{mapping} to 2D ``preserving'' (high-dimensional) distance metrics
+                \item[]     examples:
+                    \begin{itemize}
+                        \item   Self-Organizing Maps
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+            
+        \begin{frame}{audio similarity}{visualization example: SOM 1/2}
+            \vspace{-3mm}
+                    \begin{enumerate}
+                        \item	create a map with 'neurons'
+                        \item<1->	train
+                                \begin{itemize}
+                                    \item	for each training sample find BMU (best matching unit)
+                                    \item	adapt BMU and neighbors toward training sample
+                                    \begin{equation*}
+                                        W_v(t + 1) = W_v(t) + \theta (v, t) \alpha(t)\big(D(t) - W_v(t)\big)
+                                    \end{equation*}
+                                    \begin{footnotesize}
+                                        \begin{itemize}
+                                            \item	$\theta (v, t)$: depends on distance from BMU
+                                            \item	$\alpha (t)$: learning restraint
+                                            \item	$D(t)$ training sample
+                                        \end{itemize}
+                                    \end{footnotesize}
+                                \end{itemize}
+                    \end{enumerate}
+                    \only<1->{
+                    \begin{figure}
+                        \centering
+                            \includegraphics[scale=.3]{graph/SOM_training}
+                    \end{figure}
+                    \addreference{\url{https://en.wikipedia.org/wiki/Self-organizing_map}}}
+        \end{frame}
+        \begin{frame}{audio similarity}{SOM 2/2}
+            \vspace{-2mm}
+            \begin{figure}
+                \centering
+                \includegraphics[scale=.28]{graph/som}
+            \end{figure}
+            \vspace{-10mm}from \footfullcite{pampalk_islands_2001}
+        \end{frame}
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{music similarity}
+                    \begin{itemize}
+                        \item   even less clearly defined than music genre
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{processing steps}
+                    \begin{enumerate}
+                        \item   extract features
+                        \item   define some distance metric in feature space
+                    \end{enumerate}
+                \bigskip
+                \item   \textbf{clustering algorithms}
+                    \begin{itemize}
+                        \item   work to a certain degree with traditional features
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
