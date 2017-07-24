@@ -13,7 +13,7 @@ function displayScatter(cDatasetPath)
     
     [cPath, cName]  = fileparts(mfilename('fullpath'));
     cOutputFilePath = [cPath '/../graph/' strrep(cName, 'display', '')];
-    hFigureHandle   = generateFigure(7,6);
+    hFigureHandle   = generateFigure(10,8);
 
     % read music data
     music_files     = dir([cDatasetPath 'music/*.au']);
@@ -40,9 +40,9 @@ function displayScatter(cDatasetPath)
 
     printFigure(hFigureHandle, cOutputFilePath);
 
-    scatter(500,550, iMarkerSize*3,[234/256 170/256 0],'filled','o');
-    text(1500, 1000,'$\Rightarrow$ identify class')
-    text(1500, 900,'of nearest point')
+    scatter(1000,8, iMarkerSize*3,[234/256 170/256 0],'filled','o');
+    text(1000, 9.5,'$\downarrow$ identify class')
+    text(1100, 9,'of nearest point')
     hold off;
     printFigure(hFigureHandle, [cOutputFilePath '-nn']);
     
