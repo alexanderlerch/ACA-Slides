@@ -193,31 +193,31 @@
                     \end{itemize}
             \end{itemize}
 		\end{frame}
-        \begin{frame}{instantaneous features}{matlab exercise}
-            \matlabexercise{spectral centroid}
-            \begin{footnotesize}
-            \begin{enumerate}
-                \item   implement a function extracting the spectral centroid from a magnitude spectrum
-                    \begin{itemize}
-                        \item   use the following interface (output is one value)\\ \begin{scriptsize}\texttt{[v\_SC] = SpectralCentroid(MagSpec)}\end{scriptsize}
-                        \item   consider:
-                            \begin{enumerate}
-                                \item   what tests do you implement to verify your implementation
-                                \item   what additional code to avoid undefined outputs
-                            \end{enumerate}
-                    \end{itemize}
-                \item   implement a caller function reading an audio file and extracting the Spectral Centroid for each block using the function above
-                    \begin{itemize}
-                        \item   use the following interface (output is vector)\\ \begin{scriptsize}\texttt{[v\_SC,tInS] = extractSpectralCentroid(Path2AudioFile, BlockSize, HopSize)}\end{scriptsize}
+        %\begin{frame}{instantaneous features}{matlab exercise}
+            %\matlabexercise{spectral centroid}
+            %\begin{footnotesize}
+            %\begin{enumerate}
+                %\item   implement a function extracting the spectral centroid from a magnitude spectrum
+                    %\begin{itemize}
+                        %\item   use the following interface (output is one value)\\ \begin{scriptsize}\texttt{[v\_SC] = SpectralCentroid(MagSpec)}\end{scriptsize}
                         %\item   consider:
-                            %\begin{itemize}
-                                %\item   what to do with start and end blocks
-                                %\item   how to handle user inconsistencies (invalid path, hopsize larger than blocksize, ...)
-                            %\end{itemize}
-                    \end{itemize}
-            \end{enumerate}
-            \end{footnotesize}
-       \end{frame}
+                            %\begin{enumerate}
+                                %\item   what tests do you implement to verify your implementation
+                                %\item   what additional code to avoid undefined outputs
+                            %\end{enumerate}
+                    %\end{itemize}
+                %\item   implement a caller function reading an audio file and extracting the Spectral Centroid for each block using the function above
+                    %\begin{itemize}
+                        %\item   use the following interface (output is vector)\\ \begin{scriptsize}\texttt{[v\_SC,tInS] = extractSpectralCentroid(Path2AudioFile, BlockSize, HopSize)}\end{scriptsize}
+                        %%\item   consider:
+                            %%\begin{itemize}
+                                %%\item   what to do with start and end blocks
+                                %%\item   how to handle user inconsistencies (invalid path, hopsize larger than blocksize, ...)
+                            %%\end{itemize}
+                    %\end{itemize}
+            %\end{enumerate}
+            %\end{footnotesize}
+       %\end{frame}
 
         
     \section{summary}
