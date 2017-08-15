@@ -14,7 +14,9 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331120}{Chapter 3~---~Instantaneous Features}: pp.~66--69
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331120}{Chapter 3~---~Instantaneous Features}: pp.~66--69\\
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331116}{Appendix C~---~Principal Component Analysis}: pp.~199--200
+                    
             \end{block}
 
             \begin{itemize}
@@ -123,7 +125,7 @@
             \begin{columns}
             \column{.45\linewidth}
             \begin{itemize}
-                \item   \textbf{example} (uniformly distributed data )
+                \item   \textbf{example} (uniformly distributed data)
                     \begin{itemize}
                         \item   identify region on axis covering \textbf{1\% of data}
                             \begin{itemize}
@@ -384,15 +386,24 @@
 		\begin{frame}{introduction}{PCA example}
             \only<1>{
                 \textbf{pca input}
-                \figwithref{PcaExample_input}{matlab source: matlab/displayPcaExample.m}
+                \begin{figure}%
+                    \includegraphics{PcaExample_input}
+                \end{figure}
+                \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayPcaExample.m}{matlab/displayPcaExample.m}}
             }
             \only<2>{
                 \textbf{pca output}
-                \figwithref{PcaExample_output}{matlab source: matlab/displayPcaExample.m}
+                \begin{figure}%
+                    \includegraphics{PcaExample_output}
+                \end{figure}
+                \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayPcaExample.m}{matlab/displayPcaExample.m}}
             }
              \only<3>{
             \textbf{pca eigenvalues}
-                \figwithref{PcaExample_latent}{matlab source: matlab/displayPcaExample.m}
+                \begin{figure}%
+                    \includegraphics{PcaExample_latent}
+                \end{figure}
+                \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayPcaExample.m}{matlab/displayPcaExample.m}}
             }
             \only<4>{
             \textbf{pca transformation matrix}

@@ -20,15 +20,21 @@
             \begin{itemize}
                 \item   \textbf{lecture content}
                     \begin{itemize}
-                        \item   Dynamic Time Warping (DTW):
-                        \item[] synchronization of two sequences with similar content
+                        \item   Audio-to-Audio alignment
+                            \begin{itemize}
+                                \item   use cases
+                                \item   features
+                                \item   distance measures
+                                \item   typical accuracy
+                            \end{itemize}
+                        \item   Audio-to-Score alignment
                     \end{itemize}
                 \bigskip
                 \item<2->   \textbf{learning objectives}
                     \begin{itemize}
-                        \item   explain the standard DTW algorithm
-                        \item   discuss disadvantages of and modifications to the standard DTW algorithm
-                        \item   implement DTW
+                        \item   elaborate on possible use cases for audio-to-audio alignment
+                        \item   give examples for features and distance measures for alignment
+                        \item   discuss differences between audio-to-audio and audio-to-score alignment
                     \end{itemize}
             \end{itemize}
             \inserticon{directions}
@@ -200,16 +206,19 @@
     \section{summary}
         \begin{frame}{summary}{lecture content}
             \begin{itemize}
-                \item   \textbf{dynamic time warping}
-                    \begin{itemize}
-                        \item   find globally optimal alignment path between two sequences
-                    \end{itemize}
-                \bigskip
-                \item   \textbf{processing steps}
+                \item   \textbf{audio-to-audio alignment}
                     \begin{enumerate}
-                        \item   compute distance matrix
-                        \item   compute cost matrix
-                        \item   back-track path
+                        \item   extract features
+                        \item   create distance matrix with suitable distance measure
+                        \item   use DTW to find alignment path
+                        \item   (use time-stretching to actually align the sequences)
+                    \end{enumerate}
+                \bigskip
+                \item   \textbf{audio-to-score alignment}
+                    \begin{enumerate}
+                        \item   extract usually pitch-based features
+                        \item   distance measure
+                        \item   use DTW, HMM, etc to extract alignment path
                     \end{enumerate}
             \end{itemize}
             \inserticon{summary}
