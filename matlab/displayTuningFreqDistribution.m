@@ -12,7 +12,7 @@ function displayTuningFreqDistribution()
     axis([427 453 0 .25])
 
     xlabel('$f_\mathrm{A4}$ [Hz]');
-    ylabel('RDF');
+    ylabel('RFD');
 
     printFigure(hFigureHandle, cOutputFilePath)
 end
