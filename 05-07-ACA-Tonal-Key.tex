@@ -1,0 +1,381 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 5.7: Musical Key Recognition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~88--94\\
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~116--125
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   definition of musical key
+                        \item   pitch chroma feature
+                        \item   standard approach for key recognition
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   explain the defining properties of a musical key
+                        \item   implement a simple pitch chroma feature extractor
+                        \item   describe and  discuss a simple automatic key recognition system
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section{key}
+        \begin{frame}{key}{tonic \& mode}
+            \begin{columns}
+            \column{0.38\linewidth}
+            \begin{itemize}
+                \item	\textbf{tonic}: first scale degree
+                        \begin{itemize}
+                            \item	most ``important'' pitch class
+                        \end{itemize}
+                
+                \item	\textbf{mode}: set of diatonic pitch relationships
+                        \begin{itemize}
+                            \item	Major: 2, 2, 1, 2, 2, 2, 1
+                            \item	Minor: 2, 1, 2, 2, 1, 2, 2
+                        \end{itemize}
+            \end{itemize}
+            \column{0.5\linewidth}
+                \vspace{-10mm}
+                \begin{figure}[t]
+                    \centering
+                    \includegraphics[scale=.65]{pitch_modes}
+                \end{figure}
+            \end{columns}
+
+        \end{frame}
+        
+        \begin{frame}{key}{key \& key signature 1/2}
+            \begin{itemize}
+                \item	\textbf{key}:\\ defined by \textit{tonic} (root note) and \textit{mode}
+                        
+                        \begin{itemize}
+                            \item<1->	defines a set of pitch classes constructing both  pitch and harmonic content
+                            
+                        \end{itemize}
+                \bigskip        
+                \item<2->	\textbf{modulation} (local key changes):\\ common in various styles, uncommon in others
+                \bigskip        
+                \item<3->	\textbf{key signature}:\\ indicates current key with accidentals (score notation)
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{key}{key \& key signature 2/2}
+            \vspace{-3mm}
+                \begin{figure}[t]
+                    \centering
+                    \includegraphics[scale=.6]{pitch_keys}
+                \end{figure}
+        \end{frame}
+        
+        \begin{frame}{musical pitch}{key: circle of fifths}
+            \vspace{-9mm}
+            \begin{figure}
+            \scalebox{.9}
+            {
+                    \centering
+                    \input{pict/pitch_circleoffifths}
+                
+            }	
+            \end{figure}
+        \end{frame}
+        
+    \section[pitch chroma]{pitch chroma}
+        \begin{frame}{pitch chroma}{introduction}
+            \begin{itemize}
+                \item	pitch class distribution 
+                \item	12-dimensional vector
+            \end{itemize}
+            %\vspace{-15mm}\flushright{\includeaudio{sax_example}}\vspace{10mm}
+            \only<1>{\begin{figure}\includegraphics{PitchChroma}\includeaudio{sax_example}\end{figure}}
+            \only<2->{
+            \vspace{-5mm}
+            \flushright{\includegraphics[scale=.65]{PitchChroma}}
+            \vspace{-5mm}
+            \begin{itemize}
+                \item	\textbf{no} octave information
+                    \begin{itemize}
+                        \item	robust representation
+                        \item	no differentiation between unison and octave
+                    \end{itemize}
+            \end{itemize}
+            }    
+            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayPitchChroma.m}{matlab/displayPitchChroma.m}}
+            \vspace{50mm}
+            \inserticon{audio}
+        \end{frame}
+        \begin{frame}{pitch chroma}{computation 1/2}
+            \begin{enumerate}
+                \item	divide spectral representation into \textbf{semi-tone bands}
+                \item<2->	compute \textbf{mean per band}
+                    \begin{footnotesize}
+                        \begin{equation*}
+                            \mu(j,n)		= \frac{1}{k_{\mathrm{u}}(j)-k_{\mathrm{l}}(j)+1}\sum\limits_{k=k_{\mathrm{l}}(j)}^{k_{\mathrm{u}}(j)}{|X(k,n)|}
+                        \end{equation*}
+                    \end{footnotesize}
+                \item<3->	sum/mean every 12th band
+                    \begin{footnotesize}
+                        \begin{eqnarray*}
+                            \nu(j\% 12 ,n)		&=& \sum\limits_{o=o_l}^{o_u}{\mu(j,n)}\label{eq:pc}, \\
+                            \vec{\nu}(n) 	&=& \left[\nu(0,n),\, \nu(1,n),\, \nu(2,n),\, \ldots,\, \nu(10,n),\, \nu(11,n)\right]^\mathrm{T} \nonumber
+                        \end{eqnarray*}
+                    \end{footnotesize}
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}{pitch chroma}{computation 2/2}
+            \figwithmatlab{PitchChromaGrouping}
+        \end{frame}
+        \begin{frame}{pitch chroma}{computation: simple variants}
+            \begin{itemize}
+                \item	\textbf{STFT}: 
+                    \begin{itemize}
+                        \item   \textit{weighted} mean of bins (window function)
+                        \item	\textit{tonalness preprocessing} (local maxima etc)
+                    \end{itemize}
+                    \only<1>{\vspace{-1mm}\begin{figure}\includegraphics[scale=.6]{PitchChromaGrouping}\end{figure}}
+                \item<2->	sum of \textbf{filterbank} output energies
+                    \only<2>{\vspace{-1mm}\figwithmatlab{ResonanceFilterBank}}
+                \item<3->	\textbf{CQT}: 
+                    \begin{itemize}
+                        \item sum of bins/peaks
+                    \end{itemize}
+                \item<4->   beat-synchronous chroma
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch chroma}{normalization}
+            \begin{columns}[T]
+                \column{.6\textwidth}
+                    \begin{itemize}
+                        \item   pitch chroma as \textit{distribution}:
+                            \begin{equation*}
+                                \sum\limits_{k=0}^{11}{\nu(k,n)} = 1
+                            \end{equation*}
+                        \item<2->   pitch chroma as \textit{vector}:
+                            \begin{equation*}
+                                \sqrt{\sum\limits_{k=0}^{11}{\nu(k,n)^2}} = 1
+                            \end{equation*}
+                        \item<3-> other options:
+                            \begin{itemize}
+                                \item   e.g., short-term energy normalization (CENS)
+                            \end{itemize}
+                    \end{itemize}
+                \column{.4\textwidth}
+                    \includegraphics[scale=.2]{pc-norm}
+            \end{columns}
+            
+        \end{frame}
+        
+        \begin{frame}{pitch chroma}{problem 1: amplitude distortion}
+            \vspace{-3mm}
+            \figwithmatlab{HarmonicsInPitchChroma}
+            \begin{itemize}
+                \item	every pitch contains not only fundamental but higher harmonics
+                \item[$\Rightarrow$]
+                    \begin{itemize}
+                        \item<2->	[$\Rightarrow$]	de-emphasize higher frequencies
+                        \item<2->	[$\Rightarrow$]	build amplitude model
+                        \item<2->	[$\Rightarrow$]	use multi-pitch detection system
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{pitch chroma}{problem 2: frequency distortion}
+            \begin{itemize}
+                \item	higher harmonics are not ``in-tune''
+                \begin{table}
+                    \centering
+                    \begin{tabular}{cccccccccccc} %{\textwidth}{@{\extracolsep{\fill}}ccccccccccccc}
+                        \\ \hline
+                        \bf{\emph{Harmonic}}	 & \bf{\emph{$|\Delta C(f,f_T)|$}}\\ 
+                         \hline
+                        \bf{$f = f_0$}	 & 0\\
+                        \bf{$f = 2\cdot f_0$}	 & 0\\
+                        \bf{$f = 3\cdot f_0$}	 & 1.955\\
+                        \bf{$f = 4\cdot f_0$}	 & 0\\
+                        \bf{$f = 5\cdot f_0$}	 & 13.6863\\
+                        \bf{$f = 6\cdot f_0$}	 & 1.955\\
+                        \bf{$f = 7\cdot f_0$}	 & 31.1741\\
+                        \hline
+                        \bf{$\mu_{|\Delta C|}$}	 & 6.9672\\
+                    \end{tabular}
+                \end{table}
+            \end{itemize}
+        \end{frame}
+
+    \section{key detection}
+        \begin{frame}{key detection}{introduction}
+            assumption: 
+            \begin{itemize}
+                \item \textit{pitch class distribution} is prototypical for key
+                    \begin{itemize}
+                        \item	tonic/root note is tonal center
+                        \item	tonal and harmonic relations define importance and occurrence of individual pitch classes
+                        \item   different root notes result in simple shift of distribution
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{key detection}{processing steps of simple key detection}
+            \begin{columns}
+                \column{.5\linewidth}
+                    \begin{enumerate}
+                        \item<1->	define reference distribution for specific keys
+                        \item<2->	extract average pitch chroma from audio
+                        \item<3->	compute distance between template and extracted chroma
+                    \end{enumerate}
+                \column{.5\linewidth}
+                    \only<1-2>{\begin{figure}\includegraphics{KrumhanslKeyProfile}\end{figure}}
+                    \only<3>{            
+                    \begin{figure}
+                        \begin{center}
+                        \begin{picture}(60,25)
+                
+                            %boxes
+                            \put(0,10){\ovalbox{\footnotesize{\parbox{20mm}{\centering{extracted\\ pitch chroma}}}}}
+                            \put(0,20){\ovalbox{\footnotesize{\parbox{20mm}{\centering{template\\ pitch chroma}}}}}
+                            \put(27,15){\ovalbox{\footnotesize{\parbox{20mm}{\centering{distance measure}}}}}
+                
+                        
+                            %diagonal
+                            \put(22.5,11){\vector(1,1){4.5}}
+                            \put(22.5,21){\vector(1,-1){4.5}}
+                            
+                            % horizontal
+                            \put(49,15.5){\vector(1,0){10}}
+                
+                            %text
+                            \put(54,16){\footnotesize{\shortstack[c]{key}}}
+                
+                        \end{picture}
+                        \end{center}
+                    \end{figure}
+                    }
+            \end{columns}
+            \only<1-2>{\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayKrumhanslKeyProfile.m}{matlab/displayKrumhanslKeyProfile.m}}}
+        \end{frame}
+        \begin{frame}{key detection}{key template distance animation}
+            \includeanimation{KeyDetection}{01}{12}{1}
+        \end{frame}
+        
+        \begin{frame}{key detection}{key templates 1/2}
+                    \begin{itemize}
+                        \item	\emph{Orthogonal} $\vec{\nu}_\mathrm{o}$: root note is most salient component, other components negligible
+                                \pause
+                                \begin{itemize}
+                                    \item	same distance to all keys
+                                    \item	no distinction between major and minor
+                                \end{itemize}
+                        \item<2->	\emph{Smoothed Orthogonal} $\vec{\nu}_\mathrm{s}$:  root note most salient, neighboring components less important
+                                \pause
+                                \begin{itemize}
+                                    \item	increasing key distance to tritone
+                                    \item	no real distinction between major and minor
+                                \end{itemize}
+                        \item<3->	\emph{Diatonic} $\vec{\nu}_\mathrm{d}$: all key-inherent pitches weighted equally
+                                \pause
+                                \begin{itemize}
+                                    \item	linear increasing key distance
+                                \end{itemize}
+                        \item<4->	\emph{Probe tone Ratings}  $\vec{\nu}_\mathrm{p}$: derived from perceptual tonal similarity
+                        \item<5->	\emph{Extracted Key Profiles} $\vec{\nu}_\mathrm{t}$: derived from real-world data
+                    \end{itemize}
+        \end{frame}
+        \begin{frame}{key detection}{key templates 2/2}
+            \figwithmatlab{KeyProfiles}
+        \end{frame}
+        %\begin{frame}{key detection}{distance measures: (vector) distance}
+            %\begin{footnotesize}
+                    %\begin{itemize}
+                        %\item	\emph{{Euclidean distance}}:
+                                %$d_\mathrm{E}(s) = \sqrt{\sum\limits_{j = 0}^{11}{\big(\nu_\mathrm{e}(j)-\nu_\mathrm{t,s}(j)\big)^2}} $
+                        %\item<2->	\emph{{Manhattan distance}}:
+                                %$d_\mathrm{M}(s) = \sum\limits_{j = 0}^{11}{\big|\nu_\mathrm{e}(j)-\nu_\mathrm{t,s}(j)\big|} $
+                        %\item<3->	\emph{{Cosine distance}}:
+                                %$d_\mathrm{C}(s) = 1-\left( \frac{\sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)\cdot\nu_\mathrm{t,s}(j)}}{\sqrt{\sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)^2}}\sqrt{\cdot \sum\limits_{j = 0}^{11}{\nu_\mathrm{t,s}(j)^2}}}\right) $
+                        %\item<4->	\emph{{Kullback-Leibler divergence}}:
+                                %$d_\mathrm{KL}(s) = \sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)\cdot\log\left(\frac{\nu_\mathrm{e}(j)}{\nu_\mathrm{t,s}(j)}\right)}$
+                        %\item<5->   \textit{nearest neighbor classification}
+                    %\end{itemize}
+            %\end{footnotesize}
+        %\end{frame}
+        %%\begin{frame}{key detection}{distance measures: k-Nearest Neighbor}
+            %%\begin{itemize}
+                %%\item	\textbf{training}: extract reference vectors from training set (keep class labels)
+                %%\pause
+                %%\item	\textbf{classification}: extract test vector and set class to majority of $k$ nearest reference vectors
+            %%\end{itemize}
+                %%\begin{figure}[t]
+                    %%\centering
+                        %%\includegraphics[scale=.7]{graph/KnnClassification}
+                %%\end{figure}
+        %%\end{frame}
+        \begin{frame}{key detection}{variants}
+            \begin{itemize}
+                \item	\textbf{tonalness weight}:\\ estimate the tonality/noisiness and weight instantaneous pitch chroma
+                \item<2->	\textbf{multiple estimations}:\\ split piece into regions and estimate key through majority
+                \item<3->	\textbf{real-time key detection}:\\ estimate in sliding window
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{key detection}{results \& typical errors}
+            \begin{columns}[T]
+            \column{.6\textwidth}
+                \begin{itemize}
+                    \item	typical errors: related keys
+                        \begin{itemize}
+                            \item	Dominant
+                            \item	Subdominant
+                            \item	Relative
+                            \item	Major/Minor
+                        \end{itemize}
+                \end{itemize}
+            \column{.4\textwidth}
+                \begin{figure}
+                    \centering
+                        \includegraphics[scale=.35]{resultskeydetection}
+                \end{figure}
+            \end{columns}
+            \begin{flushright}
+                graph from \footfullcite{lerch_ansatz_2004}
+            \end{flushright}
+        \end{frame}
+                
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{musical key}
+                    \begin{itemize}
+                        \item   set of pitch classes constructing pitched content
+                        \item   defined by \textit{tonic} (important center) and \textit{mode} (scale)
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{pitch chroma}
+                    \begin{itemize}
+                        \item   reduced 12-dimensional octave-independent pitch representation
+                        \item   relatively robust against timbre variation
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{automatic key recognition}
+                    \begin{itemize}
+                        \item   standard approach is template-based
+                        \item   extracted average pitch chroma is compared with predefined template
+                        \item   inverse distance measure indicates key likelihoods
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
