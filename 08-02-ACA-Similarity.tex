@@ -136,11 +136,11 @@
                                     \item	for each training sample find BMU (best matching unit)
                                     \item	adapt BMU and neighbors toward training sample
                                     \begin{equation*}
-                                        W_v(t + 1) = W_v(t) + \theta (v, t) \alpha(t)\big(D(t) - W_v(t)\big)
+                                        W_v(t + 1) = W_v(t) + \theta (u, v, t) \alpha(t)\big(D(t) - W_v(t)\big)
                                     \end{equation*}
                                     \begin{footnotesize}
                                         \begin{itemize}
-                                            \item	$\theta (v, t)$: depends on distance from BMU
+                                            \item	$\theta (u, v, t)$: depends on neighborhood distance from BMU
                                             \item	$\alpha (t)$: learning restraint
                                             \item	$D(t)$ training sample
                                         \end{itemize}
