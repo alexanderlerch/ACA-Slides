@@ -1,0 +1,246 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include/common}
+\input{include/titledef}
+\input{include/definitions}
+
+
+\subtitle{Module 11.0: Music Structure Detection}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{missing in textbook} 
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   structure in music
+                        \item   self similarity and self distance matrices
+                        \item   structure detection approaches
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   summarize basic difficulties in ground truth annotations of musical structure
+                        \item   explain and interpret self similarity and self distance matrices
+                        \item   summarize three domains for approaching music structure detection
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{music structure}{introduction}
+            \begin{itemize}
+                \item   \textbf{music is inherently formal}/organized/structural
+                \smallskip
+                \item<1->   various \textbf{hierarchical structural levels}
+                    \begin{itemize}
+                        \item   \textit{groups of notes} build rhythmic/melodic/harmonic patterns
+                        \item   \textit{measures} group multiple events
+                        \item   \textit{phrases} group several measures
+                        \item   \textit{sections} contain several phrases
+                        \item   several sections can comprise \textit{piece/movement}
+                        \item   \ldots
+                    \end{itemize}
+                \smallskip
+                \item<2->    \textbf{grouping} of musical elements/patterns is influenced by
+                    \begin{enumerate}
+                        \item   \textit{contrasts \& novelty}
+                            \begin{itemize}
+                                \item   rhythmic, harmonic, melodic patterns
+                            \end{itemize}
+                        \item   \textit{similarity and repetitions}
+                            \begin{itemize}
+                                \item   rhythmic, harmonic, melodic patterns
+                            \end{itemize}
+                        \item   \textit{homogeneity} within a section 
+                            \begin{itemize}
+                                \item   instrumentation, tempo, harmony
+                            \end{itemize}
+                    \end{enumerate}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{music structure analysis}{introduction}
+            \begin{itemize}
+                \item   \textbf{objective}
+                    \begin{itemize}
+                        \item   reveal structural properties and relationships
+                        \item   generate a list of parts and repetitions
+                    \end{itemize}
+                \bigskip
+                \item   typical \textbf{processing steps}
+                    \begin{enumerate}
+                        \item   feature extraction
+                        \item   Self Distance Matrix (SDM) or Self Similarity Matrix (SSM)
+                        \item   detect segments
+                            \begin{itemize}
+                                \item novelty
+                                \item homogeneity
+                                \item repetition
+                            \end{itemize}
+                    \end{enumerate}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{music structure analysis}{example}
+            {\flushright{\includeaudio{structure-example}}}
+             \figwithmatlab{Structure}
+        \end{frame}
+    \section[features]{features for structural analysis}
+        \begin{frame}{music structure analysis}{features 1/2}
+            \begin{itemize}
+                \item   features from \textbf{all categories} can have impact on structure
+                    \begin{itemize}
+                        \item   timbre
+                            \begin{itemize}
+                                \item   instrumentation, playing technique, effects, \ldots
+                            \end{itemize}
+                        \item   tonal content
+                            \begin{itemize}
+                                \item   melodic and harmonic patterns, range, \ldots
+                            \end{itemize}
+                        \item   rhythm content
+                            \begin{itemize}
+                                \item   tempo, rhythmic patterns, \ldots
+                            \end{itemize}
+                        \item   dynamics
+                            \begin{itemize}
+                                \item   loudness, range, \ldots
+                            \end{itemize}
+                    \end{itemize}
+               \bigskip
+               \item<1->    \textbf{feature aggregation}
+                \begin{itemize}
+                    \item   use texture window, or
+                    \item   aggregate features per beat or downbeat
+                \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{music structure analysis}{features 2/2}
+            \vspace{-4mm}
+            \only<1>{\figwithref{StructureFeatures_0}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayStructureFeatures.m}{matlab/displayStructureFeatures.m}}}
+            \only<2>{\figwithref{StructureFeatures_1}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayStructureFeatures.m}{matlab/displayStructureFeatures.m}}}
+        \end{frame} 
+        \begin{frame}{music structure analysis}{distance matrix}
+            \vspace{-4mm}
+            \only<1>{\figwithref{Sdm_0}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdm.m}{matlab/displaySdm.m}}}
+            \only<2>{\figwithref{Sdm_1}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdm.m}{matlab/displaySdm.m}}}
+            \only<3>{\figwithref{Sdm_2}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdm.m}{matlab/displaySdm.m}}}
+            \only<4>{\figwithref{Sdm_3}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdm.m}{matlab/displaySdm.m}}}
+            \only<5>{\figwithref{Sdm_4}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdm.m}{matlab/displaySdm.m}}}
+        \end{frame}
+        \begin{frame}{music structure analysis}{similarity matrix}
+            \vspace{-4mm}
+            \only<1>{\figwithref{Ssm_0}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsm.m}{matlab/displaySsm.m}}}
+            \only<2>{\figwithref{Ssm_1}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsm.m}{matlab/displaySsm.m}}}
+            \only<3>{\figwithref{Ssm_2}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsm.m}{matlab/displaySsm.m}}}
+            \only<4>{\figwithref{Ssm_3}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsm.m}{matlab/displaySsm.m}}}
+            \only<5>{\figwithref{Ssm_4}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsm.m}{matlab/displaySsm.m}}}
+        \end{frame}
+    \section[novelty]{novelty analysis}
+        \begin{frame}{music structure analysis}{novelty analysis}
+            \vspace{-4mm}
+            \only<1>{\figwithref{SsmNovelty_0}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsmNovelty.m}{matlab/displaySsmNovelty.m}}}
+            \only<2>{example: Gaussian checker board kernel \figwithref{SsmNovelty_1}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsmNovelty.m}{matlab/displaySsmNovelty.m}}}
+            \only<3>{\figwithref{SsmNovelty_2}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsmNovelty.m}{matlab/displaySsmNovelty.m}}}
+            \only<4>{\figwithref{SsmNovelty_3}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsmNovelty.m}{matlab/displaySsmNovelty.m}}}
+        \end{frame}
+    \section[homogeneity]{homogeneity analysis}
+        \begin{frame}{music structure analysis}{homogeneity analysis 1/2}
+            \vspace{-4mm}
+            \only<1>{\figwithref{SsmHomogeneity_0}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsmHomogeneity.m}{matlab/displaySsmHomogeneity.m}}}
+            \only<2>{oversimplified way: MA kernel\figwithref{SsmHomogeneity_1}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsmHomogeneity.m}{matlab/displaySsmHomogeneity.m}}}
+            \only<3>{\figwithref{SsmHomogeneity_2}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySsmHomogeneity.m}{matlab/displaySsmHomogeneity.m}}}
+        \end{frame}
+        
+        \begin{frame}{music structure analysis}{homogeneity analysis 2/2}
+            \begin{itemize}
+                \item   also used as post-processing step after novelty-based approach, e.g.
+                    \begin{enumerate}
+                        \item   describe each segment with features
+                        \item   cluster and see which segments are grouped together
+                    \end{enumerate}
+            \end{itemize}
+        \end{frame}
+        
+    \section[repetition]{repetition analysis}%\href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdlm.m}{matlab/displaySdlm.m}
+        \begin{frame}{music structure analysis}{repetition analysis 1/2}
+            \vspace{-4mm}
+            \only<1>{\figwithref{Sdlm_0}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdlm.m}{matlab/displaySdlm.m}}}
+            \only<2>{\figwithref{Sdlm_1}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdlm.m}{matlab/displaySdlm.m}}}
+            \only<3>{\figwithref{Sdlm_2}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySdlm.m}{matlab/displaySdlm.m}}}
+        \end{frame}
+        \begin{frame}{music structure analysis}{repetition analysis 2/2}
+            \begin{itemize}
+                \item   while in many cases it 'looks' easy, automatic extraction is \textbf{error-prone}
+                \bigskip
+                \item<2->[$\Rightarrow$]   typical approaches for \textbf{enhancing} the distance/similarity/lag matrix
+                    \begin{itemize}
+                        \item   filtering (low pass smoothing, high pass edge detecting)
+                        \item   use matrices with different time resolutions
+                        \item   image processing methods (e.g., erosion \& dilation)
+                        \item   thresholding
+                        \item   ``path search'' through probability matrix
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+    \section[evaluation]{evaluation}
+        \begin{frame}{music structure analysis}{evaluation}
+            \begin{itemize}
+                \item   evaluation of structure detection \textbf{challenging}
+                    \begin{itemize}
+                        \item   \textit{ground truth}
+                            \begin{itemize}
+                                \item   structure itself may be ambiguous
+                                \item   depending on annotator, varying hierarchical level of labels, e.g.
+                            \end{itemize}
+                    \end{itemize}
+                    \begin{table}
+                        \centering
+                        \footnotesize
+                            \begin{tabular}{l|c|c|c|c|c|c|c|c|c|c|}
+                                    \hline
+                                  \textbf{ann 1} & intro & \multicolumn{4}{c|}{A} & \multicolumn{4}{c|}{A} & outro\\ \hline
+                                  \textbf{ann 2} & intro & \multicolumn{2}{c|}{verse} & \multicolumn{2}{c|}{chorus} & \multicolumn{2}{c|}{verse} & \multicolumn{2}{c|}{chorus} & outro\\ \hline
+                                  \textbf{ann 3} & intro & V$_1$ & V$_2$ & C$_1$ &C$_2$ &  V$_1$ & V$_2$ & C$_1$ &C$_2$ & outro\\
+                                    \hline
+                            \end{tabular}
+                    \end{table}
+                \bigskip
+                \item<2->   \textit{method and metric}
+                    \begin{itemize}
+                        \item   frame level, e.g., pairwise match
+                    \end{itemize}
+                \bigskip
+                \item<3->   typical range of results
+                    \begin{itemize}
+                        \item   $F = 50\ldots 70\% $
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{self similarity/distance matrices}
+                    \begin{itemize}
+                        \item   shows pairwise similarities/distances
+                        \item   depends on input features
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{structure detection}
+                    \begin{enumerate}
+                        \item   novelty
+                        \item   homogeneity
+                        \item   repetitions
+                    \end{enumerate}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

@@ -1,7 +1,10 @@
-function [tv,pcd,mfcc,pc,acf,parts] = generateStructureData(cFilePath)
+function [tx,x,tv,pcd,mfcc,pc,acf,parts,labels] = generateStructureData(cFilePath)
     iBlockLength = 32768;
-
+    
     [x, fs]     = audioread(cFilePath);
+    x           = mean(x,2);
+    x           = x/max(abs(x));
+    tx          = (0:(length(x)-1))/fs;
     [rms, tv]   = ComputeFeature ('TimeRms', x, fs, hann(iBlockLength), iBlockLength, iBlockLength/2);
     [mfcc, tv]  = ComputeFeature ('SpectralMfccs', x, fs, hann(iBlockLength), iBlockLength, iBlockLength/2);
     [pc, tv]    = ComputeFeature ('SpectralPitchChroma', x, fs, hann(iBlockLength), iBlockLength, iBlockLength/2);
@@ -26,11 +29,39 @@ function [tv,pcd,mfcc,pc,acf,parts] = generateStructureData(cFilePath)
     pc      = pc/max(max(pc));
     acf     = acf/max(max(acf));
 
-    parts = [1  1.612	34.229
-            2   34.229	78.073	
-            1   78.073	110.370
-            2   110.370	142.624
-            2   142.624	179.500];
+    [pathstr, name, ext] = fileparts(cFilePath);
+    bounds = readtable([pathstr '/' name '.txt']);
+    parts = [ bounds.Var1 bounds.Var2];
+
+    labels = [];
+    indices= zeros(size(parts,1),1);
+    numparts = 1;
+    for (k = 1:size(parts,1))
+        prev = [];
+        indices(k)  = numparts;
+        
+        if (k > 1)
+            prev = find(ismember(bounds.Var4(1:k-1,:),bounds.Var4(k)));
+        end    
+        if isempty(prev)
+            numparts    = numparts+1;
+            prev        = k;
+        else
+            indices(k)  = prev(1);
+        end
+        if isempty(labels)
+            labels = char(bounds.Var4(prev));
+        else
+            labels = char(labels,char(bounds.Var4(k)));
+        end
+    end
+    
+    parts = [indices parts];
+%     parts = [1  1.612	34.229
+%             2   34.229	78.073	
+%             1   78.073	110.370
+%             2   110.370	142.624
+%             2   142.624	179.500];
 %     parts = [1  1.612	34.229
 %             2   34.229	76.073	
 %             1   76.073	110.370

@@ -1,6 +1,6 @@
 function displaySdlm()
 
-    hFigureHandle = generateFigure(10.8,7);
+    hFigureHandle = generateFigure(15,8);
  
     if(exist('ComputeFeature') ~=2)
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
@@ -11,7 +11,7 @@ function displaySdlm()
  
      
     % generate sample data
-    [t,pcd,mfcc,pc,acf,parts] = generateStructureData([cPath '/../audio/structure_example.mp3']);
+    [tx,x,t,pcd,mfcc,pc,acf,parts,labels] = generateStructureData([cPath '/../audio/structure-example.mp3']);
 
     pcd = pdist2(pcd',pcd');
     pc = pdist2(pc',pc');
@@ -77,8 +77,9 @@ function displaySdlm()
     acf(acf<thresh)= 0;
 
     combined = (pc.*acf.*mfcc);
+    combined(combined<.3) = 0;
     subplot(111);
-    imagesc(t,t,combined);
+    imagesc(t,t,sqrt(combined));
     title('combined lag matrix')
     xlabel('lag [s]')
     colormap(jet)
@@ -86,14 +87,19 @@ function displaySdlm()
     
     printFigure(hFigureHandle, [cOutputFilePath '_1'])
     
-    for (i = 1: size(parts,1))
-        if (parts(i,1) == 1)
-            mycolor = [ 0 0 0 ];
-        elseif (parts(i,1) == 2)
-            mycolor = [1 0 0];
-        else
-            mycolor = [1 0 0];
-        end
+    myColorMap  = [
+%                             0                         0                         0
+                          0.75                      0.75                         0
+                             234/256                    170/256                 0
+                             0                         0                         1
+                             1                         0                         0
+                             0                       0.5                         0
+                             0                      0.75                      0.75
+                          0.75                         0                      0.75
+                          0.25                      0.25                      0.25];
+ 
+    for (i = 2: size(parts,1))
+        mycolor = myColorMap(mod(parts(i,1),size(myColorMap,1)),:);
             plot([1 1], [parts(i,2) parts(i,3)],'color',mycolor,'linewidth',3);
             for (k=1:size(parts,1))
                 if (parts(i,1)~= parts(k,1)||i>=k)
