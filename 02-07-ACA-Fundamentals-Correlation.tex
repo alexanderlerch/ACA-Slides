@@ -123,6 +123,25 @@
                 \end{itemize}	
             \end{block}
         \end{frame}	
+
+    \section[apps]{applications}
+        \begin{frame}{(auto-)correlation function}{applications and use cases}
+            \question{what are the use cases of correlation}
+            
+            \begin{itemize}
+                \item   \textit{cross-correlation}:
+                    \begin{itemize}
+                        \item   compute similarity between different signals (correlation meter)
+                        \item   detect shift between two similar but shifted signals (radar)
+                    \end{itemize}
+                \bigskip
+                \item   \textit{autocorrelation}:
+                    \begin{itemize}
+                        \item   detect self-similarity of (shifted) signal (lpc coefficients, noisiness)
+                        \item   detect periodicity of signal
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}	
         
     \section{summary}
         \begin{frame}{summary}{lecture content}
@@ -130,7 +149,7 @@
                 \item   \textbf{correlation function}
                     \begin{itemize}
                         \item   measure of similarity between two signals
-                        \item   use case: find time lag between signals
+                        \item   use case example: find time lag between signals
                     \end{itemize}
                 \bigskip
                 \item   \textbf{normalized correlation}
@@ -142,7 +161,7 @@
                 \item   \textbf{autocorrelation}
                     \begin{itemize}
                         \item   measure of self-similarity
-                        \item   use case: find periodicity
+                        \item   use case example: find periodicity
                     \end{itemize}
             \end{itemize}
             \inserticon{summary}
