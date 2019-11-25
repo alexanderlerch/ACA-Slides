@@ -21,7 +21,7 @@ function hFigureHandle = generateFigure(fWidthInCm, fHeightInCm)
     fHeightInCm = min(fHeightInCm, fMaxHeight);
     fWidthInCm  = min(fWidthInCm, fMaxWidth);
     
-    hFigureHandle = figure;
+    hFigureHandle = figure('Color', 'w');
     
     myColorMap  = [
                              0                         0                         0
