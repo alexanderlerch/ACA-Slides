@@ -1,4 +1,4 @@
-\documentclass[aspectratio=169,hyperref={pdfpagelabels=false,colorlinks=true,linkcolor=white,urlcolor=blue},t]{beamer}
+\documentclass[aspectratio=169,hyperref={pdfpagelabels=false,colorlinks=true,linkcolor=white,urlcolor=gtgold},t]{beamer}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,61 +19,8 @@
 \AtEveryCitekey{\iffootnote{\tiny}{}}
 \addbibresource{include/references}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% relative paths
-\graphicspath{{graph/}}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% units
-\setlength{\unitlength}{1mm}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% theme & layout
-\usetheme{Frankfurt}
-\beamertemplatenavigationsymbolsempty
-%\setbeamertemplate{frametitle}[smoothbars theme]
-\setbeamertemplate{frametitle}
-{
-    \begin{beamercolorbox}[ht=1.8em,wd=\paperwidth]{frametitle}
-        \vspace{-.1em}%
-        \hspace{.2em}{\strut\insertframetitle\strut}
-        
-        \hspace{.2em}\small\strut\insertframesubtitle\strut
-        %\hfill
-        %\includegraphics[height=.8cm,keepaspectratio]{CenterMusicTechnology-solid-2lines-white-CoAtag}
-        
-    \end{beamercolorbox}
-    \begin{textblock*}{100mm}(11.6cm,.7cm)
-        \includegraphics[height=.8cm,keepaspectratio]{Logo_GTCMT_black}
-    \end{textblock*}
-}
-\setbeamertemplate{footline}[frame number]
-
-% set this to ensure bulletpoints without subsections
-\usepackage{remreset}
-\makeatletter
-\@removefromreset{subsection}{section}
-\makeatother
-\setcounter{subsection}{1}
-
-%---------------------------------------------------------------------------------
-% appearance
-\setbeamercolor{structure}{fg=gtgold}
-\setbeamercovered{transparent} %invisible
-\setbeamercolor{bibliography entry author}{fg=black}
-\setbeamercolor*{bibliography entry title}{fg=black}
-\setbeamercolor*{bibliography entry note}{fg=black}
-\setbeamercolor{frametitle}{fg=black}
-\setbeamercolor{title}{fg=black}
-
-%\usepackage{pgfpages}
-%\setbeameroption{show notes}
-%\setbeameroption{show notes on second screen=right}
-%---------------------------------------------------------------------------------
 % fontsize
 \let\Tiny=\tiny
 

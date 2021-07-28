@@ -2,6 +2,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % colors
 \definecolor{gtgold}{HTML}{E0AA0F} %{rgb}{0.88,0.66,1,0.06} [234, 170, 0]/256
+\definecolor{darkgray}{rgb}{.2,.2,.2}
+%\definecolor{gtgold_less}{rgb}{.88,0.66,0} %_less!40
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% relative paths
+\graphicspath{{graph/}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% units
+\setlength{\unitlength}{1mm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -123,9 +136,20 @@
 
 \newcommand{\addreference}[1]{  
                   
-                    \begin{textblock*}{\baselineskip }(1.12\textwidth,.3\textheight) %(1.15\textwidth,.4\textheight)
-                        \rotatebox{90}{\tiny {#1}}
-                    \end{textblock*}}
+                    \begin{textblock*}{\baselineskip }(1.12\textwidth,.5\textheight) %(1.15\textwidth,.4\textheight)
+                        %\rotatebox{90}{\tiny {#1}}
+                         \begin{minipage}[b][.5\paperheight][b]{1cm}%
+                            \vfill%
+                            %\centering
+                            % \includegraphics[width=.9\textwidth]{example-image}
+                             \rotatebox{90}{\tiny {#1}}
+                             %\vfill      
+                            %\usebeamercolor[fg]{sidebar}
+                            %\insertframenumber
+                            %\vskip1.5em%
+                        \end{minipage}
+                   \end{textblock*}
+                    }
                     
 \newcommand{\figwithmatlab}[1]{
                     \begin{figure}
