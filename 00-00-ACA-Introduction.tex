@@ -26,7 +26,10 @@
                 \item   \textbf{research focus}
                     \begin{itemize}
                         \item   Music Information Retrieval (MIR)
-                        \item   intelligent music software
+                        \item   Audio Content Analysis
+                        \item   Audio Signal Processing
+                        \item   Music Performance Analysis
+                        \item   Music Generation
                     \end{itemize}
             \end{itemize}
             
@@ -36,8 +39,8 @@
 
     \section[course intro]{course introduction}
         \begin{frame}{introduction}{course introduction}
+            Audio Content Analysis and Music Information Retrieval (MIR):
             \begin{itemize}
-                \item   Audio Content Analysis and Music Information Retrieval (MIR):
                 \item   extract and infer descriptors from music signals
                 \item   answers questions and tasks such as
                     \begin{itemize}
@@ -71,18 +74,26 @@
         
     \section[course overview]{course overview}
         \begin{frame}{introduction}{course overview}
-            the course is structured into 9 different topic areas
             \begin{enumerate}
                 \item   Introduction to ACA and MIR
-                \item   Fundamentals of DSP
-                \item   Instantaneous (Low-Level) Features
-                \item   Analysis of Intensity
-                \item   Tonal Analysis
-                \item   Temporal Analysis
-                \bigskip
-                \item   Alignment
-                \item   Genre, Similarity, \& Mood
-                \item   Audio Fingerprinting
+                \item   Fundamentals
+                    \begin{itemize}
+                        \item   Signals \& Pre-Processing
+                        \item   Input Representations
+                        \item   Inference
+                        \item   Data \& Evaluation
+                    \end{itemize}
+                \item   Music Transcription
+                    \begin{itemize}
+                        \item   Tonal Analysis (Pitch, Key, ...)
+                        \item   Analysis of Intensity
+                        \item   Temporal Analysis (Onset, Beats, Structure, ...)
+                        \item   Alignment
+                    \end{itemize}
+                \item   Music Identification \& Classification
+                \item    Audio Fingerprinting
+                \item   Classification: Genre, Similarity, Mood, Instrument
+                \item   Music Performance Assessment
             \end{enumerate}
             \inserticon{directions}
         \end{frame}
@@ -116,14 +127,17 @@
                     \begin{itemize}
                         \item   \textbf{text book}: ``An Introduction to Audio Content Analysis'':
                         
-                            \href{https://ieeexplore.ieee.org/servlet/opac?bknumber=6266785}{ieeexplore.ieee.org/servlet/opac?bknumber=6266785}
+                            
+                            \begin{itemize}
+                                \item   \href{https://ieeexplore.ieee.org/servlet/opac?bknumber=6266785}{published version at IEEE}
+                                \item   new edition draft available on Canvas
+                            \end{itemize}
 
                         \smallskip
                         \item<2->  \textbf{optional reading}
                             
                             \begin{itemize}
                                 \item   \footnotesize Mueller, M. ``Fundamentals of Music Processing''. Springer (2015)
-                                \item   \footnotesize Li, T., Ogihara, M. and Tzanetakis, G.  (Eds.) ``Music Data Mining''. CRC Press (2012)
                                 \item   \footnotesize Klapuri, A. and Davy, M. (Eds.) ``Signal Processing Methods for Music Transcription''. Springer (2006)
                             \end{itemize}
                             \normalsize
@@ -131,13 +145,12 @@
                         \smallskip
                         \item<3->   \textbf{online resources} @AudioContentAnalysis.org: 
                             \begin{itemize}
-                                \item   slides
+                                \item   slides \& videos of previous classes
                                 \item   datasets
-                                \item   matlab code
-                                \item   python code
+                                \item    code (matlab, python)
                             \end{itemize}
                         \smallskip
-                        \item<4->   \textbf{software}: Matlab, Python 3
+                        \item<4->   \textbf{software}: Python 3, (Matlab)
                     \end{itemize}
                 \column{.2\textwidth}
                      \href{https://ieeexplore.ieee.org/servlet/opac?bknumber=6266785}{\includegraphics[scale=.1]{cover_aca}}

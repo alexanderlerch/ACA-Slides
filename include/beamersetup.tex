@@ -2,6 +2,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % theme & layout
 \usetheme{Frankfurt}
+%\useinnertheme[shadow=false]{rounded}
+\useinnertheme{rectangles}
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{frametitle}[default][colsep=-4bp,rounded=false,shadow=false]
 \setbeamertemplate{frametitle}
@@ -25,7 +27,7 @@
     \begin{beamercolorbox}[wd=\paperwidth,ht=.7\paperheight,dp=0.6ex]{frametitle} %35ex
         \hspace*{1.8ex}\LARGE\inserttitle%
         
-        \vspace*{1ex}
+        \vspace*{.5ex}
         
         \hspace*{1.3ex}\small\insertsubtitle%
         
@@ -58,8 +60,15 @@
   \vskip0pt%
 }
 \makeatletter
-\setbeamertemplate{navigation symbols}{}
 
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[default]%[rounded=false,shadow=false]
+\setbeamertemplate{itemize item}[square]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{itemize subsubitem}[triangle]
+\setbeamertemplate{enumerate item}[square]
+\setbeamertemplate{enumerate subitem}[circle]
+\setbeamertemplate{enumerate subsubitem}[circle]
 %---------------------------------------------------------------------------------
 % colors
 \setbeamercolor{structure}{fg=darkgray}
@@ -75,6 +84,6 @@
 \setbeamercolor{mini frame}{fg=white, bg=black}
 \setbeamercolor{section in head/foot}{fg=white, bg=darkgray}
 \setbeamercolor{page number in head/foot}{fg=black, bg=gtgold}
-\setbeamercolor{item projected}{fg=darkgray, bg=gtgold}
+\setbeamercolor{item projected}{fg=white, bg=black}
 
 %---------------------------------------------------------------------------------
