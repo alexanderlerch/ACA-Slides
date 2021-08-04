@@ -2,9 +2,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % theme & layout
 \usetheme{Frankfurt}
-%\useinnertheme[shadow=false]{rounded}
 \useinnertheme{rectangles}
-\beamertemplatenavigationsymbolsempty
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{frametitle}[default][colsep=-4bp,rounded=false,shadow=false]
 \setbeamertemplate{frametitle}
 {%
@@ -19,6 +20,9 @@
         \includegraphics[height=.8cm,keepaspectratio]{Logo_GTCMT_white}
     \end{textblock*}
 }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{title page}[default][colsep=-4bp,rounded=false,shadow=false]
 \setbeamertemplate{title page}
 {
@@ -37,6 +41,9 @@
     \begin{beamercolorbox}[wd=\paperwidth,ht=.4\paperheight,dp=0.6ex]{page number in head/foot}
         %\vspace*{-.5ex}
         \hspace*{1.7ex}\small\insertauthor%
+        
+        %\hspace*{1.7ex}\small }%
+        
         \vspace*{10ex}
         
         \begin{flushright}
@@ -45,7 +52,9 @@
     \end{beamercolorbox}%
 }
 
-\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\makeatother
 \setbeamertemplate{footline}
 {
   \leavevmode%
@@ -59,8 +68,11 @@
   \end{beamercolorbox}}%
   \vskip0pt%
 }
-\makeatletter
+%\makeatletter
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beamertemplatenavigationsymbolsempty
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{blocks}[default]%[rounded=false,shadow=false]
 \setbeamertemplate{itemize item}[square]
@@ -69,7 +81,9 @@
 \setbeamertemplate{enumerate item}[square]
 \setbeamertemplate{enumerate subitem}[circle]
 \setbeamertemplate{enumerate subsubitem}[circle]
-%---------------------------------------------------------------------------------
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % colors
 \setbeamercolor{structure}{fg=darkgray}
 \setbeamercovered{transparent} %invisible
