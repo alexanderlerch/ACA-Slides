@@ -1,0 +1,140 @@
+% move all configuration stuff into include file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 2.0: Audio Content Analysis Process}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331118&}{Chapter 1~---~Introduction}: pp.~1--6
+                    Chapter~2
+            \end{block}
+            \vspace{5mm}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   audio content
+                        \item   processing steps in a typical ACA system
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   discuss typical forms of content in an audio signal
+                        \item   describe the typical signal flow in an ACA system
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+
+    \section[content]{audio content}
+        \begin{frame}{audio content}{sources}
+            \question{what are the sources of (musical) audio content?}
+
+            \begin{enumerate}
+                \item<2->	\textbf{score/composition}:
+                    \begin{itemize}
+                        \item   definition of musical ideas
+                        \item   ``blue-print'' of the music
+                        \item   \textit{examples}: melody, key, harmony, rhythmic patterns, \ldots
+                    \end{itemize}
+                \item<3->	\textbf{performance}:
+                    \begin{itemize}
+                        \item   unique acoustic rendition
+                        \item   information in the score is interpreted, modified, added to
+                        \item   \textit{examples}: (micro-)tempo, dynamics, intonation, \ldots
+                    \end{itemize}
+                \item<4->	\textbf{production}:
+                    \begin{itemize}
+                        \item   aesthetic choices 
+                        \item   editing \& processing
+                        \item   \textit{examples}: sound quality (EQ, microphone positioning), changes in timing and pitch
+                    \end{itemize}
+            \end{enumerate}
+        \end{frame}
+        \begin{frame}\frametitle{audio content}\framesubtitle{categories}
+            audio content can be structured into \textbf{4 basic categories:}
+            
+            \bigskip
+            \begin{enumerate}
+                \item<2->	\textbf{tonal}: related to pitch
+                    \begin{itemize}
+                        \item   \textit{examples}: melody, chords, intonation, vibrato, \ldots
+                    \end{itemize}
+                        \smallskip
+                \item<3->	\textbf{timbral}: related to sound quality
+                    \begin{itemize}
+                        \item   \textit{examples}: instrument(ation), playing technique, venue, audio processing, \ldots
+                    \end{itemize}
+                        \smallskip
+                \item<4->	\textbf{intensity-related}: related to musical dynamics
+                    \begin{itemize}
+                        \item   \textit{examples}: accents, loudness, \ldots
+                    \end{itemize}
+                        \smallskip
+                \item<5->	\textbf{temporal}: related to rhythm and tempo
+                    \begin{itemize}
+                        \item   \textit{examples}: timing, meter, rhythmic patterns, \ldots
+                    \end{itemize}
+                        \smallskip
+            \end{enumerate}
+            \visible<6->{other non-musical content descriptions: e.g., statistical, technical}
+        \end{frame}
+
+    \section[ACA]{generic audio content analysis system}
+        \begin{frame}\frametitle{audio content analysis}\framesubtitle{system overview}
+            \begin{textblock*}{100mm}(1cm,2cm)
+                \includegraphics[scale=.2]{waveform}
+            \end{textblock*}
+            \begin{figure}
+                \centering
+                \only<1>{\input{pict/introduction_ACASystem}}
+                \only<2>{\input{pict/introduction_ACASystem_2}}
+                \only<3->{\input{pict/introduction_ACASystem_3}}
+            \end{figure}
+            
+            \begin{columns}
+                \column{.5\textwidth}
+                    \begin{itemize}
+                        \item<2->[]	\textbf{feature} representation
+                                \begin{itemize}
+                                    \item 	compact and non-redundant
+                                    \item	task-relevant
+                                    \item   easy to analyze
+                                \end{itemize}
+                    \end{itemize}
+                \column{.5\textwidth}
+                    \begin{itemize}
+                        \item<3->[]	\textbf{classification}
+                                \begin{itemize}
+                                    \item	map or convert feature to comprehensible domain
+                                \end{itemize}
+                    \end{itemize}
+            \end{columns}
+        \end{frame}
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item      \textbf{audio content}
+                    \begin{itemize}
+                        \item   is shaped by the musical ideas (score), the music performance, and the (studio) production
+                        \item   can relate to timbre, pitch, intensity, tempo and rhythm (but there is both lower level and higher level content)
+                    \end{itemize}
+                \bigskip
+                \item   the \textbf{flow chart of an ACA system} at its most fundamental level shows
+                    \begin{itemize}
+                        \item   a feature extraction step to extract meaningful descriptors
+                        \item   a classification or inference step to produce a ``human'' result
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

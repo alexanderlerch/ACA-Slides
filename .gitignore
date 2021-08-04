@@ -250,3 +250,6 @@
 /include/*.tmp
 /*.xml
 /02-00-ACA-System-Intro-blx.bib
+/03-00-ACA-Input-Signals-blx.bib
+/03-01-ACA-Input-Signals-blx.bib
+/graph/*.svg

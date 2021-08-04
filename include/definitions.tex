@@ -8,7 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % relative paths
-\graphicspath{{graph/}}
+\graphicspath{{../ACA-Plots/graph/}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,28 +41,31 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % media9
-\newcommand{\includeaudio}[1]{{\includemedia[
-                        addresource=audio/#1.mp3,
-                        width=5mm,
-                        height=5mm,
-                        activate=onclick,
-                        flashvars={
-                            source=audio/#1.mp3  
-                            &autoPlay=true
-                        }]
-                        {\includegraphics[width=5mm, height=5mm]{SpeakerIcon}}
-                        {APlayer.swf}}}
-\newcommand{\audioautoplay}[1]{{\begin{center}\includemedia[
-                            addresource=audio/#1.mp3,
-                            width=.1\linewidth,
-                            height=.01\linewidth,
-                            activate=pageopen,
-                            flashvars={
-                                source=audio/#1.mp3  
-                                &autoPlay=true
-                            }]
-                            {}
-                            {APlayer.swf}\end{center}}}
+\newcommand{\includeaudio}[1]{
+\href{run:audio/#1.mp3}{\includegraphics[width=5mm, height=5mm]{graph/SpeakerIcon}}
+%{\includemedia[
+                        %addresource=audio/#1.mp3,
+                        %width=5mm,
+                        %height=5mm,
+                        %activate=onclick,
+                        %flashvars={
+                            %source=audio/#1.mp3  
+                            %&autoPlay=true
+                        %}]
+                        %{\includegraphics[width=5mm, height=5mm]{graph/SpeakerIcon}}
+                        %{APlayer.swf}}
+                        }
+%\newcommand{\audioautoplay}[1]{{\begin{center}\includemedia[
+                            %addresource=audio/#1.mp3,
+                            %width=.1\linewidth,
+                            %height=.01\linewidth,
+                            %activate=pageopen,
+                            %flashvars={
+                                %source=audio/#1.mp3  
+                                %&autoPlay=true
+                            %}]
+                            %{}
+                            %{APlayer.swf}\end{center}}}
 
 \newcommand{\includevideo}[1]{{\begin{center}\includemedia[
                         addresource=video/#1.mp4,
@@ -89,7 +92,7 @@
 \newcommand{\includeanimation}[4]{{\begin{center}
                         \animategraphics[autoplay,loop]{#4}{animate#1/#1-}{#2}{#3}        
                         \end{center}
-                        \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/animate#1.m}{matlab/animate#1.m}}}
+                        \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Plots/blob/master/matlab/animate#1.m}{matlab/animate#1.m}}}
                         \inserticon{video}}
                         
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,7 +106,7 @@
                             \column{.1\textwidth}
                                 \vspace{-8mm}
                                 \begin{flushright}
-                                     \includegraphics[width=\columnwidth]{question_mark}
+                                     \includegraphics[width=\columnwidth]{graph/question_mark}
                                 \end{flushright}
                                 \vspace{6mm}
                           \end{columns}\pause\vspace{-12mm}}
@@ -129,24 +132,17 @@
                                 \textbf{matlab exercise}: #1
                             \column{.2\textwidth}
                                 \begin{flushright}
-                                     \includegraphics[scale=.5]{logo_matlab}
+                                     \includegraphics[scale=.5]{graph/logo_matlab}
                                 \end{flushright}
                                 %\vspace{6mm}
                           \end{columns}}
 
 \newcommand{\addreference}[1]{  
                   
-                    \begin{textblock*}{\baselineskip }(1.12\textwidth,.5\textheight) %(1.15\textwidth,.4\textheight)
-                        %\rotatebox{90}{\tiny {#1}}
+                    \begin{textblock*}{\baselineskip }(.98\paperwidth,.5\textheight) %(1.15\textwidth,.4\textheight)
                          \begin{minipage}[b][.5\paperheight][b]{1cm}%
                             \vfill%
-                            %\centering
-                            % \includegraphics[width=.9\textwidth]{example-image}
                              \rotatebox{90}{\tiny {#1}}
-                             %\vfill      
-                            %\usebeamercolor[fg]{sidebar}
-                            %\insertframenumber
-                            %\vskip1.5em%
                         \end{minipage}
                    \end{textblock*}
                     }
@@ -154,11 +150,11 @@
 \newcommand{\figwithmatlab}[1]{
                     \begin{figure}
                         \centering
-                        \includegraphics{#1}
+                        \includegraphics[scale=.75]{#1}
                         %\label{fig:#1}
                     \end{figure}
                     
-                    \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/display#1.m}{matlab/display#1.m}}}
+                    \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Plots/blob/main/matlab/display#1.m}{plot#1.m}}}
 \newcommand{\figwithref}[2]{
                     \begin{figure}
                         \centering
@@ -171,7 +167,7 @@
 \newcommand{\inserticon}[1]{
 
                     \begin{textblock*}{100mm}(14.5cm,7.5cm)
-                        \includegraphics[height=.8cm,keepaspectratio]{#1}
+                        \includegraphics[height=.8cm,keepaspectratio]{graph/#1}
                     \end{textblock*}}            
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

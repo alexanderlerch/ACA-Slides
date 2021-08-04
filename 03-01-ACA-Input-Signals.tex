@@ -2,7 +2,7 @@
 \input{include}
 
 
-\subtitle{Module 3.0: Input Representation~---~Signals}
+\subtitle{Module 3.1: Input Representation~---~Signals}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -67,11 +67,11 @@
                 f_0 	&=& \frac{1}{T_0} =  \frac{\omega_0}{2\pi}
             \end{eqnarray*}
 
-            \vspace{-4mm}
+            %\vspace{-4mm}
             \only<2>{
-                \figwithmatlab{PeriodicRandom}
+                \figwithmatlab{Periodic}
              }
-            \vphantom{\includegraphics{PeriodicRandom}}
+            \vphantom{\includegraphics{Periodic}}
         \end{frame}
 
         \begin{frame}{audio signals}{periodic signals 2/5}
@@ -108,14 +108,17 @@
             \begin {equation*}
                 \hat{x}(t) = \sum\limits_{k=-\mathcal{K}}^{\mathcal{K}} a_k e^{\jom_0kt}
             \end {equation*}
-            %\vspace{-5mm}
+            \vspace{-4mm}
+            \figwithmatlab{FourierSeries}
+        \end{frame}
+
+        \begin{frame}{audio signals}{periodic signals 5/5}
             \only<1>{
                     \vspace{-4mm}
                     \begin{figure}
                         \centering
-                        \includegraphics{AdditiveSynthesisSaw-1.pdf}
+                        \includegraphics[scale=.75]{AdditiveSynthesisSaw-1}
                     \end{figure}
-                \addreference{{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAdditiveSynthesis.m}{matlab/displayAdditiveSynthesis.m}}}
             }
             
             \setcounter{i}{1}
@@ -127,15 +130,25 @@
                     \vspace{-4mm}
                     \begin{figure}
                         \centering
-                        \includegraphics{AdditiveSynthesisSaw-\arabic{i}}
+                        \includegraphics[scale=.75]{AdditiveSynthesisSaw-\arabic{i}}
                     \end{figure}
-                    \audioautoplay{additivesynthesis_saw_\arabic{i}}
+                    %\audioautoplay{additivesynthesis_saw_\arabic{i}}
                     
-                    \addreference{{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAdditiveSynthesis.m}{matlab/displayAdditiveSynthesis.m}}}
+                \addreference{{matlab source: \href{https://github.com/alexanderlerch/ACA-Plots/blob/master/matlab/plotAdditiveSynthesis.m}{plotAdditiveSynthesis.m}}}
                 }
                 \stepcounter{i} 
+                
             }	
-            
+            \only<1-6>{
+                 \begin{tabular}{ccccc}
+                    1&3&1&25&50\\
+                    \includeaudio{additivesynthesis_saw_1} &
+                    \includeaudio{additivesynthesis_saw_2} &
+                    \includeaudio{additivesynthesis_saw_3} &
+                    \includeaudio{additivesynthesis_saw_4} &
+                    \includeaudio{additivesynthesis_saw_5} 
+                \end{tabular}
+            }
             \setcounter{i}{1}
             \whiledo{\value{i}<6}	
             {
@@ -145,28 +158,26 @@
                     \vspace{-4mm}
                     \begin{figure}
                         \centering
-                        \includegraphics{AdditiveSynthesisRect-\arabic{i}.pdf}
+                        \includegraphics[scale=.75]{AdditiveSynthesisRect-\arabic{i}.pdf}
                     \end{figure}
-                    \audioautoplay{additivesynthesis_rect_\arabic{i}}
+                    %\audioautoplay{additivesynthesis_rect_\arabic{i}}
                     
-                    \addreference{{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAdditiveSynthesis.m}{matlab/displayAdditiveSynthesis.m}}}
+                \addreference{{matlab source: \href{https://github.com/alexanderlerch/ACA-Plots/blob/master/matlab/plotAdditiveSynthesis.m}{plotAdditiveSynthesis.m}}}
                 }
                 \stepcounter{i} 
             }	
+            \only<7->{
+                \begin{tabular}{ccccc}
+                    1&3&10&25&50\\
+                    \includeaudio{additivesynthesis_rect_1} &
+                    \includeaudio{additivesynthesis_rect_2} &
+                    \includeaudio{additivesynthesis_rect_3} &
+                    \includeaudio{additivesynthesis_rect_4} &
+                    \includeaudio{additivesynthesis_rect_5} 
+                \end{tabular}
+                }
         \end{frame}
-        \begin{frame}{audio signals}{periodic signals 5/5}
-            youtube example --- mechanical additive synthesis:
-            
-            \bigskip
-            \bigskip
-            \bigskip
-            \bigskip
-            \begin{center}
-                \href{http://youtu.be/8KmVDxkia_w}{youtu.be/8KmVDxkia\_w}
-            \end{center}
-            %      
-            \inserticon{video}
-        \end{frame}
+        
 
     \section[random signals]{random signals}
         \begin{frame}{audio signals}{random process 1/2}
@@ -226,31 +237,163 @@
             \begin{frame}{statistical signal description}{RFD: real world signals}
                 \figwithmatlab{Rfd}
             \end{frame}	
+            
+        \begin{frame}{statistical signal description}{arithmetic mean}
+            \vspace{-7mm}
+            \begin{columns}
+            \column{.3\linewidth} 
+            \begin{itemize}
+                \item   from time series $x$:
+                    \begin{equation*}\label{eq:arith_mean}
+                        \mu_x(n) = \frac{1}{\mathcal{K}}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{x(i)} 
+                    \end{equation*}
+                \item   from distribution $p_x$:
+                    \begin{equation*}\label{eq:arith_mean2}
+                        \mu_x(n) = \sum\limits_{x=-\infty}^{\infty}{x\cdot p_x(x)} 
+                    \end{equation*}
+            \end{itemize}
+            \column{.7\linewidth} 
+             
+               \figwithmatlab{ArithmeticMean}
+            \end{columns}
+        \end{frame}
 
+        \begin{frame}{statistical signal description}{geometric \& harmonic mean}
+			\begin{itemize}
+				\item	\textbf{geometric mean}
+				\begin{eqnarray*}
+					\mathrm{Mg}_v		&=& \sqrt[\mathcal{N}]{\prod\limits_{0}^{\mathcal{N}-1}{v(n)}}\label{eq:geo_mean1}\\
+								&=& \exp\left({\frac{1}{\mathcal{N}}\sum\limits_{0}^{\mathcal{N}-1}{\log\big(v(n)\big)}}\right) .\label{eq:geo_mean2}
+				\end{eqnarray*}
+                \pause
+				\item	\textbf{harmonic mean}
+				\begin{equation*}
+				\mathrm{Mh}_v = \frac{\mathcal{N}}{\sum\limits_{0}^{\mathcal{N}-1}{\nicefrac{1}{v(n)}}} .
+				\end{equation*}
+			\end{itemize}
+        \end{frame}
+
+        \begin{frame}{statistical signal description}{variance \& standard deviation}
+            \vspace{-2mm}
+			measure of \textit{spread} of the signal around its mean
+            \vspace{-5mm}
+            \begin{columns}
+            \column{.3\linewidth} 
+            \begin{itemize}
+                \item \textbf{variance}
+                    \begin{itemize}
+                        \item   from signal block:
+                        \vspace{-2mm}
+                            \begin{equation*}
+                                \sigma_x^2(n) = \frac{1}{\mathcal{K}}\sum\limits_{i= i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{\big(x(i)-\mu_x(n)\big)^2} 
+                            \end{equation*}
+                        \pause
+                        \item   from distribution:
+                        \vspace{-2mm}
+                            \begin{equation*}
+                                \sigma_x^2(n) = \sum\limits_{x=-\infty}^{\infty}{\big(x-\mu_x\big)^2\cdot p_x(x)} 
+                            \end{equation*}
+                    \end{itemize}
+                \pause
+                \item \textbf{standard deviation}
+                        \vspace{-2mm}
+                    \begin{equation*}
+                        \sigma_x(n) = \sqrt{\sigma_x^2(n)} 
+                    \end{equation*}
+            \end{itemize}
+            \column{.7\linewidth} 
+                
+               \figwithmatlab{StandardDeviation}
+            \end{columns}
+        \end{frame}
+
+		\begin{frame}{statistical signal description}{quantiles \& quantile ranges}
+			dividing the PDF into (equal sized) subsets
+            %\vspace{-3mm}
+            %\begin{columns}
+            %\column{.4\linewidth}
+            %\begin{footnotesize}
+			\begin{eqnarray*}
+				Q_\mathrm{X}(c_p) &=& \argmin\big (F_\mathrm{X}(x) \leq c_p\big)\\
+                with\quad F_\mathrm{X}(x) &=& {\int\limits_{-\infty}^{x}{p_\mathrm{x}(y)\, dy}}
+			\end{eqnarray*}
+            %\end{footnotesize}
+            %\column{.6\linewidth}
+            %\vspace{-9mm}
+			%\begin{figure}
+                %\includegraphics{PdfQuantiles}
+            %\end{figure}
+            %\end{columns}
+        \end{frame}
+		
+        \begin{frame}{statistical signal description}{quantile examples}
+			\begin{itemize}
+				\item	\textbf{median}
+						\begin{equation*}\label{eq:median}
+							Q_\mathrm{X}(0.5) = \argmin\big (F_\mathrm{X}(x) \leq 0.5\big)
+						\end{equation*}
+				\bigskip
+				\item	\textbf{quartiles}: $Q_\mathrm{X}(0.25),\, Q_\mathrm{X}(0.5)$, and $Q_\mathrm{X}x(0.75)$
+				\bigskip
+                \item	\textbf{quantile range}, e.g.
+						\begin{equation*}
+							\Delta Q_\mathrm{X}(0.9) = Q_\mathrm{X}(0.95)-Q_\mathrm{X}(0.05)
+						\end{equation*}
+			\end{itemize}
+        \end{frame}
+		%\begin{frame}{statistical features}{matlab exercise}
+            %\matlabexercise{statistical feature implementation}
+            %\begin{enumerate}
+                %\item   load an audio file
+                %\item   make both block size and hop size parameters of your matlab function
+                %\item   implement the following features extracted per block of your time domain signal:
+                    %\begin{itemize}
+                        %\item   mean and median
+                        %\item   variance and standard deviation
+                        %\item   skewness and kurtosis
+                    %\end{itemize}
+            %\end{enumerate}
+		%\end{frame}
+        
     \section{summary}
         \begin{frame}{summary}{lecture content}
+            %\begin{itemize}
+                %\bigskip
+                %\item   \textbf{feature description}
+                    %\begin{itemize}
+                        %\item   \textit{mean}: average value
+                        %\item   \textit{variance} and \textit{standard deviation}: measure of expected deviation from the mean
+                        %\item   \textit{quantiles}: numerical pdf shape description
+                    %\end{itemize}
+            %\end{itemize}
             \begin{itemize}
                 \item   signals can be categorized into \textbf{deterministic and random signals}
                     \begin{itemize}
                         \item   deterministic signal can be described in a mathematical function
                         \item   random processes can only be described by their general properties
                     \end{itemize}
-                \bigskip
+                \smallskip
                 \item      \textbf{periodic signals}
                     \begin{itemize}
                         \item   periodic signals are probably the most music-related deterministic signal
                         \item   any periodic (pitched) signal is a sum of weighted sinusoidals
                         \item   frequencies \textit{only} at the fundamental frequency and integer multiples
                     \end{itemize}
-                \bigskip
+                \smallskip
                 \item   \textbf{random} signals
                     \begin{itemize}
                         \item   noise, unpredictable
                     \end{itemize}
-                \bigskip
+                \smallskip
                 \item   \textbf{real-world} signals
                     \begin{itemize}
                         \item   can be seen as a time-varying mixture of these two signal categories
+                    \end{itemize}
+               \smallskip
+               \item   \textbf{statistical features}  
+                    \begin{itemize}
+                        \item  summarize technical signal characteristics in few numerical values 
+                        \item   may be used on a time domain, frequency domain, or feature domain signal
                     \end{itemize}
             \end{itemize}
             \inserticon{summary}
