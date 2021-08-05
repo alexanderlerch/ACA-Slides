@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 2.4: Fundamentals~---~Blocking}
+\subtitle{Module 3.2: Fundamentals~---~Blocking}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~18--20
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~18--20
+                Section 3.2
             \end{block}
 
             \begin{itemize}
@@ -42,7 +41,7 @@
                 \item   \textbf{reasons}:
                     \begin{itemize}
                         \item   block based processing methods such as the Short-Time Fourier Transform
-                        \item	quasi-stationary signal properties within block
+                        %\item	quasi-stationary signal properties within block
                         \item	audio hardware characteristics (real-time systems)
                         \item	efficiency (memory allocation, SIMD)
                     \end{itemize}
@@ -50,14 +49,15 @@
                 \item<2->   typical block lengths:
                     \begin{itemize}
                         \item   1\ldots thousands of samples
-                        \item   often powers of 2
+                        \item   often powers of 2 (1024, 2048, ...)
                     \end{itemize}
             \end{itemize}
         \end{frame}
+        
         \begin{frame}{block based processing}{description}
             \vspace{-4mm}
             \figwithmatlab{Blocking}
-            \pause
+
             \begin{columns}
                 \column{.6\textwidth}
                     \vspace{-11mm}
@@ -74,6 +74,7 @@
                     \end{itemize}
             \end{columns}
         \end{frame}
+        
     \section[definitions]{terms \& definitions}
         \begin{frame}{block based processing}{terms and definitions}
             \begin{columns}
@@ -125,7 +126,7 @@
                             \end{itemize}
                         \item   block \textit{time stamp}:
                             \begin{itemize}
-                                \item typically refers to middle of block
+                                \item typically refers to either start or middle of block
                             \end{itemize}
                     \end{itemize}
             \end{itemize}
