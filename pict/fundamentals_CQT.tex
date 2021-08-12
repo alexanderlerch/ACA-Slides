@@ -1,5 +1,5 @@
 \newcommand{\plotrect}[1]{%
-\setcounter{iXOffset}{0}%
+\setcounter{iXOffset}{4}%
 \setcounter{i}{0}%
 \whiledo{\value{i} < #1}%
 {%
@@ -12,32 +12,156 @@
 \addtocounter{iYBlockSize}{\value{iYBlockSize}}%
 }
 
-\begin{footnotesize}
-				\begin{picture}(18,40)
-					\setcounter{iYOffset}{5}
-					\setcounter{iXBlockSize}{16}
-					\setcounter{iYBlockSize}{1}
-	
-					% blocks
-                    \plotrect{\value{iYBlockSize}}
 
-					\setcounter{iXBlockSize}{8}
-                    \plotrect{\value{iYBlockSize}}
+\begin{picture}(72,38)
+	\setcounter{iYOffset}{5}
+	\setcounter{iXBlockSize}{32}
+	\setcounter{iYBlockSize}{1}
 
-					\setcounter{iXBlockSize}{4}
-                    \plotrect{\value{iYBlockSize}}
+	% blocks
+		\plotrect{\value{iYBlockSize}}
 
-					\setcounter{iXBlockSize}{2}
-                    \plotrect{\value{iYBlockSize}}
+	\setcounter{iXBlockSize}{16}
+		\plotrect{\value{iYBlockSize}}
 
-					\setcounter{iXBlockSize}{1}
-                    \plotrect{\value{iYBlockSize}}
+	\setcounter{iXBlockSize}{8}
+        \plotrect{\value{iYBlockSize}}
 
-					\put(9,69)
-						{\text{5-point CQT}}
-					\put(6,2)
-						{\text{time}}
-					\put(-5, 15)
-						{\rotatebox{90}{\text{frequency}}}
-				\end{picture}
-\end{footnotesize}
+	\setcounter{iXBlockSize}{4}
+        \plotrect{\value{iYBlockSize}}
+
+	\setcounter{iXBlockSize}{2}
+        \plotrect{\value{iYBlockSize}}
+
+	\put(9,69)
+		{\text{5-point CQT}}
+	\put(17,2)
+		{\text{\footnotesize time}}
+	\put(0, 15)
+		{\rotatebox{90}{\text{\footnotesize  frequency}}}
+	\put(52,2)
+		{\text{\footnotesize time}}
+ 
+
+
+       
+	\setcounter{iXBlockSize}{32}
+    \setcounter{iXOffset}{40}
+    \setcounter{iYOffset}{5}
+	\setcounter{iYBlockSize}{1}
+
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+	\setcounter{iXBlockSize}{8}
+    \addtocounter{iYOffset}{\value{iYBlockSize}}%
+    \addtocounter{iYBlockSize}{\value{iYBlockSize}}
+    {\put(40, \value{iYOffset}){\textcolor{gray}{\rule{\value{iXBlockSize}mm}{\value{iYBlockSize}mm}}}}
+    {\put(40, \value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){{\tiny 0}}}}
+	\setcounter{iXBlockSize}{16}
+    \addtocounter{iXOffset}{8}
+    
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+    \addtocounter{iXOffset}{\value{iXBlockSize}}
+	\setcounter{iXBlockSize}{8}
+    {\put(\value{iXOffset}, \value{iYOffset}){\textcolor{gray}{\rule{\value{iXBlockSize}mm}{\value{iYBlockSize}mm}}}}
+    {\put(\value{iXOffset}, \value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){{\tiny 0}}}}
+    \addtocounter{iXOffset}{-16}
+
+	\setcounter{iXBlockSize}{12}
+    \addtocounter{iYOffset}{\value{iYBlockSize}}%
+    \addtocounter{iYBlockSize}{\value{iYBlockSize}}
+    {\put(40, \value{iYOffset}){\textcolor{gray}{\rule{\value{iXBlockSize}mm}{\value{iYBlockSize}mm}}}}
+    {\put(40, \value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){{\tiny 0}}}}
+	\setcounter{iXBlockSize}{8}
+    \addtocounter{iXOffset}{4}
+    
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+    \addtocounter{iXOffset}{\value{iXBlockSize}}
+	\setcounter{iXBlockSize}{12}
+    {\put(\value{iXOffset}, \value{iYOffset}){\textcolor{gray}{\rule{\value{iXBlockSize}mm}{\value{iYBlockSize}mm}}}}
+    {\put(\value{iXOffset}, \value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){{\tiny 0}}}}
+    \addtocounter{iXOffset}{-8}
+
+	\setcounter{iXBlockSize}{14}
+    \addtocounter{iYOffset}{\value{iYBlockSize}}%
+    \addtocounter{iYBlockSize}{\value{iYBlockSize}}
+    {\put(40, \value{iYOffset}){\textcolor{gray}{\rule{\value{iXBlockSize}mm}{\value{iYBlockSize}mm}}}}
+    {\put(40, \value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){{\tiny 0}}}}
+	\setcounter{iXBlockSize}{4}
+    \addtocounter{iXOffset}{2}
+    
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+    \addtocounter{iXOffset}{\value{iXBlockSize}}
+	\setcounter{iXBlockSize}{14}
+    {\put(\value{iXOffset}, \value{iYOffset}){\textcolor{gray}{\rule{\value{iXBlockSize}mm}{\value{iYBlockSize}mm}}}}
+    {\put(\value{iXOffset}, \value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){{\tiny 0}}}}
+    \addtocounter{iXOffset}{-4}
+
+	\setcounter{iXBlockSize}{15}
+    \addtocounter{iYOffset}{\value{iYBlockSize}}%
+    \addtocounter{iYBlockSize}{\value{iYBlockSize}}
+    {\put(40, \value{iYOffset}){\textcolor{gray}{\rule{\value{iXBlockSize}mm}{\value{iYBlockSize}mm}}}}
+    {\put(40, \value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){{\tiny 0}}}}
+	\setcounter{iXBlockSize}{2}
+    \addtocounter{iXOffset}{1}
+    
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+
+    \addtocounter{iXOffset}{\value{iXBlockSize}}
+	\setcounter{iXBlockSize}{15}
+    {\put(\value{iXOffset}, \value{iYOffset}){\textcolor{gray}{\rule{\value{iXBlockSize}mm}{\value{iYBlockSize}mm}}}}
+    {\put(\value{iXOffset}, \value{iYOffset}){\framebox(\value{iXBlockSize}, \value{iYBlockSize}){{\tiny 0}}}}
+    \addtocounter{iXOffset}{-2}
+
+	\setcounter{iXBlockSize}{32}
+    \setcounter{iXOffset}{40}
+    \setcounter{iYOffset}{5}
+	\setcounter{iYBlockSize}{1}
+
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+    \addtocounter{iYOffset}{\value{iYBlockSize}}%
+    \addtocounter{iYBlockSize}{\value{iYBlockSize}}
+	\setcounter{iXBlockSize}{16}
+    \addtocounter{iXOffset}{8}
+    
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+    \addtocounter{iYOffset}{\value{iYBlockSize}}%
+    \addtocounter{iYBlockSize}{\value{iYBlockSize}}
+	\setcounter{iXBlockSize}{8}
+    \addtocounter{iXOffset}{4}
+    
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+    \addtocounter{iYOffset}{\value{iYBlockSize}}%
+    \addtocounter{iYBlockSize}{\value{iYBlockSize}}
+	\setcounter{iXBlockSize}{4}
+    \addtocounter{iXOffset}{2}
+    
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+    \addtocounter{iYOffset}{\value{iYBlockSize}}%
+    \addtocounter{iYBlockSize}{\value{iYBlockSize}}
+	\setcounter{iXBlockSize}{2}
+    \addtocounter{iXOffset}{1}
+    
+    \put(\value{iXOffset}, \value{iYOffset})%
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize})}%
+
+       
+\end{picture}
+

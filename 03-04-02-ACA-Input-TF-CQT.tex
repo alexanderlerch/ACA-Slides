@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 2.6: Fundamentals~---~Non-Fourier Time-Frequency Transforms}
+\subtitle{Module 3.4.2: Time-Frequency Representations~---~Constant Q Transform}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,19 +12,19 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~24--26
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~24--26
+                    Section 3.4.2
             \end{block}
 
             \begin{itemize}
                 \item   \textbf{lecture content}
                     \begin{itemize}
                         \item   constant-Q transform (CQT)
-                        \item   Gammatone filterbank
                     \end{itemize}
                 \bigskip
                 \item<2->   \textbf{learning objectives}
                     \begin{itemize}
-                        \item   discussing the advantages and disadvantages of different time-frequency transforms
+                        \item   discussing advantages and disadvantages of different time-frequency transforms
                         \item   explaining the principles of the CQT and auditory filterbanks
                     \end{itemize}
             \end{itemize}
@@ -34,7 +32,7 @@
         \end{frame}
         
     \section[intro]{introduction}
-        \begin{frame}{other time frequency transforms}{introduction}
+        \begin{frame}{non-FT time frequency transforms}{introduction}
             \begin{itemize}
                 \item   Fourier transform continues to be much-used tool in audio signal processing and MIR
                 \bigskip
@@ -100,21 +98,23 @@
         \begin{frame}{constant Q transform}{implementation 2/2}
             \vspace{-5mm}
             \begin{columns}
-                \column{.4\linewidth}
+                \column{.3\linewidth}
                     \begin{center}\textbf{non-overlapping}\end{center}
                     \vspace{-8mm}
                     \begin{figure}
                     \centering
                         \scalebox{1.2}{\input{pict/fundamentals_CQT}}
                     \end{figure}
-                \column{.6\linewidth}
+                \column{.3\linewidth}
                     \begin{center}\textbf{overlapping}\end{center}
                     \vspace{10mm}
+                    \vspace{15mm}
+                \column{.3\linewidth}
+                    \begin{center}\textbf{differences}\end{center}
                     \begin{itemize}
-                        \item   define transformation matrix with maximum window length
-                        \item   zeropad higher frequencies (left \& right)
-                        \bigskip
-                        \item[$\Rightarrow$] independent definition of block and hop length
+                        \item   outputs at multiple vs.\ one time resolution
+                        \item   multiple different FFT lengths vs.\ one FFT length (zero-padded)
+                        \item   dependent vs.\ independent definition of block and hop length
                     \end{itemize}
                     \vspace{15mm}
                 \end{columns}
@@ -134,38 +134,38 @@
             \end{itemize}
         \end{frame}	
 
-    \section{Auditory Filterbanks}
-        \begin{frame}{auditory filterbanks}{introduction}
-            FT and related transforms bad models of physiological properties of the human ear:
-                \begin{itemize}
-                    \item   frequency resolution (critical bands)
-                    \item   frequency scale (pitch resolution)
-                    \item   loudness \& masking
-                    \item   event perception \&  time integration
-                \end{itemize}
-            
-            \smallskip
-            $\Rightarrow$ \textbf{auditory filterbanks}
-            
-            \pause
-            \bigskip
-            not as widely used as one might think because
-            
-            \begin{enumerate}
-                \item<3->	computationally inefficient
-                \item<3->	analysis only: no invertibility (mostly)
-                \item<3->	not proven to be superior
-            \end{enumerate}
-        \end{frame}	
-
-        \begin{frame}{auditory filterbanks}{gammatone filterbank}
-            \vspace{-6mm}
-            \begin{equation*}
-                h(i) = \frac{ a \cdot\left(\nicefrac{i}{f_{\mathrm{S}}}\right)^{\mathcal{O}-1}\cdot \cos\left( 2\pi \cdot f_{\mathrm{c}} \frac{ i}{f_{\mathrm{S}}} \right) }{\e^{\nicefrac{2\pi i \Delta f}{f_{\mathrm{S}}}}}
-            \end{equation*}
-            \vspace{-4mm}
-            \figwithmatlab{Gammatone}
-        \end{frame}	
+    %\section{Auditory Filterbanks}
+        %\begin{frame}{auditory filterbanks}{introduction}
+            %FT and related transforms bad models of physiological properties of the human ear:
+                %\begin{itemize}
+                    %\item   frequency resolution (critical bands)
+                    %\item   frequency scale (pitch resolution)
+                    %\item   loudness \& masking
+                    %\item   event perception \&  time integration
+                %\end{itemize}
+            %
+            %\smallskip
+            %$\Rightarrow$ \textbf{auditory filterbanks}
+            %
+            %\pause
+            %\bigskip
+            %not as widely used as one might think because
+            %
+            %\begin{enumerate}
+                %\item<3->	computationally inefficient
+                %\item<3->	analysis only: no invertibility (mostly)
+                %\item<3->	not proven to be superior
+            %\end{enumerate}
+        %\end{frame}	
+%
+        %\begin{frame}{auditory filterbanks}{gammatone filterbank}
+            %\vspace{-6mm}
+            %\begin{equation*}
+                %h(i) = \frac{ a \cdot\left(\nicefrac{i}{f_{\mathrm{S}}}\right)^{\mathcal{O}-1}\cdot \cos\left( 2\pi \cdot f_{\mathrm{c}} \frac{ i}{f_{\mathrm{S}}} \right) }{\e^{\nicefrac{2\pi i \Delta f}{f_{\mathrm{S}}}}}
+            %\end{equation*}
+            %\vspace{-4mm}
+            %\figwithmatlab{Gammatone}
+        %\end{frame}	
 
     \section{summary}
         \begin{frame}{summary}{lecture content}
@@ -181,13 +181,13 @@
                         \item   similar to Fourier Transform but logarithmically spaced frequency bins
                         \item   not invertible and inefficient
                     \end{itemize}
-                \bigskip
-                \item      \textbf{filterbanks}
-                    \begin{itemize}
-                        \item   good model of human physiology
-                        \item   not invertible and inefficient
-                        \item   not proven to be superior
-                    \end{itemize}
+                %\bigskip
+                %\item      \textbf{filterbanks}
+                    %\begin{itemize}
+                        %\item   good model of human physiology
+                        %\item   not invertible and inefficient
+                        %\item   not proven to be superior
+                    %\end{itemize}
             \end{itemize}
             \inserticon{summary}
         \end{frame}
