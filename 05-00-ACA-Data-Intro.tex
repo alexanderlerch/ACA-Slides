@@ -1,0 +1,214 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 5.0: Data, Data Splits, and Augmentation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~155)
+                    Section~5
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   data requirements
+                        \item   data splits for train and test
+                        \item   N-Fold cross-validation
+                        \item   data augmentation
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   understand the importance of data in machine learning 
+                        \item   define task-specific data requirements
+                        \item   discuss possibilities of data augmentation
+                        \item   implement N-Fold cross-validation in Python
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{machine learning}{data-driven}
+           \begin{itemize}
+                \item   derive classification parameters from data, e.g.,
+                \item[$\Rightarrow$]  learn feature distributions/separation metrics per class
+                \bigskip
+                \item  typical steps
+                    \begin{enumerate}
+                        \item	\textbf{define training set}: annotated results
+                        \smallskip
+                        \item<2->	\textbf{normalize} training set
+                        \smallskip
+                        \item<3->	\textbf{train} classifier
+                        \smallskip
+                        \item<4->	\textbf{evaluate} classifier with test (or validation) set
+                        \smallskip
+                        \item<5->	(\textbf{adjust} classifier settings, return to 4.)
+                    \end{enumerate}
+            \end{itemize}
+        \end{frame}
+
+    \section{data}
+        \begin{frame}{data}{requirements}
+            \question{what are important properties of our data} 
+          
+            \begin{itemize}
+                \item   \textbf{representative}
+                    \begin{itemize}
+                        \item   represent all necessary factors of input data (e.g., range of genres, audio qualities, musical complexity, etc.)
+                        \item   unbiased representation of class balance/label distribution
+                    \end{itemize}
+                \item   \textbf{clean}, non-noisy
+                    \begin{itemize}
+                        \item   potential issues with subjective tasks
+                    \end{itemize}
+                \item   \textbf{sufficient}
+                    \begin{itemize}
+                        \item   complex tasks/systems require lots of data
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{data}{data split}
+            \begin{itemize}
+                \item   a bigger data set is commonly split in subsets
+                    \smallskip
+                    \begin{itemize}
+                        \item   \textbf{training data} ($\approx 70-80\%$)
+                            \begin{itemize}
+                                \item   used to build the machine learning model
+                            \end{itemize}
+                        \smallskip
+                        \item   \textbf{validation data }($\approx 10-15\%$)
+                            \begin{itemize}
+                                \item   used to tweak model parameters
+                            \end{itemize}
+                        \smallskip
+                        \item   \textbf{testing data} ($\approx 10-15\%$)
+                            \begin{itemize}
+                                \item   used to evaluate the model
+                                \item   needs to be \textbf{unseen}!
+                            \end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item   no overlap between subsets!
+                    \begin{itemize}
+                        \item also make sure that similar content (from one recording, album, artist, ...) is grouped into \textbf{one subset only}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{data}{N-Fold cross validation}
+
+            \begin{itemize}
+                \item   trying to utilize ALL data as both training and testing data
+                \item   special case: Leave One Out CV
+                \item   tends to be time-consuming
+            \end{itemize}
+            \bigskip
+            \begin{enumerate}
+                \item<2->	split training set into $N$ parts (randomly, but preferably identical number per class)
+                \item<3->	select one part as test set
+                \item<4->	train the classifier with all observations from remaining $N-1$ parts
+                \item<5->	compute the classification rate for the test set
+                \item<6->	repeat until all $N$ parts have been tested
+                \item<7->	overall result: \textit{average} classification rate
+            \end{enumerate}
+        \end{frame}
+        
+        \begin{frame}{classification}{interaction of data, features, and classifier}
+            \vspace{-3mm}
+            \begin{itemize}
+                \item   \textbf{training set}
+                    \begin{itemize}
+                        \item	training set too small, feature number too large\\ $\Rightarrow$ \textit{overfitting}
+                        \item<1->	training set \textbf{too noisy}\\ $\Rightarrow$ \textit{underfitting}
+                        \item<1->	training set \textbf{not representative}\\ $\Rightarrow$ \textit{bad classification performance}
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{classifier}
+                    \begin{itemize}
+                        \item<2->   classifier too complex\\ $\Rightarrow$ \textit{overfitting}
+                        \item<2->	\textbf{poor classifier}\\ $\Rightarrow$ \textit{bad classification performance}
+                            %\begin{itemize}
+                                %\item[$\rightarrow$]	different classifier
+                            %\end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item<3->   \textbf{features}
+                    \begin{itemize}
+                        \item<3->	\textbf{poor features}\\ $\Rightarrow$ \textit{bad classification performance}
+                            %\begin{itemize}
+                                %\item[$\rightarrow$]	new, better features
+                            %\end{itemize}
+                        %\item<3->	features \textbf{not normalized} $\Rightarrow$ possibly \textit{bad classification performance}
+                            %\begin{itemize}
+                                %\item	feature distribution (range, mean, symmetry)
+                            %\end{itemize}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section{augmentation}
+        \begin{frame}{data}{augmentation}
+            \begin{itemize}
+                \item   if annotated data is insufficient, we can 'cheat' by increasing the amount of training data
+                \item[$\Rightarrow$] \textbf{data augmentation}: apply irrelevant transforms to audio data
+                    \begin{itemize}
+                        \item<2->   \textit{data segmentation}
+                            \begin{itemize}
+                                \item   treat audio snippets as separate observations
+                            \end{itemize}
+                        \item<3->   \textit{quality degradation}
+                            \begin{itemize}
+                                \item   add noise and distortion, limit bandwidth, etc.
+                            \end{itemize}
+                        \item<4->   \textit{audio effects}
+                            \begin{itemize}
+                                \item   apply reverb, etc.
+                            \end{itemize}
+                        \item<5->   \textit{changing pitch/tempo}
+                        \item<6->   \textit{combine data}
+                            \begin{itemize}
+                                \item   mix different audio inputs together (if labels can be ``mixed'')
+                            \end{itemize}
+                        \item<7->   \textit{mask out parts of the signal}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{data}
+                    \begin{itemize}
+                        \item   {representative}
+                        \item   {clean}, non-noisy
+                        \item   {sufficient}
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{data split}
+                    \begin{itemize}
+                        \item   {train}
+                        \item   {validation}
+                        \item   {test}
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{cross validation}
+                    \begin{itemize}
+                        \item   multiple runs with varying data splits
+                        \item   maximum data utilization
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

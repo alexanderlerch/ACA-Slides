@@ -4,7 +4,11 @@ function [ClassIdx] = computeKnn(TestFeatureVector, TrainFeatureMatrix, TrainCla
         k = 3;
     end
     
-    d           = pdist2(TestFeatureVector, TrainFeatureMatrix,'euclidean');
+    d           = computeEucDist(TestFeatureVector, TrainFeatureMatrix);
     [ds,idx]    = sort(d); 
     ClassIdx    = mode(TrainClassIndices(idx(1:k)));
+end
+
+function d = computeEucDist( A, B )
+    d = sqrt(sum(A.^2, 2) * ones(1,size(B,1))  - 2*A*B' + ones(size(A,1),1) * sum(B.^2, 2)');
 end

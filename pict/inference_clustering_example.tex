@@ -1,0 +1,63 @@
+%\begin{footnotesize}
+    \begin{picture}(80,20)
+        \setcounter{iXOffset}{0}
+        \setcounter{iYOffset}{4}
+        \setcounter{iXBlockSize}{70}
+        \setcounter{iXBlockSizeDiv2}{34}
+        \setcounter{iYBlockSize}{4}
+        \setcounter{iDistance}{8}
+
+        \put(\value{iXOffset}, \value{iYOffset})
+            {\text{{\shortstack[c]{\textcolor{blue}{................................}\textcolor{gtgold}{................................}}}}}
+        
+        \addtocounter{iYOffset}{\value{iDistance}}
+        \put(\value{iXOffset}, \value{iYOffset})
+            {\text{{\shortstack[c]{\textcolor{blue}{................................}\textcolor{gtgold}{................................}}}}}
+
+        \addtocounter{iYOffset}{-\value{iDistance}}
+        \addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+        \only<2,4>{
+        \put(\value{iXOffset}, \value{iYOffset})
+            {\oval(\value{iXBlockSize}, \value{iYBlockSize})}
+        }
+        
+        \addtocounter{iYOffset}{\value{iDistance}}
+        \only<2,4>{
+        \put(\value{iXOffset}, \value{iYOffset})
+            {\oval(\value{iXBlockSize}, \value{iYBlockSize})}
+        }
+        
+        \addtocounter{iXOffset}{36}
+        \addtocounter{iYOffset}{-1}
+        \only<2,4>{
+        \put(\value{iXOffset}, \value{iYOffset})
+            {\text{\footnotesize Cluster A1}}
+        }
+        \addtocounter{iYOffset}{-\value{iDistance}}
+        \only<2,4>{
+        \put(\value{iXOffset}, \value{iYOffset})
+            {\text{\footnotesize Cluster A2}}
+        }
+        \addtocounter{iYOffset}{1}
+        \addtocounter{iYOffset}{\value{iDistance}}
+
+        \addtocounter{iYOffset}{-\value{iYBlockSize}}
+        \addtocounter{iXOffset}{-17}
+        \only<3,4>{
+        \put(16.5, \value{iYOffset})
+            {\oval(36, 18)}
+        }
+
+        \addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+        \addtocounter{iXOffset}{1}
+        \only<3,4>{
+        \put(52, \value{iYOffset})
+            {\oval(36, 18)}
+
+        \put(10,18)
+            {\text{\footnotesize Cluster B1}}
+        \put(44, 18)
+            {\text{\footnotesize Cluster B2}}
+        }
+    \end{picture}
+%\end{footnotesize}

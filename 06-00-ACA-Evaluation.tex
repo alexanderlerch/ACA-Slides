@@ -1,0 +1,236 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 6.0: Evaluation and Metrics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~155)
+                    Section~6
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   evaluation methodology
+                        \item   good practices
+                        \item   metrics
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   design proper evaluation setups for machine learning algorithms
+                        \item   list relevant metrics for different machine learning models
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{evaluation}{introduction}
+           \begin{itemize}
+                \item   without proper evaluation, there is no way to say whether a system works
+                \bigskip
+                \item   typical mistakes in evaluation
+                \begin{enumerate}
+                    \item   non-representative test set
+                        \begin{enumerate}
+                            \item	small, too homogeneous, ...
+                        \end{enumerate}
+                    \item   tuning system parameters with the test set (explicitly or implicitly)
+                    \item   using misleading evaluation procedures and metrics
+                \end{enumerate}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{evaluation}{good practices}
+           \begin{itemize}
+                \item   evaluation \textbf{method unrelated} to the specific implementation
+                    \begin{itemize}
+                        \item   has to be task driven, not algorithm driven
+                        \item   metrics should be unrelated to loss function
+                    \end{itemize}
+                \item<2->   \textbf{expectations} clearly defined
+                    \begin{itemize}
+                        \item   worst case performance (random)
+                        \item   best case performance (oracle)
+                        \item   realistic performance $\Rightarrow$ baseline system
+                            \begin{itemize}
+                                \item   Zero-R classifier
+                                \item   standard approach
+                            \end{itemize}
+                    \end{itemize}
+                \item<3->   \textbf{comparability} to state-of-the-art
+                    \begin{itemize}
+                        \item   use of established datasets and identical data splits
+                        \item   running existing systems on your data
+                    \end{itemize}
+               \item<4->   increase \textbf{reproducibility}
+                    \begin{itemize}
+                        \item   automate evaluation
+                        \item   publish source code
+                    \end{itemize}
+               \item<5->   test for \textbf{statistical significance}
+            \end{itemize}
+        \end{frame}
+
+    \section{classification}
+        \begin{frame}{classification metrics}{introduction}
+                      
+            \begin{itemize}
+                \item   possible outcomes of two class problem (positive and negative): 
+                    \begin{itemize}
+                        \item	{TP}: Positives correctly identified as Positives,
+						\item	{TN}: Negatives correctly identified Negatives,
+                        \item	{FP}: Negatives incorrectly identified Positives, and
+                        \item	{FN}: Positives incorrectly identified Negatives.
+                    \end{itemize}
+                \item   visualization: confusion matrix
+            \end{itemize}
+            
+            \begin{table}
+                \begin{center}
+                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l|cc|cccccccccc}
+                    & \textbf{Pred.\ Pos.} & \textbf{Pred.\ Neg.} & $\boldsymbol{\Sigma}$ \\ 
+                 \hline
+                    \textbf{GT Pos.} & True Pos.\ (TP) & False Neg.\ (FN) & \# of GT Pos.\ (TP+FN)\\
+                    \textbf{GT Neg.}  & False Pos.\ (FP)& True Neg.\ (TN) & \# of GT Neg.\ (FP+FN)\\ 
+                 \hline
+                    $\boldsymbol{\Sigma}$ & \# of Pred.\ Pos.\ & \# of Pred.\ Neg.\ & \# of True Pred.\ (TP+TN)
+                \end{tabular*}
+                \end{center}
+            \end{table}
+        \end{frame}
+        
+        \begin{frame}{classification metrics}{accuracy and f-measure}
+            \begin{columns}
+                \column{.5\linewidth}
+                    \begin{itemize}
+                        \item<1-> \textbf{accuracy}: how many predictions are accurate
+                        \item<2->   \textbf{macro accuracy}: averaged over classes (not observations)
+                        \item<3->   \textbf{precision}: how many predicted positives are correct
+                        \item<4->   \textbf{recall}: how many ground truth positives correctly predicted
+                        \item<5->   \textbf{f-measure}: combines precision and recall
+                    \end{itemize}
+                \column{.5\linewidth}
+                    \only<1->{
+                        \begin{footnotesize}
+                        \begin{equation*}
+                            \mathrm{Acc} = \frac{TP + TN}{TP + TN + FP + FN}
+                        \end{equation*}
+                        \end{footnotesize}
+                    }
+                    \only<2->{
+                        \smallskip
+                        \begin{footnotesize}
+                        \begin{equation*}
+                            \mathrm{Acc_{Macro}} = \frac{{\frac{TP}{TP + FN}} + {\frac{TN}{TN + FP}}}{2}  = \frac{TPR + TNR}{2}
+                        \end{equation*}
+                        \end{footnotesize}
+                    }
+                    \only<3->{
+                        \smallskip
+                        \begin{footnotesize}
+                        \begin{equation*}
+                            P = \frac{TP}{TP + FP} 
+                        \end{equation*}
+                        \end{footnotesize}
+                    }
+                    \only<4->{
+                        \smallskip
+                         \begin{footnotesize}
+                        \begin{equation*}
+                            R = \frac{TP}{TP + FN}
+                        \end{equation*}
+                        \end{footnotesize}
+                   }
+                    \only<5->{
+                        \smallskip
+                        \begin{footnotesize}
+                        \begin{equation*}
+                            F = 2\cdot \frac{P\cdot R}{P + R}
+                        \end{equation*}
+                        \end{footnotesize}
+                    }
+            \end{columns}
+        \end{frame}
+        
+        \begin{frame}{classification metrics}{area under curve}
+            \figwithmatlab{ROC}
+        \end{frame}
+
+    \section{regression}
+        \begin{frame}{regression metrics}{mae, mse, $R^2$}
+            \begin{itemize}
+                \item[]   goal: measure deviation
+            \end{itemize}
+             \begin{columns}
+                \column{.5\linewidth}
+                    \begin{itemize}
+                        \item<1->   mean absolute error
+                        \bigskip
+                        \item<2->   mean squared error
+                        \bigskip
+                        \item<3->   coefficient of determination
+                    \end{itemize}
+                \column{.5\linewidth}
+                    \only<1->{
+                        \begin{footnotesize}
+                        \begin{equation*}
+                            MAE = \frac{1}{\mathcal{R}}\sum\limits_{\forall r}|y(r) - \hat{y}(r)|
+                        \end{equation*}
+                        \end{footnotesize}
+                    }
+                    \only<2->{
+                        \smallskip
+                        \begin{footnotesize}
+                        \begin{equation*}
+                            MSE = \frac{1}{\mathcal{R}}\sum\limits_{\forall r}\big(y(r) - \hat{y}(r)\big)^2
+                        \end{equation*}
+                        \end{footnotesize}
+                    }
+                    \only<3->{
+                        \smallskip
+                        \begin{footnotesize}
+                        \begin{equation*}
+                            R^2 = 1 - \frac{MSE\big(y - \hat{y}\big)}{MSE\big(y - \mu_y\big)}
+                        \end{equation*}
+                        \end{footnotesize}
+                    }
+            \end{columns}
+           
+        \end{frame}
+        
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{evaluation}
+                    \begin{itemize}
+                        \item   system development without evaluation is meaningless
+                        \item   data and method need to be carefully selected
+                        \item   metrics need to reflect the sucess of the system
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{classification metrics}
+                    \begin{itemize}
+                        \item   accuracy and macro accuracy
+                        \item   precision, recall, and f-measure
+                        \item   AUC
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{regression metrics}
+                    \begin{itemize}
+                        \item   MAE and MSE
+                        \item   coefficient of determination
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

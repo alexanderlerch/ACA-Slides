@@ -90,7 +90,7 @@
                         {}
                         {VPlayer.swf}\end{center}\addreference{matlab source: matlab/animate#1.m}}}
 \newcommand{\includeanimation}[4]{{\begin{center}
-                        \animategraphics[autoplay,loop,scale=.75]{#4}{animation/#1-}{#2}{#3}        
+                        \animategraphics[autoplay,loop,scale=.7]{#4}{animation/#1-}{#2}{#3}        
                         \end{center}
                         \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Plots/blob/master/matlab/animate#1.m}{matlab/animate#1.m}}}
                         \inserticon{video}}
@@ -150,7 +150,7 @@
 \newcommand{\figwithmatlab}[1]{
                     \begin{figure}
                         \centering
-                        \includegraphics[scale=.75]{#1}
+                        \includegraphics[scale=.7]{#1}
                         %\label{fig:#1}
                     \end{figure}
                     
@@ -158,7 +158,7 @@
 \newcommand{\figwithref}[2]{
                     \begin{figure}
                         \centering
-                        \includegraphics[scale=.75]{#1}
+                        \includegraphics[scale=.7]{#1}
                         \label{fig:#1}
                     \end{figure}
                     
@@ -180,4 +180,5 @@
 \newcounter{iXBlockSize}
 \newcounter{iYBlockSize}
 \newcounter{iYBlockSizeDiv2}
+\newcounter{iXBlockSizeDiv2}
 \newcounter{iDistance}

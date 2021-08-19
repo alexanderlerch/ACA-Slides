@@ -1,0 +1,336 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 4.2: Regression \& Clustering}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~155)
+                    Sections~4.2 \& 4.3
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   regression: non-categorical data analysis
+                        \item   clustering: unsupervised data analysis
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe the basic principles of data-driven machine learning approaches
+                        \item   implement linear regression in Python
+                        \item   implement kMeans clustering in Python 
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{regression}{introduction}
+            remember the flow chart of a general ACA system:
+            \vspace{-3mm}
+            \begin{figure}
+                \input{pict/introduction_ACASystem_3}
+            \end{figure}
+            \begin{itemize}
+                \item<2->   \textit{classification}: 
+                    \begin{itemize}
+                        \item   assign class labels to data
+                    \end{itemize}
+                \item<2->   \color<3->{gtgold}{\textit{regression}}:
+                    \begin{itemize}
+                        \item	estimate numerical labels for data
+                    \end{itemize}
+                \item<2->   \color<3->{gtgold}{\textit{clustering}}:
+                    \begin{itemize}
+                        \item	find grouping patterns in data
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+    \section{regression}
+        \begin{frame}{regression}{introduction}
+             \vspace{-3mm}
+             \begin{itemize}
+                 \item  given a set of pairs of data and corresponding output observations
+                \item   find model that maps input to output
+                \bigskip
+                \item<2-> model can then be used to predict (continuous value) output for an unknown new input
+             \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{regression}{linear regression}
+             \vspace{-3mm}
+             \begin{columns}
+                \column{.4\linewidth} 
+                   \begin{itemize}
+                        \item   estimate the slope $m$ and offset $b$ of a straight line that fits the data best:
+                            \begin{footnotesize}
+                            \begin{equation*}
+                                \hat{y}(r) = m\cdot v(r) + b
+                            \end{equation*} 
+                        \end{footnotesize}
+                        \bigskip
+                        \item   minimizing the mean squared error leads to:
+                            \begin{footnotesize}
+                            \begin{eqnarray*}
+                                b &=& \mu_y - m\cdot \mu_v \\
+                                m &=& \frac{\sum\limits_{r=0}^{\mathcal{R}-1}\left(y(r)- \mu_y\right)\cdot \left(v(r) - \mu_v\right)}{\sum\limits_{r=0}^{\mathcal{R}-1}\left(v(r) - \mu_v\right)^2}
+                            \end{eqnarray*}
+                        \end{footnotesize}
+                    \end{itemize}
+                \column{.6\linewidth} 
+                \vspace{-10mm}
+                    \figwithmatlab{LinearRegression}
+            \end{columns}
+        \end{frame}
+        
+    \section{clustering}
+        \begin{frame}{clustering}{introduction}
+             \begin{itemize}
+                \item   clustering is usually unsupervised and exploratory
+                \item  group observations 
+                    \begin{itemize}
+                        \item 'similar' observations are grouped together
+                        \item   'dissimilar' observations are in different groups
+                    \end{itemize}
+                \item   depends on definition of 'similarity'/ distance
+             \end{itemize}
+            
+            \begin{figure}%
+                \centering
+                \input{pict/inference_clustering_example}	
+            \end{figure}
+        \end{frame}
+        
+        \begin{frame}{clustering}{kMeans clustering}
+             \only<1>{
+            \vspace{-3mm}
+             \begin{columns}
+                \column{.4\linewidth} 
+                    \begin{enumerate}
+                        \item	\emph{Initialization}: randomly select $K$ observations from the data set as initialization.
+                        \item	\emph{Update}: compute the mean for each cluster.
+                        \item	\emph{Assignment}: assign each observation to the cluster with the mean of the closest cluster.
+                        \item	\emph{Iteration}: go to step $2$ until the clusters converge.
+                    \end{enumerate}
+                \column{.6\linewidth} 
+                \vspace{-10mm}
+                \includeanimation
+                    {Kmeans}
+                    {00}
+                    {04}
+                    {.5}
+                    %
+            \end{columns}
+            }
+            \only<2>{\figwithmatlab{Kmeans}}
+        \end{frame}
+
+    \section{distances}
+        \begin{frame}{distances}{overview }
+             \begin{columns}
+                \column{.5\linewidth} 
+                    \begin{itemize}
+                        \item<1->	\emph{{Euclidean Distance}} (L2 Distance)
+                        \item<2->	\emph{{Manhattan Distance}} (L1 Distance)
+                        \item<3->	\emph{{Cosine Similarity}}
+                                \begin{itemize}
+                                    \item   range is from $[-1;1]$ ($[0;1]$ for non-negative input),
+                                    \item   not distance but similarity measure
+                                    \item   independent of vector length, only on angle
+                                \end{itemize}
+                        \item<4->	\emph{Kullback-Leibler Divergence}
+                                \begin{itemize}
+                                    \item   not symmetric: $d_\mathrm{KL}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b})\neq d_\mathrm{KL}(\vec{v}_\mathrm{b},\vec{v}_\mathrm{a})$,
+                                    \item   designed to measure distance between probability distributions
+                                \end{itemize}
+                            \end{itemize}
+                \column{.5\linewidth} 
+                \only<1>{
+                    \begin{footnotesize}\begin{equation*}\label{eq:dist_eucl}
+                        d_\mathrm{EU}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) = \left\|\vec{v}_\mathrm{a}-\vec{v}_\mathrm{b}\right\|_2 = \sqrt{\sum\limits_{j = 0}^{\mathcal{J}-1}{\big(v_\mathrm{a}(j)-v_\mathrm{b}(j)\big)^2}} .
+                    \end{equation*}\end{footnotesize}
+                }
+                \only<2>{
+                    \begin{footnotesize}\begin{equation*}\label{eq:dist_manh}
+                        d_\mathrm{M}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) = \left\|\vec{v}_\mathrm{a}-\vec{v}_\mathrm{b}\right\|_1 = \sum\limits_{j = 0}^{\mathcal{J}-1}{\big|v_\mathrm{a}(j)-v_\mathrm{b}(j)\big|} .
+                    \end{equation*}\end{footnotesize}
+                }
+                \only<3>{
+                    \begin{footnotesize}\begin{equation*}\label{eq:dist_cos}
+                        s_\mathrm{C}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) = \frac{\sum\limits_{j = 0}^{\mathcal{J}-1}{v_\mathrm{a}(j)\cdot v_\mathrm{b}(j)}}{\sqrt{\sum\limits_{j = 0}^{\mathcal{J}-1}{v_\mathrm{a}(j)^2}}\cdot\sqrt{ \sum\limits_{j = 0}^{\mathcal{J}-1}{v_\mathrm{b}(j)^2}}} .
+                    \end{equation*}\end{footnotesize}
+                     \begin{footnotesize}\begin{equation*}
+                        d_\mathrm{C}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) = 1-s_\mathrm{C}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) \text{, and}
+                    \end{equation*}\end{footnotesize}
+               }
+                \only<4>{
+                    \begin{footnotesize}\begin{equation*}\label{eq:dist_kl}
+                        d_\mathrm{KL}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) = \sum\limits_{j = 0}^{\mathcal{J}-1}{v_\mathrm{a}(j)\cdot\log\left(\frac{v_\mathrm{a}(j)}{v_\mathrm{b}(j)}\right)} . %-v_\mathrm{a}(j)+v_\mathrm{b}(j)
+                    \end{equation*}\end{footnotesize}
+                }
+            \end{columns}
+            
+        \end{frame}
+
+        %\begin{frame}{classification}{general steps}
+            %\begin{enumerate}
+                %\item	\textbf{define training set}: annotated results
+                %\smallskip
+                %\item<2->	\textbf{normalize} training set
+                %\smallskip
+                %\item<3->	\textbf{train} classifier
+                %\smallskip
+                %\item<4->	\textbf{evaluate} classifier with test (or validation) set
+                %\smallskip
+                %\item<5->	(\textbf{adjust} classifier settings, return to 4.)
+            %\end{enumerate}
+        %\end{frame}
+        %
+    %\section{classification}
+        %\begin{frame}{classification}{rules of thumb}
+            %\vspace{-3mm}
+            %\begin{itemize}
+                %\item   \textbf{training set}
+                    %\begin{itemize}
+                        %\item	training set size vs.\ number of features
+                            %\begin{itemize}
+                                %\item	training set too small,% $\Rightarrow$ \textit{overfitting}
+                                %feature number too large $\Rightarrow$ \textit{overfitting}
+                            %\end{itemize}
+                        %\item<1->	training set \textbf{too noisy} $\Rightarrow$ \textit{underfitting}
+                        %\item<1->	training set \textbf{not representative} $\Rightarrow$ \textit{bad classification performance}
+                    %\end{itemize}
+                %\smallskip
+                %\item<2->   \textbf{classifier}
+                    %\begin{itemize}
+                        %\item<2->   classifier too complex $\Rightarrow$ \textit{overfitting}
+                        %\item<2->	\textbf{poor classifier} $\Rightarrow$ \textit{bad classification performance}
+                            %\begin{itemize}
+                                %\item[$\rightarrow$]	different classifier
+                            %\end{itemize}
+                    %\end{itemize}
+                %\smallskip
+                %\item<3->   \textbf{features}
+                    %\begin{itemize}
+                        %\item<3->	\textbf{poor features} $\Rightarrow$ \textit{bad classification performance}
+                            %\begin{itemize}
+                                %\item[$\rightarrow$]	new, better features
+                            %\end{itemize}
+                        %\item<3->	features \textbf{not normalized} $\Rightarrow$ possibly \textit{bad classification performance}
+                            %\begin{itemize}
+                                %\item	feature distribution (range, mean, symmetry)
+                            %\end{itemize}
+                    %\end{itemize}
+            %\end{itemize}
+        %\end{frame}
+        %\begin{frame}{classification}{evaluation}
+            %\begin{itemize}
+                %\item	define \textbf{test set} for evaluation
+                    %\begin{itemize}
+                        %\item	test set \textit{different} from training set
+                        %\item	otherwise, same requirements
+                    %\end{itemize}
+                %
+                %\bigskip
+                %\item<2->	example: \textbf{$N$-fold cross validation}
+                    %\begin{enumerate}
+                        %\item<2->	split training set into $N$ parts (randomly, but preferably identical number per class)
+                        %\item<3->	select one part as test set
+                        %\item<4->	train the classifier with all observations from remaining $N-1$ parts
+                        %\item<5->	compute the classification rate for the test set
+                        %\item<6->	repeat until all $N$ parts have been tested
+                        %\item<7->	overall result: \textit{average} classification rate
+                    %\end{enumerate}
+            %\end{itemize}
+        %\end{frame}
+        %
+     %\section{classifier examples}
+        %\begin{frame}{classifier examples}{k-Nearest Neighbor (kNN)}
+            %\begin{columns}
+                %\column{.6\linewidth} 
+                    %\begin{itemize}
+                        %\item	\textbf{training}: extract reference vectors from training set (keep class labels)
+                        %\item<2->	\textbf{classification}: extract test vector and set class to majority of $k$ nearest reference vectors
+                        %\bigskip
+                        %\item<3->	\textbf{classifier data}: all training vectors
+                    %\end{itemize}
+                %\column{.4\linewidth} 
+                    %%\only<1,6>{\begin{figure}\includegraphics[width=\columnwidth]{Knn-0}\end{figure}}
+                    %%\setcounter{i}{1}
+                    %%\setcounter{j}{2}
+                    %%\whiledo{\value{i}<5}
+                    %%{
+                        %%\only<\value{j}>{\begin{figure}\includegraphics[width=\columnwidth]{Knn-\arabic{i}}\end{figure}}
+                        %%\stepcounter{i}
+                        %%\stepcounter{j}
+                    %%}
+                    %\figwithmatlab{Knn}
+                    %\only<4>{$k = 3 \Rightarrow$ gold majority}
+                    %\only<5>{$k = 5 \Rightarrow$ black majority}
+                    %\only<6>{$k = 7 \Rightarrow$ black majority}
+            %\end{columns}
+        %\end{frame}
+        %\begin{frame}{classifier examples}{Gaussian Mixture Model (GMM)}
+            %\vspace{-3mm}
+             %\begin{columns}
+                %\column{.4\linewidth} 
+                   %\begin{itemize}
+                        %\item	\textbf{training}:\\ model each class distribution as superposition of Gaussian distributions
+                        %\item<2->	\textbf{classification}:\\ compute output of each Gaussian and select class with highest probability
+                        %\item<3->	\textbf{classifier data}:\\ per class per Gaussian: $\mu$ and covariance, mixture weight
+                    %\end{itemize}
+                %\column{.6\linewidth} 
+                %\vspace{-13mm}
+                    %\figwithmatlab{Gmm}
+            %\end{columns}
+        %\end{frame}
+        %\begin{frame}{classifier examples}{Support Vector Machine (SVM)}
+            %\begin{itemize}
+                %\item	\textbf{training}:
+                    %\begin{itemize}
+                        %\item   map features to high dimensional space
+                            %\figwithref{graph/SVM}{\href{https://en.wikipedia.org/wiki/Support\_vector\_machine}{https://en.wikipedia.org/wiki/Support\_vector\_machine}}
+                        %\item   find separating hyperplane through maximum distance of support vectors (data points)
+                    %\end{itemize}
+                %\item<2->	\textbf{classification}: apply feature transform and proceed with 'linear' classification
+                %\item<3->	\textbf{classifier data}: support vectors, kernel, kernel parameters
+            %\end{itemize}
+        %\end{frame}
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{regression}
+                    \begin{itemize}
+                        \item   model to estimate numeric labels from features
+                        \item   linear regression assumes model is straight line
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{clustering}
+                    \begin{enumerate}
+                        \item   unsupervised grouping
+                        \item   feature space and distance measure determine result
+                        \item   number of clusters usually has to be known
+                        \item   kMeans is simple way of clustering
+                    \end{enumerate}
+                %\bigskip
+                %\item   \textbf{fine balance of inputs}
+                    %\begin{enumerate}
+                        %\item   number of features
+                        %\item   classifier complexity
+                        %\item   amount and variability of data
+                    %\end{enumerate}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
