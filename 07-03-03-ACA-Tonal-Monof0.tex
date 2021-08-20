@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 5.2: Fundamental Frequency Detection in Monophonic Signals}
+\subtitle{Module 7.3.3: Fundamental Frequency Detection in Monophonic Signals}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~91--103
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~91--103
+                    Section 7.3.3
             \end{block}
 
             \begin{itemize}
@@ -54,7 +53,7 @@
         \only<2->{
         \begin{figure}[t]
             \centering
-            \includegraphics[scale=.7]{pitch_harmonics}
+            \includegraphics[scale=.7]{graph/pitch_harmonics}
         \end{figure}
         }
 	\end{frame}
@@ -154,24 +153,22 @@
 	\begin{frame}{monophonic fundamental frequency detection}{harmonic product spectrum 1/2}
         \vspace{-10mm}
         \begin{columns}
-            \column{0.5\textwidth}
+            \column{0.4\textwidth}
                 \vspace{4mm}
                 \begin{equation*}\label{eq:hps}
                     X_{\mathrm{HPS}}(k,n) = \prod\limits_{j=1}^{\mathcal{O}}{|X(j\cdot k,n)|^2}
                 \end{equation*}
                 
-                first published in the 1960s by Noll (graph from that paper)
-            \column{0.5\textwidth}
-				\begin{figure}
-                    \includegraphics[scale=.25]{HPS_Noll}
-                \end{figure}
+                first published in the 1960s by Noll
+            \column{0.6\textwidth}
+                \figwithmatlab{F0HpsMethod}
 		\end{columns}
         \vspace{-5mm}
         \footfullcite{noll_pitch_1969}
 	\end{frame}
 	
 	\begin{frame}{monophonic fundamental frequency detection}{harmonic product spectrum 2/2}
-		\figwithmatlab{HarmonicProductSpectrum}
+		\figwithmatlab{F0Hps}
 	\end{frame}
 	
 	\begin{frame}{monophonic fundamental frequency detection}{harmonic sum spectrum}
@@ -197,16 +194,17 @@
 	
 	\begin{frame}{monophonic fundamental frequency detection}{ACF of magnitude spectrum}
         \vspace{-3mm}
+        \begin{columns}
+        \column{.4\linewidth}
 		\begin{equation*}
 			r_{XX}(\eta,n) = \sum\limits_{k=-\mathcal{K}/2}^{\mathcal{K}/2-1}{|X(k,n)|\cdot |X(k+\eta,n)|}
 		\end{equation*}
-		\pause
+		%\pause
 		$\Rightarrow$ \textbf{detect maximum location}
         
-        \vspace{-1mm}
-        \only<2->{
-		\figwithmatlab{AcfOfFft}
-        }
+        \column{.6\linewidth}
+            \figwithmatlab{F0AcfOfFft}
+        \end{columns}
 	\end{frame}
 	
 	\begin{frame}{monophonic fundamental frequency detection}{cepstral pitch detection}
@@ -214,7 +212,7 @@
 			\item	compute cepstrum
 			\item	detect periodicities
 		\end{enumerate}
-		\figwithmatlab{Cepstrum}
+		\figwithmatlab{F0Cepstrum}
 	\end{frame}
 	
 	\begin{frame}{monophonic fundamental frequency detection}{spectral maximum likelihood}
@@ -258,12 +256,10 @@
                 \item   smoothed output
             \end{enumerate}
         \column{.7\linewidth}
-            \vspace{-13mm}
-            \begin{figure}%
-            \includegraphics[width=1.1\columnwidth]{AuditoryPitchTracking}%
-            \end{figure}
+            \vspace{-3mm}
+            \figwithmatlab{F0Auditory}%
         \end{columns}
-        \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAuditoryPitchTracking.m}{matlab/displayAuditoryPitchTracking.m}}
+        %\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayAuditoryPitchTracking.m}{matlab/displayAuditoryPitchTracking.m}}
 	\end{frame}
     
 	%\begin{frame}{monophonic fundamental frequency detection}{matlab exercise}
@@ -279,7 +275,7 @@
     \section{summary}
         \begin{frame}{summary}{lecture content}
             \begin{itemize}
-                \item   \textbf{basic approach}
+                \item   \textbf{basic commonality}
                     \begin{itemize}
                         \item   all approaches look for \textbf{periodicity}
                             \begin{itemize}
@@ -291,7 +287,7 @@
                 \item   \textbf{state-of-the-art}
                     \begin{itemize}
                         \item   despite the age of the presented methods, tweaked versions of the presented approaches are still often considered state-of-the-art
-                        \item   especially combinations of different approaches can be very successful
+                        \item   combinations of different approaches can be robust
                     \end{itemize}
             \end{itemize}
             \inserticon{summary}
