@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 5.0: Human Perception of Pitch}
+\subtitle{Module 7.1: Human Perception of Pitch}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~79--82
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~79--82
+                    Section 7.1
             \end{block}
 
             \begin{itemize}
@@ -79,11 +78,11 @@
                     %\vspace{-3mm}
 
                 
-                \item<2->	higher fundamental frequency $\Rightarrow$ higher pitch (mono-dimensional)
+                \item	higher fundamental frequency $\Rightarrow$ higher pitch (mono-dimensional)
             \end{itemize}
         \end{frame}
         \begin{frame}{pitch perception}{frequency \& pitch}
-            \figwithmatlab{PerceptualPitch}
+            \figwithmatlab{MelBark}
             \only<1>{
                 \textbf{non-linear} pitch frequency relation:
                     \begin{itemize}
@@ -137,9 +136,11 @@
             \begin{itemize}
                 \item   \textbf{pitch}
                     \begin{itemize}
-                        \item   subjective phenomenon
-                        \item   non-linear monotonic relationship to frequency (tone height increases with fundamental frequency)
-                        \item   pitch grouping based on powers of two: tone chroma perception
+                        \item   \textbf{subjective} phenomenon
+                        \smallskip
+                        \item   \textbf{non-linear} monotonic relationship to frequency (tone height increases with fundamental frequency)
+                        \smallskip
+                        \item   pitch grouping based on powers of two: tone \textbf{chroma perception}
                     \end{itemize}
             \end{itemize}
             \inserticon{summary}
