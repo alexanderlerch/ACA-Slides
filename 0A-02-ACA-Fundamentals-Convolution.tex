@@ -1,0 +1,197 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module A.2: Fundamentals~---~Convolution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~14--18\\
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331114}{Appendix A~---~Convolution Properties}: pp.~181--183
+                    Section~A.2
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   LTI systems
+                        \item   convolution
+                        \item   filter examples
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   basic understanding of linearity and time-invariance
+                        \item   basic understanding of the convolution operation
+                        \item   ability to implement simple filters
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[systems]{systems}
+       \begin{frame}{systems}{introduction}
+            a system:
+            \begin{itemize}
+                \item   any process producing an output signal in response to an input signal
+            \end{itemize}
+		    \begin{figure}
+				\centering
+		        \begin{picture}(80,35)
+		            %boxes
+		            %\put(0,30){\ovalbox{\footnotesize{\parbox{20mm}{\vspace{2mm}\centering{Composer}\vspace{2mm}}}}}
+		            \put(30,30){\ovalbox{\footnotesize{\parbox{20mm}{\vspace{2.3mm}\centering{System}\vspace{2.3mm}}}}}
+		            %\put(60,30){\ovalbox{\footnotesize{\parbox{20mm}{\vspace{2mm}\centering{Recipient}\vspace{2mm}}}}}
+		
+		            % horizontal
+		            \put(22.4,30.6){\vector(1,0){7.8}}
+		            \put(52.4,30.6){\vector(1,0){7.8}}
+		            \put(15,30){\text{$x(t)$}}
+		            \put(60,30){\text{$y(t)$}}
+		        \end{picture}
+		    \end{figure}
+            \vspace{-25mm}
+            \question{name examples for systems in signal processing}
+            
+            \begin{itemize}
+                \item   filters, effects
+                \item   vocal tract
+                \item   room
+                \item   (audio) cable
+                \item   \ldots
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{systems}{LTI systems}
+            \begin{block}{LTI: Linear Time-Invariant Systems}
+                are a great model for many real-world systems
+            \end{block}
+            
+            \bigskip
+            \begin{itemize}
+                \item   \textbf{linearity}
+                   \begin{enumerate}
+                        \item   \textit{homogeneity}:
+                            $f(ax) = a f(x)$
+                        \smallskip
+                        \item   \textit{superposition} (additivity):
+                        $f(x+y) = f(x) + f(y)$
+                    \end{enumerate}
+                 \bigskip
+                \item   \textbf{time invariance}:
+                    $f\left(x(t-\tau)\right) = f(x)(t-\tau)$
+             \end{itemize}
+        \end{frame}
+     
+    \section[convolution]{convolution}
+        \begin{frame}{convolution}{introduction}
+                \begin{block}{convolution}
+                    convolution operation describes the \textbf{output of an LTI system}:
+                \end{block}
+                
+            \bigskip
+            \begin{eqnarray*}
+                y(t) = (x \ast h)(t) &:=& \int\limits_{-\infty}^{\infty}x(\tau)h(t-\tau)d\tau\\
+                y(i) = (x \ast h)(i) &:=& \sum\limits_{j=-\infty}^{\infty}x(j)h(i-j)
+            \end{eqnarray*}
+        \end{frame}
+            
+        \begin{frame}{convolution}{animation}
+            \vspace{-3mm}
+            \includeanimation
+                {Convolution}
+                {000}
+                {600}
+                {10}
+            %\vspace{-5mm}
+            %\begin{center}
+                 %\animategraphics[autoplay,loop]{10}{animateConvolution/Convolution-}{000}{600}        
+            %\end{center}
+            %\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/animateConvolution.m}{matlab/animateConvolution.m}}
+            \inserticon{video}
+        \end{frame}
+
+        \begin{frame}{convolution}{properties}
+            \begin{itemize}
+                \item<1->	\textbf{identity}:
+                        \begin{footnotesize}\begin{equation*}
+                            x(i) = \delta(i)\ast x(i)
+                        \end{equation*}\end{footnotesize}
+                \item<2->	\textbf{commutativity}: 
+                        \begin{footnotesize}\begin{equation*}
+                            h(i) \ast x(i)	= x(i) \ast h(i) 
+                        \end{equation*}\end{footnotesize}
+                \item<3->	\textbf{associativity}:
+                        \begin{footnotesize}\begin{equation*}
+                            \big(g(i) \ast h(i)\big) \ast x(i) = g(i) \ast \big(h(i) \ast x(i)\big)
+                        \end{equation*}\end{footnotesize}
+                \item<4->	\textbf{distributivity}:
+                            \begin{footnotesize}\begin{equation*}
+                                g(i) \ast \big(h(i) + x(i)\big) = \big(g(i) \ast h(i)\big) + \big(g(i) \ast x(i)\big)
+                            \end{equation*}\end{footnotesize}
+                \item<5->	\textbf{circularity}:\\
+                        \begin{footnotesize}
+                        $h(i)$ periodic $\Rightarrow y(i) = h(i) \ast x(i)$ periodic
+                        \end{footnotesize}
+            \end{itemize}
+        \end{frame}
+
+    \section{filter examples}
+        \begin{frame}{filter}{example 1: Moving Average}
+            \begin{equation*}
+                y(i) = \sum\limits_{j=0}^{\mathcal{J}-1}{b(j)\cdot x(i-j)}
+            \end{equation*} 
+            
+            \begin{itemize}
+                \item   replaces current sample with average of $\mathcal{J}$ samples
+                \item   smooths a signal (low pass)
+                \item   IR: rectangular
+                \item   linear phase, but inefficient for many coefficients
+                \item   Finite Impulse Response (FIR)
+            \end{itemize}
+        
+        \end{frame}	
+
+        \begin{frame}{filter}{example 2: Single-Pole}
+            \begin{equation*}
+                y(i) = (1-\alpha)\cdot x(i) + \alpha\cdot y(i-1)
+            \end{equation*}
+            
+            \begin{itemize}
+                \item   \textbf{recursive system}: output depends on previous \textit{output}
+                \item   the larger alpha, the less the current input is taken into account (low pass)
+                \item   alpha from 0\ldots 1
+                \item   efficient, but non-linear phase
+                \item   Infinite Impulse Response (IIR)
+            \end{itemize}
+        \end{frame}	
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{LTI system}
+                    \begin{itemize}
+                        \item   good model for many real-world system
+                        \item   linear (homogeneity, superposition) and time-invariant
+                        \item   impulse response reflects all system properties
+                    \end{itemize}
+                \bigskip
+                \item  \textbf{convolution}
+                    \begin{itemize}
+                        \item   operation that computes the output of an LTI system from the input
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{low pass filters}
+                    \begin{itemize}
+                        \item   often used to smooth a signal
+                        \item   typical examples are moving average (FIR) and single pole (IIR)
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
