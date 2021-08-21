@@ -1,0 +1,304 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module A.1: Fundamentals~---~Digitization}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~9--11
+                    Section~A.1
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   discretization of signals in time and amplitude
+                        \item   ambiguity and aliasing
+                        \item   sampling theorem
+                        \item   properties of the quantization error
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   summarize the principle of discretization
+                        \item   describe the implications of the sample theorem
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{digital signals}{introduction}
+            \textit{digital} signals are represented with a limited number of values
+            
+            \bigskip
+            $\Rightarrow$
+            \begin{enumerate}
+                \item	{\textbf{sampling}}: time discretization
+                
+                continuous time $\mapsto$ discrete equidistant points in time 
+                
+                
+                \smallskip
+                \item	\textbf{quantization}: amplitude discretization
+                
+                continuous amplitude $\mapsto$ discrete, pre-defined, set of values
+            \end{enumerate}
+        \end{frame}
+        
+    \section{sampling}
+        \begin{frame}{sampling}{basic concept}
+            \vspace{-3mm}
+            \figwithmatlab{Sampling01}
+                
+            \begin{itemize}
+                \item   $f_\mathrm{S}\;[\unit{Hz}]$: number of samples per second
+                \item   $T_\mathrm{S} = \nicefrac{1}{f_\mathrm{S}}\;[\unit{s}]$: distance between two neighboring samples
+            \end{itemize}
+        \end{frame}
+            
+        \begin{frame}{sampling}{sampling frequencies}
+            \question{What are typical sample rates}
+            
+            
+            \begin{itemize}
+                \item	\unit[8--16]{kHz}: speech (phone)
+                \item	\unit[44.1--48]{kHz}: (consumer) audio/music
+                \item	\unit[$>$48]{kHz}: production audio
+            \end{itemize}
+            \pause
+            
+            \bigskip
+            \begin{table}
+                \centering
+                    \begin{tabular}{l|p{.1\textwidth}p{.1\textwidth}p{.1\textwidth}p{.1\textwidth}p{.1\textwidth}p{.1\textwidth}}
+                        $f_\mathrm{S}$ & \unit[44.1]{kHz} & \unit[32]{kHz} & \unit[22.05]{kHz} & \unit[16]{kHz} & \unit[8]{kHz} & \unit[6]{kHz}\\
+                        & \includeaudio{sampling_44}& \includeaudio{sampling_32}& \includeaudio{sampling_22}& \includeaudio{sampling_16}& \includeaudio{sampling_08}& \includeaudio{sampling_06} \\
+                    \end{tabular}
+            \end{table}
+            \inserticon{audio}
+        \end{frame}	
+            
+    \section{sampling ambiguity}
+        \begin{frame}{sampling}{sampling ambiguity}
+            \figwithmatlab{Sampling02}
+        \end{frame}	
+        
+        \begin{frame}{sampling}{sampling ambiguity --- wagon-wheel effect}
+            \only<1>{\figwithref{graph/StageCoach}{\url{flickr.com/photos/fotoguy49057/12209056184}}}
+            \visible<2->{
+                compare speed of wheel (spokes) $f_\mathrm{wheel}$ between real world and video recording for an accelerating stage coach
+                \begin{columns}[T]
+                    \column{0.5\textwidth}
+                        
+                        \begin{enumerate}
+                            \item<2->	$f_\mathrm{wheel} < \frac{f_\mathrm{S}}{2}$\\
+                                speeding up
+                            \item<3->	$\frac{f_\mathrm{S}}{2} < f_\mathrm{wheel} < f_\mathrm{S}$\\
+                                slowing down
+                            \item<4->	$f_\mathrm{wheel} = f_\mathrm{S}$:\\
+                            standing still
+                            \item<4->	$\ldots$
+                        \end{enumerate}
+                                    
+                    \column{0.5\textwidth}
+                        \includegraphics[scale=0.5]{graph/StageCoach}
+                \end{columns}
+            }
+            
+            \only<5->{
+            \vspace{5mm}
+            video example: \href{https://youtu.be/QYYK4tlCMlY}{youtu.be/QYYK4tlCMlY}
+            }
+            \inserticon{video}
+        \end{frame}	
+        
+        \begin{frame}{digital signals}{sampling ambiguity --- spectral domain}
+            \includeanimation{Sampling}{01}{48}{10}
+            %\begin{center}
+                %\animategraphics[autoplay,loop]{10}{animateSampling/Sampling-}{01}{48}        
+            %\end{center}
+            %\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/animateSampling.m}{matlab/animateSampling.m}}
+            \inserticon{video}
+        \end{frame}	
+        
+    \section{theorem}
+        \begin{frame}{digital signals}{sampling theorem}
+            \toremember{}
+            
+            \begin{block}{sampling theorem}
+                A sampled signal can be reconstructed without loss of information if the sample rate $f_\mathrm{S}$ is higher than twice the bandwidth $f_\mathrm{max}$ of the original audio signal.
+                
+                \begin{equation*}
+                    f_\mathrm{S} > 2\cdot f_\mathrm{max}
+                \end{equation*}
+            \end{block}
+            
+            \bigskip
+            $\nicefrac{f_\mathrm{S}}{2}$ is also referred to as the \textit{Nyquist}\footnote{\tiny Harry Nyquist, 1889--1976}-rate
+        \end{frame}	
+    
+    
+    \section{quantization}
+        \begin{frame}{digital signals}{quantization}
+            \vspace{-3mm}
+            \begin{columns}
+            \column{.4\linewidth}
+            \begin{itemize}
+                \item   continuous amplitude values are mapped to pre-defined, equidistant set of values
+                %\item<2->   quantization steps are most frequently \textbf{equidistant}
+                \item<1->   signal stored in binary $\Rightarrow$ \# quantization steps equals \textbf{power of 2}
+                \smallskip
+                \item<2->   \textbf{example: 4-bit quantization}
+                    \begin{itemize}
+                        \item	\textit{word length}: $w = \log_2(\mathcal{M}) = \unit[4]{bit}$
+                        \item	\textit{number of quantization steps}: $\mathcal{M} = 2^w = 16$
+                    \end{itemize}
+            \end{itemize}
+            \column{.6\linewidth}
+            \visible<2->{
+            \figwithmatlab{Quantization}}
+            \end{columns}
+        \end{frame}	
+
+        \begin{frame}{digital signals}{quantization wordlength}
+            \question{What are typical wordlengths?}
+            
+            \begin{itemize}
+                \item	\unit[8]{bit}: speech
+                \item	\unit[12--14]{bit}: low quality audio/music
+                \item	\unit[16]{bit}: (consumer) audio/music
+                \item	\unit[$>$16]{bit}: production audio
+            \end{itemize}
+            \pause
+            
+            \bigskip
+            \begin{table}
+                \centering
+                    \begin{tabular}{l|ccccc}
+                        $w$ & \unit[16]{bit} & \unit[12]{bit} & \unit[8]{bit} & \unit[4]{bit} &\unit[2]{bit}\\
+                        & \includeaudio{quantized_16}& \includeaudio{quantized_12}& \includeaudio{quantized_8}& \includeaudio{quantized_4}& \includeaudio{quantized_2} \\
+                    \end{tabular}
+            \end{table}
+            \inserticon{audio}
+        \end{frame}	
+
+    \section[quant error]{quantization error}
+        \begin{frame}{digital signals}{quantization error}
+            \begin{figure}
+                \input{pict/fundamentals_Quantization}
+            \end{figure}
+            \bigskip
+            \pause
+            
+            model for quantization: \\
+            quantization noise $q$ is added to input signal $x$
+            \begin{eqnarray*}
+                x_{\mathrm{Q}}(i)   &=& x(i) + q(i)\\
+                q(i) &=& x(i) - x_{\mathrm{Q}}(i)
+            \end{eqnarray*}
+        \end{frame}		
+        \begin{frame}{digital signals}{quantization error magnitude}
+            \question{What is the maximum amplitude of the quantization error?}
+
+            \figwithmatlab{QuantizationError}
+        \end{frame}	
+
+        \begin{frame}{digital signals}{quantization error properties}
+            Under the assumption that the signal has a variance much higher than the quantization step size (no derivation), we find that the quantization error
+            \begin{itemize}
+                \item   is white noise and uncorrelated to signal,
+                \item   is uniformly distributed, and
+                \item   its power $W_\mathrm{Q}$ is directly related to the wordlength.
+            \end{itemize}
+            
+            \pause
+            \bigskip
+            The quantizer quality is usually given by its \textit{Signal-to-Noise Ratio (SNR)}
+			\begin{equation*}\label{eq:snr}
+				SNR = 10\cdot\log_{10}\left(\frac{W_{\mathrm{S}}}{W_{\mathrm{Q}}}\right)\; [dB] 
+			\end{equation*}
+        \end{frame}	
+        
+        \begin{frame}{digital signals}{quantization: SNR}
+            \vspace{-3mm}
+            \toremember{}
+            \begin{block}{signal-to-noise ratio (quantizer)}
+                \centering
+                \begin{equation*}
+                    SNR = 6.02\cdot w + c_{\mathrm{S}}\quad [dB]
+                \end{equation*}
+                \vspace{-5mm}
+                \begin{itemize}
+                    \item	every additional bit adds app.\ \unit[6]{dB} SNR
+                    \item	constant $c_{\mathrm{S}}$ depends on \textit{signal} (scaling and PDF)
+                \end{itemize}
+            \end{block}
+            \pause
+            \begin{itemize}
+                \item	square wave (full scale): $c_{\mathrm{S}} =  \unit[10.80]{dB}$
+                \item	sinusoidal wave (full scale): $c_{\mathrm{S}} =  \unit[1.76]{dB}$
+                \item	rectangular {PDF} (full scale): $c_{\mathrm{S}} =  \unit[0]{dB}$
+                \item	Gaussian {PDF} (full scale = $4\sigma_{g}$): $c_{\mathrm{S}} =  \unit[-7.27]{dB}$
+            \end{itemize}
+        \end{frame}		
+           
+    \section[amplitude range]{amplitude range of a discrete signal}
+        \begin{frame}{digital signals}{amplitude in DSP}
+            \begin{itemize}
+                \item<1->   when represented as integer, different wordlengths lead to different maximum amplitude ranges
+                \item<2->	most common: normalize to the absolute maximum integer value and represent the signal in \textbf{floating point format}
+                \item<3->[$\Rightarrow$]   signal amplitude:
+                    \begin{equation*}
+                        -1 \leq x_{\mathrm{Q}} < 1
+                    \end{equation*}
+                \item<3->[$\Rightarrow$]	level: \\
+                    \begin{center}max.\ amplitude $\mapsto \unit{0}{dBFS}$\end{center}
+                \item<4->   floating point representation
+                    \begin{equation*}
+                        x_{\mathrm{Q}} = M_{\mathrm{G}}\cdot 2^{E_{\mathrm{G}}}
+                    \end{equation*}
+                \item<5->   internal float point representation usually treated as signal being \textbf{not quantized}
+            \end{itemize}
+        \end{frame}
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   continuous signal is sampled to be \textbf{discrete in time}
+                    \begin{itemize}
+                        \item   number of samples per second is called sampling rate or sampling frequency
+                    \end{itemize}
+                \item   continuous signal is quantized to be \textbf{discrete in amplitude}
+                    \begin{itemize}
+                        \item   number of quantization steps equals $2^\mathrm{wordlength}$
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{sampling theorem}
+                    \begin{itemize}
+                        \item   sampled signal can be reconstructed without loss of information if the sample rate $f_\mathrm{S}$ is higher than twice the bandwidth $f_\mathrm{max}$ of the original audio signal
+                        \item   otherwise reconstruction is ambiguous and  aliasing occurs
+                    \end{itemize}
+                \bigskip
+               \item      \textbf{quantization error properties}
+                    \begin{itemize}
+                        \item   maximum amplitude is half the step size
+                        \item   number of steps depends on wordlength
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{SNR}
+                    \begin{itemize}
+                        \item   SNR depends on input signal characteristic and wordlength
+                        \item   SNR increases linearly (\unit[6]{dB}/bit) with wordlength
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

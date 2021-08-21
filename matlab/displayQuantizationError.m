@@ -15,7 +15,7 @@ function displayQuantizationError()
     subplot(121)
     plot(x,xq)
     xlabel('$x$')
-    ylabel('$x_Q/\Delta$')
+    ylabel('$x_\mathrm{Q}/\Delta$')
     axis([x(1) x(end) xqTick(1) xqTick(end)])
     set(gca, 'XTick',[-1 -.5 0 .5 1], 'YTick',xqTick, 'YTickLabel',xqTickLabel)
     
