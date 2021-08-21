@@ -1,0 +1,126 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 7.3.5: Fundamental Frequency Detection~---~Evaluation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~14--18\\
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331114}{Appendix A~---~Convolution Properties}: pp.~181--183
+                    Section~7.3.5
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   evaluation of pitch tracking  systems
+                        \item   challenges in annotation
+                        \item   metrics
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   successfully plan a systematic evaluation procedure for a pitch detection system
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{intro}
+       \begin{frame}{pitch evaluation}{tasks}
+            goal: compare predicted pitch and ground truth pitch
+            \pause
+            \begin{itemize}
+                \item   various 'pitch tracking' tasks
+                    \begin{itemize}
+                        \item   pitch of \textbf{individual notes}
+                        \item   pitch of \textbf{monophonic melody}
+                        \item   pitch of \textbf{pre-dominant melody} in polyphonic mixture
+                        \item   pitches in multi-timbral \textbf{polyphonic mixture}
+                    \end{itemize}
+             \end{itemize}
+        \end{frame}
+        
+       \begin{frame}{pitch evaluation}{annotation challenges}
+            \begin{itemize}
+               \item   pitch discretization
+                    \begin{itemize}
+                        \item   (MIDI/score) pitch of individual notes
+                        \item   F0
+                    \end{itemize}
+               \item   time discretization
+                    \begin{itemize}
+                        \item   start and stop time of note
+                        \item   equidistant time stamps
+                    \end{itemize}
+            \end{itemize}
+            \bigskip
+               \question{how to annotate F0}
+        \end{frame}
+       \begin{frame}{pitch evaluation}{metrics --- score ground truth}
+            \begin{itemize}
+                \item   all metrics should be computed in the pitch domain, not the frequency domain
+                \item   metrics measure a \textbf{match} between ground truth and predicted pitch ($\Rightarrow$ tolerance)
+                \item<2->   Raw Pitch Accuracy:
+                \begin{equation}
+                     RPA = \frac{\sum\limits_{\forall n}TP_n}{\mathcal{N}}  
+                \end{equation}
+                \[ TP_n = \left\{ 
+								\begin{array}{ll} 
+									0, & \text{if } |\mathfrak{p}_\mathrm{GT}(n) - \hat{\mathfrak{p}}(n)| \geq 0.5 \\
+									1, & \text{otherwise }
+			          			\end{array} 
+			          			\right. \] 
+                \item<2->   Raw Chroma Accuracy:
+                \begin{equation}
+                     RCA = \frac{\sum\limits_{\forall n}TP_{\mathrm{chroma},n}}{\mathcal{N}}  
+                \end{equation}
+                \[ TP_{\mathrm{chroma},n} = \left\{ 
+								\begin{array}{ll} 
+									0, & \text{if} \mod\big(|\mathfrak{p}_\mathrm{GT}(n) - \hat{\mathfrak{p}}(n)|, 12\big) \geq 0.5 \\
+									1, & \text{otherwise }
+			          			\end{array} 
+			          			\right. \]
+            \end{itemize}
+       \end{frame}
+       \begin{frame}{pitch evaluation}{metrics --- f0 ground truth}
+            \begin{itemize}
+                \item   all metrics should be computed in the pitch domain, not the frequency domain
+                \item   metrics measure \textbf{deviation} between ground truth and predicted pitch 
+                \bigskip
+                \item<2->   MSE, MAE, standard deviation from the ground truth
+            \end{itemize}
+       \end{frame}
+     
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{potential data problems}
+                    \begin{itemize}
+                        \item   pitch and time quantization
+                        \item   reliability of ground truth
+                        \item   time resolution mismatch of ground truth and system
+                    \end{itemize}
+                \bigskip
+                \item  \textbf{metrics}
+                    \begin{itemize}
+                        \item   score pitch match (chroma match)
+                        \item   measures of deviation
+                    \end{itemize}
+                \bigskip
+                \item      \textbf{factor impacting metrics}
+                    \begin{itemize}
+                        \item   voicing detection
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

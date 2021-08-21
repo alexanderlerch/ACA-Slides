@@ -1,0 +1,140 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 7.4: Tuning Frequency Estimation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~14--18\\
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331114}{Appendix A~---~Convolution Properties}: pp.~181--183
+                    Section~7.4
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   definition of the tuning frequency
+                        \item   approaches to tuning frequency estimation
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   explain the term tuning frequency
+                        \item   discuss the necessity of automatic tuning frequency estimation
+                        \item   compare different approaches to tuning frequency estimation
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{intro}
+       \begin{frame}{tuning frequency}{introduction}
+            \begin{block}{tuning frequency}
+                    frequency of the concert pitch A4
+            \end{block}
+            \bigskip
+            \begin{itemize}
+                \item   used to tune groups of instruments
+                \item   standardized as \unit[440]{Hz}\footfullcite{16:1975_acoustics_1975}
+             \end{itemize}
+        \end{frame}
+        
+       \begin{frame}{tuning frequency}{distribution}
+        \vspace{-5mm}
+        \begin{columns}
+        \column{.4\linewidth}
+            \begin{itemize}
+                \item historic tuning frequencies
+                \item<2-> tuning frequencies today
+                    \begin{itemize}
+                        \item   electronic music: often exactly \unit[440]{Hz}
+                        \item   'classical' music:
+                            \begin{itemize}
+                                \item CSO, NYP: \unit[442]{Hz}
+                                \item BPO, VPO: \unit[443]{Hz}
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+        \column{.6\linewidth}
+            \begin{footnotesize}
+           \begin{table}
+            \begin{tabular}{lcc} %{c|p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}p{12mm}}
+                \\ \hline
+                \bf{\emph{Year}}	 & \bf{\emph{Lower Deviation}}	 & \bf{\emph{Upper Deviation}}\\ 
+                 \hline
+                \bf{1750}	 & $-\unit[50]{Hz}$	 & $+\unit[30]{Hz}$\\
+                \bf{1850}	 & $-\unit[20]{Hz}$	 & $+\unit[20]{Hz}$\\
+                \bf{1950}	 & $-\unit[5]{Hz}$	 & $+\unit[10]{Hz}$\\
+            \end{tabular}
+            \end{table}
+            \end{footnotesize}
+            
+            \only<2->{
+            \figwithmatlab{TuningFreqs}
+                    }
+        \end{columns}
+        \phantom{\footfullcite{lerch_requirement_2006}}
+        \end{frame}
+        
+    \section{task}
+       \begin{frame}{tuning frequency estimation}{requirement}
+    
+            \begin{itemize}
+                \item   any pitch-based analysis system relies on tuning frequency (pre-defined or adaptive), recall \[ \mathfrak{p}(f)= 69 + 12\cdot\log_2\left(\frac{f}{f_{A4}}\right)\]
+                \item   tuning frequency can be far from \unit[440]{Hz}
+                \bigskip
+                \item<2->[$\Rightarrow$]   wrong tuning frequency assumption can significantly impact pitch detection reliability
+            \end{itemize}
+       \end{frame}
+       \begin{frame}{tuning frequency estimation}{assumptions and limits}
+            \begin{enumerate}
+                \item   \textbf{key is unknown}, i.e., deviation $>\unit[50]{Cent}$ will be mapped back to semitone range
+                \item   \textbf{temperament/intonation is unknown}, i.e., equally tempered tuning has to be assumed
+                \item   piece may be \textbf{polyphonic}
+                \item   piece may \textbf{not contain pitch A4}
+                \item   \textbf{tuning frequency does not change} or changes slowly over time
+            \end{enumerate}
+       \end{frame}
+       \begin{frame}{tuning frequency estimation}{typical processing steps}
+            \begin{enumerate}
+                \item   estimate fundamental frequencies or frequencies of tonal components
+                \item   calculate deviation $\Delta C$ from the nearest equally tempered pitch frequency
+                \item   average all deviations: $\mu_{\Delta C}$ (or look at histogram)
+                \item   compute the tuning frequency from the average deviation:
+                \[ \hat{f}_\mathrm{A4} = \unit[440]{Hz}\cdot 2^\frac{\mu_{\Delta C}}{1200}\]
+                    
+            \end{enumerate}
+       \end{frame}
+       \begin{frame}{tuning frequency estimation}{adaption example}
+            \vspace{-3mm}
+            \figwithmatlab{FA4Rprop}
+            
+            \includeanimation{FA4FilterBank}{01}{75}{10}
+       \end{frame}
+     
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{tuning frequency}
+                    \begin{itemize}
+                        \item   important reference for all pitch-based algorithms
+                        \item   usually around \unit[440]{Hz}
+                    \end{itemize}
+                \bigskip
+                \item  \textbf{tuning frequency estimation}
+                    \begin{itemize}
+                        \item   assume equally tempered recording without intonation changes
+                        \item   map deviations to new estimate
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
