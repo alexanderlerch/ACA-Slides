@@ -1,0 +1,68 @@
+\begin{footnotesize}
+\setcounter{iXOffset}{0}
+\setcounter{iYOffset}{3}
+\setcounter{iXBlockSize}{20}
+\setcounter{iYBlockSize}{10}
+\setcounter{iDistance}{4}
+\setcounter{iYBlockSizeDiv2}{4}
+
+\begin{picture}(112,16)
+
+
+	\put(\value{iXOffset}, \value{iYOffset})
+		{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {$\mat{V}$}}
+	\addtocounter{iXOffset}{\value{iXBlockSize}}
+	\addtocounter{iXOffset}{\value{iDistance}}
+	\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+	\put(\value{iXOffset}, \value{iYOffset})
+		{$=$}
+	\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+	\addtocounter{iXOffset}{\value{iDistance}}
+    \addtocounter{iXOffset}{2}
+	\put(\value{iXOffset}, \value{iYOffset})
+		{\framebox(2, \value{iYBlockSize}) {~}}
+	\put(\value{iXOffset}, 0)
+		{$\vec{w}_{0}$}
+
+	\addtocounter{iXOffset}{2}
+	\addtocounter{iXOffset}{1}
+	\addtocounter{iYOffset}{8}
+	\put(\value{iXOffset}, \value{iYOffset})
+		{\framebox(\value{iXBlockSize}, 2) {~}}
+	\addtocounter{iYOffset}{-8}
+	\addtocounter{iXOffset}{\value{iDistance}}
+	\put(\value{iXOffset}, 14)
+		{$\vec{h}_{0}$}
+	\addtocounter{iXOffset}{\value{iXBlockSize}}
+	\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+	\put(\value{iXOffset}, \value{iYOffset})
+		{$+\cdots+$}
+	\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+	\addtocounter{iXOffset}{\value{iDistance}}
+	\addtocounter{iXOffset}{8}
+	\put(\value{iXOffset}, \value{iYOffset})
+		{\framebox(2, \value{iYBlockSize}) {~}}
+	\put(\value{iXOffset}, 0)
+		{$\vec{w}_{r-1}$}
+	\addtocounter{iXOffset}{2}
+	\addtocounter{iXOffset}{1}
+	\addtocounter{iYOffset}{8}
+	\put(\value{iXOffset}, \value{iYOffset})
+		{\framebox(\value{iXBlockSize}, 2) {~}}
+	\addtocounter{iYOffset}{-8}
+	\addtocounter{iXOffset}{\value{iDistance}}
+	\put(\value{iXOffset}, 14)
+		{$\vec{h}_{r-1}$}
+	\addtocounter{iXOffset}{\value{iXBlockSize}}
+	\addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+	\put(\value{iXOffset}, \value{iYOffset})
+		{$+$}
+	\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+	\addtocounter{iXOffset}{\value{iDistance}}
+    \addtocounter{iXOffset}{2}
+	\put(\value{iXOffset}, \value{iYOffset})
+		{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {$\mat{E}$}}
+
+
+\end{picture}
+\end{footnotesize}

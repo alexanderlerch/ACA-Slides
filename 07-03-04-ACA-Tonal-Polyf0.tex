@@ -1,0 +1,413 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 7.3.4: Fundamental Frequency Detection in Polyphonic Signals}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~103--106
+                    Section~7.3.4
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   overview of ``historic'' methods for polyphonic pitch detection
+                        \item   introduction to Non-negative Matrix Factorization (NMF)
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe the task and challenges of polyphonic pitch detection
+                        \item   list the processing steps of iterative subtraction and relate them to the introduced approaches
+                        \item   describe the process of NMF and discuss advantages and disadvantages of using NMF for pitch detection
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{polyphonic pitch tracking}{problem statement}
+            \begin{itemize}
+                \item \textbf{monophonic} fundamental frequency detection:
+                    \begin{itemize}
+                        \item   exactly one fundamental frequency with sinusoidals at multiples of $f_0$ (harmonics)
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{polyphonic} fundamental frequency detection:
+                    \begin{itemize}
+                        \item   multiple/unknown number of fundamental frequencies with harmonics
+                        \item   number of voices might change over time
+                        \item   complex mixture with overlapping frequency content
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+    \section[iterative subtraction]{iterative subtraction}
+	\begin{frame}{polyphonic pitch tracking}{iterative subtraction: introduction}
+        \vspace{-3mm}
+        \begin{itemize}
+            \item \textbf{principle}
+                \smallskip
+                \begin{enumerate}
+                    \item	find most salient fundamental frequency 
+                        \begin{itemize}
+                            \item   e.g., with monophonic pitch tracking
+                        \end{itemize}
+                    \smallskip
+                    \item<1->	remove this frequency and related frequency components
+                        \begin{itemize}
+                            \item   e.g., mask or subtraction
+                        \end{itemize}
+                    \smallskip
+                    \item<1->	repeat until termination criterion
+                        \begin{itemize}
+                            \item   e.g., number of voices
+                        \end{itemize}
+                \end{enumerate}
+            \bigskip
+            \item<2->   \textbf{challenges}            
+            \smallskip
+            \begin{itemize}
+                \item<2->	reliably \textit{identify fundamental frequency} in a mixture
+                \smallskip
+                \item<2->	\textit{identify/group components} and amount to subtract
+                    \begin{itemize}
+                        \item   overlapping components
+                        \item   spectral leakage
+                    \end{itemize}
+                \smallskip
+                \item<2->	define \textit{termination criterion}
+                    \begin{itemize}
+                        \item   e.g., unknown number of voices or overall energy
+                    \end{itemize}
+            \end{itemize}
+        \end{itemize}
+	\end{frame}
+	
+	\begin{frame}{polyphonic pitch tracking}{iterative subtraction: Cheveign\'e}
+		\begin{enumerate}
+			\item	compute squared AMDF
+				\begin{equation*}
+					\mathrm{ASMDF}_{xx}(\eta,n) = \frac{1}{i_{\mathrm{e}}(n)-i_{\mathrm{s}}(n)+1}\sum\limits_{i=i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{\big(x(i)- x(i+\eta)\big)^2}
+				\end{equation*}
+			\item<2->	find fundamental frequency
+				\begin{equation*}
+					\eta_{\mathrm{min}} = \argmin \big(\mathrm{ASMDF}_{xx}(\eta,n)\big)
+				\end{equation*}
+			\item<3->	apply comb cancellation filter, IR:
+				\begin{equation*}
+					h(i) = \delta(i) - \delta(i-\eta_{\mathrm{min}})
+				\end{equation*}
+			\item<4->	repeat process
+		\end{enumerate}			
+	\end{frame}
+	
+	\begin{frame}{polyphonic pitch tracking}{iterative subtraction: Meddis}
+		\begin{enumerate}
+			\item	auditory pitch tracking:
+				\begin{equation*}
+					r_{zz} (c,n,\eta) = \sum\limits_{i = 0}^{\mathcal{K}-1}{z_c(i)\cdot z_c(i+\eta)}
+				\end{equation*}
+			\pause
+			\item	detect most likely frequency for all bands
+			\pause
+			\item	remove all bands with a max at detected frequency
+			\pause
+			\item	reiterate until most bands have eliminated			
+		\end{enumerate}
+	\end{frame}
+	
+	\begin{frame}{polyphonic pitch tracking}{iterative subtraction: spectral}
+		\begin{enumerate}
+			\item	find salient fundamental frequency (e.g.\ auditory approach, HPS)
+			\pause
+			\item	estimate current model for harmonic magnitudes
+			\pause
+			\item	subtract the model spectrum
+			\pause
+			\item	repeat process
+		\end{enumerate}
+	\end{frame}
+	
+    \section[other]{other methods}
+	\begin{frame}{polyphonic pitch tracking}{exhaustive search}
+		\begin{enumerate}
+			\item	define set of all possible fundamental frequencies
+			\pause
+			\item	compute all possible pairs of fundamental frequency
+			\pause
+			\item 	repeatedly filter the signal with two comb cancellation filters (all combinations)
+			\pause
+			\item	find combination with minimal output energy
+		\end{enumerate}
+	\end{frame}
+	
+	%\begin{frame}{polyphonic pitch tracking}{Karjalainen and Tolonen 1/3}
+		%\begin{enumerate}
+			%\item	pre-whitening by frequency warped linear prediction
+			%\pause
+			%\item	filter bank: low-pass and high-pass band (cut-off: \unit[1]{kHz})
+			%\pause
+			%\item 	HWR and smoothing
+			%\pause
+			%\item	generalized ACF ($\beta = 2/3$):
+						%\begin{equation*}
+							%r_{xx}^\beta (\eta,n) = \mathfrak{F}^{-1}\left\{|X(\jom)|^\beta\right\} 
+						%\end{equation*}
+		%\end{enumerate}
+	%\end{frame}
+	%
+	%\begin{frame}{polyphonic pitch tracking}{Karjalainen and Tolonen 2/3}
+		%\begin{enumerate}
+			%\item	summary ACF
+			%\pause
+			%\item	harmonic ACF processing:
+				%\begin{enumerate}
+					%\item	define temporary function:
+						%\begin{equation*}
+							%r'(\eta) = HWR(r_{xx}^\beta (\eta,n)) 
+						%\end{equation*}
+					%\pause
+					%\item	resample (e.g. linear interpolation):
+						%\begin{equation*}
+							%\eta' = \frac{\eta}{m}
+						%\end{equation*}
+					%%\pause
+					%%\item	compute linear interpolation
+						%%\begin{equation*}
+							%%r'_m(\eta) = r'(\eta) + \frac{\eta-m\eta'}{m}\big(r'(\eta'+1) - r'(\eta')\big)
+						%%\end{equation*}
+					%\pause
+					%\item	update $r(\eta)$
+						%\begin{equation*}
+							%r'(\eta) = HWR\big(r'(\eta) - HWR(r'_m(\eta))\big) 
+						%\end{equation*}
+				%\end{enumerate}
+		%\end{enumerate}
+	%\end{frame}
+	%
+	%\begin{frame}{polyphonic pitch tracking}{Karjalainen and Tolonen 3/3}
+        %\figwithmatlab{Karjalainen}
+	%\end{frame}
+	
+	\begin{frame}{polyphonic pitch tracking}{klapuri}
+        %\vspace{-5mm}
+        \begin{columns}[T]
+            \column{.5\textwidth}
+                \begin{enumerate}
+                    \item	gammatone \textbf{filterbank} (100 bands)
+                    \item<2->	\textbf{normalization}, HWR, smoothing, \ldots
+                    \item<3->	\textbf{STFT} per filter channel (magnitude)
+                    \item<4->	use \textbf{delta pulse templates} to detect frequency patterns
+                    \item<5->	\textbf{pick most salient frequencies}, remove them
+                \end{enumerate}
+            \column{.5\textwidth}
+                \includegraphics[scale=.25]{graph/pitch_klapuri}
+        \end{columns}
+    \bigskip
+    
+    \begin{flushright}
+        graph from \footfullcite{klapuri_perceptually_2005}
+    \end{flushright}
+	\end{frame}
+ 
+    \section[intro]{introduction}
+        \begin{frame}{non-negative matrix factorization}{introduction}
+            \begin{itemize}
+                \item   \textbf{Non-negative Matrix Factorization (NMF)}\\
+                Given a $m \times n$ matrix $V$, find a $m \times r$ matrix $W$ and a $r \times n$ matrix $H$ such that
+                \begin{equation*}
+                V \approx WH
+                \end{equation*}
+                \begin{itemize}
+                		\item all matrices must be non-negative
+                		\item rank $r$ is usually smaller than $m$ and $n$
+                \end{itemize}
+              		                
+                \bigskip
+                \item<2->   \textbf{advantage of non-negativity?}
+                    \begin{itemize}
+                        \item<2->   additive model
+                        \item<3->   relates to probability distributions
+                        \item<4->   efficiency?
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}    
+        
+        \begin{frame}{non-negative matrix factorization}{overview}
+           alternative formulation\footfullcite{cichocki_nmf_2009} to $V \approx WH$
+            \begin{columns}
+            \column{0.6\linewidth}
+                \begin{equation*}
+                V = \sum_{i = 1}^r w_{i} \cdot h_{i} + E
+                \end{equation*}
+            \column{0.6\linewidth}
+			    \begin{itemize}
+					\item  $V \in \mathbb{R}^{m \times n}$
+					\item  $W = [w_{1}, w_{2}, ..., w_{r}] \in \mathbb{R}^{m \times r}$
+					\item  $H  = [h_{1}, h_{2}, ..., h_{r}]^{T} \in \mathbb{R}^{r \times n}$
+					\item  $E$ is the error matrix													   
+				\end{itemize}			                   
+            \end{columns}
+            \begin{figure}
+                \input{pict/pitch_nmf}
+            \end{figure}
+        \end{frame}        
+        
+    \section[objective function]{objective function}
+        \begin{frame}{objective function}{distance and divergence}
+            \begin{itemize}
+                \item   task: \textbf{iteratively minimize objective function} $D(V || WH)$
+                \bigskip
+                \item   typical distance measures ($B = WH$):
+                   \begin{itemize}
+                        \item  squared Euclidean distance:\\
+                        \begin{equation*}
+                        D_\mathrm{EU}( V \parallel B) = \parallel V - B\parallel^{2} = \sum_{i j} (V_{i j} - B_{i j})^{2}
+                        \end{equation*}
+                       \item  generalized K-L divergence:\\
+                       \begin{equation*}
+                        D_\mathrm{KL}( V \parallel B) = \sum_{i j} (V_{i j} \log\left(\frac{V_{i j}}{B_{i j}}\right) - V_{i j} + B_{i j})
+                        \end{equation*}		                
+                        \smallskip
+                        \item<2-> others\footfullcite{cichocki_nmf_2009}: Bregman Divergence, Alpha-Divergence, Beta-Divergence, \ldots 
+                   \end{itemize}
+            \end{itemize}
+        
+        \end{frame}          
+    
+        \begin{frame}{objective function}{gradient descent}
+            \begin{itemize}
+                \item   minimization of objective function
+
+               \bigskip
+            \item<2->  \textbf{gradient descent}: minimum can be found as zero of derivative
+                       \begin{itemize}
+                            \item  2D example: given a function $f(x_{1}, x_{2})$, find the minimum $x_{1} = a$ and $x_{2} = b$
+                                \smallskip
+                                \begin{enumerate}
+                                    \item  initialize $x_{i}(0)$ with random numbers
+                                    \item  update points iteratively:  
+                                             \begin{equation*}
+                                                 x_{i}(n+1) = x_{i}(n) - \alpha \cdot \frac{\partial f}{\partial x_{i}}, \quad i = [1, 2]
+                                             \end{equation*}
+                                \end{enumerate}
+                            \bigskip
+                            \item[$\Rightarrow$] as iteration number $n$ increases, $x_{1}$, $x_{2}$ will be closer to $a$, $b$.
+                       \end{itemize}			   			   
+            \end{itemize}
+        \end{frame}    
+          
+        \begin{frame}{objective function}{additive vs.\ multiplicative update rules} 
+           optimization of objective function\footfullcite{seung_nmf_2001} $D_\mathrm{EU}( V \parallel WH) = \parallel V - WH\parallel^{2}$
+           \begin{itemize}
+                \item  \textbf{additive} update rules:
+                \begin{equation*}
+                H \leftarrow H + \alpha \frac{\partial J}{\partial H} = H + \alpha [(W^{T}V) - (W^{T}WH)]
+                \end{equation*}
+                \begin{equation*}
+                W \leftarrow W + \alpha \frac{\partial J}{\partial W} = W + \alpha [(VH^{T}) - (WHH^{T})]
+                \end{equation*}
+			   \item<2->  \textbf{multiplicative} update rules:
+                \begin{equation*}
+                H \leftarrow H \frac{(W^{T}V)}{(W^{T}WH)}
+                \end{equation*}
+                \begin{equation*}
+                W \leftarrow W \frac{(VH^{T})}{(WHH^{T})}
+                \end{equation*}
+           \end{itemize}
+        \end{frame}        
+    
+        \begin{frame}{objective function}{additional cost function constraints}
+            \begin{itemize}
+                \item   additional penalty terms (regularization terms) may be added to objective function
+                \bigskip
+                \item   example: sparsity in $W$ or $H$
+                \begin{equation*}
+                    D = \parallel V - WH\parallel^{2} + {\color{gtgold}{\alpha J_\mathrm{W}(W)}} + {\color{gtgold}{\beta J_\mathrm{H}(H)}}
+                \end{equation*}
+                \begin{itemize}
+                    \item $\alpha,\beta$: coefficients for controlling degree of sparsity
+                    \item $J_\mathrm{W}$ and $J_\mathrm{H}$: typically $L_{1},L_{2}$ norm 
+                \end{itemize}
+            \end{itemize}
+        \end{frame}
+              
+    \section[example]{example}
+        %\begin{frame}{in class exercise}{nmf for music transcription}
+        %\matlabexercise{nmf based pitch tracking}
+            %\begin{itemize}
+                %\item   \textbf{unsupervised}  
+                    %\begin{itemize}
+                        %\item   read audio file \textit{4notes\_train.wav}
+                        %\item   compute magnitude spectrogram using \textit{spectrogram( )}
+                        %\item   compute matrix W and H using \textit{nnmf( )}
+                        %\item   visualize the templates and activations
+                    %\end{itemize}
+                %\bigskip
+                %\item   \textbf{supervised}
+                    %\begin{itemize}
+                        %\item   read audio file \textit{2notes\_test.wav}  
+                        %\item   compute magnitude spectrogram using \textit{spectrogram( )}
+                        %\item   get H2 using [W2, H2] = PfNmf(Y, W, [ ], [ ], [ ], 0, 0)
+                        %\item   visualize the activations and plot the error curve
+                    %\end{itemize}
+            %\end{itemize}
+        %\end{frame}
+        
+        \begin{frame}{example}{template extraction}
+            \vspace{-3mm}
+            \begin{columns}
+                \column{.4\linewidth}
+                    \begin{itemize}
+                        \item   unsupervised extraction of templates and activations
+                        \item   input audio: 
+                            \begin{itemize}
+                                \item  \includeaudio{Horn.ff.Db2} horn
+                                \item  \includeaudio{Oboe.ff.F4} oboe
+                                \item  \includeaudio{Violin.arco.ff.sulD.B4} violin
+                                \item  \includeaudio{nmf_mixture} mix
+                            \end{itemize}
+                    \end{itemize}
+                \column{.6\linewidth}
+                    \figwithmatlab{F0Nmf}   
+            \end{columns}
+        \end{frame}
+        
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{polyphonic pitch detection}
+                    \begin{itemize}
+                        \item   highly challenging task with
+                            \begin{itemize}
+                                \item   unknown number of sources
+                                \item   unknown harmonic structure
+                                \item   spectral overlap of sources
+                                \item   time-varying mixture
+                            \end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{traditional approaches}
+                    \begin{itemize}
+                        \item   iterative subtraction (detect one pitch, remove it, repeat analysis)
+                        \item   multi-band processing
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{non-negative matrix factorization}
+                    \begin{itemize}
+                        \item   iterative process minimizing an objective function
+                        \item   split a matrix into a template matrix and an activation matrix
+                    \end{itemize}
+           \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
