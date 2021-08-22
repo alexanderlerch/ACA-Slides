@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 5.7: Musical Key Recognition}
+\subtitle{Module 7.5: Musical Key Recognition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,8 +12,9 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~88--94\\
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~116--125
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~88--94\\
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~116--125
+                    Section~7.5
             \end{block}
 
             \begin{itemize}
@@ -56,7 +55,7 @@
                 \vspace{-10mm}
                 \begin{figure}[t]
                     \centering
-                    \includegraphics[scale=.65]{pitch_modes}
+                    \includegraphics[scale=.65]{graph/pitch_modes}
                 \end{figure}
             \end{columns}
 
@@ -81,7 +80,7 @@
             \vspace{-3mm}
                 \begin{figure}[t]
                     \centering
-                    \includegraphics[scale=.6]{pitch_keys}
+                    \includegraphics[scale=.6]{graph/pitch_keys}
                 \end{figure}
         \end{frame}
         
@@ -99,27 +98,24 @@
         
     \section[pitch chroma]{pitch chroma}
         \begin{frame}{pitch chroma}{introduction}
-            \begin{itemize}
-                \item	pitch class distribution 
-                \item	12-dimensional vector
-            \end{itemize}
-            %\vspace{-15mm}\flushright{\includeaudio{sax_example}}\vspace{10mm}
-            \only<1>{\begin{figure}\includegraphics{PitchChroma}\includeaudio{sax_example}\end{figure}}
-            \only<2->{
-            \vspace{-5mm}
-            \flushright{\includegraphics[scale=.65]{PitchChroma}}
-            \vspace{-5mm}
-            \begin{itemize}
-                \item	\textbf{no} octave information
-                    \begin{itemize}
-                        \item	robust representation
-                        \item	no differentiation between unison and octave
-                    \end{itemize}
-            \end{itemize}
-            }    
-            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayPitchChroma.m}{matlab/displayPitchChroma.m}}
-            \vspace{50mm}
-            \inserticon{audio}
+            \begin{columns}
+            \column{.4\linewidth}
+                \begin{itemize}
+                    \item	pitch class distribution 
+                    \item	12-dimensional vector
+                \end{itemize}
+                \begin{itemize}
+                    \item	\textbf{no} octave information
+                        \begin{itemize}
+                            \item	robust representation
+                            \item	no differentiation between unison and octave
+                        \end{itemize}
+                \end{itemize}
+                \includeaudio{sax_example}
+            \column{.6\linewidth}
+                \figwithmatlab{PitchChroma}
+                
+            \end{columns}
         \end{frame}
         \begin{frame}{pitch chroma}{computation 1/2}
             \begin{enumerate}
@@ -143,21 +139,32 @@
             \figwithmatlab{PitchChromaGrouping}
         \end{frame}
         \begin{frame}{pitch chroma}{computation: simple variants}
+            \begin{columns}
+            \column{.4\linewidth}
             \begin{itemize}
                 \item	\textbf{STFT}: 
                     \begin{itemize}
                         \item   \textit{weighted} mean of bins (window function)
                         \item	\textit{tonalness preprocessing} (local maxima etc)
                     \end{itemize}
-                    \only<1>{\vspace{-1mm}\begin{figure}\includegraphics[scale=.6]{PitchChromaGrouping}\end{figure}}
+                    
                 \item<2->	sum of \textbf{filterbank} output energies
-                    \only<2>{\vspace{-1mm}\figwithmatlab{ResonanceFilterBank}}
+                   
                 \item<3->	\textbf{CQT}: 
                     \begin{itemize}
                         \item sum of bins/peaks
                     \end{itemize}
                 \item<4->   beat-synchronous chroma
             \end{itemize}
+            
+            \column{.6\linewidth}
+                \only<1>{
+                    \figwithmatlab{PitchChromaGrouping}
+                }
+                \only<2>{
+                    \figwithmatlab{ResonanceFilterBank}
+                }
+            \end{columns}
         \end{frame}
         \begin{frame}{pitch chroma}{normalization}
             \begin{columns}[T]
@@ -177,14 +184,14 @@
                             \end{itemize}
                     \end{itemize}
                 \column{.4\textwidth}
-                    \includegraphics[scale=.2]{pc-norm}
+                    \includegraphics[scale=.2]{graph/pc-norm}
             \end{columns}
             
         \end{frame}
         
         \begin{frame}{pitch chroma}{problem 1: amplitude distortion}
             \vspace{-3mm}
-            \figwithmatlab{HarmonicsInPitchChroma}
+            \figwithmatlab{PitchChromaLeakage}
             \begin{itemize}
                 \item	every pitch contains not only fundamental but higher harmonics
                 \item[$\Rightarrow$]
@@ -232,14 +239,14 @@
         \end{frame}
         \begin{frame}{key detection}{processing steps of simple key detection}
             \begin{columns}
-                \column{.5\linewidth}
+                \column{.4\linewidth}
                     \begin{enumerate}
                         \item<1->	define reference distribution for specific keys
                         \item<2->	extract average pitch chroma from audio
                         \item<3->	compute distance between template and extracted chroma
                     \end{enumerate}
-                \column{.5\linewidth}
-                    \only<1-2>{\begin{figure}\includegraphics{KrumhanslKeyProfile}\end{figure}}
+                \column{.6\linewidth}
+                    \only<1-2>{\figwithmatlab{KeyProfileKrumhansl}}
                     \only<3>{            
                     \begin{figure}
                         \begin{center}
@@ -266,38 +273,45 @@
                     \end{figure}
                     }
             \end{columns}
-            \only<1-2>{\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayKrumhanslKeyProfile.m}{matlab/displayKrumhanslKeyProfile.m}}}
         \end{frame}
         \begin{frame}{key detection}{key template distance animation}
             \includeanimation{KeyDetection}{01}{12}{1}
         \end{frame}
         
-        \begin{frame}{key detection}{key templates 1/2}
+        \begin{frame}{key detection}{key templates}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{.4\linewidth}
                     \begin{itemize}
                         \item	\emph{Orthogonal} $\vec{\nu}_\mathrm{o}$: root note is most salient component, other components negligible
                                 \pause
                                 \begin{itemize}
                                     \item	same distance to all keys
-                                    \item	no distinction between major and minor
+                                    \item	no major/minor distinction 
                                 \end{itemize}
-                        \item<2->	\emph{Smoothed Orthogonal} $\vec{\nu}_\mathrm{s}$:  root note most salient, neighboring components less important
-                                \pause
-                                \begin{itemize}
-                                    \item	increasing key distance to tritone
-                                    \item	no real distinction between major and minor
-                                \end{itemize}
+                        %\item<2->	\emph{Smoothed Orthogonal} $\vec{\nu}_\mathrm{s}$:  root note most salient, neighboring components less important
+                                %\pause
+                                %\begin{itemize}
+                                    %\item	increasing key distance to tritone
+                                    %\item	no real distinction between major and minor
+                                %\end{itemize}
                         \item<3->	\emph{Diatonic} $\vec{\nu}_\mathrm{d}$: all key-inherent pitches weighted equally
                                 \pause
                                 \begin{itemize}
-                                    \item	linear increasing key distance
+                                    \item	linear increasing key dist
                                 \end{itemize}
                         \item<4->	\emph{Probe tone Ratings}  $\vec{\nu}_\mathrm{p}$: derived from perceptual tonal similarity
                         \item<5->	\emph{Extracted Key Profiles} $\vec{\nu}_\mathrm{t}$: derived from real-world data
                     \end{itemize}
+            \column{.6\linewidth}
+                \vspace{-5mm}
+                \figwithmatlab{KeyProfiles}
+                \vspace{20mm}
+            \end{columns}
         \end{frame}
-        \begin{frame}{key detection}{key templates 2/2}
-            \figwithmatlab{KeyProfiles}
-        \end{frame}
+        %\begin{frame}{key detection}{key templates 2/2}
+            %\figwithmatlab{KeyProfiles}
+        %\end{frame}
         %\begin{frame}{key detection}{distance measures: (vector) distance}
             %\begin{footnotesize}
                     %\begin{itemize}
@@ -346,7 +360,7 @@
             \column{.4\textwidth}
                 \begin{figure}
                     \centering
-                        \includegraphics[scale=.35]{resultskeydetection}
+                        \includegraphics[scale=.35]{graph/resultskeydetection}
                 \end{figure}
             \end{columns}
             \begin{flushright}

@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 5.8: Chord Detection}
+\subtitle{Module 7.7: Chord Detection}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~125--127
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{Chapter 5~---~Tonal Analysis}: pp.~125--127
+                    Section~7.7
             \end{block}
 
             \begin{itemize}
@@ -43,7 +42,7 @@
                 \item	usually constructed of (major/minor) thirds
                 \begin{figure}[t]
                     \centering
-                    \includegraphics[scale=.85]{pitch_chords}
+                    \includegraphics[scale=.85]{graph/pitch_chords}
                 \end{figure}
                 
                 \smallskip
@@ -61,7 +60,7 @@
                 \item	otherwise: chord inversion
                 \begin{figure}[t]
                     \centering
-                    \includegraphics{pitch_chordinversions}
+                    \includegraphics{graph/pitch_chordinversions}
                 \end{figure}
                 
             \end{itemize}
@@ -80,6 +79,9 @@
                 \end{itemize}
             \end{itemize}
         \end{frame}
+        
+      
+        
     \section{chord detection}
         \begin{frame}{chord detection}{introduction: key vs.\ chord detection}
 
@@ -99,13 +101,76 @@
                     \end{itemize}
             \end{itemize}
         \end{frame}
+        \begin{frame}{chord detection}{introduction: overview}
+  \begin{footnotesize}
+\begin{picture}(112,48)
+    \setcounter{iXOffset}{0}
+    \setcounter{iYOffset}{32}
+    \setcounter{iXBlockSize}{32}
+    \setcounter{iXBlockSizeDiv2}{16}
+    \setcounter{iYBlockSize}{16}
+    \setcounter{iYBlockSizeDiv2}{8}
+    \setcounter{iDistance}{8}
+
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{Pitch Representation\\ Extraction}}}}
+
+    \addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+    \addtocounter{iXOffset}{\value{iXBlockSize}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(1,0){\value{iDistance}}}
+    \addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+
+    \addtocounter{iXOffset}{\value{iDistance}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{Similarity\\ Computation}}}}
+
+    \addtocounter{iYOffset}{\value{iYBlockSizeDiv2}}
+    \addtocounter{iXOffset}{\value{iXBlockSize}}
+    \addtocounter{iXOffset}{\value{iDistance}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(-1,0){\value{iDistance}}}
+    \addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+        
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{Chord Template\\ Definition}}}}
+
+    \addtocounter{iXOffset}{-\value{iXBlockSizeDiv2}}
+    \addtocounter{iXOffset}{-\value{iDistance}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(0,-1){\value{iDistance}}}
+
+    \addtocounter{iYOffset}{-\value{iDistance}}
+    \addtocounter{iYOffset}{-\value{iYBlockSize}}
+    \addtocounter{iXOffset}{-\value{iXBlockSizeDiv2}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{Time Sequence\\ Modeling}}}}
+    
+    \addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\vector(0,-1){\value{iDistance}}}
+
+    \addtocounter{iXOffset}{2}
+    \addtocounter{iYOffset}{-\value{iDistance}}
+    \addtocounter{iYOffset}{2}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\text{{\shortstack[c]{Chord Sequence}}}}
+
+    \addtocounter{iYOffset}{\value{iDistance}}
+    \addtocounter{iYOffset}{\value{iYBlockSize}}
+    \put(\value{iXOffset}, \value{iYOffset})
+        {\text{{\shortstack[c]{Chord Probabilities}}}}
+    
+\end{picture}
+\end{footnotesize}
+        \end{frame}
         \begin{frame}{pitch chroma}{introduction}
             \vspace{-3mm}
             \begin{itemize}
                 \item	pitch class distribution: 12-dimensional vector
                 \item   map all pitch class bands in all octaves to one
             \end{itemize}
-            {\vspace{-12mm}\visible<2->{\begin{flushright}{\includeaudio{sax_example}}\end{flushright}}}
+            {\visible<2->{\begin{flushright}{\includeaudio{sax_example}}\end{flushright}}}
             \only<1>{\vspace{1mm}\figwithmatlab{PitchChromaGrouping}}
             \only<2>{\vspace{4mm}\figwithmatlab{PitchChroma}}
             \only<3->{
@@ -125,16 +190,19 @@
             
             }  
             \vspace{50mm}
-            \inserticon{audio}
+            %\inserticon{audio}
         \end{frame}
 
         \begin{frame}{chord detection}{chord template}
+            \vspace{-4mm}
+            \begin{columns}
+            \column{.4\linewidth}
             \begin{itemize}
-                \item similar to key detection we can simply compare an extracted pitch chroma with a template
+                \item compare extracted pitch chroma with template
                     \begin{itemize}
                         \item	simplest possible template and distance: linear transformation  
                     
-                            example~---~C major: $\Gamma(0,j) = [\nicefrac{1}{3},0,0,0,\nicefrac{1}{3},0,0,\nicefrac{1}{3},0,0,0,0]$
+                            example~---~C major: \[\Gamma(0,j) = [\nicefrac{1}{3},0,0,0,\nicefrac{1}{3},0,0,\nicefrac{1}{3},0,0,0,0]\]
                         \smallskip
                         \item[$\Rightarrow$]	instantaneous chord likelihood:
                         \begin{equation*}
@@ -142,6 +210,9 @@
                         \end{equation*}
                     \end{itemize}	
             \end{itemize}
+            \column{.6\linewidth}
+                \figwithmatlab{ChordTemplates}
+            \end{columns}
         \end{frame}
         
         \begin{frame}{chord detection}{chord progression 1/2}
@@ -252,7 +323,7 @@
         \begin{frame}{chord detection}{hidden markov model: example (WP) 2/2}
             %\begin{columns}[T]
             %\column{.6\textwidth}
-            \vspace{-5mm}
+            \vspace{-3mm}
             \only<1>{
             \begin{itemize}
                 \item   \textbf{start probabilities} (initial state assumption)
@@ -276,7 +347,7 @@
             }
             \only<2>{
             \begin{figure}
-                \includegraphics[scale=.6]{viterbi_example}
+                \includegraphics[scale=.6]{graph/viterbi_example}
             \end{figure}
             }
             %\column{.4\textwidth}
@@ -298,7 +369,7 @@
                 {
                     \begin{figure}
                     \centering
-                        \includegraphics[scale=.5]{viterbi_example_\arabic{i}}
+                        \includegraphics[scale=.5]{graph/viterbi_example_\arabic{i}}
                     \end{figure}
                 }
                 \ifthenelse{\equal{\value{i}}{3}}{}{\pause}
@@ -314,6 +385,10 @@
                 \item   transition probability $\rightarrow$ trained from dataset
                 \item   start probability $\rightarrow$ chord statistics (style dependent?)
             \end{itemize}
+        \end{frame}
+        \begin{frame}{chord detection}{chord detection example}
+            {\flushright \includeaudio{chord_detection_example}}
+            \figwithmatlab{ChordDetection}
         \end{frame}
                 
     \section{summary}
