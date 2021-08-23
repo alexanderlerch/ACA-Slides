@@ -41,7 +41,7 @@
     \section[intro]{introduction}
         \begin{frame}{introduction}{content in audio signals}
              \begin{columns}
-             \column{.7\textwidth}
+             \column{.4\textwidth}
                 examples for audio signal content
                 \begin{itemize}
                     \item   \textbf{speech}
@@ -62,22 +62,25 @@
                             \item   \dots
                         \end{itemize}
                 \end{itemize}
-             \column{.3\textwidth}
-                %\vspace{25mm}
-                \begin{figure}
-                    \includegraphics[scale=.4]{waveform}
-                \end{figure}
+             \column{.6\textwidth}
+                \figwithmatlab{Waveform}
+                %\begin{figure}
+                    %\includegraphics[scale=.4]{waveform}
+                %\end{figure}
              \end{columns}
         \end{frame}
  
     \section[aca]{audio content analysis}
         \begin{frame}{introduction}{audio content analysis --- goals}
             \begin{block}{Audio Content Analysis}
-                The field of Audio Content Analysis (ACA) aims at designing and applying algorithms for the automatic extraction of content information from the raw (digital) audio signal. This enables content-driven and content-adaptive services which describe, categorize, sort, retrieve, segment, process, and visualize the signal and its content.                
+                The field of Audio Content Analysis (ACA) aims at designing and applying algorithms for the \textbf{automatic extraction of content information from the raw (digital) audio signal}. 
+                
+                This enables content-driven and content-adaptive services which describe, categorize, sort, retrieve, segment, process, and visualize the signal and its content.                
             \end{block}
         \end{frame}
         
         \begin{frame}{introduction}{audio content analysis --- research fields}
+            \vspace{-3mm}
             \begin{itemize}
                 \item   \textbf{speech} analysis
                     \begin{itemize}
@@ -86,21 +89,21 @@
                         \item   \ldots
                     \end{itemize}
                 \smallskip
-                \item   \textbf{urban sound} analysis
+                \item<2->   \textbf{urban sound} analysis
                     \begin{itemize}
                         \item   noise pollution monitoring
                         \item   audio surveillance
                         \item   \ldots
                     \end{itemize}
                 \smallskip
-                \item   \textbf{industrial sound} analysis
+                \item<3->   \textbf{industrial sound} analysis
                     \begin{itemize}
                         \item   monitoring the state of mechanical devices (engines, etc.)
                         \item   monitoring the health of livestock
                         \item   \ldots
                     \end{itemize}
                 \smallskip
-                \item   \only<2->{\textcolor{gtgold}}{\textbf{musical audio} analysis}
+                \item<4->   \only<5->{\textcolor{gtgold}}{\textbf{musical audio} analysis}
                     \begin{itemize}
                         \item   music transcription
                         \item   music classification
@@ -109,20 +112,22 @@
         \end{frame}
         
         \begin{frame}{introduction}{musical audio vs.\ other audio}
-            music 
+            \vspace{-3mm}
+            \textbf{music} \ldots
             \begin{itemize}
-                \item   is a \textbf{wide band} signal (unlike many other audio signals)
-                \item   comprises both \textbf{tonal and noise} components (like most audio signals)
-                \item   combines \textbf{multiple sound sources} (unlike speech, like urban sound)
-                \item   is a \textbf{poly-timbral} mixture (unlike industrial sound)
-                \item   sources are \textbf{harmonically related and synchronous} (unlike other multi-source signals)
-                \item   has a highly structured language that is \textbf{abstract} (unlike speech)
+                \item   is a \textbf{wide band} signal\\ unlike many other audio signals
+                \item<2->   comprises both \textbf{tonal and noise} components\\ like most audio signals
+                \item<3->   combines \textbf{multiple sound sources}\\ unlike speech, like urban sound
+                \item<4->   is a \textbf{poly-timbral} mixture\\ unlike industrial sound
+                \item<5->  sources are \textbf{harmonically related and synchronous}\\ unlike other multi-source signals
+                \item<6->   has a highly structured language that is \textbf{abstract}\\ unlike speech
             \end{itemize}
         \end{frame}
         
         \begin{frame}{introduction}{audio content analysis --- related terms and areas}
             \begin{itemize}
                 \item   \textbf{terminology}
+                    \bigskip
                     \begin{itemize}
                         \item   \textit{Music Informatics}
                             \begin{itemize}
@@ -182,7 +187,7 @@
             \column{.2\textwidth}
                 \vspace{25mm}
                 \begin{figure}
-                    \includegraphics[height=.8cm,keepaspectratio]{logo_ismir}
+                    \includegraphics[height=.8cm,keepaspectratio]{graph/logo_ismir}
                 \end{figure}
             \end{columns}
             \addreference{\href{http://www.ismir.net}{www.ismir.net}}
@@ -213,7 +218,7 @@
             \end{itemize}
             \column{.5\textwidth}
                 \begin{figure}
-                    \includegraphics[width=\columnwidth]{tonoscope}
+                    \includegraphics[width=\columnwidth]{graph/tonoscope}
                 \end{figure}
             \end{columns}
         \end{frame}
@@ -254,20 +259,20 @@
                     \begin{columns}
                         \column{.25\textwidth}
                         \column{.25\textwidth}
-                            \href{https://www.spotify.com}{\includegraphics[scale=.1]{logo_spotify}}
+                            \href{https://www.spotify.com}{\includegraphics[scale=.1]{graph/logo_spotify}}
                         \column{.25\textwidth}
-                            \href{https://www.last.fm}{\includegraphics[scale=.05]{logo_lastfm}}
+                            \href{https://www.last.fm}{\includegraphics[scale=.05]{graph/logo_lastfm}}
                         \column{.25\textwidth}
-                            \href{https://www.pandora.com}{\includegraphics[scale=.03]{logo_pandora}}
+                            \href{https://www.pandora.com}{\includegraphics[scale=.03]{graph/logo_pandora}}
                     \end{columns}
                 \bigskip
                 \item<1->   \textbf{fingerprinting} 
                     \begin{columns}
                         \column{.25\textwidth}
                         \column{.25\textwidth}
-                            \href{https://www.shazam.com}{\includegraphics[scale=.03]{logo_shazam}}
+                            \href{https://www.shazam.com}{\includegraphics[scale=.03]{graph/logo_shazam}}
                         \column{.25\textwidth}
-                            \href{https://www.gracenote.com}{\includegraphics[scale=.05]{logo_gracenote}}
+                            \href{https://www.gracenote.com}{\includegraphics[scale=.05]{graph/logo_gracenote}}
                         \column{.25\textwidth}
                     \end{columns}
                 \bigskip
@@ -275,9 +280,9 @@
                    \begin{columns}
                         \column{.25\textwidth}
                         \column{.25\textwidth}
-                            \href{http://www.rockprodigy.com}{\includegraphics[scale=.15]{logo_rockprodigy}}
+                            \href{http://www.rockprodigy.com}{\includegraphics[scale=.15]{graph/logo_rockprodigy}}
                         \column{.25\textwidth}
-                            \href{https://www.smartmusic.com}{\includegraphics[scale=.75]{logo_smartmusic}}
+                            \href{https://www.smartmusic.com}{\includegraphics[scale=.75]{graph/logo_smartmusic}}
                         \column{.25\textwidth}
                     \end{columns}
                 \bigskip
@@ -285,9 +290,9 @@
                     \begin{columns}
                         \column{.25\textwidth}
                         \column{.25\textwidth}
-                            \href{http://www.celemony.com}{\includegraphics[scale=.15]{logo_melodyne}}
+                            \href{http://www.celemony.com}{\includegraphics[scale=.15]{graph/logo_melodyne}}
                         \column{.25\textwidth}
-                            \href{http://www.zplane.de}{\includegraphics[scale=.125]{logo_zplane}}
+                            \href{http://www.zplane.de}{\includegraphics[scale=.125]{graph/logo_zplane}}
                         \column{.25\textwidth}
                     \end{columns}
             \end{itemize}
