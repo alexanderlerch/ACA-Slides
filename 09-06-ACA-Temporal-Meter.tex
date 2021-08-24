@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 6.3: Downbeat and Bar Length Detection}
+\subtitle{Module 9.6: Downbeat and Bar Length Detection}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331123}{Chapter 6~---~Temporal Analysis}: pp.~136--137
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331123}{Chapter 6~---~Temporal Analysis}: pp.~136--137
+                    Section~9.6
             \end{block}
 
             \begin{itemize}
@@ -53,7 +52,10 @@
                 \begin{itemize}
                     \item   relation of \textit{bar length and downbeat} is comparable to relation between \textit{tempo and beat phase}
                     \item   meter and downbeat are on a higher hierarchical level
-                    \bigskip
+                \end{itemize}
+                \begin{columns}
+                \column{.4\linewidth}
+                \begin{itemize}
                     \item<2-> extraction can be very similar but on \textit{higher hierarchical level}
                         \begin{enumerate}
                             \item   extraction of novelty function
@@ -61,6 +63,10 @@
                             \item   estimation of downbeat
                         \end{enumerate}
                 \end{itemize}
+                \column{.6\linewidth}
+                    \vspace{-10mm}
+                    \only<2->{\figwithmatlab{BeatHierarchy}}
+                \end{columns}
             \end{frame}
 
     \section[meter]{meter detection}
