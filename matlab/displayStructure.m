@@ -13,7 +13,7 @@ function displayStructure()
     % generate sample data
     [tx,x,t,pcd,mfcc,pc,acf,parts,labels] = generateStructureData([cPath '/../audio/structure-example.mp3']);
 
-    f=plot(tx,x)
+    f=plot(tx,x);
     xlabel('t [s]')
     axis([t(1) t(end) -1 1])
     hold on;

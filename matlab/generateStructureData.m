@@ -13,9 +13,13 @@ function [tx,x,tv,pcd,mfcc,pc,acf,parts,labels] = generateStructureData(cFilePat
     %norm
     mfcc = (mfcc(2:end,:)-repmat(min(mfcc(2:end,:),[],2),1,size(mfcc,2)))./repmat(max(mfcc(2:end,:),[],2)-min(mfcc(2:end,:),[],2),1,size(mfcc,2));
     acf  = (acf(2:end,:)-repmat(min(acf(2:end,:),[],2),1,size(acf,2)))./repmat(max(acf(2:end,:),[],2)-min(acf(2:end,:),[],2),1,size(acf,2));
-    rms  = (rms+50)/(max(rms+50));
+    rms  = (rms(1,:)+50)./(max(rms(1,:)+50));
     rms(rms<0) = 0;
-    rms = rms(1:size(mfcc,2));
+    
+    len = min([size(mfcc,2) size(acf,2) size(rms,2)]);
+    mfcc = mfcc(1:size(len,2));
+    acf = acf(1:size(len,2));
+    rms = rms(1:size(len,2));
     
     pcd  = diff([zeros(12,1) pc],1, 2);
     %pcd  = (pcd-min(min(pcd)));
