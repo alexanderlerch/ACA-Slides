@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 6.1: Onset Detection}
+\subtitle{Module 9.3: Onset Detection}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331123}{Chapter 6~---~Temporal Analysis}: pp.~135--139
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331123}{Chapter 6~---~Temporal Analysis}: pp.~135--139
+                    Section~9.3
             \end{block}
 
             \begin{itemize}
@@ -72,7 +71,7 @@
    \section{novelty function}
         \begin{frame}{onset detection}{novelty function}
             \begin{itemize}
-                \item	\textbf{terms}
+                \item	alternative \textbf{names}
                     \begin{itemize}
                         \item	detection function
                         \item	difference function
@@ -88,20 +87,28 @@
             \end{itemize}
         \end{frame}
         \begin{frame}{onset detection}{novelty function examples 1/3}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{.4\linewidth}
             \begin{enumerate}
                 \item	\textbf{time domain}
                     \begin{itemize}
                         \item	extract time domain envelope
                         \item<1->	calculate slope
                     \end{itemize}
-                    \only<1>{\figwithmatlab{Onset}}
+                \bigskip    
                 \bigskip
-                \item<2->	\textbf{pitch-based}: evaluate pitch changes\footfullcite{collins_using_2005}
-                        \begin{figure}[t]
+                \item<2->	\textbf{pitch-based}: evaluate pitch changes
+            \end{enumerate}
+            \column{.6\linewidth}
+            \vspace{-5mm}
+                        \only<1->{\figwithmatlab{Onset}}
+                        \only<2->{\begin{figure}[t]
                             \centering
                             \includegraphics[scale=.25]{graph/pitch_onset}
-                        \end{figure}
-            \end{enumerate}
+                        \end{figure}}
+            \end{columns}
+            \only<2->{\phantom{\footfullcite{collins_using_2005}}}
         \end{frame}
         \begin{frame}{onset detection}{novelty function examples 2/3}
             \begin{enumerate}   
@@ -146,35 +153,34 @@
                         {							
                             \begin{figure}
                                 \centering
-                                \includegraphics[scale=.25]{goto_onset}
+                                \includegraphics[scale=.25]{graph/goto_onset}
                             \end{figure}
                         }
                     \end{itemize}
             \end{enumerate}
         \end{frame}
-        \begin{frame}{onset detection}{novelty function: variants}
-            \begin{itemize}
-                \item	\textbf{number of frequency bands}
-                    \begin{itemize}
-                        \item	varies: 1, 3, 6, 21, 960, FFT length, ...
-                        \item<2->	larger number of bands not necessarily better\\ $\rightarrow$ adjust number of bands adaptively?
-                    \end{itemize}
-                \bigskip
-                \item<3->	\textbf{combination of bands}
-                    \begin{itemize}
-                        \item	(weight and) add novelty functions per band
-                        \item<4->	onset detection per band and combine results
-                    \end{itemize}
-            \end{itemize}
-        \end{frame}
+        %\begin{frame}{onset detection}{novelty function: variants}
+            %\begin{itemize}
+                %\item	\textbf{number of frequency bands}
+                    %\begin{itemize}
+                        %\item	varies: 1, 3, 6, 21, 960, FFT length, ...
+                        %\item<2->	larger number of bands not necessarily better\\ $\rightarrow$ adjust number of bands adaptively?
+                    %\end{itemize}
+                %\bigskip
+                %\item<3->	\textbf{combination of bands}
+                    %\begin{itemize}
+                        %\item	(weight and) add novelty functions per band
+                        %\item<4->	onset detection per band and combine results
+                    %\end{itemize}
+            %\end{itemize}
+        %\end{frame}
     \section{peak picking}
         \begin{frame}{onset detection}{peak picking: introduction}
             \vspace{-4mm}
+            \begin{columns}
+            \column{.4\linewidth}
             \begin{itemize}
                 \item	detect onsets in the smoothed novelty function
-                    \vspace{-1mm}
-                    \figwithmatlab{NoveltyFunction}
-                \vspace{-3mm}
                 \item<2->	typical \textbf{criteria}
                     \begin{itemize}
                         \item<2->	local maximum \& salient peak
@@ -183,9 +189,14 @@
                         \item<2->	other options: high attack slope, distance to prev. min, \ldots
                     \end{itemize}
             \end{itemize}
+            \column{.6\linewidth}
+                    \vspace{-1mm}
+                    \figwithmatlab{Novelty}
+            \end{columns}
         \end{frame}
         \begin{frame}{onset detection}{peak picking: thresholding}
-            \only<1>{
+            \begin{columns}
+            \column{.4\linewidth}
             \begin{itemize}
                 \item options for thresholding
                     \begin{itemize}
@@ -203,28 +214,39 @@
                         \end{equation*}
                     \end{itemize}
             \end{itemize}
-            }
-            \only<2>{
-            \figwithmatlab{PeakPicking}
-            }
+            \column{.6\linewidth}
+                    \vspace{-1mm}
+                    \figwithmatlab{Novelty}
+            \end{columns}
         \end{frame}
-        %\begin{frame}{onset detection}{evaluation}
-            %\question{how do you properly evaluate an onset detection system}
-            %\begin{itemize}
-                %\item   methodology
-                %\smallskip
-                %\item   ground truth
-                    %\begin{itemize}
-                        %\item   how to get/generate
-                        %\item   necessary annotations
-                    %\end{itemize}
-                %\smallskip
-                %\item   metrics
-                    %\begin{itemize}
-                        %\item   how to measure the accuracy of your system
-                    %\end{itemize}
-            %\end{itemize}
-        %\end{frame}
+
+    \section[eval]{evaluation}
+        \begin{frame}{onset detection}{evaluation}
+            \begin{itemize}
+                \item   \textbf{goal}
+                    \begin{itemize}
+                        \item   compare a series of ground truth onset time stamps with a series of predicted time stamps
+                    \end{itemize}
+                \smallskip
+                \item<2->   \textbf{ground truth annotation} problems
+                    \begin{itemize}
+                        \item   deviations between annotators
+                        \item   how to annotate quasi-synchronous onsets
+                    \end{itemize}
+                \smallskip
+                \item<3->   \textbf{metrics}
+                    \begin{itemize}
+                        \item   measure TP with tolerance range $\Rightarrow$ TP, FN, FP (TN only implicitly)
+                        \item   Precision, Recall, F-Measure
+                        \item   other metrics
+                            \begin{itemize}
+                                \item   mean (absolute) deviation
+                                \item   standard deviation
+                                \item   max deviation
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
 
     
     \section{summary}
