@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 6.4: Rhythm Descriptors}
+\subtitle{Module 9.4: Beat Histogram}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331123}{Chapter 6~---~Temporal Analysis}: pp.~133--135
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331123}{Chapter 6~---~Temporal Analysis}: pp.~133--135
+                    Section~9.4
             \end{block}
 
             \begin{itemize}
@@ -34,47 +33,72 @@
         \end{frame}
 
     \section[intro]{introduction}
-        \begin{frame}{rhythm description}{problem statement}
+        \begin{frame}{beat histogram}{problem statement}
             \begin{itemize}
-                \item challenges for extracting rhythm descriptors from an audio signal 
-                    \begin{itemize}
-                        \item   onset, beat, and downbeat detection error prone
-                        \item   varying tempo
-                    \end{itemize}
+                \item previously introduced low-level features not suitable for temporal or rhythm description
+                \item   onset, beat, and downbeat detection either error prone or complicated
                 \bigskip
-                \item[$\Rightarrow$]   need for robust low level descriptors
+                \item[$\Rightarrow$]   ``robust'' low level representation focused on tempo and rhythm:\\
+                \smallskip
+                \textbf{beat histogram/spectrum}
             \end{itemize}
         \end{frame}
         
-        \section[beat histogram]{beat histogram features}
+        \section[beat histogram]{beat histogram}
             \begin{frame}{beat histogram}{introduction}
-                \vspace{-3mm}
-                \textbf{beat spectrum}/\textbf{beat histogram}: compact representation of periodicities
+                \textbf{beat spectrum} or \textbf{beat histogram}: 
+                \begin{itemize}
+                    \item   x-axis (BPM or inter-onset-time)
+                    \item   y-axis ('strength' of periodicity or number of occurrences)
+                    \bigskip
+                    \item   compact representation of periodicities
+                \end{itemize}
+                \figwithmatlab{BeatHistogram}
+            \end{frame}
+            \begin{frame}{beat histogram}{input}
                 \begin{columns}[T]
                     \column{.55\linewidth}
                         \begin{enumerate}
-                            \item<1->   compute novelty function
+                            \item<1->   option 1: novelty function
                                 \begin{itemize}
                                     \item   time domain features: envelope, rms
                                     \item   spectral differences: flux, ...
-                                    \item   any other feature
+                                    \item   any other feature meaningful for rhythm description
                                 \end{itemize}
-                            \item<1->   compute transform
-                                \begin{itemize}
-                                    \item   (resonance) filter bank
-                                    \item   magnitude spectrum
-                                    \item   pick onsets\\ $\rightarrow$ compute histogram of Inter-Onset-Intervals (IOI histogram)
-                                \end{itemize}
+                            \bigskip
+                            \item<1->   option 2: series of onset times
                         \end{enumerate}
                     \column{.45\linewidth}
                         \begin{figure}
                             \centering
-                                \includegraphics[scale=.25]{lykartsis_beathistogram}
+                                \includegraphics[scale=.25]{graph/lykartsis_beathistogram}
                         \end{figure}
                 \end{columns}
                 
                 \flushright{graph from \footfullcite{lykartsis_rhythm_2015}}
             \end{frame}
+            
+            \begin{frame}{beat histogram}{transform}
+                    \begin{enumerate}
+                        \item<1->   option 1: frequency transform
+                            \begin{itemize}
+                                \item   magnitude spectrum
+                                \item   filterbank
+                            \end{itemize}
+                        \bigskip
+                        \item<1->   option 2: ACF
+                            \begin{itemize}
+                                \item   ACF maxima indicate periodicity periods
+                            \end{itemize}
+                        \bigskip
+                        \item<1->   option 3: histogram
+                            \begin{itemize}
+                                \item   measure inter-onset-intervals
+                                \item   sort them into bins and plot number of occurrences
+                            \end{itemize}
+                    \end{enumerate}
+            \end{frame}
+            
         \section[features]{beat histogram features}
             \begin{frame}{beat histogram}{feature examples}
                 \vspace{-5mm}
@@ -100,7 +124,7 @@
                         \end{itemize}
                 \end{itemize}
                 \column{.5\linewidth}
-                      \only<3->{  \begin{figure}\centering\includegraphics[scale=.2]{burred_acfofbeathisto}\end{figure}}
+                      \only<3->{  \begin{figure}\centering\includegraphics[scale=.2]{graph/burred_acfofbeathisto}\end{figure}}
                 \end{columns}   
                 
                 
@@ -109,13 +133,15 @@
 
             \begin{frame}{rhythm description}{general questions}
                 \begin{itemize}
-                    \item   should a rhythm description be tempo dependent or not?
-                    \smallskip
-                    \item   what role does microtiming play?
-                    \smallskip
-                    \item   should rhythm descriptors be normalized to bar length?
+                    \item   what are the salient perceptual properties of rhythm?
                     \smallskip
                     \item   what rhythms are perceptually similar?
+                    \smallskip
+                    \item   should a rhythm description be tempo dependent or not?
+                    \smallskip
+                    \item   what role does micro-timing play?
+                    \smallskip
+                    \item   should rhythm descriptors be normalized to bar length?
                 \end{itemize}
             \end{frame}
 
@@ -125,7 +151,7 @@
             \begin{itemize}
                 \item   \textbf{beat histogram or spectrum}
                     \begin{itemize}
-                        \item   some frequency domain representation of  onsets
+                        \item   some frequency domain representation of  novelty/ onsets
                         \item   usually characterizing the periodicities
                     \end{itemize}
                 \bigskip

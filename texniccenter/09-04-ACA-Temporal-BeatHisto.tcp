@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=..\06-04-ACA-Temporal-Rhythm.tex
+MainFile=..\09-04-ACA-Temporal-BeatHisto.tex
 UseBibTeX=1
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PDF
