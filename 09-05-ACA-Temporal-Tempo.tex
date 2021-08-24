@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 6.2: Tempo Detection}
+\subtitle{Module 9.5: Tempo Detection}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331123}{Chapter 6~---~Temporal Analysis}: pp.~146--148
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331123}{Chapter 6~---~Temporal Analysis}: pp.~146--148
+                    Section~9.5
             \end{block}
 
             \begin{itemize}
@@ -50,6 +49,8 @@
         \end{frame}
         
        \begin{frame}{tempo detection \& beat tracking}{introduction}
+            \begin{columns}
+            \column{.4\linewidth}
             \begin{itemize}
                 \item \textbf{objectives}
                     \begin{enumerate}
@@ -61,19 +62,25 @@
                     \begin{enumerate}
                         \item	distinguish \textit{hierarchical levels}
                             \begin{itemize}
-                                \item[]	
                                 \item	meter
                                 \item	beat
                                 \item	subbeat/tatum
                             \end{itemize}
-                            \vspace{-17mm}
-                            \begin{flushright}
-                                \includegraphics[scale=.25]{graph/periodiclevels}
-                            \end{flushright}
                         \item<1->	detect \textit{beats without onsets}
                         \item<1->	recognize \textit{onsets without beats}
                     \end{enumerate}
             \end{itemize}
+            \column{.6\linewidth}
+                \figwithmatlab{BeatGrid}
+            \end{columns}
+        \end{frame}
+        
+       \begin{frame}{tempo detection \& beat tracking}{typical beat tracking system}
+        \begin{figure}
+        \scalebox{.75}{
+			\centering
+			\input{pict/temporal_beattracking}	}
+		\end{figure}
         \end{frame}
 
     \section{oscillator approach}
@@ -102,10 +109,7 @@
             \begin{itemize}
                 \item	location of maximum of \textbf{ACF of novelty function}
                 \item<2->	maximum of \textbf{IOI histogram}
-                    \begin{figure}
-                        \centering
-                            \includegraphics[scale=.3]{graph/ioi_hist}
-                    \end{figure}
+                    \figwithmatlab{BeatHistogram}
                 \item<2->	maximum of \textbf{beat spectrum/histogram}
                 \item<2->	\ldots
             \end{itemize}
@@ -183,23 +187,34 @@
             
             challenges with adaptation speed example:                     \includeaudio{sonata-ck330_auftakt}
         \end{frame}
-        %\begin{frame}{tempo detection \& beat tracking}{evaluation}
-            %\question{how do you properly evaluate a tempo detection or beat tracking system}
-            %\begin{itemize}
-                %\item   methodology
-                %\smallskip
-                %\item   ground truth
-                    %\begin{itemize}
-                        %\item   how to get/generate
-                        %\item   necessary annotations
-                    %\end{itemize}
-                %\smallskip
-                %\item   metrics
-                    %\begin{itemize}
-                        %\item   how to measure the accuracy of your system
-                    %\end{itemize}
-            %\end{itemize}
-        %\end{frame}
+   
+    \section[eval]{evaluation}
+        \begin{frame}{tempo detection \& beat tracking}{evaluation}
+            
+            \begin{itemize}
+                \item   evaluation of \textbf{constant tempo }
+                    \begin{itemize}
+                        \item   match within tempo range $\Rightarrow$ classification metrics
+                    \end{itemize}
+                \smallskip
+                \item<2->   evaluation of \textbf{beat tracking }
+                    \begin{itemize}
+                        \item   ground truth can be subjective (double/half tempo, deviations)
+                        \item   each beat matched against ground truth 
+                            \begin{itemize}
+                                \item   challenge 1: tolerance window definition (tempo dependent or not?)
+                                \item   challenge 2: slightly different tempo might lead to gap between metrics and perceptual severity
+                            \end{itemize}
+                    \end{itemize}
+                \smallskip
+                \item<3->   \textbf{typical errors}
+                    \begin{itemize}
+                        \item   double/half tempo (sometimes also 3/2 relationships)
+                        \item   off-beat
+                        \item   problems with abrupt tempo changes
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
     
     \section{summary}
         \begin{frame}{summary}{lecture content}

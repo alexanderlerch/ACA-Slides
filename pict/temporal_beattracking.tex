@@ -1,0 +1,114 @@
+\begin{footnotesize}
+	\begin{picture}(100,70)
+		\setcounter{iXBlockSize}{32}
+		\setcounter{iYBlockSize}{16}
+		\setcounter{iYBlockSizeDiv2}{8}
+		\setcounter{iXBlockSizeDiv2}{16}
+		\setcounter{iDistance}{8}
+
+        % left branch top to bottom
+		\setcounter{iYOffset}{48}
+		\setcounter{iXOffset}{0}
+		\addtocounter{iXOffset}{7}
+		\addtocounter{iYOffset}{2}
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\text{{\shortstack[c]{Audio/Midi\\ Signal}}}}
+		\addtocounter{iXOffset}{-7}
+		\addtocounter{iYOffset}{-2}
+		
+		\addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\vector(0,-1){\value{iDistance}}}
+		\addtocounter{iXOffset}{-\value{iXBlockSizeDiv2}}
+
+		\addtocounter{iYOffset}{-\value{iDistance}}
+		\addtocounter{iYOffset}{-\value{iYBlockSize}}
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{\textbf{Compute}\vspace{2mm}\\  Novelty Function \\ or \\ Onset Times}}}} %Novelty Function\\ Onset Times
+
+		\addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\line(0,-1){\value{iDistance}}}
+		\addtocounter{iYOffset}{-\value{iDistance}}
+
+		\addtocounter{iDistance}{\value{iXBlockSizeDiv2}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\vector(1,0){\value{iDistance}}}
+		\addtocounter{iDistance}{-\value{iXBlockSizeDiv2}}
+
+		\addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+		\addtocounter{iXOffset}{\value{iDistance}}
+		\addtocounter{iYOffset}{-\value{iYBlockSizeDiv2}}
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{\textbf{Compute}\vspace{2mm}\\  Confidence\\ or\\ Distance}}}}
+
+		\addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\line(0,-1){\value{iDistance}}}
+		\addtocounter{iYOffset}{-\value{iDistance}}
+
+ 		\addtocounter{iDistance}{\value{iXBlockSizeDiv2}}
+ 		\addtocounter{iDistance}{\value{iYBlockSizeDiv2}}
+ 		\addtocounter{iDistance}{\value{iXBlockSize}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\line(1,0){\value{iDistance}}}
+		\addtocounter{iXOffset}{\value{iDistance}}
+ 		\addtocounter{iDistance}{-\value{iXBlockSizeDiv2}}
+ 		\addtocounter{iDistance}{-\value{iYBlockSizeDiv2}}
+ 		\addtocounter{iDistance}{-\value{iXBlockSize}}
+
+ 		\addtocounter{iDistance}{\value{iYBlockSize}}
+ 		\addtocounter{iDistance}{\value{iYBlockSize}}
+ 		\addtocounter{iDistance}{\value{iYBlockSizeDiv2}}
+ 		\addtocounter{iDistance}{\value{iYBlockSizeDiv2}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\line(0,1){\value{iDistance}}}
+		\addtocounter{iYOffset}{\value{iDistance}}
+ 		\addtocounter{iDistance}{-\value{iYBlockSize}}
+ 		\addtocounter{iDistance}{-\value{iYBlockSize}}
+ 		\addtocounter{iDistance}{-\value{iYBlockSizeDiv2}}
+ 		\addtocounter{iDistance}{-\value{iYBlockSizeDiv2}}
+
+		\addtocounter{iXOffset}{-3}
+		\addtocounter{iYOffset}{2}
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\text{{\shortstack[c]{Update}}}}
+		\addtocounter{iXOffset}{3}
+		\addtocounter{iYOffset}{-2}
+
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\vector(-1,0){\value{iDistance}}}
+
+        % right branch top to bottom
+		\setcounter{iYOffset}{48}
+		\setcounter{iXOffset}{0}
+		\addtocounter{iXOffset}{\value{iDistance}}
+		\addtocounter{iXOffset}{\value{iDistance}}
+		\addtocounter{iXOffset}{\value{iXBlockSize}}
+		\addtocounter{iXOffset}{\value{iXBlockSize}}
+
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{\textbf{Current State}\vspace{2mm}\\ \\ Tempo, Beat Phase,\\ Time\\ \phantom{or}}}}}
+		
+		\addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\vector(0,-1){\value{iDistance}}}
+		\addtocounter{iXOffset}{-\value{iXBlockSizeDiv2}}
+
+		\addtocounter{iYOffset}{-\value{iDistance}}
+		\addtocounter{iYOffset}{-\value{iYBlockSize}}
+		\put(\value{iXOffset}, \value{iYOffset})
+			{\framebox(\value{iXBlockSize}, \value{iYBlockSize}) {{\shortstack[c]{\textbf{Predict}\vspace{2mm}\\ Next Beat Pos\\ \phantom{or}\\ \phantom{Time} }}}}
+
+		\addtocounter{iXOffset}{\value{iXBlockSizeDiv2}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\line(0,-1){\value{iDistance}}}
+		\addtocounter{iYOffset}{-\value{iDistance}}
+
+		\addtocounter{iDistance}{\value{iXBlockSizeDiv2}}
+        \put(\value{iXOffset}, \value{iYOffset})
+			{\vector(-1,0){\value{iDistance}}}
+		\addtocounter{iDistance}{-\value{iXBlockSizeDiv2}}
+
+	\end{picture}
+\end{footnotesize}
