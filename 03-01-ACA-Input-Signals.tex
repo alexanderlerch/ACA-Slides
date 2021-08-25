@@ -204,8 +204,8 @@
             \begin{frame}{statistical signal description}{probability density function}
                 PDF $p_x(x)$
                 \begin{itemize}
-                    \item	abscissa: possible (amplitude) values
-                    \item	ordinate: probability
+                    \item	x-axis: possible (amplitude) values
+                    \item	y-axis: probability
                 \end{itemize}
                 \pause
                 \begin{eqnarray*}
@@ -309,21 +309,19 @@
 
 		\begin{frame}{statistical signal description}{quantiles \& quantile ranges}
 			dividing the PDF into (equal sized) subsets
-            %\vspace{-3mm}
-            %\begin{columns}
-            %\column{.4\linewidth}
-            %\begin{footnotesize}
+            \vspace{-3mm}
+            \begin{columns}
+            \column{.4\linewidth}
+            \begin{footnotesize}
 			\begin{eqnarray*}
 				Q_\mathrm{X}(c_p) &=& \argmin\big (F_\mathrm{X}(x) \leq c_p\big)\\
                 with\quad F_\mathrm{X}(x) &=& {\int\limits_{-\infty}^{x}{p_\mathrm{x}(y)\, dy}}
 			\end{eqnarray*}
-            %\end{footnotesize}
-            %\column{.6\linewidth}
-            %\vspace{-9mm}
-			%\begin{figure}
-                %\includegraphics{PdfQuantiles}
-            %\end{figure}
-            %\end{columns}
+            \end{footnotesize}
+            \column{.6\linewidth}
+            \vspace{-9mm}
+            \figwithmatlab{PdfQuantiles}
+            \end{columns}
         \end{frame}
 		
         \begin{frame}{statistical signal description}{quantile examples}
