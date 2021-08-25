@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=..\07-00-ACA-DTW.tex
+MainFile=..\10-01-ACA-Alignment-DTW.tex
 UseBibTeX=1
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PDF

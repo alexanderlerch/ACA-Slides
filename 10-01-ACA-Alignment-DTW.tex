@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 7.0: Dynamic Time Warping}
+\subtitle{Module 10.1: Alignment~---~Dynamic Time Warping}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331124}{Chapter 7: Alignment} (pp.~139--146)
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331124}{Chapter 7: Alignment} (pp.~139--146)
+                    Section~10.1
             \end{block}
 
             \begin{itemize}
@@ -36,32 +35,37 @@
 
     \section[intro]{introduction}
         \begin{frame}{dynamic time warping}{problem statement}
-            \begin{columns}
+            \begin{columns}[T]
             \column{.5\linewidth}
             \begin{itemize}
-                \item   align/\textbf{synchronize two sequences}
+                \item   \textbf{synchronize two sequences}
                     \begin{itemize}
                         \item	\textit{similar} musical content
                         \item	\textit{different} tempo and timing
-                            \begin{itemize}
-                                \item[]	$A(n_\mathrm{A})\quad n_\mathrm{A} \in [0;\mathcal{N}_\mathrm{A}-1]$
-                                \item[]	$B(n_\mathrm{B})\quad n_\mathrm{B} \in [0;\mathcal{N}_\mathrm{B}-1]$
-                            \end{itemize}
+                            \begin{footnotesize}
+                            \[A(n_\mathrm{A})\quad n_\mathrm{A} \in [0;\mathcal{N}_\mathrm{A}-1]\]
+                            \[B(n_\mathrm{B})\quad n_\mathrm{B} \in [0;\mathcal{N}_\mathrm{B}-1]\]
+                            %\begin{itemize}
+                                %\item[]	$$
+                                %\item[]	$$
+                            %\end{itemize}
+                            \end{footnotesize}
                         \bigskip
-                        \item[$\Rightarrow$] find the alignment path that 
+                        \item[$\Rightarrow$] find alignment path 
                             \begin{itemize}
-                                \item   minimizes the pairwise distance between sequences
-                                \item   covers the whole sequence
-                                \item   does only move forward in time
+                                \item   minimizing pairwise distance between sequences
+                                \item   covering whole sequence
+                                \item   moving only forward in time
                             \end{itemize}
                     \end{itemize}
                 \end{itemize}
             \column{.5\linewidth}
-                \begin{figure}
-                    \includegraphics[width=\columnwidth]{SequenceAlignment}
-                \end{figure}
+                \figwithmatlab{SequenceAlignment}
+                %\begin{figure}
+                    %\includegraphics[width=\columnwidth]{SequenceAlignment}
+                %\end{figure}
             \end{columns}
-            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySequenceAlignment.m}{matlab/displaySequenceAlignment.m}}
+            %\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySequenceAlignment.m}{matlab/displaySequenceAlignment.m}}
         \end{frame}
     \section[DTW]{dynamic time warping}
         \begin{frame}{dynamic time warping}{overview}
@@ -76,14 +80,15 @@
             \end{itemize}
         \end{frame}
         \begin{frame}{dynamic time warping}{processing steps}
-            \begin{columns}
-            \column{.6\linewidth}
+            \vspace{-3mm}
+            \begin{columns}[T]
+            \column{.4\linewidth}
                 \begin{enumerate}
-                    \item   extract suitable features\\ $\Rightarrow$ two series of feature vectors
+                    \item   extract suitable \textbf{features}\\ $\Rightarrow$ two series of feature vectors
                     \smallskip
-                    \item<1->	compute distance matrix\\ $\mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B})$
+                    \item<1->	compute \textbf{distance matrix}\\ $\mat{D}_{\mathrm{AB}}(n_\mathrm{A},n_\mathrm{B})$
                     \smallskip
-                    \item<1->	compute alignment path\\ $\vec{P}(n_\mathrm{P})$ with $n_\mathrm{P} \in
+                    \item<1->	compute \textbf{alignment path}\\ $\vec{P}(n_\mathrm{P})$ with $n_\mathrm{P} \in
                 [0;\mathcal{N}_{\mathrm{P}}-1]$
                         \begin{itemize}
                             \item[$\Rightarrow$]	minimal \textit{overall} distance
@@ -91,18 +96,21 @@
                     \smallskip
                     \item<1->   (align sequences using dynamic time stretching)
                 \end{enumerate}
-            \column{.4\linewidth}
-                \begin{figure}
-                    \includegraphics[width=\columnwidth]{SimMatrix}
-                \end{figure}
+            \column{.6\linewidth}
+                \vspace{-7mm}
+                \figwithmatlab{DtwPath}
+                %\begin{figure}
+                    %\includegraphics[width=\columnwidth]{SimMatrix}
+                %\end{figure}
             \end{columns}
-            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySimMatrix.m}{matlab/displaySimMatrix.m}}
+            %\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySimMatrix.m}{matlab/displaySimMatrix.m}}
         \end{frame}
     \section[distance]{distance matrix}
         \begin{frame}{dynamic time warping}{distance matrix computation}
-            given 2 sequences of vectors, compute the distance between all pairs of observations
-            \begin{columns}
-            \column{.6\linewidth}
+            %given 2 sequences of vectors, compute the distance between all pairs of observations
+           \vspace{-3mm}
+            \begin{columns}[T]
+            \column{.4\linewidth}
                 \begin{itemize}
                     \item   given 2 sequences of vectors, compute the distance between all pairs of observations
                     \smallskip
@@ -112,12 +120,11 @@
                             \item   example  $\mat{D}_{\mathrm{AB}}(1,n_\mathrm{B})$ is the distance of the first vector in Seq.\ A to all vectors in Seq.\ B
                         \end{itemize}
                 \end{itemize}
-            \column{.4\linewidth}
-                \begin{figure}
-                    \includegraphics[width=\columnwidth]{SimMatrix}
-                \end{figure}
+            \column{.6\linewidth}
+                \vspace{-7mm}
+                \figwithmatlab{DtwPath}
             \end{columns}
-            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySimMatrix.m}{matlab/displaySimMatrix.m}}
+            %\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displaySimMatrix.m}{matlab/displaySimMatrix.m}}
         \end{frame}
     \section[path]{path}
         \begin{frame}{dynamic time warping}{path properties 1/2}
@@ -154,6 +161,7 @@
                         \mathcal{N}_\mathrm{P, max} = \mathcal{N}_\mathrm{A} + \mathcal{N}_\mathrm{B} - 2
                     \end{equation*}
         \end{frame}
+        
     \section[cost]{cost matrix}
         \begin{frame}{alignment}{DTW: overall cost}
             \begin{itemize}
@@ -194,12 +202,6 @@
         \begin{frame}{alignment}{DTW: accumulated cost 2/2}
             \vspace{-5mm}
             \figwithmatlab{DtwCost}
-        \end{frame}
-        \begin{frame}{dynamic time warping}{DTW: example}
-            \begin{textblock*}{100mm}(1cm,2.5cm)
-                \includegraphics[scale=.5]{SequenceAlignment}
-            \end{textblock*}
-            \figwithmatlab{Dtw}
         \end{frame}
         \begin{frame}{alignment}{DTW: algorithm description 1/2}
                 \begin{itemize}
@@ -257,6 +259,13 @@
                 \end{itemize}
         \end{frame}
     \section{example}
+        \begin{frame}{dynamic time warping}{DTW: example}
+            \begin{textblock*}{100mm}(1cm,2.5cm)
+                \includegraphics[scale=.25]{SequenceAlignment}
+            \end{textblock*}
+            \vspace{-5mm}
+            \figwithmatlab{DtwPath}
+        \end{frame}
         \begin{frame}{dynamic time warping}{example}
             \begin{eqnarray*}
                 A &=& [1,\ 2,\ 3,\ 0] ,\nonumber\\
@@ -374,26 +383,22 @@
                     \end{enumerate}
             \column{.6\linewidth}
                 \only<2>{
-                    \vspace{-8mm}
-                    \begin{figure}
-                        \centerline{\includegraphics{DtwConstraints}}
-                    \end{figure}
+                    \figwithmatlab{DtwConstraints}
                 }
                 \only<3>{
                     \vspace{-4mm}
                     \begin{figure}
-                        \centerline{\includegraphics[scale=.3]{dtw_match}}
+                        \centerline{\includegraphics[scale=.3]{graph/dtw_match}}
                     \end{figure}
                 }
                 \only<4>{
                     \vspace{-4mm}
                     \begin{figure}
-                        \centerline{\includegraphics[scale=.4]{multiscaledtw}}
+                        \centerline{\includegraphics[scale=.4]{graph/multiscaledtw}}
                     \end{figure}
                 }
             \end{columns}
             \vspace{-2mm}
-            \only<2>{\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayDtwConstraints.m}{matlab/displayDtwConstraints.m}}}
             \only<3>{\footfullcite{dixon_match:_2005}}
             \only<4>{\footfullcite{muller_efficient_2006}}
 
