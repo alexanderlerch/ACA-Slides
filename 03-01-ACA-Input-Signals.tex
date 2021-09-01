@@ -278,30 +278,37 @@
 			measure of \textit{spread} of the signal around its mean
             \vspace{-5mm}
             \begin{columns}
-            \column{.3\linewidth} 
+            \column{.4\linewidth} 
             \begin{itemize}
                 \item \textbf{variance}
                     \begin{itemize}
                         \item   from signal block:
                         \vspace{-2mm}
+                            \begin{footnotesize}
                             \begin{equation*}
                                 \sigma_x^2(n) = \frac{1}{\mathcal{K}}\sum\limits_{i= i_{\mathrm{s}}(n)}^{i_{\mathrm{e}}(n)}{\big(x(i)-\mu_x(n)\big)^2} 
                             \end{equation*}
+                             \end{footnotesize}
                         \pause
                         \item   from distribution:
                         \vspace{-2mm}
+                             \begin{footnotesize}
                             \begin{equation*}
                                 \sigma_x^2(n) = \sum\limits_{x=-\infty}^{\infty}{\big(x-\mu_x\big)^2\cdot p_x(x)} 
                             \end{equation*}
+                             \end{footnotesize}
                     \end{itemize}
                 \pause
+                \bigksip
                 \item \textbf{standard deviation}
                         \vspace{-2mm}
+                         \begin{footnotesize}
                     \begin{equation*}
                         \sigma_x(n) = \sqrt{\sigma_x^2(n)} 
                     \end{equation*}
+                     \end{footnotesize}
             \end{itemize}
-            \column{.7\linewidth} 
+            \column{.6\linewidth} 
                 
                \figwithmatlab{StandardDeviation}
             \end{columns}
