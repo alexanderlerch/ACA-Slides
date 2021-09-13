@@ -1,0 +1,277 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 10.2: Audio-to-Audio \& Audio-to-Score Alignment}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331124}{Chapter 7: Alignment} (pp.~146--150)
+                    Section~10.2\\
+                    Section~10.3
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   Audio-to-Audio alignment
+                            \begin{itemize}
+                                \item   use cases
+                                \item   features
+                                \item   distance measures
+                                \item   typical accuracy
+                            \end{itemize}
+                        \item   Audio-to-Score alignment
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   elaborate on possible use cases for audio-to-audio alignment
+                        \item   give examples for features and distance measures for alignment
+                        \item   discuss differences between audio-to-audio and audio-to-score alignment
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[A2A]{Audio to audio alignment}
+        \begin{frame}{audio-to-audio alignment}{introduction}
+            \begin{itemize}
+                \item	\textbf{objective}
+                    \begin{itemize}
+                        \item	align two sequences of audio
+                    \end{itemize}
+                \bigskip
+                \item<2->	\textbf{use cases}
+                    \begin{itemize}
+                        \item	\textit{quick browsing} for certain parts in recordings
+                        \item	\textit{timing adjustment} (backing vocals, loops, \ldots)
+                        \item	\textit{automated dubbing}
+                        \item	\textit{musicological analysis} (relative timing of several performances)
+                    \end{itemize}
+                \bigskip
+                \item<3->	\textbf{processing steps}
+                    \begin{itemize}
+                        \item	extract suitable features
+                        \item	compute distance matrix
+                        \item	compute alignment path
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+        \begin{frame}{audio-to-audio alignment}{alignment path computation}
+                 \vspace{-3mm}
+           \begin{columns}
+            \column{.4\linewidth}
+            \vspace{4mm}
+            \begin{itemize}
+                \item prerequisite:\\ Module 10.1~---~Dynamic Time Warping
+            \end{itemize}
+            
+            \column{.6\linewidth}
+                \vspace{-14mm}
+            \figwithmatlab{DtwPath}
+            \end{columns}
+        \end{frame}
+
+        \begin{frame}{audio-to-audio alignment}{features}
+            \vspace{-2mm}
+            \only<1-2>{
+                \begin{itemize}
+                    \item	\textbf{use case examples}
+                        \begin{itemize}
+                            \item	\textbf{quick browsing} --- find the same part across files\\
+                                $\Rightarrow$ use \textit{pitch based} features
+                            \item	\textbf{timing adjustment} --- backing vocals to lead vocals\\
+                                $\Rightarrow$ use \textit{intensity based} features
+                            \item	\textbf{automated dubbing} --- same speaker several recordings\\
+                                $\Rightarrow$ use \textit{intensity based} and \textit{timbre based} features
+                        \end{itemize}
+                    \smallskip
+                    \item<2-> \textbf{feature categories}
+                        \begin{itemize}
+                            \item	\textbf{intensity}: energy, onset probability, \ldots
+                            \item	\textbf{tonal}: pitch chroma, \ldots
+                            \item	\textbf{timbral}: MFCCs, spectral shape, \ldots
+                        \end{itemize}
+                    \item<2->[] plot from \footfullcite{kirchhoff_evaluation_2011}
+                \end{itemize}
+            }
+            \only<3>{
+                \begin{figure}
+                    \centerline{\includegraphics[scale=.5]{graph/ATAA_features}}
+                \end{figure}
+            }
+        \end{frame}
+        
+        \begin{frame}{audio-to-audio alignment}{compute distance matrix --- distance measures}
+            \begin{itemize}
+                \item	typical distance measures
+                    \only<1-4>{
+                    \begin{itemize}
+                        \item<1-4>	\emph{{Euclidean distance}}:
+                                $d_\mathrm{E}(s) = \sqrt{\sum\limits_{j = 0}^{11}{\big(\nu_\mathrm{e}(j)-\nu_\mathrm{t,s}(j)\big)^2}} $
+                        \item<2-4>	\emph{{Manhattan distance}}:
+                                $d_\mathrm{M}(s) = \sum\limits_{j = 0}^{11}{\big|\nu_\mathrm{e}(j)-\nu_\mathrm{t,s}(j)\big|} $
+                        \item<3-4>	\emph{{Cosine distance}}:
+                                $d_\mathrm{C}(s) = 1-\left( \frac{\sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)\cdot\nu_\mathrm{t,s}(j)}}{\sqrt{\sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)^2}}\sqrt{\cdot \sum\limits_{j = 0}^{11}{\nu_\mathrm{t,s}(j)^2}}}\right) $
+                        \item<4-4>	\emph{{Kullback-Leibler divergence}}:
+                                $d_\mathrm{KL}(s) = \sum\limits_{j = 0}^{11}{\nu_\mathrm{e}(j)\cdot\log\left(\frac{\nu_\mathrm{e}(j)}{\nu_\mathrm{t,s}(j)}\right)}$
+                    \end{itemize}
+                    }
+                \smallskip
+                \item<5->	data-driven approach: train classifier with 2-class problem \footfullcite{kirchhoff_evaluation_2011}
+                    \only<5>{
+                        \begin{figure}
+                            \centerline{\includegraphics[scale=.5]{graph/ATAA_feature_training}}
+                        \end{figure}
+                    }
+                    \only<6>{
+                        \begin{figure}
+                            \centerline{\includegraphics[scale=.5]{graph/ATAA_simmatrix_compare}}
+                        \end{figure}
+                    }
+            \end{itemize}
+        \end{frame}
+        
+        \begin{frame}{audio-to-audio alignment}{typical results}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{.7\linewidth}
+                \vspace{-3mm}\begin{figure}
+                    \centerline{\includegraphics[width= \columnwidth]{graph/ATAA_results}}
+                \end{figure}
+            \column{.3\linewidth}
+                \begin{table}
+                    \begin{tabular}{p{.55\columnwidth}l}
+                        \textbf{originals}\linebreak
+                        \begin{scriptsize}
+                            left:~instrumental\hfill \linebreak
+                            right:~a capella
+                        \end{scriptsize} & \textbf{synced}\\
+                        \includeaudio{originals_splanky} & \includeaudio{synced_splanky}
+                    
+                    \end{tabular}
+                \end{table}
+            \end{columns}
+            
+            \hphantom{\footfullcite{kirchhoff_evaluation_2011}}
+            \inserticon{audio}
+        \end{frame}
+        
+    \section[A2S]{Audio to score alignment}
+        \begin{frame}{audio-to-score alignment}{overview}
+            \begin{itemize}
+                \item   \textbf{objective}
+                    \begin{itemize}
+                        \item align an audio sequence with a score sequence
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{use cases}
+                    \begin{itemize}
+                        \item   score viewer
+                        \item   music education
+                        \item   retrieve matching score/audio via cost function
+                        \item   musicological analysis
+                    \end{itemize}
+                \bigskip
+                \item<3->   \textbf{processing steps}
+                    \begin{itemize}
+                        \item   see audio-to-audio alignment
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{audio-to-score alignment}{challenges}
+            \begin{itemize}
+                \item   features from \textbf{different domains} 
+                    \begin{itemize}
+                    \item   score contains no timbre info
+                    \item   score cannot be expected to contain no loudness info
+                    \item   score has no clear ``time axis''
+                    \end{itemize}
+                \bigskip
+                \item<2->[$\Rightarrow$]   two prototypical for distance/similarity calculation
+                    \begin{itemize}
+                        \item   \textit{approach 1}: convert score into audio-like representation
+                            \begin{itemize}
+                                \item   MIDI-to-audio
+                                \item   use model synthesize
+                            \end{itemize}
+                        \smallskip
+                        \item   \textit{approach 2}: convert audio into score-like representation
+                            \begin{itemize}
+                                \item   audio-to-MIDI 
+                                \item   pitch chroma
+                                \item   event-based segmentation
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+    \section[eval]{evaluation}
+        \begin{frame}{alignment}{evaluation}
+            \begin{itemize}
+                \item   \textbf{goal}: compare two sequences of time stamps
+                \bigskip
+                \item<2->   evaluation \textbf{challenges} 
+                    \begin{itemize}
+                    \item   pauses/rests, and long held notes: what is the reference path?
+                    \item   noise in the begin and end of the recording
+                    \item   data not easily available
+                        \begin{itemize}
+                            \item   synthesized
+                            \item   piano sensors
+                            \item   pseudo-ground truth with time stretching
+                            \item   automatic annotation with quality assurance
+                        \end{itemize}
+                    \end{itemize}
+             \end{itemize}
+        \end{frame}
+        \begin{frame}{alignment}{evaluation metrics}
+            \begin{itemize}
+                \item   \textit{audio-to-score}
+                    \begin{itemize}
+                        \item   missed not rate
+                        \item   misalign rate
+                        \item   piece completion
+                        \item   average absolute deviation
+                        \item   variance of deviation
+                    \end{itemize}
+                \bigskip
+                \item   \textit{audio-to-audio}
+                    \begin{itemize}
+                        \item   mean deviation
+                        \item   mean absolute deviation
+                        \item   maximum deviation
+                        \item   relative number of matching path points
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{audio-to-audio alignment}
+                    \begin{enumerate}
+                        \item   extract features
+                        \item   create distance matrix with suitable distance measure
+                        \item   use DTW to find alignment path
+                        \item   (use time-stretching to actually align the sequences)
+                    \end{enumerate}
+                \bigskip
+                \item   \textbf{audio-to-score alignment}
+                    \begin{enumerate}
+                        \item   extract usually pitch-based features
+                        \item   distance measure
+                        \item   use DTW, HMM, etc to extract alignment path
+                    \end{enumerate}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=..\03-04-02-ACA-Input-TF-MelSpecGram.tex
+MainFile=..\03-04-03-ACA-Input-TF-MelSpecGram.tex
 UseBibTeX=1
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PDF
