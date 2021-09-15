@@ -107,7 +107,7 @@
             \begin{columns}
                 \column{.16\textwidth}
                 \column{.25\textwidth}\centering
-                    \hspace{8mm}\includeaudio{excerpt_speechexcerpt_pop}
+                    \hspace{8mm}\includeaudio{excerpt_speech}
                 \column{.25\textwidth}\centering
                     \includeaudio{excerpt_stringquartet}
                 \column{.25\textwidth}\centering
@@ -177,7 +177,7 @@
                         \item   amplitude modulations
                         \item   \ldots
                     \end{itemize}
-                \item<2->   a function of \color<3->{gtgold}{\textbf{spectral distribution}}
+                \item<2->   a function of \color<4->{gtgold}{\textbf{spectral distribution}}
                     \begin{itemize}
                         \item   spectral envelope
                         \item   number of partials
@@ -355,7 +355,7 @@
             \listspectralfeature{Flatness}{\begin{itemize}   \item power vs.\ magnitude spectrum \item smoothed spectrum (avoid spurious 0-bins) \item measure \textit{per band} instead of  whole spectrum \end{itemize}}
         \end{frame}
         \begin{frame}{tonalness features}{spectral tonal power ratio}
-            \listspectralfeature{TonalPowerRatio}{\begin{itemize}   \item definition of tonal/non-tonal components \end{itemize}}
+            \listspectralfeature{TonalPowerRatio}{\begin{itemize}   \item definition of tonal/non-tonal components \begin{itemize}\item local maxima\item peak salience\item in periodic (harmonic) pattern \item \ldots\end{itemize}\end{itemize}}
         \end{frame}
         
 		\begin{frame}{tonalness features}{maximum of ACF}
@@ -481,6 +481,11 @@
                         \item   each layer uses the output of the previous layer as input
                         \smallskip
                         \item<4->[$\rightarrow$]   feature: output of the highest layer
+                        \item<5->   task-dependency:
+                            \begin{itemize}
+                                \item   independent: use auto-encoder to maximize encoded information
+                                \item   dependent: train for specific task(s) (cf.\ multi-task learning) and use representation for other tasks (cf.\ transfer learning)
+                            \end{itemize}
                     \end{itemize}
             \end{itemize}
 		\end{frame}
