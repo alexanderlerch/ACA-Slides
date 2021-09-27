@@ -492,6 +492,7 @@
                 
     \section{summary}
         \begin{frame}{summary}{lecture content}
+            \vspace{-3mm}
             \begin{itemize}
                 \item   \textbf{feature}
                     \begin{itemize}
@@ -499,24 +500,30 @@
                         \item   not necessarily interpretable by humans
                     \end{itemize}
                 \bigskip
-                \item   \textbf{low-level feature extraction}
+                \item   \textbf{feature extraction}
                     \begin{itemize}
                         \item   usually extracted per short block of samples
                         \item   many features can be extracted from audio data, resulting in feature matrix
                     \end{itemize}
-                \bigskip
-                \item   \textbf{timbre}
-                    \begin{itemize}
-                        \item   mostly dependent on both spectral shape and time domain envelope characteristics
-                        \item   multi-dimensional perceptual property not as clearly defined as pitch or loudness
-                    \end{itemize}
+                %\bigskip
+                %\item   \textbf{timbre}
+                    %\begin{itemize}
+                        %\item   mostly dependent on both spectral shape and time domain envelope characteristics
+                        %\item   multi-dimensional perceptual property not as clearly defined as pitch or loudness
+                    %\end{itemize}
                 \bigskip
                 \item   \textbf{instantaneous spectral shape features}
                     \begin{itemize}
                         \item   established set of baseline features
-                        \item   usually extracted from the magnitude spectrum
+                        \item   often extracted from the magnitude spectrum, describing timbre
                         \item   condensing various properties of the spectral shape into single values
                         \item   there exist multiple variants of ``the same'' feature
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{feature learning}
+                    \begin{itemize}
+                        \item   do not design but learn from data
+                        \item   not interpretable but should contain all relevant information
                     \end{itemize}
             \end{itemize}
             \inserticon{summary}

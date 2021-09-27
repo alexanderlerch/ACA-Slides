@@ -67,28 +67,28 @@
                             %{}
                             %{APlayer.swf}\end{center}}}
 
-\newcommand{\includevideo}[1]{{\begin{center}\includemedia[
-                        addresource=video/#1.mp4,
-                        width=0.8\linewidth,
-                        height=0.4\linewidth,
-                        activate=onclick,
-                        flashvars={
-                            source=video/#1.mp4  
-                            &autoPlay=true
-                        }]
-                        {}
-                        {VPlayer.swf}\end{center}}}
-\newcommand{\videowithmatlab}[1]{{\begin{center}\includemedia[
-                        addresource=video/animate#1.mp4,
-                        width=0.8\linewidth,
-                        height=0.4\linewidth,
-                        activate=onclick,
-                        flashvars={
-                            source=video/animate#1.mp4  
-                            &autoPlay=true
-                        }]
-                        {}
-                        {VPlayer.swf}\end{center}\addreference{matlab source: matlab/animate#1.m}}}
+%\newcommand{\includevideo}[1]{{\begin{center}\includemedia[
+                        %addresource=video/#1.mp4,
+                        %width=0.8\linewidth,
+                        %height=0.4\linewidth,
+                        %activate=onclick,
+                        %flashvars={
+                            %source=video/#1.mp4  
+                            %&autoPlay=true
+                        %}]
+                        %{}
+                        %{VPlayer.swf}\end{center}}}
+%\newcommand{\videowithmatlab}[1]{{\begin{center}\includemedia[
+                        %addresource=video/animate#1.mp4,
+                        %width=0.8\linewidth,
+                        %height=0.4\linewidth,
+                        %activate=onclick,
+                        %flashvars={
+                            %source=video/animate#1.mp4  
+                            %&autoPlay=true
+                        %}]
+                        %{}
+                        %{VPlayer.swf}\end{center}\addreference{matlab source: matlab/animate#1.m}}}
 \newcommand{\includeanimation}[4]{{\begin{center}
                         \animategraphics[autoplay,loop,scale=.7]{#4}{animation/#1-}{#2}{#3}        
                         \end{center}

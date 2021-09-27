@@ -103,6 +103,9 @@
 
     \section[normalization]{feature normalization}
 		\begin{frame}{feature post-processing}{feature normalization}
+            \vspace{-3mm}
+            \begin{columns}
+            \column{.5\linewidth}
             \begin{itemize}
                 \item \textbf{reasons}
                     \begin{itemize}
@@ -114,15 +117,16 @@
                     \begin{equation*}\label{eq:featnorm_zscore}
                         v_{j,\mathrm{N}}(n) = \frac{v_j(n) - \mu_{v_j}}{\sigma_{v_j}}.
                     \end{equation*}
-                \smallskip
                 \item   \textbf{min-max normalization}
                     \begin{equation*}\label{eq:featnorm_minmax}
                         v_{j,\mathrm{N}}(n) = \frac{v_j(n) - \min(v_j)}{\max(v_j) - \min(v_j)}.
                     \end{equation*}
             \end{itemize}
-            \begin{block}
+            \column{.5\linewidth}
+            \begin{block}{normalization}
                 The normalization constants $\mu_{v_j},\sigma_{v_j},\max(v_j),\min(v_j)$ have to be estimated from the \emph{{Training Set}}. The same (training) constants are then applied during inference. Extracting constants from the \emph{Test Set} is meaningless as the system has to infer with exactly the same parameters as during training. 
             \end{block}
+            \end{columns}
 		\end{frame}
 
     \section[aggregation]{feature aggregation}
@@ -154,7 +158,19 @@
 		\end{frame}
 
 		\begin{frame}{feature post-processing}{feature aggregation}
-        %\begin{figure}    
+        \begin{columns}  
+            \column{.4\linewidth}
+            \begin{itemize}
+                \item       could be for whole file or \textbf{texture window}:\\ split feature series in overlapping blocks of a few seconds length
+                \bigskip
+                \item<2->   could be \textbf{hierarchical} process:
+                    \begin{enumerate}
+                        \item   compute subfeatures per window
+                        \item   compute subfeatures of subfeature series
+                        \item   (go to 1.)
+                    \end{enumerate}
+            \end{itemize}
+            
             %\begin{footnotesize}
             %\begin{align}
                 %%\mat{V} &=& 				 
@@ -179,17 +195,9 @@
             %\vspace{8\baselineskip}
             %\caption[Feature Aggregation]{Example aggregation with a texture window length of $4$ with the arithmetic mean $\mu$ and the standard deviation $\sigma$}
             %\label{fig:feature_aggregation}
-        %\end{figure}
-            \begin{itemize}
-                \item       could be for whole file or \textbf{texture window}:\\ split feature series in overlapping blocks of a few seconds length
-                \bigskip
-                \item<2->   could be \textbf{hierarchical} process:
-                    \begin{enumerate}
-                        \item   compute subfeatures per window
-                        \item   compute subfeatures of subfeature series
-                        \item   (go to 1.)
-                    \end{enumerate}
-            \end{itemize}
+            \column{.6\linewidth}
+            \figwithmatlab{TextureWindow}
+        \end{columns}
 		\end{frame}
 
 
@@ -209,16 +217,16 @@
                         \item   take existing features and ``create'' new ones
                     \end{itemize}
                 \bigskip
-                \item   \textbf{aggregate features: subfeatures}
-                    \begin{itemize}
-                        \item   combine blocks of features by computing, e.g., statistical features from them (mean, standard deviation, \ldots)
-                        \item   subfeature vector is used as classifier input or as intermediate feature series
-                    \end{itemize}
-                \bigskip
                 \item   \textbf{feature normalization}
                     \begin{itemize}
                         \item   avoid different value ranges might impacting classifier
                         \item   handle different feature distributions
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{aggregate features: subfeatures}
+                    \begin{itemize}
+                        \item   combine blocks of features by computing, e.g., statistical features from them (mean, standard deviation, \ldots)
+                        \item   subfeature vector is used as classifier input or as intermediate feature series
                     \end{itemize}
             \end{itemize}
             \inserticon{summary}
