@@ -76,7 +76,9 @@
 
     \section[challenges]{high data dimensionality challenges}
 		\begin{frame}{dimensionality issues}{overfitting}
-            %\vspace{-2mm}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{.4\linewidth}
             \begin{itemize}
                 \item   \textbf{overfitting}:
                     \begin{itemize}
@@ -85,28 +87,20 @@
                         \item[$\Rightarrow$]<2-> model cannot be estimated properly
                     \end{itemize}
                     
-                    \only<2>{
                     \bigskip
-                    \bigskip
-                    \figwithmatlab{Overfitting}
-                    %\begin{figure}
-                        %\centering
-                        %\includegraphics[scale=.3]{graph/overfitting}
-                    %\end{figure}
-                    }
-                    \bigskip
-                    \begin{itemize}
-                        \item<3-> required training set size depends on 
-                            \begin{itemize}
-                                \item   classifier and its parametrization
-                                \item   number of classes
-                                \item   \ldots
-                            \end{itemize}
-                        \bigskip
-                        \item<3-> \textit{rule of thumb}:\\ don't bother with training sets smaller than $\mathcal{F}^2$
-                    \end{itemize}
-                    \vspace{50mm}
+                    \item<2-> required training set size depends on 
+                        \begin{itemize}
+                            \item   classifier (parametrization)
+                            \item   number of classes
+                            \item   task complexity
+                            \bigskip
+                            \item[$\Rightarrow$]<3-> \textit{rule of thumb}:\\ don't bother with training sets smaller than $\mathcal{F}^2$
+                        \end{itemize}
+                    
 			\end{itemize}
+            \column{.6\linewidth}
+                    \figwithmatlab{Overfitting}
+            \end{columns}
 		\end{frame}
 		\begin{frame}{dimensionality issues}{curse of dimensionality}
             \only<1>{
