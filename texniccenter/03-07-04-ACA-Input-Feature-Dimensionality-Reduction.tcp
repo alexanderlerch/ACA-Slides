@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=..\03-07-04-ACA-Input-Post-Processing.tex
+MainFile=..\03-07-04-ACA-Input-Feature-Dimensionality-Reduction.tex
 UseBibTeX=1
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PDF

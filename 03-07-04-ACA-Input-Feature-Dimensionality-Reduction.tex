@@ -1,7 +1,7 @@
 % move all configuration stuff into includes file so we can focus on the content
 \input{include}
 
-\subtitle{Module 3.7.4: Feature Dimensionality Reducation}
+\subtitle{Module 3.7.4: Feature Dimensionality Reduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -76,7 +76,7 @@
 
     \section[challenges]{high data dimensionality challenges}
 		\begin{frame}{dimensionality issues}{overfitting}
-            \vspace{-2mm}
+            %\vspace{-2mm}
             \begin{itemize}
                 \item   \textbf{overfitting}:
                     \begin{itemize}
@@ -109,6 +109,7 @@
 			\end{itemize}
 		\end{frame}
 		\begin{frame}{dimensionality issues}{curse of dimensionality}
+            \only<1>{
             \begin{itemize}
                 \item \textbf{curse of dimensionality}: 
                     \begin{itemize}
@@ -118,54 +119,32 @@
                         \item   applies to distance-based algorithms
                     \end{itemize}
             \end{itemize}
+            }
+            \only<2->{
+             \textbf{example} (uniformly distributed data): identify region on axis covering \textbf{1\% of data}
             \begin{columns}
-            \column{.45\linewidth}
-            \begin{itemize}
-                \item   \textbf{example} (uniformly distributed data)
-                    \begin{itemize}
-                        \item   identify region on axis covering \textbf{1\% of data}
+            \column{.3\linewidth}
+            %\begin{itemize}
+                %\item  
+                    %\begin{itemize}
+                        %\item   
                             \begin{itemize}
                                 \item   1-D: 1\% of x-axis
-                                \item   2-D: 10\% of x-axis/y-axis
-                                \item   3-D: 21.5\% of x-axis/y-axis/z-axis
+                                \item   2-D: 10\% of x/y-axis
+                                \item   3-D: 21.5\% of x/y/z-axis
                                 \item   10-D: 63\%
                                 \item   100-D: 95\%
                             \end{itemize}
-                    \end{itemize}
-            \end{itemize}
-            \column{.55\linewidth}
+                    %\end{itemize}
+            %\end{itemize}
+            \column{.7\linewidth}
             \includeanimation{CurseOfDimensionality}{00}{02}{1}
             %\vspace{-8mm}
             %\begin{center}
                 %\animategraphics[loop]{1}{-}{00}{02}        
             %\end{center}
             \end{columns}
-            %\addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/animateCurseOfDimensionality.m}{matlab/animateCurseOfDimensionality.m}}
-                %\pause
-                %\item   \textbf{training set density}: 
-                    %example: 1NN ($9$ training samples)
-                    %\only<3>{
-                        %$\mathcal{F} = 1$
-                    %\begin{figure}
-                        %\centering
-                        %\includegraphics[scale=.3]{graph/1nn-1}
-                    %\end{figure}
-                    %}
-                    %\only<4>{
-                        %$\mathcal{F} = 2$
-                     %\begin{figure}
-                        %\centering
-                        %\includegraphics[scale=.25]{graph/1nn-2}
-                    %\end{figure}
-                   %}
-                    %\only<5>{
-                        %$\mathcal{F} = 3$
-                     %\begin{figure}
-                        %\centering
-                        %\includegraphics[scale=.25]{graph/1nn-3}
-                    %\end{figure}
-                   %}
-                     %\vspace{50mm}
+            }
 		\end{frame}
 
     \section[reduction]{dimensionality reduction}
