@@ -137,17 +137,21 @@
 
     \section{distances}
         \begin{frame}{distances}{overview }
+            \vspace{-5mm}
              \begin{columns}
                 \column{.5\linewidth} 
                     \begin{itemize}
                         \item<1->	\emph{{Euclidean Distance}} (L2 Distance)
+                        \smallskip
                         \item<2->	\emph{{Manhattan Distance}} (L1 Distance)
-                        \item<3->	\emph{{Cosine Similarity}}
+                        \smallskip
+                        \item<3->	\emph{{Cosine Similarity/Distance}}
                                 \begin{itemize}
                                     \item   range is from $[-1;1]$ ($[0;1]$ for non-negative input),
                                     \item   not distance but similarity measure
                                     \item   independent of vector length, only on angle
                                 \end{itemize}
+                        \smallskip
                         \item<4->	\emph{Kullback-Leibler Divergence}
                                 \begin{itemize}
                                     \item   not symmetric: $d_\mathrm{KL}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b})\neq d_\mathrm{KL}(\vec{v}_\mathrm{b},\vec{v}_\mathrm{a})$,
@@ -170,7 +174,7 @@
                         s_\mathrm{C}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) = \frac{\sum\limits_{j = 0}^{\mathcal{J}-1}{v_\mathrm{a}(j)\cdot v_\mathrm{b}(j)}}{\sqrt{\sum\limits_{j = 0}^{\mathcal{J}-1}{v_\mathrm{a}(j)^2}}\cdot\sqrt{ \sum\limits_{j = 0}^{\mathcal{J}-1}{v_\mathrm{b}(j)^2}}} .
                     \end{equation*}\end{footnotesize}
                      \begin{footnotesize}\begin{equation*}
-                        d_\mathrm{C}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) = 1-s_\mathrm{C}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) \text{, and}
+                        d_\mathrm{C}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) = 1-s_\mathrm{C}(\vec{v}_\mathrm{a},\vec{v}_\mathrm{b}) .
                     \end{equation*}\end{footnotesize}
                }
                 \only<4>{

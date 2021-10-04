@@ -165,8 +165,16 @@
             \begin{columns}
                 \column{.6\linewidth} 
                     \begin{itemize}
-                        \item	\textbf{training}: extract reference vectors from training set (keep class labels)
-                        \item<2->	\textbf{classification}: extract test vector and set class to majority of $k$ nearest reference vectors
+                        \item	\textbf{training}: extract reference vectors from training set 
+                            \begin{itemize}
+                                \item store coordinates and class labels
+                            \end{itemize}
+                        \item<2->	\textbf{classification}: extract query vector and set class to majority of $k$ nearest reference vectors
+                            \begin{enumerate}
+                                \item   compute distance between query and all training vectors
+                                \item   sort distances to find closest vectors
+                                \item   choose majority class out of the $k$ closest vectors
+                            \end{enumerate}
                         \bigskip
                         \item<3->	\textbf{classifier model}: all training vectors
                     \end{itemize}
