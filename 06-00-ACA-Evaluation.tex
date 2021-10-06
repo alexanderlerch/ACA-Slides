@@ -49,13 +49,14 @@
                 \end{enumerate}
             \end{itemize}
         \end{frame}
-        \begin{frame}{evaluation}{good practices}
+        \begin{frame}{evaluation}{good practices 1/2}
            \begin{itemize}
                 \item   evaluation \textbf{method unrelated} to the specific implementation
                     \begin{itemize}
                         \item   has to be task driven, not algorithm driven
                         \item   metrics should be unrelated to loss function
                     \end{itemize}
+                \bigskip
                 \item<2->   \textbf{expectations} clearly defined
                     \begin{itemize}
                         \item   worst case performance (random)
@@ -66,17 +67,23 @@
                                 \item   standard approach
                             \end{itemize}
                     \end{itemize}
-                \item<3->   \textbf{comparability} to state-of-the-art
+            \end{itemize}
+        \end{frame}
+        \begin{frame}{evaluation}{good practices 2/2}
+           \begin{itemize}
+                \item<1->   \textbf{comparability} to state-of-the-art
                     \begin{itemize}
                         \item   use of established datasets and identical data splits
                         \item   running existing systems on your data
                     \end{itemize}
-               \item<4->   increase \textbf{reproducibility}
+                \bigskip
+               \item<2->   increase \textbf{reproducibility}
                     \begin{itemize}
                         \item   automate evaluation
                         \item   publish source code
                     \end{itemize}
-               \item<5->   test for \textbf{statistical significance}
+                \bigskip
+                \item<3->   test for \textbf{statistical significance}
             \end{itemize}
         \end{frame}
 

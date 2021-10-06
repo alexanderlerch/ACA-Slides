@@ -79,6 +79,9 @@
         \end{frame}
         
         \begin{frame}{data}{data split}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{.6\linewidth}
             \begin{itemize}
                 \item   a bigger data set is commonly split in subsets
                     \smallskip
@@ -100,14 +103,18 @@
                             \end{itemize}
                     \end{itemize}
                 \bigskip
+                \pause
                 \item   no overlap between subsets!
                     \begin{itemize}
                         \item also make sure that similar content (from one recording, album, artist, ...) is grouped into \textbf{one subset only}
                     \end{itemize}
             \end{itemize}
+            \column{.6\linewidth}
+                \figwithmatlab{DataSplit}
+            \end{columns}
         \end{frame}
         
-        \begin{frame}{data}{N-Fold cross validation}
+        \begin{frame}{data}{N-Fold cross validation 1/2}
 
             \begin{itemize}
                 \item   trying to utilize ALL data as both training and testing data
@@ -123,6 +130,13 @@
                 \item<6->	repeat until all $N$ parts have been tested
                 \item<7->	overall result: \textit{average} classification rate
             \end{enumerate}
+        \end{frame}
+        
+        \begin{frame}{data}{N-Fold cross validation 2/2}
+            \begin{figure}
+                \input{pict/input_crossval}
+            \end{figure}
+
         \end{frame}
         
         \begin{frame}{classification}{interaction of data, features, and classifier}
