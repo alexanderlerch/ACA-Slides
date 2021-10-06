@@ -74,13 +74,37 @@
             \vspace{-2mm}
                     \figwithmatlab{Harmonics}
             \begin{itemize}
-                \item	dominant \textit{fundamental} frequency ($f_0,2f_0,3f_0,\ldots$)
+                \item	\textit{fundamental} frequency is relevant for pitch perception ($f_0,2f_0,3f_0,\ldots$)
                     %\vspace{-3mm}
 
                 
                 \item	higher fundamental frequency $\Rightarrow$ higher pitch (mono-dimensional)
             \end{itemize}
         \end{frame}
+        \begin{frame}{pitch perception}{missing fundamental }
+            \vspace{-5mm}
+                \begin{figure}
+                    \includegraphics[scale=.3]{graph/virtualpitchillustration}
+                \end{figure}
+            \begin{itemize}
+                \item   basilar membrane location \textbf{does not explain} the pitch perception of complex tones
+
+                \bigskip
+                \item<2->[$\Rightarrow$] \textbf{virtual pitch}, \textbf{residue pitch}
+
+                \bigskip
+                \item<3->   \textbf{example 1}: missing fundamental \only<3->{\includeaudio{zwicker-track-17}}
+                    \begin{itemize}
+                        \item   $f_0 = \unit[120]{Hz}$, 33 harmonics, with(out) bandpass \unit[300-2400]{Hz}
+                    \end{itemize}
+                \item<3->   \textbf{example 2}: missing fundamental \only<3->{\includeaudio{zwicker-track-18}}
+                    \begin{itemize}
+                        \item   speech $f_0 \approx \unit[100]{Hz}$, with(out) bandpass \unit[300-4000]{Hz}
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+        
         \begin{frame}{pitch perception}{frequency \& pitch}
             \figwithmatlab{MelBark}
             \only<1>{
