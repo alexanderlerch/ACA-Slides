@@ -2,7 +2,7 @@
 \input{include}
 
 
-\subtitle{Module B.6: Instantaneous Frequency}
+\subtitle{Module B.6: Frequency Resolution \& Instantaneous Frequency}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -323,6 +323,22 @@
         \end{frame}
         \begin{frame}{pitch detection resolution}{frequency reassignment: example}
             \figwithmatlab{InstantaneousFreq}
+            \begin{columns}
+            \column{.5\linewidth}
+            \begin{itemize}
+                \item   FFT length: 1024
+                \item   sample rate: \unit[48]{kHz}
+            \end{itemize}
+            \column{.5\linewidth}
+            \begin{itemize}
+                \item   selected frequencies: 
+                    \begin{itemize}
+                        \item   between bins (0.5)
+                        \item   between bins (0.25)
+                        \item   on bin
+                    \end{itemize}
+            \end{itemize}
+            \end{columns}
         \end{frame}
 
             

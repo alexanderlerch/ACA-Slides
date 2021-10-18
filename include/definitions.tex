@@ -42,53 +42,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % media9
 \newcommand{\includeaudio}[1]{
-\href{run:audio/#1.mp3}{\includegraphics[width=5mm, height=5mm]{graph/SpeakerIcon}}
-%{\includemedia[
-                        %addresource=audio/#1.mp3,
-                        %width=5mm,
-                        %height=5mm,
-                        %activate=onclick,
-                        %flashvars={
-                            %source=audio/#1.mp3  
-                            %&autoPlay=true
-                        %}]
-                        %{\includegraphics[width=5mm, height=5mm]{graph/SpeakerIcon}}
-                        %{APlayer.swf}}
-                        }
-%\newcommand{\audioautoplay}[1]{{\begin{center}\includemedia[
-                            %addresource=audio/#1.mp3,
-                            %width=.1\linewidth,
-                            %height=.01\linewidth,
-                            %activate=pageopen,
-                            %flashvars={
-                                %source=audio/#1.mp3  
-                                %&autoPlay=true
-                            %}]
-                            %{}
-                            %{APlayer.swf}\end{center}}}
+\href{run:audio/#1.mp3}{\includegraphics[width=5mm, height=5mm]{graph/SpeakerIcon}}}
 
-%\newcommand{\includevideo}[1]{{\begin{center}\includemedia[
-                        %addresource=video/#1.mp4,
-                        %width=0.8\linewidth,
-                        %height=0.4\linewidth,
-                        %activate=onclick,
-                        %flashvars={
-                            %source=video/#1.mp4  
-                            %&autoPlay=true
-                        %}]
-                        %{}
-                        %{VPlayer.swf}\end{center}}}
-%\newcommand{\videowithmatlab}[1]{{\begin{center}\includemedia[
-                        %addresource=video/animate#1.mp4,
-                        %width=0.8\linewidth,
-                        %height=0.4\linewidth,
-                        %activate=onclick,
-                        %flashvars={
-                            %source=video/animate#1.mp4  
-                            %&autoPlay=true
-                        %}]
-                        %{}
-                        %{VPlayer.swf}\end{center}\addreference{matlab source: matlab/animate#1.m}}}
 \newcommand{\includeanimation}[4]{{\begin{center}
                         \animategraphics[autoplay,loop,scale=.7]{#4}{animation/#1-}{#2}{#3}        
                         \end{center}
@@ -106,22 +61,12 @@
                             \column{.1\textwidth}
                                 \vspace{-8mm}
                                 \begin{flushright}
-                                     \includegraphics[width=\columnwidth]{graph/question_mark}
+                                     \includegraphics[width=.9\columnwidth]{graph/question_mark}
                                 \end{flushright}
                                 \vspace{6mm}
                           \end{columns}\pause\vspace{-12mm}}
 
-\newcommand{\toremember}[1]{%\vspace{-4mm}
-                          %\begin{columns}[T]
-                            %\column{.8\textwidth}
-                                %\textbf{#1}
-                            %\column{.2\textwidth}
-                                %\vspace{-4mm}
-                                %\begin{flushright}
-                                     %\includegraphics[scale=.5]{exclamation_mark}
-                                %\end{flushright}
-                                %\vspace{6mm}
-                          %\end{columns}\vspace{-6mm}
+\newcommand{\toremember}[1]{
                         \inserticon{lightbulb}
                         }
 
@@ -165,7 +110,6 @@
                     \addreference{#2}}  
                                     
 \newcommand{\inserticon}[1]{
-
                     \begin{textblock*}{100mm}(14.5cm,7.5cm)
                         \includegraphics[height=.8cm,keepaspectratio]{graph/#1}
                     \end{textblock*}}            

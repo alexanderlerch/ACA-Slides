@@ -75,19 +75,20 @@
     \section[mono f0]{monophonic pitch tracking}
         \begin{frame}{pitch detection}{task definition}
             \begin{itemize}
-                \item   detect the fundamental frequency $f_0$
-                \item   there is only one fundamental frequency at a time
+                \item   detect the \textbf{fundamental frequency} $f_0$
+                \item   monophonic: only \textbf{one} fundamental frequency at a time
                 \bigskip
-                \item   related subtasks:
+                \item   related \textbf{subtasks}:
                     \begin{itemize}
-                        \item   detect when there is no fundamental frequency
-                        \item   segment into notes
+                        \item   \textit{voice activity}: detect when there is no voice/no fundamental frequency
+                        \item   \textit{note segmentation}
                             \begin{itemize}
-                                \item   start time and stop time
+                                \item   note start time and stop time
                                 \item   average note frequency
+                                \item   averate note velocity
                                 \item   vibrato detection
                             \end{itemize}
-                        \item   map to pitch scale
+                        \item   frequency to \textit{pitch mapping}
                     \end{itemize}
             \end{itemize}
         \end{frame}
@@ -113,6 +114,7 @@
 	
 	\begin{frame}{monophonic fundamental frequency detection}{auto correlation function}
 		\vspace{-2mm}
+        \only<1-2>{
         \begin{itemize}
             \item find \textbf{lag of ACF maximum}
                 \begin{equation*}
@@ -129,11 +131,15 @@
                    % \item<4->	pre-whitening: LP, spectral envelope estimation															
                 \end{itemize}
         \end{itemize}
-		
+		}
+        \only<3>{
+            \figwithmatlab{F0Acf}
+        }
             
 	\end{frame}
 	
 	\begin{frame}{monophonic fundamental frequency detection}{average magnitude difference function}
+        \only<1-2>{
         \begin{itemize}
             \item find \textbf{lag of AMDF minimum}
                 \begin{equation*}
@@ -147,11 +153,15 @@
                         \end{equation*}
                 \end{itemize}
         \end{itemize}
+        }
+        \only<3>{
+            \figwithmatlab{F0Amdf}
+        }
 	\end{frame}
 	
     \section[frequency domain]{frequency domain methods}
 	\begin{frame}{monophonic fundamental frequency detection}{harmonic product spectrum 1/2}
-        \vspace{-10mm}
+        \vspace{-12mm}
         \begin{columns}
             \column{0.4\textwidth}
                 \vspace{4mm}
@@ -164,7 +174,7 @@
                 \figwithmatlab{F0HpsMethod}
 		\end{columns}
         \vspace{-5mm}
-        \footfullcite{noll_pitch_1969}
+        \phantom{\footfullcite{noll_pitch_1969}}
 	\end{frame}
 	
 	\begin{frame}{monophonic fundamental frequency detection}{harmonic product spectrum 2/2}
@@ -196,10 +206,11 @@
         \vspace{-3mm}
         \begin{columns}
         \column{.4\linewidth}
+        \begin{footnotesize}
 		\begin{equation*}
 			r_{XX}(\eta,n) = \sum\limits_{k=-\mathcal{K}/2}^{\mathcal{K}/2-1}{|X(k,n)|\cdot |X(k+\eta,n)|}
 		\end{equation*}
-		%\pause
+        \end{footnotesize}
 		$\Rightarrow$ \textbf{detect maximum location}
         
         \column{.6\linewidth}
