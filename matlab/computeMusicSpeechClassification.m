@@ -4,7 +4,7 @@ function computeMusicSpeechClassification(cDatasetPath)
         % this script is written for the GTZAN music/speech dataset
         % modify this path or use the function parameter to specify your
         % dataset path
-        cDatasetPath = 'c:\dataset\music_speech\'; 
+        cDatasetPath = 'd:\dataset\music_speech\'; 
     end
     if (exist('ComputeFeature') ~= 2)
         error('Please add the ACA scripts (https://github.com/alexanderlerch/ACA-Code) to your path!');
@@ -38,7 +38,7 @@ function computeMusicSpeechClassification(cDatasetPath)
     v     = (v - repmat(m,1,size(music_files,1)+size(speech_files,1)))./repmat(s,1,size(music_files,1)+size(speech_files,1));
     C     = [zeros(1,size(music_files,1)) ones(1,size(speech_files,1))];
 
-    [acc, mat]  = LeaveOneOutCV(v,C);
+    [acc, mat]  = ToolLooCrossVal(v,C);
     
     disp('confusion matrix:'),disp(mat);
 
@@ -50,9 +50,9 @@ function computeMusicSpeechClassification(cDatasetPath)
     disp('macro accuracy:'), disp(mean(tmp))
     
     % single feature performance
-    [acc1, mat1]  = LeaveOneOutCV(v(1,:),C);
+    [acc1, mat1]  = ToolLooCrossVal(v(1,:),C);
     sprintf('centroid accuracy: %f', acc1)
-    [acc2, mat2]  = LeaveOneOutCV(v(2,:),C);
+    [acc2, mat2]  = ToolLooCrossVal(v(2,:),C);
     sprintf('rms accuracy: %f', acc2)
 end
 
@@ -69,17 +69,17 @@ function [v] = ExtractFeaturesFromFile(cFilePath)
     v(1,1)    = mean(feature);
     
     feature = ComputeFeature (deblank(cFeatureNames(2,:)), x, fs);
-    v(2,1)    = std(feature);
+    v(2,1)    = std(feature(1,:));
 end
-
-function [acc, result] = LeaveOneOutCV(v,C)
-    result  = zeros(length(unique(C)));
-    for i = 1:size(v,2)
-        v_train = [v(:,1:i-1) v(:,i+1:end)]';
-        C_train = [C(1:i-1) C(:,i+1:end)]';
-        res = computeKnn(v(:,i)', v_train,C_train,3);
-        result(C(i)+1,res+1) = result(C(i)+1,res+1) + 1; 
-    end
-    
-    acc = sum(diag(result))/length(C);
-end
+% 
+% function [acc, result] = LeaveOneOutCV(v,C)
+%     result  = zeros(length(unique(C)));
+%     for i = 1:size(v,2)
+%         v_train = [v(:,1:i-1) v(:,i+1:end)]';
+%         C_train = [C(1:i-1) C(:,i+1:end)]';
+%         res = computeKnn(v(:,i)', v_train,C_train,3);
+%         result(C(i)+1,res+1) = result(C(i)+1,res+1) + 1; 
+%     end
+%     
+%     acc = sum(diag(result))/length(C);
+% end

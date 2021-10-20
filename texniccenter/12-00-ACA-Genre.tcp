@@ -3,7 +3,7 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=..\08-01-ACA-Genre.tex
+MainFile=..\12-00-ACA-Genre.tex
 UseBibTeX=1
 UseMakeIndex=0
 ActiveProfile=LaTeX ⇨ PDF
