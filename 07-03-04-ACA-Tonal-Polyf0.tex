@@ -304,6 +304,10 @@
                             \item[$\Rightarrow$] as iteration number $n$ increases, $x_{1}$, $x_{2}$ will be closer to $a$, $b$.
                        \end{itemize}			   			   
             \end{itemize}
+            \vspace{-2mm}
+            \begin{figure}
+                \includegraphics[scale=.2]{graph/gradient_descent}
+            \end{figure}
         \end{frame}    
           
         \begin{frame}{objective function}{additive vs.\ multiplicative update rules} 
@@ -341,7 +345,7 @@
             \end{itemize}
         \end{frame}
               
-    \section[example]{example}
+    \section[example]{NMF example}
         %\begin{frame}{in class exercise}{nmf for music transcription}
         %\matlabexercise{nmf based pitch tracking}
             %\begin{itemize}
@@ -363,7 +367,7 @@
             %\end{itemize}
         %\end{frame}
         
-        \begin{frame}{example}{template extraction}
+        \begin{frame}{nmf example}{template extraction}
             \vspace{-3mm}
             \begin{columns}
                 \column{.4\linewidth}
@@ -380,6 +384,24 @@
                 \column{.6\linewidth}
                     \figwithmatlab{F0Nmf}   
             \end{columns}
+        \end{frame}
+        
+        \begin{frame}{nmf use cases}{piano transcription}
+            \begin{itemize}
+                \item   separate template adaptation from activation matrix adaptation:
+                    \begin{enumerate}
+                        \item  train/set template matrix
+                        \item  order template matrix to have fixed pitch mapping
+                        \item  keep template matrix fixed and only update activation matrix
+                        \item  pick activation magnitude to determine active pitches
+                    \end{enumerate}
+                \bigskip
+                \item   potential problems
+                    \begin{itemize}
+                        \item   detuned piano
+                        \item   template differs significantly from sound analyzed
+                    \end{itemize}
+            \end{itemize}
         \end{frame}
         
     \section{summary}
