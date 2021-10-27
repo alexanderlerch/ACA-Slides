@@ -37,8 +37,9 @@
        \begin{frame}{pitch evaluation}{tasks}
             goal: compare predicted pitch and ground truth pitch
             \pause
+            \bigskip
             \begin{itemize}
-                \item   various 'pitch tracking' tasks
+                \item   differentiate various 'pitch tracking' tasks
                     \begin{itemize}
                         \item   pitch of \textbf{individual notes}
                         \item   pitch of \textbf{monophonic melody}
@@ -64,30 +65,38 @@
             \bigskip
                \question{how to annotate F0}
         \end{frame}
+    \section{metrics}
        \begin{frame}{pitch evaluation}{metrics --- score ground truth}
+            \vspace{-2mm}
             \begin{itemize}
                 \item   all metrics should be computed in the pitch domain, not the frequency domain
                 \item   metrics measure a \textbf{match} between ground truth and predicted pitch ($\Rightarrow$ tolerance)
-                \item<2->   Raw Pitch Accuracy:
-                \begin{equation}
+                \bigskip
+                \item<2->   \textbf{Raw Pitch Accuracy}:
+                \begin{footnotesize}
+                \begin{equation*}
                      RPA = \frac{\sum\limits_{\forall n}TP_n}{\mathcal{N}}  
-                \end{equation}
+                \end{equation*}
                 \[ TP_n = \left\{ 
 								\begin{array}{ll} 
 									0, & \text{if } |\mathfrak{p}_\mathrm{GT}(n) - \hat{\mathfrak{p}}(n)| \geq 0.5 \\
 									1, & \text{otherwise }
 			          			\end{array} 
 			          			\right. \] 
-                \item<2->   Raw Chroma Accuracy:
-                \begin{equation}
+                \end{footnotesize}
+                \smallskip
+                \item<2->   \textbf{Raw Chroma Accuracy}:
+                \begin{footnotesize}
+                \begin{equation*}
                      RCA = \frac{\sum\limits_{\forall n}TP_{\mathrm{chroma},n}}{\mathcal{N}}  
-                \end{equation}
+                \end{equation*}
                 \[ TP_{\mathrm{chroma},n} = \left\{ 
 								\begin{array}{ll} 
 									0, & \text{if} \mod\big(|\mathfrak{p}_\mathrm{GT}(n) - \hat{\mathfrak{p}}(n)|, 12\big) \geq 0.5 \\
 									1, & \text{otherwise }
 			          			\end{array} 
 			          			\right. \]
+                \end{footnotesize}
             \end{itemize}
        \end{frame}
        \begin{frame}{pitch evaluation}{metrics --- f0 ground truth}
@@ -96,6 +105,12 @@
                 \item   metrics measure \textbf{deviation} between ground truth and predicted pitch 
                 \bigskip
                 \item<2->   MSE, MAE, standard deviation from the ground truth
+            \end{itemize}
+       \end{frame}
+       \begin{frame}{pitch evaluation}{result aggregation}
+            \begin{itemize}
+                \item   aggregate per datapoint (frame/note)
+                \item   aggregate per file
             \end{itemize}
        \end{frame}
      
