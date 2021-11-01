@@ -99,7 +99,7 @@
        \begin{frame}{tuning frequency estimation}{requirement}
     
             \begin{itemize}
-                \item   any pitch-based analysis system relies on tuning frequency (pre-defined or adaptive), recall \[ \mathfrak{p}(f)= 69 + 12\cdot\log_2\left(\frac{f}{f_{A4}}\right)\]
+                \item   any pitch-based analysis system relies on tuning frequency (pre-defined or adaptive), recall \[ \mathfrak{p}(f)= 69 + 12\cdot\log_2\left(\frac{f}{\textcolor{gtgold}{f_{A4}}}\right)\]
                 \item   tuning frequency can be far from \unit[440]{Hz}
                 \bigskip
                 \item<2->[$\Rightarrow$]   wrong tuning frequency assumption can significantly impact pitch detection reliability
@@ -108,18 +108,25 @@
        \begin{frame}{tuning frequency estimation}{assumptions and limits}
             \begin{enumerate}
                 \item   \textbf{key is unknown}, i.e., deviation $>\unit[50]{Cent}$ will be mapped back to semitone range
-                \item   \textbf{temperament/intonation is unknown}, i.e., equally tempered tuning has to be assumed
-                \item   piece may be \textbf{polyphonic}
-                \item   piece may \textbf{not contain pitch A4}
-                \item   \textbf{tuning frequency does not change} or changes slowly over time
+                \smallskip
+                \item<2->   \textbf{temperament/intonation is unknown}, i.e., equally tempered tuning has to be assumed
+                \smallskip
+                \item<3->   piece may be \textbf{polyphonic}
+                \smallskip
+                \item<4->   piece may \textbf{not contain pitch A4}
+                \smallskip
+                \item<5->   \textbf{tuning frequency does not change} or changes slowly over time
             \end{enumerate}
        \end{frame}
        \begin{frame}{tuning frequency estimation}{typical processing steps}
             \begin{enumerate}
-                \item   estimate fundamental frequencies or frequencies of tonal components
-                \item   calculate deviation $\Delta C$ from the nearest equally tempered pitch frequency
-                \item   average all deviations: $\mu_{\Delta C}$ (or look at histogram)
-                \item   compute the tuning frequency from the average deviation:
+                \item   \textbf{estimate fundamental frequencies} or frequencies of tonal components
+                \smallskip
+                \item<2->   \textbf{calculate deviation} $\Delta C$ from the nearest equally tempered pitch frequency
+                \smallskip
+                \item<3->   \textbf{average all deviations}: $\mu_{\Delta C}$ (or look at histogram)
+                \smallskip
+                \item<4->   \textbf{estimate the tuning frequency} from the average deviation:
                 \[ \hat{f}_\mathrm{A4} = \unit[440]{Hz}\cdot 2^\frac{\mu_{\Delta C}}{1200}\]
                     
             \end{enumerate}
@@ -145,6 +152,13 @@
                     \begin{itemize}
                         \item   assume equally tempered recording without intonation changes
                         \item   map deviations to new estimate
+                    \end{itemize}
+                \bigskip
+                \item  \textbf{potential issues}
+                    \begin{itemize}
+                        \item   frequencies of harmonics distort estimate
+                        \item   temperament and tuning break assumptions
+                        \item   insufficient reliable real-world ground truth data
                     \end{itemize}
             \end{itemize}
             \inserticon{summary}
