@@ -39,13 +39,44 @@
                 \item \textbf{onset}: begin of musical event
 
                 \bigskip
-                \item   \textbf{polyphonic} audio signals:
+                \item \textbf{goal}: detect the point in time of an onset
+
+                \bigskip
+                \item   \textbf{challenges}:
                     \begin{itemize}
-                        \item   unknown number of voices and events
-                        \item   multiple onsets occur at ``the same'' time
-                        \item   onset might be obfuscated by other musical content
+                        \item   which time stamp of the initial attack time actually marks the onset time?
+                        \smallskip
+                        \item   \textit{polyphonic} audio signals:
+                            \begin{itemize}
+                                \item   unknown number of voices and events
+                                \item   multiple onsets occur at ``the same'' time
+                                \item   onset might be obfuscated by other musical content
+                            \end{itemize}
                     \end{itemize}
             \end{itemize}
+        \end{frame}
+        \begin{frame}{onset detection}{onset time}
+            \begin{columns}
+            \column{.4\linewidth}
+                \begin{itemize}
+                    \item \textbf{note onset time}: 
+                        \begin{itemize}
+                            \item   time the instrument is \textit{triggered}
+                        \end{itemize}
+                    \bigskip
+                    \item \textbf{acoustic onset time}: 
+                        \begin{itemize}
+                            \item   time of first \textit{measurable} instrument output
+                        \end{itemize}
+                    \bigskip
+                    \item   \textbf{perceptual onset time}:
+                        \begin{itemize}
+                            \item   time the event is \textit{perceived} by listener
+                        \end{itemize}
+                \end{itemize}
+            \column{.6\linewidth}
+                \figwithmatlab{Onset}
+            \end{columns}
         \end{frame}
 
         \begin{frame}{onset detection}{overview}
@@ -71,7 +102,7 @@
    \section{novelty function}
         \begin{frame}{onset detection}{novelty function}
             \begin{itemize}
-                \item	alternative \textbf{names}
+                \item	alternative \textbf{terms} for \textit{novelty function}
                     \begin{itemize}
                         \item	detection function
                         \item	difference function
@@ -82,7 +113,7 @@
                         \item<2->	extract features
                         \item<3->	compute derivative
                         \item<4->	smooth result
-                        \item<5->	apply Half-Wave-Rectification $HWR$
+                        \item<5->	apply Half-Wave-Rectification (HWR)
                     \end{enumerate}
             \end{itemize}
         \end{frame}
@@ -91,14 +122,19 @@
             \begin{columns}
             \column{.4\linewidth}
             \begin{enumerate}
-                \item	\textbf{time domain}
+                \item	\textbf{time domain} example
                     \begin{itemize}
-                        \item	extract time domain envelope
-                        \item<1->	calculate slope
+                        \item	\textit{feature}: time domain envelope
+                        \item   \textit{derivative}:	slope of envelope
+                        \item   \textit{HWR}: only interested in onsets, not offsets
                     \end{itemize}
                 \bigskip    
                 \bigskip
-                \item<2->	\textbf{pitch-based}: evaluate pitch changes
+                \item<2->	\textbf{pitch domain}: 
+                    \begin{itemize}
+                        \item	\textit{feature}: pitch contour
+                        \item   \textit{derivative}: changes in pitch
+                    \end{itemize}
             \end{enumerate}
             \column{.6\linewidth}
             \vspace{-5mm}
@@ -133,9 +169,9 @@
                         \item<3->	\textit{complex}
                         \only<3->
                         {
-                            \begin{equation*}
-                                d_\mathrm{dux}(n) = \sum\limits_{k = 0}^{\mathcal{K}/2-1}{|X(k,n)-X(k,n-1)|}
-                            \end{equation*}
+                            \begin{itemize}
+                                \item   $d_\mathrm{dux}(n) = \sum\limits_{k = 0}^{\mathcal{K}/2-1}{|X(k,n)-X(k,n-1)|}$
+                            \end{itemize}
                         }
                     \end{itemize}
             \end{enumerate}

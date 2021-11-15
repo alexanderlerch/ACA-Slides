@@ -48,7 +48,8 @@
             \end{itemize}
         \end{frame}
         
-       \begin{frame}{tempo detection \& beat tracking}{introduction}
+        \begin{frame}{tempo detection \& beat tracking}{introduction}
+            \vspace{-3mm}
             \begin{columns}
             \column{.4\linewidth}
             \begin{itemize}
@@ -75,7 +76,7 @@
             \end{columns}
         \end{frame}
         
-       \begin{frame}{tempo detection \& beat tracking}{typical beat tracking system}
+        \begin{frame}{tempo detection \& beat tracking}{typical beat tracking system}
         \begin{figure}
         \scalebox{.75}{
 			\centering
@@ -85,6 +86,7 @@
 
     \section{oscillator approach}
         \begin{frame}{tempo detection \& beat tracking}{oscillator approach}
+            \vspace{-2mm}
             \textbf{Beat tracking with an oscillator}\footfullcite{large_beat_1995}
             \begin{figure}
                 \centering
@@ -122,7 +124,8 @@
                         \item	initial beat phase
                         \item	adaptation speed
                     \end{itemize}
-                \item<2->	compute reliability/confidence criteria:
+                \smallskip
+                \item<2->	compute reliability/\textbf{confidence} criteria:
                 
                     \begin{itemize}
                         \item	match beat and onset times
@@ -130,6 +133,7 @@
                         \item<4->	majority of different agents
                         \item   \ldots
                     \end{itemize}
+                \smallskip
                 \item<5->	choose\textbf{ most reliable agent} (or path between agents)
             \end{enumerate}
         \end{frame}
@@ -140,7 +144,9 @@
             \column{.5\linewidth}
                 \begin{enumerate}
                     \item	design \textbf{filterbank} (e.g. comb resonators spaced 1 beat)
+                    \smallskip
                     \item<2->	compute filter output energy	
+                    \smallskip
                     \item<3->	pick maximum
                 \end{enumerate}
             \column{.5\linewidth}
@@ -185,7 +191,8 @@
                 \item<1->	tempo \& phase: only \textbf{slow adaptation} --- no sudden tempo changes
             \end{enumerate}
             
-            challenges with adaptation speed example:                     \includeaudio{sonata-ck330_auftakt}
+            \bigskip
+            example: challenges with adaptation speed\\                      \includeaudio{sonata-ck330_auftakt}
         \end{frame}
    
     \section[eval]{evaluation}
