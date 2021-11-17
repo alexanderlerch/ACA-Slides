@@ -401,11 +401,30 @@
             \vspace{-2mm}
             \only<3>{\footfullcite{dixon_match:_2005}}
             \only<4>{\footfullcite{muller_efficient_2006}}
-
         \end{frame}
 
     
     \section{summary}
+        \begin{frame}{dynamic time warping}{DTW vs.\ Viterbi}
+            \question{similarities and differences of DTW and the Viterbi algorithm}
+              
+                \bigskip
+                \begin{itemize}
+                    \item   \textbf{commonalities}
+                        \begin{itemize}
+                            \item   find path through matrix 
+                            \item   maximizes overall probability/minimizes overall cost
+                            \item   based on dynamic programming principles
+                        \end{itemize}
+                    \smallskip
+                    \item   \textbf{differences}
+                        \begin{itemize}
+                            \item   DTW has more constraints: start/end in corner, move only to neighbor
+                            \item   DTW is not usually parametrized by training data (transition probs, construction of distance/emission prob matrix)
+                            \item   Viterbi path length is predefined, DTW path length is not
+                        \end{itemize}
+                \end{itemize}
+        \end{frame}
         \begin{frame}{summary}{lecture content}
             \begin{itemize}
                 \item   \textbf{dynamic time warping}
