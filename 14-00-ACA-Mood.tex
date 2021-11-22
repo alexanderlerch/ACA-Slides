@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 8.3: Mood Recognition}
+\subtitle{Module 14: Mood Recognition}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~158--161)
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~158--161)
+                    Section~14
             \end{block}
 
             \begin{itemize}
@@ -56,6 +55,8 @@
     \section[mood]{mood \& emotion}
         \begin{frame}{mood recognition}{challenges}
             \question{What is the difference between \textit{mood} and \textit{emotion}}
+            
+            many definitions out there but general consensus on
             \begin{itemize}
                 \item	\textit{emotion}: 
                     \begin{itemize}
@@ -76,13 +77,14 @@
                     \begin{itemize}
                         \item   \textit{verbalization} of emotions/moods usually misleading
                         \item   not easily \textit{quantifiable}/categorizable
-                        \item   change over time?
+                        \item   changing over time?
                     \end{itemize}
                 \bigskip
-                \item   \textbf{research focus}
+                \item   \textbf{research questions}
                     \begin{itemize}
-                        \item<2->	are established \textit{basic emotions} (happiness, anger, fear, \ldots) representative for music perception
-                        \item<3->	\textit{aroused vs.\ transported} moods?
+                        \item<2->	are \textit{basic emotions} (happiness, anger, fear, \ldots) representative for music perception?
+                        \item<2->   should aesthetic emotions be distinguished from other emotions (guilt, shame, disgust, ...)?
+                        \item<3->	\textit{aroused vs.\ transported}/\textit{evoked vs.\ conveyed} moods?
                     \end{itemize}
             \end{itemize}
         \end{frame}
@@ -91,9 +93,8 @@
         \begin{frame}{mood recognition}{models}
             \vspace{-3mm}
             \begin{itemize}
-                \item	classification into \textbf{label clusters}\footfullcite{hu_exploring_2007}
-                
-                    \only<1>{
+                \item	classification into \textbf{label clusters}                
+                    \only<1>{\footfullcite{hu_exploring_2007}
                     \begin{scriptsize}
                     \begin{tabular}{ccccc}
                         \\ \hline
@@ -109,11 +110,11 @@
                     \end{tabular}
                     \end{scriptsize}
                     }
-                \item<2->	\textbf{mood model}, circumplex model\footfullcite{russel_circumplex_1980}
-                    \only<2>{
+                \item<2->	\textbf{mood model}, circumplex model
+                    \only<2>{\footfullcite{russel_circumplex_1980}
                     \begin{figure}
                         \centering
-                            \includegraphics[scale=.25]{graph/circumplex_affect}
+                            \scalebox{.8}{\input{pict/genre_moodmodel}}
                     \end{figure}
                     }
             \end{itemize}
@@ -133,52 +134,53 @@
             \end{itemize}
         \end{frame}
                 
-        \begin{frame}{linear regression}{introduction to regression 1/2}
-                    \begin{itemize}
-                        \item fit a linear function to a series of points  $(x_j,y_j)$
-                            \begin{equation*}
-                                y_n = m\cdot x_n + b
-                            \end{equation*}
-                    \end{itemize}
-                \figwithref{LinearRegression}{\url{https://en.wikipedia.org/wiki/Linear_regression}}
+        \begin{frame}{regression}{regression}
+            \begin{itemize}
+                \item linear regression: fit a linear function to a series of points  $(x_j,y_j)$
+                    \begin{equation*}
+                        y_n = m\cdot x_n + b
+                    \end{equation*}
+                    \figwithmatlab{LinearRegression}
+                \item   other regression approaches: SVR, DNNs, etc.
+            \end{itemize}
         \end{frame}
                 
-        \begin{frame}{linear regression}{introduction to regression 2/2}
-            \begin{itemize}
-                \item   minimize error between model and data (here: least squares)
-            \end{itemize}
-            \begin{scriptsize}
-            \begin{eqnarray*}
-                e_n^2 &=& (y_n - mx_n - b)^2\\
-                E &=& \sum (y_n - mx_n - b)^2\\
-            \end{eqnarray*}
-            \vspace{-10mm}
-            \begin{columns}[T]
-                \column{.5\linewidth}
-                    \begin{eqnarray*}
-                        \visible<2->{\frac{\partial E}{\partial b} = \sum -2(y_n - mx_n - b) &=& 0}\\
-                        \visible<3->{-2\sum y_n +2\sum mx_n +2\sum b &=& 0}\\
-                        \visible<4->{\sum mx_n + \sum b &=& \sum y_n}\\
-                        \visible<5->{m\sum x_n + \mathcal{N}b &=& \sum y_n}
-                    \end{eqnarray*}
-                \column{.5\linewidth}
-                    \begin{eqnarray*}
-                        \visible<2->{\frac{\partial E}{\partial m} = \sum -2x_n(y_n - mx_n - b) =& 0&}\\
-                        \visible<3->{-2\sum x_ny_n +2\sum mx_n^2 +2\sum bx_n =& 0&}\\
-                        \visible<4->{\sum mx_n^2 + \sum bx_n = \sum x_ny_n&&}\\
-                        \visible<5->{m\sum x_n^2 + b\sum x_n = \sum x_ny_n&&}
-                    \end{eqnarray*}
-            \end{columns}
-            \bigskip
-            \visible<6>{
-            \begin{eqnarray*}
-                &\Rightarrow&\\
-                m &=& \frac{\mathcal{N}\sum x_ny_n-\sum x_n\sum y_n}{\mathcal{N}\sum x_n^2 -\left(\sum x_n\right)^2}\\
-                b &=& \frac{\sum y_n}{\mathcal{N}}-m\frac{\sum x_n}{\mathcal{N}}\\
-            \end{eqnarray*}
-            }
-            \end{scriptsize}
-        \end{frame}
+        %\begin{frame}{linear regression}{introduction to regression 2/2}
+            %\begin{itemize}
+                %\item   minimize error between model and data (here: least squares)
+            %\end{itemize}
+            %\begin{scriptsize}
+            %\begin{eqnarray*}
+                %e_n^2 &=& (y_n - mx_n - b)^2\\
+                %E &=& \sum (y_n - mx_n - b)^2\\
+            %\end{eqnarray*}
+            %\vspace{-10mm}
+            %\begin{columns}[T]
+                %\column{.5\linewidth}
+                    %\begin{eqnarray*}
+                        %\visible<2->{\frac{\partial E}{\partial b} = \sum -2(y_n - mx_n - b) &=& 0}\\
+                        %\visible<3->{-2\sum y_n +2\sum mx_n +2\sum b &=& 0}\\
+                        %\visible<4->{\sum mx_n + \sum b &=& \sum y_n}\\
+                        %\visible<5->{m\sum x_n + \mathcal{N}b &=& \sum y_n}
+                    %\end{eqnarray*}
+                %\column{.5\linewidth}
+                    %\begin{eqnarray*}
+                        %\visible<2->{\frac{\partial E}{\partial m} = \sum -2x_n(y_n - mx_n - b) =& 0&}\\
+                        %\visible<3->{-2\sum x_ny_n +2\sum mx_n^2 +2\sum bx_n =& 0&}\\
+                        %\visible<4->{\sum mx_n^2 + \sum bx_n = \sum x_ny_n&&}\\
+                        %\visible<5->{m\sum x_n^2 + b\sum x_n = \sum x_ny_n&&}
+                    %\end{eqnarray*}
+            %\end{columns}
+            %\bigskip
+            %\visible<6>{
+            %\begin{eqnarray*}
+                %&\Rightarrow&\\
+                %m &=& \frac{\mathcal{N}\sum x_ny_n-\sum x_n\sum y_n}{\mathcal{N}\sum x_n^2 -\left(\sum x_n\right)^2}\\
+                %b &=& \frac{\sum y_n}{\mathcal{N}}-m\frac{\sum x_n}{\mathcal{N}}\\
+            %\end{eqnarray*}
+            %}
+            %\end{scriptsize}
+        %\end{frame}
     \section{results}
         \begin{frame}{mood recognition}{range of results}
             \begin{itemize}

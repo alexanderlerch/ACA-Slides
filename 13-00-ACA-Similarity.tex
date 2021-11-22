@@ -1,10 +1,8 @@
 % move all configuration stuff into includes file so we can focus on the content
-\input{include/common}
-\input{include/titledef}
-\input{include/definitions}
+\input{include}
 
 
-\subtitle{Module 8.2: Music Similarity}
+\subtitle{Module 13: Music Similarity}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
@@ -14,7 +12,8 @@
     \section[overview]{lecture overview}
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
-                    \href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~156--157)
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~156--157)
+                    Section~13
             \end{block}
 
             \begin{itemize}
@@ -27,32 +26,15 @@
                 \item<2->   \textbf{learning objectives}
                     \begin{itemize}
                         \item   describe potential issues with algorithms for measuring music similarity
-                        \item   implement a simple k-Means algorithm
+                        \item   understand common approaches for timbre similarity
                     \end{itemize}
             \end{itemize}
             \inserticon{directions}
         \end{frame}
 
     \section[intro]{introduction}
-        \begin{frame}{music similarity}{introduction}
-            \begin{itemize}
-                \item	genre classification is just a grouping by specific interpretation of similarity
-                    \begin{itemize}
-                        \item	similar set of features
-                        \item	ambiguous 'ground truth'
-                        \item   unclear value/impact of low level and high level features
-                    \end{itemize}
-                \bigskip
-                \item<2->	 \textbf{differences} to genre classification
-                    \begin{itemize}
-                        %\item	\textit{mood}: often not a classification but regression
-                        \item	\textit{similarity}: distance measure instead of categorizing into classes
-                    \end{itemize}
-            \end{itemize}
-        \end{frame}
 
 
-    \section[similarity]{audio similarity}
         \begin{frame}{audio similarity}{introduction}
             \begin{itemize}
                 \item   \textbf{perception} of music similarity
@@ -68,49 +50,46 @@
                 \item<3->	instead of assigning (genre) labels, the similarity/distance between (pairs) of files is measured
             \end{itemize}
         \end{frame}
-    \section{clustering}
-        \begin{frame}{audio similarity}{K-Means clustering example}
+        \begin{frame}{music similarity}{introduction}
             \begin{itemize}
-                \item   simple k-means example
+                \item	\textbf{commonalities} with genre classification
                     \begin{itemize}
-                        \item   \textbf{goal}: minimize intra-cluster variance
-                        \item   \textbf{distance}: Euclidean
-                        \item   \textbf{procedure}:
-                            \begin{enumerate}
-                                \item	\textit{initialization}:\\ randomly select $K$ points in the feature space as initialization.
-                                \item<2->	\textit{assignment}:\\ assign each observation to the cluster with the mean/centroid of the closest cluster.
-                                \item<3->	\textit{update}:\\ compute mean/centroid for each cluster.
-                                \item<4->	\textit{iteration}:\\ go to step $2$ until the clusters converge.
-                            \end{enumerate}
+                        \item	similar set of features
+                        \item	ambiguous 'ground truth'
+                        \item   unclear value/impact of low level and high level features
+                    \end{itemize}
+                \bigskip
+                \item<2->	 \textbf{differences} to genre classification
+                    \begin{itemize}
+                        %\item	\textit{mood}: often not a classification but regression
+                        \item	distance/similarity measure instead of categorical classification
+                    \end{itemize}
+                \bigskip
+                \item<3->	 \textbf{tasks}
+                    \begin{itemize}
+                        \item   playlist generation
+                        \item   music discovery
                     \end{itemize}
             \end{itemize}
         \end{frame}
-        \begin{frame}{audio similarity}{K-Means clustering example}
-            \begin{columns}
-            \column{.5\linewidth}
+   \section{approach}         
+        \begin{frame}{audio similarity}{approaches}
+            \begin{itemize}
+                \item   \textbf{standard approach}
                     \begin{itemize}
-                        \item<1->   data points
-                        \item<2->   init randomly
-                        \item<3->   iteration
-                            \begin{itemize}
-                                \item   assign data points to closest centroid
-                                \item   update centroids
-                            \end{itemize}
-                        \item<7->   terminate when convergence
+                        \item   define set of features and aggregate them appropriately
+                        \item   use vector distance in latent space as similarity approximation
                     \end{itemize}
-            \column{.5\linewidth}
-            \setcounter{i}{0}
-            \setcounter{j}{1}
-            \whiledo{\value{i}<7}
-            {
-                %\only<\value{j}>{\figwithref{KMeans-\arabic{i}}{matlab source: matlab/displayKMeans.m}}
-                \only<\value{j}>{\begin{figure}\includegraphics{KMeans-\arabic{i}}\end{figure}}
-                \stepcounter{i}
-                \stepcounter{j}
-            }
-            \end{columns}
-            \addreference{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayKMeans.m}{matlab/displayKMeans.m}}
+                \bigskip
+                \item   \textbf{modern approach}
+                    \begin{itemize}
+                        \item   train 'meaningful' representation (e.g., VAE etc.)
+                        \item   use vector distance in latent space as similarity approximation
+                    \end{itemize}
+            \end{itemize}
         \end{frame}
+
+    \section[visual]{visualization}
         \begin{frame}{audio similarity}{visualization in a 2D space}
             \begin{itemize}
                 \item \textbf{problem}
@@ -161,6 +140,19 @@
                 \includegraphics[scale=.28]{graph/som}
             \end{figure}
             \vspace{-10mm}from \footfullcite{pampalk_islands_2001}
+        \end{frame}
+        
+    \section[eval]{evaluation}
+        \begin{frame}{audio similarity}{evaluation}
+            \begin{itemize}
+                \item   as the task is not clearly defined, it often can only be indirectly evaluated
+                    \begin{itemize}
+                        \item   evaluation through genre/artist/album labels
+                        \item   evaluation through listening surveys
+                        \item   qualitative evaluation (picking pairs of samples and discussing them)
+                    \end{itemize}
+                \item  lack of ground truth and lack of established metrics 
+            \end{itemize}
         \end{frame}
     
     \section{summary}
