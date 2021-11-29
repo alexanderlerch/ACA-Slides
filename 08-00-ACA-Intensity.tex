@@ -86,15 +86,17 @@
         
         \begin{frame}{intensity, magnitude \& loudness}{side note: level computation}
             \begin{itemize}
-                \item if $v(n) = 0\quad\Rightarrow$: computation of $\log_{10}(0)$
-                \bigskip
+                \item[] if $v(n) = 0\quad\Rightarrow$: computation of $\log_{10}(0)$
+            \end{itemize}
+            \begin{columns}
+            \column{.4\textwidth}
+            \begin{itemize}
                 \item<2-> \textbf{work-arounds}
                     \begin{enumerate}[a]
                         \item	add constant $\epsilon$
                             \begin{equation*}
                                 v_\mathrm{dB}(n) = 20\cdot\log_{10}(v(n) + \epsilon)
                             \end{equation*}
-                            \only<2>{\vspace{-6mm}\figwithmatlab{LogEpsilon}}
 
                         \item<3->	add \textbf{if} statement	
                             \begin{equation*}
@@ -107,6 +109,10 @@
                             \end{equation*}
                     \end{enumerate}
             \end{itemize}
+            \column{.6\textwidth}
+                \only<2>{ %\vspace{-6mm}
+                \figwithmatlab{LogEpsilon}}
+            \end{columns}
         \end{frame}
         
         \begin{frame}{intensity, magnitude \& loudness}{human perception 2/2}
@@ -160,7 +166,7 @@
         \begin{frame}{intensity, magnitude \& loudness}{features: root mean square 1/2}
             \vspace{-6mm}
             \begin{equation*}
-                \input{eq/TimeRms}
+                \input{eq/Llf_Rms}
             \end{equation*}
             \only<2>{
                 \begin{itemize}
@@ -300,7 +306,7 @@
                 }
                 \only<4>{	specific loudness\footfullcite{specloudness_website}
                 \begin{figure}
-                    \includegraphics[scale=.35]{graph/specificloudness}
+                    \includegraphics[scale=.3]{graph/specificloudness}
                 \end{figure}
                 }
                 \only<5>{	overall loudness
