@@ -3,10 +3,10 @@ Type=TeXnicCenterProjectInformation
 Version=4
 
 [ProjectInfo]
-MainFile=..\11-00-ACA-Fingerprinting.tex
+MainFile=..\16-00-ACA-Music-Performance-Analysis.tex
 UseBibTeX=1
 UseMakeIndex=0
-ActiveProfile=pdf (book)
+ActiveProfile=LaTeX => PDF (splitbib)
 ProjectLanguage=en
 ProjectDialect=US
 

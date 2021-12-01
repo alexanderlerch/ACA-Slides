@@ -1,0 +1,220 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 16: Music Performance Analysis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~158--161)
+                    Section~16
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   musical communication
+                        \item   music performance
+                        \item   music performance analysis
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   give examples for score-inherent and performance-inherent musical characteristics
+                        \item   describe typical challenges in music performance analysis
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section{music performance}
+        \begin{frame}{music performance}{introduction}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{0.4\linewidth}
+            \begin{itemize}
+                \item	music exists only with performance
+                \item   performance realizes acoustic rendition of musical ideas 
+                \item   each rendition is unique
+                \item   score information is interpreted, modified, added to, or dismissed
+                \item   adds “expressivity”
+            \end{itemize}
+            \column{0.6\linewidth}
+            
+                \begin{figure}
+                   \scalebox{.5}{\input{pict/performance_communication}	}
+                \end{figure}
+            \end{columns}
+            
+            \bigskip
+            \includeaudio{performance_example1}\hspace{5mm}  \includeaudio{performance_example2}
+
+            \vspace{-30mm}
+            \flushright{\includegraphics[scale=.7]{graph/performance}}
+            %\begin{flushright}\includegraphics{graph/performance}\end{flushright}
+        \end{frame}
+        \begin{frame}{music performance}{parameters}
+            \begin{table}
+            \begin{tabular}{lll}
+                \textbf{category}   & \textbf{score representation/idea} & \textbf{performance} \\
+                tempo/timing        & explicitly defined rhythmic content&  tempo, micro-timing\\
+                dynamics            &basic dynamics instructions            & accents,...\\
+                pitch               & explicitely defined pitches           & vibrato, intonation,...\\
+                timbre              & implicit definitions (instruments, ..) & playing techniques
+            \end{tabular}
+            \end{table}
+            
+        \end{frame}
+   
+    \section[performance analysis]{music performance analysis}
+        \begin{frame}{music performance analysis}{goals}
+            by analyzing the music performance, we learn about
+            \bigskip
+
+            \begin{itemize}
+                \item	the \textbf{performance}: 
+                    \begin{itemize}
+                        \item   general performance characteristics
+                        \item   notable stylistic differences (over time, between artists, ...)
+                    \end{itemize}
+                \item	the \textbf{performer}: 
+                    \begin{itemize}
+                        \item   mapping of intent and projected emotion to measurable parameters
+                    \end{itemize}
+                \item	the \textbf{listener}: 
+                    \begin{itemize}
+                        \item   what is perceived as (appropriate level of) expressiveness
+                        \item   how can different performance parameters impact the listener
+                        \item   how is aesthetic perception shaped by performance parameters
+                    \end{itemize}
+            \end{itemize}
+
+            \begin{textblock*}{100mm}(12.5cm,1.5cm)
+                \includegraphics[scale=.5,keepaspectratio]{graph/life_concert}
+            \end{textblock*}
+ 
+            %\vspace{-20mm}
+            %\flushright{\includegraphics[scale=.5]{graph/life_concert}}
+        \end{frame}
+            
+        \begin{frame}{performance analysis}{insights 1/3}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{0.4\linewidth}
+            \begin{itemize}
+                \item close relation between \textbf{tempo/dynamics and structure}:
+                    \begin{itemize}
+                        \item	ritardandi at phrase boundaries
+                        \item   tempo changes at structural boundaries 
+                        \item   repetitions very similar
+                    \end{itemize}
+                \item   performance sounds unnatural without these general trends
+                \item   no clear relation to timbre
+            \end{itemize}
+            \column{0.6\linewidth}
+            
+                \begin{figure}
+                   \includegraphics[width=\columnwidth]{graph/tempo_loudness}
+                \end{figure}
+            \end{columns}
+       \end{frame}
+        \begin{frame}{performance analysis}{insights 2/3}
+            \begin{itemize}
+                \item perceptual relevance of “expressive” performance characteristics:
+                    \begin{itemize}
+                        \item	dynamics highest impact on ratings of emotional expression
+                        \item   expressive timing best predicts ratings of musical tension
+                        \item   sharpened intonation at phrase climax contributes to perceived excitement
+                    \end{itemize}
+                \item   measured $\neq$ perceived
+                    \begin{itemize}
+                        \item	e.g., measurable difference between “normative” and ``expressive'' performance does not necessarily lead to perception of expressivity 
+                        \item   e.g., no correlation between measured and perceived vibrato onsets
+                    \end{itemize}
+            \end{itemize}
+       \end{frame}
+        \begin{frame}{performance analysis}{insights 3/3}
+            \vspace{-5mm}
+            \begin{columns}
+            \column{0.6\linewidth}
+            \begin{itemize}
+                \item Humans rate performances regularly (schools, auditions, competitions) but specific criteria are often badly defined
+                \item use cases
+                    \begin{itemize}
+                        \item	music education
+                        \item computer-assisted practice
+                        \item pre-screening of candidates for music programs
+                        \item provide insights into \textbf{technical and aesthetical descriptors} of human judgments
+                    \end{itemize}
+                \item   most models still lack generalizability and reliability beyond simple note matching
+
+            \end{itemize}
+            \column{0.4\linewidth}
+            
+                \begin{figure}
+                   \includegraphics[width=\columnwidth]{graph/performance_assessment}
+                \end{figure}
+            \end{columns}
+       \end{frame}
+        
+    \section{challenges}
+  
+        \begin{frame}{music performance analysis}{challenges}
+            \begin{itemize}
+                \item   \textbf{observations}
+                    \begin{itemize}
+                        \item   style dependent, lacking research beyond western classical music
+                        \item   data is manually annotated in most cases
+                        \item   most research 
+                            \begin{itemize}
+                                \item   focused on piano and voice 
+                                \item   descriptive and explorative
+                            \end{itemize}
+                    \end{itemize}
+                    \bigskip
+                    \begin{enumerate}
+                        \item   datasets small, not general
+                            \begin{itemize}
+                                \item automatic tools not reliable enough?
+                                \item   generality: instrument specific, performers, listeners
+                            \end{itemize}
+                        \item   unknown mapping of performance parameters to perception
+                            \begin{itemize}
+                                \item   isolation of parameter meaning tricky
+                                \item   hard to define expressivity, hard to control variables
+                            \end{itemize}
+                    \end{enumerate}
+            \end{itemize}
+
+        \end{frame}
+    
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{performance}
+                    \begin{itemize}
+                        \item   all music needs to be performed
+                        \item   while the general performance characteristics are clear, their analysis is less clear
+                    \end{itemize}
+                \bigskip
+                \item   \textbf{performance analysis}
+                    \begin{enumerate}
+                        \item   describes and formalizes commonalities and differences of performances
+                    \end{enumerate}
+                \bigskip
+                \item   \textbf{challenges}
+                    \begin{enumerate}
+                        \item   tricky to disentangle variables
+                        \item   unclear impact on listeners
+                        \item   hard to find reliable ground truth data
+                    \end{enumerate}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}
