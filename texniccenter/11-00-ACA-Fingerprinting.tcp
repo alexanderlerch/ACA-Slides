@@ -6,7 +6,7 @@ Version=4
 MainFile=..\11-00-ACA-Fingerprinting.tex
 UseBibTeX=1
 UseMakeIndex=0
-ActiveProfile=pdf (book)
+ActiveProfile=LaTeX ⇨ PDF
 ProjectLanguage=en
 ProjectDialect=US
 

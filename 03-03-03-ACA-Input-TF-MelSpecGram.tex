@@ -1,0 +1,79 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 3.3.3: Time-Frequency Representations~---~(Log) Mel-Spectrogram}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~24--26
+                    section 3.3.3
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   log mel spectrogram
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   discussing advantages and disadvantages of different time-frequency transforms
+                        \item   explaining the computation of the mel spectrogram
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{mel spectrogram}{introduction}
+            \begin{itemize}
+                \item   the log mel spectrogram is a normal spectrogram with a logarithmic frequency axis
+                \bigskip
+                \item   more musically and perceptually meaningful
+                \item   usually less frequency bins
+                \item   often used as audio input representation to neural networks
+            \end{itemize}
+        \end{frame}
+        
+    \section[mel specgram]{mel specgram}
+        \begin{frame}{mel spectrogram}{computation}
+            \begin{enumerate}
+                \item<1-> compute STFT
+                \item<2-> compute magnitude
+                \item<3-> aggregate frequency bins into bands with increasing width (logarithmic frequency)
+                \item<4-> optional: compute the aggregated magnitudes to dB
+            \end{enumerate}
+        \end{frame}	
+
+        \begin{frame}{mel spectrogram}{example}
+            \figwithmatlab{LogMelSpecgram}
+            \includeaudio{sax_example}
+        \end{frame}	
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{Mel spectrogram}
+                    \begin{itemize}
+                        \item   logarithmic frequency axis (musically and perceptually more meaningful)
+                        \item   logarithmic magnitude (perceptually more meaningful)
+                        \item   usually a more reduced representation than STFT
+                    \end{itemize}
+                %\bigskip
+                %\item      \textbf{filterbanks}
+                    %\begin{itemize}
+                        %\item   good model of human physiology
+                        %\item   not invertible and inefficient
+                        %\item   not proven to be superior
+                    %\end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

@@ -6,7 +6,7 @@ Version=4
 MainFile=..\03-01-ACA-Input-Signals.tex
 UseBibTeX=1
 UseMakeIndex=0
-ActiveProfile=LaTeX ⇨ PDF
+ActiveProfile=LaTeX => PDF (splitbib)
 ProjectLanguage=en
 ProjectDialect=US
 

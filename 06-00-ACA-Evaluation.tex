@@ -13,7 +13,7 @@
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
                     %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331125}{Chapter 8: Musical Genre, Similarity, and Mood} (pp.~155)
-                    Section~6
+                    chapter~6
             \end{block}
 
             \begin{itemize}
@@ -102,16 +102,20 @@
             \end{itemize}
             
             \begin{table}
+            \begin{footnotesize}
                 \begin{center}
-                \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l|cc|cccccccccc}
-                    & \textbf{Pred.\ Pos.} & \textbf{Pred.\ Neg.} & $\boldsymbol{\Sigma}$ \\ 
-                 \hline
-                    \textbf{GT Pos.} & True Pos.\ (TP) & False Neg.\ (FN) & \# of GT Pos.\ (TP+FN)\\
-                    \textbf{GT Neg.}  & False Pos.\ (FP)& True Neg.\ (TN) & \# of GT Neg.\ (FP+FN)\\ 
-                 \hline
-                    $\boldsymbol{\Sigma}$ & \# of Pred.\ Pos.\ & \# of Pred.\ Neg.\ & \# of True Pred.\ (TP+TN)
-                \end{tabular*}
+                    \begin{tabular}{@{}ll|cc|c@{}}
+                                                        && \multicolumn{2}{c|}{\textbf{Predicted}}              & \\
+                                                        && \textbf{Positive}                                    & \textbf{Negative} & $\boldsymbol{\Sigma}$ \\ 
+ \hline
+ \multirow{2}{*}{\textbf{GT}}     &\textbf{Positive}    & \cellcolor{green!25}\shortstack{TP\\ True Positives}  & \cellcolor{red!25}\shortstack{FN\\ False Negatives}   & \shortstack{TP+FN\\ \# of GT Positives}\\
+                                  &\textbf{Negative}    & \cellcolor{red!25}\shortstack{FP\\ False Positives}   &  \cellcolor{green!25}\shortstack{TN\\ True Negatives} & \shortstack{FP+TN\\ \# of GT Negatives}\\ 
+ \hline
+                                  &$\boldsymbol{\Sigma}$ & \shortstack{TP+FP\\ \# of Predicted Positives}       & \shortstack{TN+FN\\ \# of Predicted Negatives}        &  \cellcolor{green!25}\shortstack{TP+TN\\ \# of True Predictions}
+
+                \end{tabular}
                 \end{center}
+            \end{footnotesize}
             \end{table}
         \end{frame}
         

@@ -1,0 +1,86 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 3.3.4: Time-Frequency Representations~---~Filterbanks}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~24--26
+                    section 3.3.4
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   gammatone filterbank
+                        \item   resonance filterbank
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   explaining the principles of (auditory) filterbanks
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+        
+    \section[intro]{introduction}
+        \begin{frame}{auditory filterbanks}{introduction}
+            FT and related transforms are bad models of physiological properties of the human ear:
+                \begin{itemize}
+                    \item   frequency resolution (critical bands)
+                    \item   frequency scale (pitch resolution)
+                    \item   loudness \& masking
+                    \item   event perception \&  time integration
+                \end{itemize}
+            
+            \smallskip
+            $\Rightarrow$ \textbf{auditory filterbanks}
+            
+            \pause
+            \bigskip
+            not as widely used as one might think because
+            
+            \begin{enumerate}
+                \item<3->	computationally inefficient
+                \item<3->	analysis only: no invertibility (mostly)
+                \item<3->	not proven to be superior
+            \end{enumerate}
+        \end{frame}	
+        
+    \section[gammatone]{Gammatone Filterbank}
+        \begin{frame}{auditory filterbanks}{gammatone filterbank}
+            \vspace{-6mm}
+            \begin{equation*}
+                h(i) = \frac{ a \cdot\left(\nicefrac{i}{f_{\mathrm{S}}}\right)^{\mathcal{O}-1}\cdot \cos\left( 2\pi \cdot f_{\mathrm{c}} \frac{ i}{f_{\mathrm{S}}} \right) }{\e^{\nicefrac{2\pi i \Delta f}{f_{\mathrm{S}}}}}
+            \end{equation*}
+            \vspace{-4mm}
+            \figwithmatlab{Gammatone}
+        \end{frame}	
+        
+    \section[resonance]{Other Filterbanks}
+        \begin{frame}{other filterbanks}{resonance filterbank}
+            \figwithmatlab{ResonanceFilterbank}
+        \end{frame}	
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item      \textbf{filterbank-based frequency transforms}
+                    \begin{itemize}
+                        \item   possibly good model of human physiology
+                        \item   high time resolution
+                        \item   not invertible and inefficient
+                        \item   not proven to be superior
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

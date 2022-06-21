@@ -1,0 +1,143 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+\subtitle{Module 3.6: Learned Features}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331120}{Chapter 3~---~Instantaneous Features}: pp.~31--35
+                    section 3.6
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   introduction to the concept of  feature learning
+                        \item   quick overview of important methods
+                   \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   describe the advantages and disadvantages of feature learning
+                        \item   give examples of approaches to feature learning
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[intro]{introduction}
+        \begin{frame}{introduction}{feature learning vs.\ traditional features}
+            \begin{itemize}
+                \item   \textbf{hand-crafted features}:
+                    \begin{itemize}
+                        \item   arbitrary definitions
+                        \item   simple to compute
+                        \item   mostly focus on one technical property
+                        \item   provide limited information
+                    \end{itemize}
+                    
+                \bigskip
+                \item<2-> \textbf{feature learning}:
+                    \begin{itemize}
+                        \item   \textit{automatically} learn features from data-set
+                        \item   meaning not obvious, can combine multiple properties
+                        
+                    \end{itemize}
+            \end{itemize}
+        \end{frame}
+        
+
+        \begin{frame}{overview}{general properties}
+            \begin{itemize}
+                \item   \textbf{principle}
+                    \begin{enumerate}
+                        \item   put (a lot of) raw data at input
+                        \item   learn a way of reducing dimensionality while keeping as much information as possible
+                    \end{enumerate}
+                \bigskip
+                \item<2->   \textbf{advantages}
+                    \begin{itemize}
+                        \item   features might contain more useful information than provided by hand-crafted features
+                        \item   no expert knowledge required
+                        %\item   possibly easier generalization
+                    \end{itemize}
+                \smallskip
+                \item<3->   \textbf{disadvantages}
+                    \begin{itemize}
+                        \item   usually time consuming
+                        \item   limited ways of controlling the type of information learned
+                    \end{itemize}
+            \end{itemize}
+		\end{frame}
+    \section[approaches]{approaches}
+        
+        \begin{frame}{approaches}{dictionary learning}
+            \begin{itemize}
+                \item   \textbf{dictionary learning} (sparse coding, non-negative matrix factorization)
+                    \begin{equation*}
+                        X = B\cdot A
+                    \end{equation*}
+                    \begin{itemize}
+                        \item[]   $X$: input signal to be modeled (often spectrogram)
+                        \item[]   $B$: dictionary/template matrix (often set of single spectra that comprise the basic building blocks of $X$)
+                        \item[]   $A$: activation matrix indicating the weight and superposition of templates 
+                    \end{itemize}
+                    \begin{itemize}
+                        \item   derive $B$,$A$, by minimizing a cost function, e.g. $||X-BA||_2$
+                    \end{itemize}
+                \item<2->[$\rightarrow$] templates are trained, activations are used as feature vector (length: number of templates)
+            \end{itemize}
+		\end{frame}
+        \begin{frame}{approaches}{deep learning}
+            \begin{itemize}
+                \item   \textbf{clustering} 
+                    \begin{itemize}
+                        \item   find clusters in data set (e.g., from magnitude spectra or simple features)
+                        \item   store median of clusters (compare: template matrix)
+                        \smallskip
+                        \item<2->[$\rightarrow$]   features:
+                            \begin{itemize}
+                                \item   binary vector (length: number of clusters, zero except for closest cluster)
+                                \item   distance vector (distance to each cluster)
+                            \end{itemize}
+                    \end{itemize}
+                \bigskip
+                \item<3->   neural networks and \textbf{deep architectures} 
+                    \begin{itemize}
+                        \item   stack multiple layers of simple learning blocks
+                        \item   each layer uses the output of the previous layer as input
+                        \smallskip
+                        \item<4->[$\rightarrow$]   feature: output of the highest layer
+                        \item<5->   task-dependency:
+                            \begin{itemize}
+                                \item   independent: use auto-encoder structure to maximize encoded information
+                                \item   dependent: train for specific task(s) (cf.\ multi-task learning) and use representation for other tasks (cf.\ transfer learning)
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+		\end{frame}
+                
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{learned features}
+                    \begin{itemize}
+                        \item   not designed but learn from data
+                            \begin{itemize}
+                                \item   no hand-designed features $\Rightarrow$ no expert knowledge needed
+                                \item   requires large amounts of data and computational resources
+                            \end{itemize}
+                        \smallskip
+                        \item   not interpretable
+                        \item   potentially more powerful as it contains all relevant information
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

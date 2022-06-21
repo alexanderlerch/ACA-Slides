@@ -1,0 +1,477 @@
+% move all configuration stuff into includes file so we can focus on the content
+\input{include}
+
+
+\subtitle{Module 3.3.1: Time-Frequency Representations~---~Fourier Transform}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % generate title page
+	\input{include/titlepage}
+
+    \section[overview]{lecture overview}
+        \begin{frame}{introduction}{overview}
+            \begin{block}{corresponding textbook section}
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?tp=&arnumber=6331119&}{Chapter 2~---~Fundamentals}: pp.~20--23\\
+                    %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331115}{Appendix B~---~Fourier Transform}: pp.~185--197
+                    section 3.3.1\\
+                    appendix B
+            \end{block}
+
+            \begin{itemize}
+                \item   \textbf{lecture content}
+                    \begin{itemize}
+                        \item   FT of continuous signals  
+                        \item   FT properties
+                        \item   FT of sampled signals
+                        \item   Short Time FT (STFT)
+                        \item   DFT
+                    \end{itemize}
+                \bigskip
+                \item<2->   \textbf{learning objectives}
+                    \begin{itemize}
+                        \item   name and explain definition and properties of the FT
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{directions}
+        \end{frame}
+
+    \section[introduction]{introduction}
+        \begin{frame}{fourier transform}{introduction}
+            \figwithmatlab{FourierTransform}
+            
+            \begin{table}%
+            \begin{tabular}{lll}
+                top & time domain signal & magnitude spectrum in dB\\
+                bottom & real spectrum & imaginary spectrum
+            \end{tabular}
+            \end{table}
+            
+        \end{frame}	
+
+    \section[definition]{definition}
+        \begin{frame}{fourier transform}{definition (continuous)}
+            \begin {equation*}\label{eq:fourier_transformation}
+                X(\jom) = \mathfrak{F}[x(t)] = \int\limits_{-\infty}^{\infty} {x(t) \e^{-\jom t}\, dt}
+            \end {equation*}
+
+            \pause
+            sidenote: 
+            \begin{footnotesize}
+            Fourier series coefficients 
+            \begin {equation*}\label{eq:fourier_coeff}
+                a_k = \frac{1}{T_0}\int\limits_{-\nicefrac{T_0}{2}}^{\nicefrac{T_0}{2}} x(t) \e^{-\jom_0kt}\, dt \nonumber
+            \end {equation*}
+            
+            \begin{itemize}
+                \item	$T_0\rightarrow \infty$ to allow the analysis of aperiodic functions
+                \item[$\Rightarrow$] $k\omega_0 \rightarrow \omega$
+            \end{itemize}
+            \end{footnotesize}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{representations}
+            \vspace{-5mm}
+            \begin{eqnarray*}
+                X(\jom) &=& \Re[X(\jom)] + \Im[X(\jom)]\\
+                &=& \underbrace{|X(\jom)|}_{\text{magnitude}} \cdot \underbrace{\Phi_\mathrm{X}(\omega)}_{\text{phase}}\\
+%
+                \pause
+                &&\\
+                &&\\
+                \bigskip
+                |X(\jom)|  &=& \sqrt{\Re[X(\jom)]^2 + \Im[X(\jom)]^2}\\
+                \Phi_\mathrm{X}(\omega)  &=& \atan2\left(\frac{\Im[X(\jom)]}{\Re[X(\jom)]}\right)
+            \end{eqnarray*}
+
+            \bigskip
+            \only<2->{\textbf{note}: }
+            \begin{itemize}
+                \item<2->   complex spectrum either represented as magnitude \& phase or as real \& imaginary
+                \item<2->   magnitude spectrum has no negative values
+            \end{itemize}
+        \end{frame}	
+    
+    \section{properties}
+        \begin{frame}{fourier transform}{property 1: invertibility}
+            \begin{eqnarray*}\label{eq:ift}
+                x(t) &=& \mathfrak{F}^{-1}[X(\jom)]\nonumber\\
+                 &=& \frac{1}{2\pi}\int\limits_{-\infty}^{\infty} X(\jom) \e^{\jom t}\, d\omega 
+            \end{eqnarray*}
+
+            \bigskip
+            \only<2->{\textbf{note}: }
+            \begin{itemize}
+                %\item<2->   for comparison: Fourier series equation
+                    %\begin {equation*}
+                        %x(t) = \sum\limits_{k=-\infty}^{\infty} a_k \e^{\jom_0 k t} \nonumber
+                    %\end {equation*}
+                \item<2->   time domain signal can be \textbf{perfectly reconstructed}~---~no information loss
+                \item<2->   FT and IFT are very similar, largely equivalent
+            \end{itemize}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{property 2: superposition}
+            \begin{eqnarray*}
+                y(t) &=& c_1\cdot x_1(t) + c_2\cdot x_2(t)\nonumber\\
+                \mapsto&&\nonumber\\
+                Y(\jom) &=& c_1\cdot X_1(\jom) + c_2\cdot X_2(\jom)\nonumber
+            \end{eqnarray*}
+            \bigskip
+            \only<2->{\textbf{note}: }
+            \begin{itemize}
+                %\item<2->   for comparison: Fourier series equation
+                    %\begin {equation*}
+                        %x(t) = \sum\limits_{k=-\infty}^{\infty} a_k \e^{\jom_0 k t} \nonumber
+                    %\end {equation*}
+                \item<2->   FT is a \textit{linear }transform
+            \end{itemize}
+            
+            %\pause
+            %\begin{itemize}
+                %\item[]	\textbf{derivation}
+                        %\begin{footnotesize}
+                            %\begin{eqnarray*}
+                                %Y(\jom) &=& \int\limits_{-\infty}^{\infty} {\big(c_1\cdot x_1(t) + c_2\cdot x_2(t)\big)\cdot \e^{-\jom t}\, dt}\nonumber\\
+                                %\pause
+                                %&=& c_1\cdot \int\limits_{-\infty}^{\infty} {x_1(t)  \e^{-\jom t}\, dt} + c_2\cdot \int\limits_{-\infty}^{\infty} {x_2(t) \e^{-\jom t}\, dt}\nonumber\\
+                                %\pause
+                                %&=& c_1\cdot X_1(\jom) + c_2\cdot X_2(\jom) 
+                            %\end{eqnarray*}
+                        %\end{footnotesize}
+            %\end{itemize}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{property 3: convolution and multiplication}
+            \vspace{-5mm}
+            \begin{eqnarray*}
+                y(t) &=& \int_{-\infty}^{\infty} {h(\tau) \cdot x(t-\tau)\, d\tau}\\\mapsto &&\\
+                Y(\jom) &=& H(\jom)\cdot X(\jom) \nonumber
+            \end{eqnarray*}
+            
+            \bigskip
+            \only<2->{\textbf{note}: }
+            \begin{itemize}
+                \item<2->   convolution in time domain means multiplication in frequency domain
+                \item<2->   convolution in frequency domain means multiplication in time domain
+            \end{itemize}
+            
+            %\pause
+            %\vspace{-2mm}
+            %\begin{itemize}
+                %\item[]	\textbf{derivation}
+                        %\begin{footnotesize}
+                    %\begin{eqnarray*}
+                        %Y(\jom)	&=& \int_{-\infty}^{\infty} {y(t) \e^{-\jom t}\, dt} = \int_{-\infty}^{\infty} {\left(\int_{-\infty}^{\infty} {h(\tau) \cdot x(t-\tau)\, d\tau}\right) \e^{-\jom t}\, dt}\nonumber\\
+                                %\pause
+                                    %&=& \int_{-\infty}^{\infty} {h(\tau) \int_{-\infty}^{\infty} {x(t-\tau)} \e^{-\jom t}\, dt\, d\tau}\nonumber\\
+                                %\pause
+                                    %&=& \int_{-\infty}^{\infty} {h(\tau)  \e^{-\jom \tau} \underbrace{\int_{-\infty}^{\infty} {x(t-\tau)} \e^{-\jom (t-\tau)}\, d(t-\tau)}_{X(\jom)}\, d\tau}\nonumber\\
+                                %\pause
+                                    %&=& \int_{-\infty}^{\infty} {h(\tau) \e^{-\jom \tau}\, d\tau} \cdot X(\jom)\nonumber\\
+                                %\pause
+                                    %&=& H(\jom) \cdot X(\jom)\label{eq:mult_conv} 
+                    %\end{eqnarray*}
+                        %\end{footnotesize}
+            %\end{itemize}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{property 4: Parseval's theorem}
+            \begin{equation*}
+                \int\limits_{-\infty}^{\infty}{x^2(t)\, dt} = \frac{1}{2\pi}\int\limits_{-\infty}^{\infty} {\left|X(\jom)\right|^2\, d\omega} 
+            \end{equation*}
+            
+            \bigskip
+            \only<2->{\textbf{note}: }
+            \begin{itemize}
+                \item<2->   energy of the signal is preserved when switching between time and frequency domains
+            \end{itemize}
+            %\pause
+            %\begin{itemize}
+                %\item[]	\textbf{derivation}
+                %\begin{footnotesize}
+                    %\begin{equation*}
+                        %\int_{-\infty}^{\infty}{h(\tau)\cdot x(t-\tau)\, d\tau} = \frac{1}{2\pi}\int_{-\infty}^{\infty} {H(\jom)\cdot X(\jom) \e^{\jom t} d\omega}\nonumber
+                    %\end{equation*}
+                    %
+                    %\centering with $H(\jom) \longrightarrow X^\ast (\jom)$ and $h(\tau)\longrightarrow x(-\tau)$, $t = 0$
+                    %
+                    %\pause
+                    %\begin{eqnarray*}
+                        %\int_{-\infty}^{\infty}{x(-\tau)\cdot x(-\tau)\, d\tau} &=& \frac{1}{2\pi}\int_{-\infty}^{\infty} {X^\ast (\jom)\cdot X(\jom) \, d\omega}\nonumber\\
+                        %\int_{-\infty}^{\infty}{x^2(t)\, dt} &=& \frac{1}{2\pi}\int_{-\infty}^{\infty} {\left|X(\jom)\right|^2\, d\omega} \nonumber
+                    %\end{eqnarray*}
+                %\end{footnotesize}
+            %\end{itemize}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{property 5: time \& frequency shift}
+            \begin{itemize}
+                \item \textbf{time shift}
+                \begin{equation*}\label{eq:fft_timeshift}
+                    x(t-t_0) \mapsto X(\jom)\e^{-\jom t_0} 
+                \end{equation*} 
+                %\pause
+                %\begin{itemize}
+                    %\item[]	\textit{derivation}
+                    %\begin{footnotesize}
+                        %\begin{eqnarray*}
+                            %\int\limits_{-\infty}^{\infty} {x(t-t_0) \e^{-\jom t}\, dt} &=& \int\limits_{-\infty}^{\infty} {x(\tau) \e^{-\jom (\tau + t_0)}\, d\tau}\nonumber\\
+                            %\pause
+                            %&=& \e^{-\jom t_0}\underbrace{\int\limits_{-\infty}^{\infty} {x(\tau) \e^{-\jom \tau}\, d\tau}}_{X(\jom)}\nonumber\\
+                        %\end{eqnarray*}
+                    %\end{footnotesize}
+                %\end{itemize}
+                %\pause
+                \item \textbf{frequency shift}
+                \begin{equation*}
+                            \frac{1}{2\pi}\int\limits_{-\infty}^{\infty} X(\jom-\omega_0) \e^{\jom t}\, d\omega = \e^{\jom_0 t}\cdot x(t) 		
+                \end{equation*} 
+            
+            \end{itemize}
+            
+            \bigskip
+            \only<2->{\textbf{note}: }
+            \begin{itemize}
+                \item<2->   time shift results in phase shift
+                \item<2->   frequency shift results in modulation of time signal
+            \end{itemize}
+
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{property 6: symmetry}
+            \begin{eqnarray*}
+                |X(\jom)| &=& |X(-\jom)|\\
+                \Phi_\mathrm{X}(\omega) &=& -\Phi_\mathrm{X}(-\omega) 
+            \end{eqnarray*}
+            
+            \bigskip
+            \only<2->{\textbf{note}: }
+            \begin{itemize}
+                \item<2->   spectrum of (real) signal is conjugate complex
+                    \begin{itemize}
+                        \item   magnitude spectrum is symmetric to ordinate
+                        \item   phase spectrum is symmetric to origin
+                    \end{itemize}
+                \item<2->   even signals have no imaginary spectrum
+                \item<2->   odd signals have no real spectrum
+            \end{itemize}
+            %\pause
+            %\vspace{-5mm}
+            %\begin{itemize}
+                %\item[]	\textbf{derivation}
+                %
+                %\begin{footnotesize}
+                %\item model time signal as sum of even and odd component $x_e(t), x_o(t)$:
+                    %\begin{equation*}
+                        %x(t) = \underbrace{\frac{1}{2}(x(t) + x(-t))}_{x_e(t)} + \underbrace{\frac{1}{2}(x(t) - x(-t))}_{x_o(t)} 
+                    %\end{equation*}
+                    %\only<3-4>{
+                    %\begin{equation*}
+                        %X_e(\jom) = \int\limits_{-\infty}^{\infty}{x_e(t)\cos(\omega t)\,dt} - \mathrm{j} \underbrace{\int\limits_{-\infty}^{\infty}{x_e(t)\sin(\omega t)\,dt}}_{= 0}\nonumber
+                    %\end{equation*}
+                    %\pause
+                    %%\vspace{-5mm}
+                    %\begin{itemize}
+                        %\item[$\Rightarrow$]	$X_e(\jom)$ is \textit{real}
+                        %\item[$\Rightarrow$]	$X_e(\jom) = X_e(-\jom)$ (substitute $x(t)$ with $x(-t)$)
+                    %\end{itemize}
+                    %}
+                    %\only<5-6>{
+                    %\begin{equation*}
+                        %X_o(\jom) = \underbrace{\int\limits_{-\infty}^{\infty}{x_o(t)\cos(\omega t)\,dt}}_{=0} - \mathrm{j} \int\limits_{-\infty}^{\infty}{x_o(t)\sin(\omega t)\,dt} \nonumber
+                    %\end{equation*}
+                    %\pause
+                    %%\vspace{-5mm}
+                    %\begin{itemize}
+                        %\item[$\Rightarrow$]	$X_o(\jom)$ is \textit{imaginary}
+                        %\item[$\Rightarrow$]	$X_o(\jom) = -X_o(-\jom)$ (substitute $x(t)$ with $-x(-t)$)
+                    %\end{itemize}
+                    %}
+                %\end{footnotesize}
+                %\vspace{500mm}
+            %\end{itemize}
+        \end{frame}	
+
+
+        \begin{frame}{fourier transform}{property 7: time \& frequency scaling}
+            \vspace{-5mm}
+            \begin{eqnarray*}
+                y(t) &=& x(c\cdot t)\\ \mapsto&&\\ Y(\jom) &=& \frac{1}{|c|}X\left(j\frac{\omega}{c}\right) 
+            \end{eqnarray*}
+            
+            \bigskip
+            \only<2->{\textbf{note}: }
+            \begin{itemize}
+                \item<2->   scaling of abscissa in one domain leads to inverse scaling in the other domain
+            \end{itemize}
+            %\pause
+            %\begin{itemize}
+                %\item[]	\textbf{derivation} (positive $c$)
+                %\begin{footnotesize}
+                    %\begin{eqnarray*}
+                        %Y(\jom) &=& \int\limits_{-\infty}^{\infty} {x(c\cdot t) \e^{-\jom t}\, dt}\nonumber\\
+                        %\pause
+                        %&=& \int\limits_{-\infty}^{\infty} {x(\tau) \e^{-\jom \frac{\tau}{c}}\, d\frac{\tau}{c}}\nonumber\\
+                        %\pause
+                        %&=& \frac{1}{c}\int\limits_{-\infty}^{\infty} {x(\tau) \e^{-\mathrm{j} \frac{\omega}{c} \tau}\, d\tau}\nonumber\\
+                        %\pause
+                        %&=& \frac{1}{c} X\left(\mathrm{j}\frac{\omega}{c}\right) \nonumber
+                    %\end{eqnarray*}
+                %\end{footnotesize}
+            %\end{itemize}
+        \end{frame}	
+    %%\section{examples}
+        %%\begin{frame}{fourier transform}{examples}
+                %%\begin{itemize}
+                    %%\item	cosine
+                    %%\item	delta function
+                    %%\item	constant
+                    %%\item	rectangular window
+                    %%\item	delta pulse
+                %%\end{itemize}
+        %%\end{frame}	
+%
+    \section[sampled]{fourier transform of sampled time signals}
+        \begin{frame}{fourier transform}{sampled time signals 1/2}
+            \begin{itemize}
+                \item   sampled time signal can be modeled as multiplication of original signal with delta pulse $\delta_\mathrm{T}(t)$
+                \item   multiplication in time domain $\mapsto$ convolution in frequency domain
+            \end{itemize}
+            \begin{eqnarray*}\label{eq:ft_sampled}
+                \mathfrak{F}[x(i)] 	&=& \mathfrak{F}[x(t)\cdot \delta_\mathrm{T}(t)]\nonumber\\
+                \pause
+                                    &=& \mathfrak{F}[x(t)]\ast \mathfrak{F}[\delta_\mathrm{T}(t)]\nonumber\\
+                                    &=& X(\jom)\ast \Delta_\mathrm{T}(\jom) 
+            \end{eqnarray*}
+            \pause
+            \textbf{note}
+            \begin{itemize}
+                \item   even if time domain signal is discrete, its Fourier transform is \textit{still continuous}
+                \item   spectrum is \textit{repeated periodically}
+            \end{itemize}
+            
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{sampled time signals 2/2}
+            \includeanimation{Sampling}{01}{48}{10}
+        \end{frame}	
+
+    \section[STFT]{Short Time Fourier Transform}
+        \begin{frame}{fourier transform}{STFT 1/2}
+            short time Fourier transform (STFT):\\ Fourier transform of a short time segment
+
+            \bigskip	
+                \begin{itemize}
+                    \item<2->   \textbf{reasons}:
+                        \begin{itemize}
+                            \item	remember block based processing
+                            \item	segment can be seen as quasi-periodic or stationary
+                        \end{itemize}
+                    \smallskip
+                    \item <3->  \textbf{implementation}:
+                        \begin{itemize}
+                            \item   pretend signal is $0$ outside of the segment
+                            \item[$\Rightarrow$] multiplication of signal and \textit{window function}
+                        \end{itemize}
+                \end{itemize}
+        \end{frame}	
+        \begin{frame}{fourier transform}{STFT 2/2}
+            \includeanimation{Stft}{001}{005}{1}
+            \inserticon{video}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{STFT: window functions}
+            \begin{itemize}
+                \item   time domain multiplication $\mapsto$ frequency domain convolution 
+                \item   time domain shape determines frequency domain shape of the window
+            \end{itemize}
+            \only<2>{
+            %\vspace{-3mm}
+            \figwithmatlab{SpectralWindows}
+            }
+            \only<3>{
+            \bigskip
+            \textbf{spectral leakage characterization}
+            \begin{itemize}
+                \item	main lobe width
+                \item	side lobe height
+                \item	side lobe attenuation
+            \end{itemize}
+            }
+            \vspace{70mm}
+        \end{frame}	
+
+    \section[DFT]{Discrete Fourier Transform}
+        \begin{frame}{fourier transform}{DFT}
+            digital domain: requires discrete frequency values:
+            
+            $\Rightarrow$ discrete Fourier transform
+            \begin{equation*}\label{eq:dft}
+                X(k) = \sum\limits_{i=0}^{\mathcal{K}-1}{x(i)\e^{-\mathrm{j}ki\frac{2\pi}{\mathcal{K}}}}
+            \end{equation*}
+            with
+            \begin{equation*}
+                \Delta\Omega = \frac{2\pi}{\mathcal{K}T_{\mathrm{S}}} = \frac{2\pi f_{\mathrm{S}}}{\mathcal{K}}
+            \end{equation*}
+            
+            \pause
+            2 interpretations:
+            \begin{itemize}
+                \item	sampled continuous Fourier transform
+                \item	continuous Fourier transform of periodically extended time domain segment
+            \end{itemize}
+        \end{frame}	
+
+        \begin{frame}{fourier transform}{spectrogram}
+            \vspace{-2mm}
+            \begin{itemize}
+                \item   spectrogram allows to visualize temporal changes in the spectrum
+                \item   displays the \textit{magnitude spectrum }only
+            \end{itemize}
+            \vspace{-8mm}
+            \begin{columns}
+                \column{.9\linewidth}
+                    \figwithmatlab{Specgram}
+                \column{.1\linewidth}
+                    \begin{figure}
+                    \includeaudio{sax_example}
+                    \end{figure}
+            \end{columns}
+            
+        \end{frame}	
+
+    \section{summary}
+        \begin{frame}{summary}{lecture content}
+            \begin{itemize}
+                \item   \textbf{Fourier Transform (of a real signal)}
+                    \begin{itemize}
+                        \item   is conjugate complex
+                        \item   often represented as magnitude $+$ phase
+                    %\end{itemize}
+                %\item    \textbf{FT properties}
+                    %\begin{itemize}
+                        \item   invertible
+                        \item   linear
+                        \item   convolution in time domain is multiplication in frequency domain
+                        \item   energy preserving
+                        \item   time shift result in phase shift, frequency shift results in amplitude modulation
+                        \item   symmetric
+                        \item   time scaling result in inverse frequency scaling
+                    \end{itemize}
+                \item   \textbf{FT of sampled signals}:
+                    \begin{itemize}
+                        \item   is periodic with sample rate
+                    \end{itemize}
+                \item   \textbf{STFT}
+                    \begin{itemize}
+                        \item   window results in spectral leakage (convolution in freq domain)
+                    \end{itemize}
+                \item   \textbf{DFT}
+                    \begin{itemize}
+                        \item   discrete in both time and freq domain
+                    \end{itemize}
+            \end{itemize}
+            \inserticon{summary}
+        \end{frame}
+\end{document}

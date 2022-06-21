@@ -13,7 +13,7 @@
         \begin{frame}{introduction}{overview}
             \begin{block}{corresponding textbook section}
                     %\href{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6331122}{missing in textbook} 
-                    Section~9.7
+                    section~9.7
             \end{block}
 
             \begin{itemize}
@@ -130,15 +130,17 @@
             %\only<2>{\figwithref{StructureFeatures_1}{matlab source: \href{https://github.com/alexanderlerch/ACA-Slides/blob/master/matlab/displayStructureFeatures.m}{matlab/displayStructureFeatures.m}}}
         %\end{frame} 
         \begin{frame}{music structure analysis}{self similarity matrix}
+            \vspace{-2mm}
             \begin{equation*}
                 S(n_\mathrm{A}, n_\mathrm{B}) = \mathrm{s}\big(v(n_\mathrm{A}),v(n_\mathrm{B})\big)
             \end{equation*}
             \includeaudio{bad}\vspace{-5mm}
-            \figwithmatlab{SelfSimilarityMatrix}
+            \figwithmatlab{Ssm}
             
         \end{frame}
         \begin{frame}{music structure analysis}{feature dependency of similarity}
             \figwithmatlab{SsmFeatures}
+            Features (left to right): Pitch Chroma, RMS, MFCCs, Mel Spectrogram
         \end{frame}
     \section[novelty]{novelty analysis}
         \begin{frame}{music structure analysis}{novelty analysis}
