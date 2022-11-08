@@ -6,7 +6,7 @@ Version=4
 MainFile=..\00-00-ACA-Introduction.tex
 UseBibTeX=1
 UseMakeIndex=0
-ActiveProfile=LaTeX => PDF (splitbib)
+ActiveProfile=LaTeX ⇨ PDF
 ProjectLanguage=en
 ProjectDialect=US
 
