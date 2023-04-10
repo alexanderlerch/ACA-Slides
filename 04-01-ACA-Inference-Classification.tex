@@ -79,6 +79,7 @@
                 \column{.4\linewidth} 
                    \begin{itemize}
                         \item   derive classification parameters from data, e.g.,
+                        \smallskip
                         \item[$\Rightarrow$]  learn common feature distributions per class
                         \item[$\Rightarrow$]  learn separation metrics per class
                     \end{itemize}
@@ -162,6 +163,7 @@
         %
      \section[examples]{classifier examples}
         \begin{frame}{classifier examples}{k-Nearest Neighbor (kNN)}
+            \vspace{-5mm}
             \begin{columns}
                 \column{.6\linewidth} 
                     \begin{itemize}
@@ -169,6 +171,7 @@
                             \begin{itemize}
                                 \item store coordinates and class labels
                             \end{itemize}
+                        \bigskip
                         \item<2->	\textbf{classification}: extract query vector and set class to majority of $k$ nearest reference vectors
                             \begin{enumerate}
                                 \item   compute distance between query and all training vectors
@@ -194,20 +197,24 @@
                     \only<6>{$k = 7 \Rightarrow$ black majority}
             \end{columns}
         \end{frame}
+        
         \begin{frame}{classifier examples}{Gaussian Mixture Model (GMM)}
-            \vspace{-3mm}
+            \vspace{-5mm}
              \begin{columns}
                 \column{.4\linewidth} 
                    \begin{itemize}
                         \item	\textbf{training}:\\ model each class distribution as superposition of Gaussian distributions
+                        \bigskip
                         \item<2->	\textbf{classification}:\\ compute output of each Gaussian and select class with highest probability
+                        \bigskip
                         \item<3->	\textbf{classifier data}:\\ per class per Gaussian: $\mu$ and covariance, mixture weight
                     \end{itemize}
                 \column{.6\linewidth} 
-                \vspace{-13mm}
+                \vspace{-11mm}
                     \figwithmatlab{Gmm}
             \end{columns}
         \end{frame}
+        
         \begin{frame}{classifier examples}{Support Vector Machine (SVM)}
             \begin{itemize}
                 \item	\textbf{training}:
