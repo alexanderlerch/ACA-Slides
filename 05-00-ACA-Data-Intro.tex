@@ -50,9 +50,11 @@
                         \smallskip
                         \item<3->	\textbf{train} classifier
                         \smallskip
-                        \item<4->	\textbf{evaluate} classifier with test (or validation) set
+                        \item<4->	\textbf{evaluate} classifier with validation set
                         \smallskip
                         \item<5->	(\textbf{adjust} classifier settings, return to 4.)
+                        \smallskip
+                        \item<6->	\textbf{evaluate} classifier with test set
                     \end{enumerate}
             \end{itemize}
         \end{frame}
@@ -176,8 +178,10 @@
 
     \section{augmentation}
         \begin{frame}{data}{augmentation}
+            \vspace{-3mm}
             \begin{itemize}
                 \item   if annotated data is insufficient, we can 'cheat' by increasing the amount of training data
+                \bigskip
                 \item[$\Rightarrow$] \textbf{data augmentation}: apply irrelevant transforms to audio data
                     \begin{itemize}
                         \item<2->   \textit{data segmentation}

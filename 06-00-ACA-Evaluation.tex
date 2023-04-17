@@ -59,12 +59,20 @@
                 \bigskip
                 \item<2->   \textbf{expectations} clearly defined
                     \begin{itemize}
-                        \item   worst case performance (random)
-                        \item   best case performance (oracle)
+                        \item   worst case performance
+                            \begin{itemize}
+                                \item   random or trivial system
+                            \end{itemize}
+                        \smallskip
+                        \item   best case performance
+                            \begin{itemize}
+                                \item   metric max or oracle input
+                            \end{itemize}
+                        \smallskip
                         \item   realistic performance $\Rightarrow$ baseline system
                             \begin{itemize}
                                 \item   Zero-R classifier
-                                \item   standard approach
+                                \item   traditional approach
                             \end{itemize}
                     \end{itemize}
             \end{itemize}
@@ -74,13 +82,13 @@
                 \item<1->   \textbf{comparability} to state-of-the-art
                     \begin{itemize}
                         \item   use of established datasets and identical data splits
-                        \item   running existing systems on your data
+                        \item   running existing (pre-trained?) systems on your data
                     \end{itemize}
                 \bigskip
                \item<2->   increase \textbf{reproducibility}
                     \begin{itemize}
                         \item   automate evaluation
-                        \item   log system parametrization
+                        \item   log system parametrization and experimental setup
                         \item   publish source code
                     \end{itemize}
                 \bigskip
