@@ -368,7 +368,7 @@
         
         \begin{frame}{nmf use cases}{piano transcription}
             \begin{itemize}
-                \item   separate template adaptation from activation matrix adaptation:
+                \item   \textbf{separate template adaptation} from activation matrix adaptation:
                     \begin{enumerate}
                         \item  train/set template matrix
                         \item  order template matrix to have fixed pitch mapping
@@ -376,10 +376,11 @@
                         \item  pick activation magnitude to determine active pitches
                     \end{enumerate}
                 \bigskip
-                \item   potential problems
+                \item   \textbf{potential problems}
                     \begin{itemize}
-                        \item   detuned piano
+                        \item   detuned piano/tuning frequency deviation
                         \item   template differs significantly from sound analyzed
+												\item	  spectral changes dependent on time and/or loudness
                     \end{itemize}
             \end{itemize}
         \end{frame}
