@@ -6,7 +6,7 @@ Version=4
 MainFile=..\08-00-ACA-Intensity.tex
 UseBibTeX=1
 UseMakeIndex=0
-ActiveProfile=LaTeX => PDF (splitbib)
+ActiveProfile=LaTeX ⇨ PDF
 ProjectLanguage=en
 ProjectDialect=US
 
