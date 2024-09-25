@@ -72,10 +72,14 @@
                 \smallskip
                 \item   examples:
                 \begin{itemize}
-                    \item	\textbf{tonic}:\\ chord on 1st scale degree (tonal center)
-                    \item	\textbf{dominant}:\\ chord on 5th scale degree (often moves to tonic)
-                    \item	\textbf{subdominant}:\\ chord on 4th scale degree
-                    \item	\ldots
+                    \smallskip
+										\item	\textbf{tonic}:\\ chord on 1st scale degree (tonal center)
+                    \smallskip
+										\item	\textbf{dominant}:\\ chord on 5th scale degree (often moves to tonic)
+                    \smallskip
+										\item	\textbf{subdominant}:\\ chord on 4th scale degree
+                    \smallskip
+										\item	\ldots
                 \end{itemize}
             \end{itemize}
         \end{frame}
@@ -165,12 +169,12 @@
 \end{footnotesize}
         \end{frame}
         \begin{frame}{pitch chroma}{introduction}
-            \vspace{-3mm}
+            %\vspace{-3mm}
             \begin{itemize}
                 \item	pitch class distribution: 12-dimensional vector
                 \item   map all pitch class bands in all octaves to one
             \end{itemize}
-            {\visible<2->{\begin{flushright}{\includeaudio{sax_example}}\end{flushright}}}
+            {\visible<2>{\begin{flushright}{\includeaudio{sax_example}}\end{flushright}}}
             \only<1>{\vspace{1mm}\figwithmatlab{PitchChromaGrouping}}
             \only<2>{\vspace{4mm}\figwithmatlab{PitchChroma}}
             \only<3->{
@@ -219,7 +223,7 @@
             apply \textbf{musical knowledge} to increase the result's robustness and accuracy:
             
             \begin{itemize}
-                \item	different probabilities for different chord progressions (similar to key modulations), e.g.
+                \item	probabilities for different chord progressions (similar to key modulations), e.g.
                 \begin{itemize}
                     \item	cadences: I-IV-V-I
                     \item	sequences: circle progression
@@ -229,12 +233,14 @@
 
             $\Rightarrow$ model for \textit{chord progression probabilities}
             \begin{enumerate}
-                \item<2->	\textit{analytical model} based on music theory
+								\smallskip
+							  \item<2->	\textit{analytical model} based on music theory
                     \begin{itemize}
                         \item	circle of fifths (?!)
                         \item	key profile correlation (?!)
                     \end{itemize}
-                \item<3->	\textit{empirical model} based on data
+                \smallskip
+							  \item<3->	\textit{empirical model} based on data
                     \begin{itemize}	
                         \item	annotate audio
                         \item	symbolic score

@@ -139,6 +139,7 @@
             \figwithmatlab{PitchChromaGrouping}
         \end{frame}
         \begin{frame}{pitch chroma}{computation: simple variants}
+					\vspace{-5mm}
             \begin{columns}
             \column{.4\linewidth}
             \begin{itemize}
@@ -148,13 +149,17 @@
                         \item	\textit{tonalness preprocessing} (local maxima etc)
                     \end{itemize}
                     
+								\bigskip
                 \item<2->	sum of \textbf{filterbank} output energies
-                   
+                
+								\bigskip
                 \item<3->	\textbf{CQT}: 
                     \begin{itemize}
                         \item sum of bins/peaks
                     \end{itemize}
-                \item<4->   beat-synchronous chroma
+										
+								\bigskip
+                \item<4->   beat-synchronous \textbf{aggregation}
             \end{itemize}
             
             \column{.6\linewidth}
@@ -340,8 +345,10 @@
         \begin{frame}{key detection}{variants}
             \begin{itemize}
                 \item	\textbf{tonalness weight}:\\ estimate the tonality/noisiness and weight instantaneous pitch chroma
-                \item<2->	\textbf{multiple estimations}:\\ split piece into regions and estimate key through majority
-                \item<3->	\textbf{real-time key detection}:\\ estimate in sliding window
+                \bigskip
+								\item<2->	\textbf{multiple estimations}:\\ split piece into regions and estimate key through majority
+                \bigskip
+								\item<3->	\textbf{real-time key detection}:\\ estimate in sliding window
             \end{itemize}
         \end{frame}
         \begin{frame}{key detection}{results \& typical errors}
@@ -349,11 +356,16 @@
             \column{.6\textwidth}
                 \begin{itemize}
                     \item	typical errors: related keys
+												\smallskip
                         \begin{itemize}
-                            \item	Dominant
-                            \item	Subdominant
-                            \item	Relative
-                            \item	Major/Minor
+                            \smallskip
+														\item	Dominant
+                            \smallskip
+														\item	Subdominant
+                            \smallskip
+														\item	Relative
+                            \smallskip
+														\item	Major/Minor
                         \end{itemize}
                 \end{itemize}
             \column{.4\textwidth}
